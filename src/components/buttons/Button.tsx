@@ -2,7 +2,7 @@ import { Gilroy } from '@/fonts/font';
 import clsx from 'clsx';
 import { FC } from 'react';
 import { Icon } from '../icon/icon';
-import { ArrowDown, ChevronDown, ListFilter } from 'lucide-react';
+import { ArrowDown, ChevronDown, ListFilter, CircleHelp } from 'lucide-react';
 
 type ButtonProps = {
   label: string;
@@ -18,11 +18,13 @@ type ButtonProps = {
   onClick?: () => void;
   filter?: boolean;
   download?: boolean;
+  question?: boolean;
 };
 
 const Button: FC<ButtonProps> = ({
   label,
   arrow,
+  question,
   type,
   onClick,
   additionalClass,
@@ -54,6 +56,8 @@ const Button: FC<ButtonProps> = ({
     >
       {download && <ArrowDown width={24} />}
       {filter && <ListFilter width={24} />}
+      {question && <CircleHelp width={15} />}
+
 
       {label}
       {arrow && (
