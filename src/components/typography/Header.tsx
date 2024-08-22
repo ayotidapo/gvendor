@@ -10,7 +10,7 @@ export const Header = ({
   return (
     <div
       className={`
-				text-2xl font-black 
+				text-xl font-black 
 				tracking-[-3%] md:tracking-normal
 				${RecoletaMedium.className} ${className}
 				`}

@@ -16,7 +16,7 @@ const CountCard: React.FC<CountCardProps> = ({
   isCurrency,
 }) => {
   return (
-    <div className="bg-[#FAFAFA] border border-[#EAEAEA] shadow-sm p-4 rounded-md flex items-center justify-between">
+    <div className="bg-off-white border border-[#EAEAEA] shadow-sm p-4 rounded-md flex items-center justify-between">
       <div className="space-y-2">
         <p className="text-sm text-secondary-black">{text}</p>
         <p className="text-2xl font-normal">

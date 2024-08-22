@@ -14,7 +14,9 @@ module.exports = {
         primary: '#F45D2C',
         black: '#050301',
         'secondary-black': '#555555',
-        'default-gray': '#7A7978'
+        'default-gray': '#7A7978',
+        'off-white': '#FAFAFA',
+        'default-gray-2': '#F3F3F3',
       },
     },
   },
