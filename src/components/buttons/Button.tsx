@@ -37,7 +37,7 @@ const Button: FC<ButtonProps> = ({
       onClick={onClick}
       disabled={disabled}
       className={clsx(
-        'w-full rounded-md flex gap-2 justify-center items-center relative px-3',
+        'w-[169px] rounded-md flex gap-2 justify-center items-center relative px-3',
         {
           'bg-black text-white': name === 'primary',
           'bg-white text-black shadow-lg': name === 'inverted',
