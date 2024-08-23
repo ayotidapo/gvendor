@@ -1,9 +1,11 @@
+'use client'
+
 import React from 'react'
 import { registerables, Chart } from 'chart.js'
 import { Line } from 'react-chartjs-2'
 
 interface Props {
-  labels: string[]
+  labels: number[]
   data: number[]
   width?: number
   height?: number
@@ -28,11 +30,12 @@ const LineChart: React.FC<Props> = ({
         datasets: [
           {
             label: '',
-            fill: true,
-            backgroundColor: '#F45D2C',
-            borderColor: '#9d72ff',
+            borderColor: '#F45D2C',
             type: 'line',
             data,
+            cubicInterpolationMode: 'monotone', 
+            tension: 0.6, 
+          
           },
         ],
       }}
@@ -41,18 +44,26 @@ const LineChart: React.FC<Props> = ({
         scales: {
           x: {
             grid: {
-              display: false,
+              display: true,
+              color: '#EAEAEA'
             },
             border: {
               display: false,
             },
-            display: false,
+            ticks: {
+              color: '#050301'
+            },
+            display: true,
           },
           y: {
             grid: {
-              display: false,
+              display: true,
+              color: '#EAEAEA'
             },
-            display: false,
+            ticks: {
+              color: '#050301'
+            },
+            display: true,
           },
         },
         plugins: {

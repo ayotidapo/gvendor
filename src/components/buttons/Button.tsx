@@ -2,7 +2,7 @@ import { Gilroy } from '@/fonts/font';
 import clsx from 'clsx';
 import { FC } from 'react';
 import { Icon } from '../icon/icon';
-import { ArrowDown, ChevronDown, ListFilter, CircleHelp } from 'lucide-react';
+import { ArrowDown, ChevronDown, ListFilter, CircleHelp, ArrowRight } from 'lucide-react';
 
 type ButtonProps = {
   label: string;
@@ -10,7 +10,7 @@ type ButtonProps = {
   arrow?: boolean;
   svg?: string;
   type?: 'button' | 'submit' | 'reset' | undefined;
-  name?: 'primary' | 'inverted' | 'outline';
+  name?: 'primary' | 'inverted' | 'outline' | 'transparent';
   loading?: boolean;
   spinColor?: string;
   small?: boolean;
@@ -19,12 +19,14 @@ type ButtonProps = {
   filter?: boolean;
   download?: boolean;
   question?: boolean;
+  right?: boolean;
 };
 
 const Button: FC<ButtonProps> = ({
   label,
   arrow,
   question,
+  right,
   type,
   onClick,
   additionalClass,
@@ -50,14 +52,13 @@ const Button: FC<ButtonProps> = ({
           'border border-gray-100': name === 'inverted',
           'outline outline-1  ': name === 'outline',
           'opacity-10': disabled,
+          'bg-transparent text-black  border-black': name === 'transparent',
         },
         additionalClass
       )}
     >
       {download && <ArrowDown width={24} />}
       {filter && <ListFilter width={24} />}
-      {question && <CircleHelp width={15} />}
-
 
       {label}
       {arrow && (
@@ -65,6 +66,8 @@ const Button: FC<ButtonProps> = ({
           <ChevronDown width={24} />
         </span>
       )}
+      {right && <ArrowRight width={24} />}
+      {question && <CircleHelp width={15} />}
     </button>
   );
 };

@@ -22,7 +22,7 @@ const data = [
 	{ total: 240501, count: 500 },
 	{ total: 56500, count: 100 },
 	{ total: 0, count: 200 },
-	{ id: 1, total: 411000, count: 200 },
+	{ total: 411000, count: 200 },
 	{ total: 411000, count: 300 },
 	{ total: 4110, count: 400 },
 	{ total: 41100, count: 300 },
@@ -31,9 +31,8 @@ const data = [
 	{ total: 411000, count: 200 },
 ];
 
-const labels = data.map(item => item.count);
-const values1 = data.map(item => item.total);
-const value = data.map(item => item.id);
+const labels = data.map(item => item.total);
+const values1 = data.map(item => item.count);
 
 const HomePage: React.FC = () => {
 	return (
@@ -71,13 +70,22 @@ const HomePage: React.FC = () => {
 						}
 						content={
 							<div>
-								<div>
+								<div className='pt-6'>
 									<BarChart responsive labels={labels} data={values1} />
 								</div>
-								<div className='flex space-x-6'>
-									<Button label='View detailed report' name='outline' />
-									<span>20 Aug</span>
+								<div className='pb-10 flex space-x-10 justify-between'>
+									<div>
+										<Button
+											label='View detailed report'
+											name='transparent'
+											right
+										/>
+									</div>
+									<div className=''>
+										<span className=''>20 Aug</span>
+									</div>
 								</div>
+
 							</div>
 						}
 					/>
@@ -96,8 +104,22 @@ const HomePage: React.FC = () => {
 								</div>
 							}
 							content={
-								<div className=''>
-									<BarChart responsive labels={labels} data={values1} />
+								<div>
+									<div className='pt-6'>
+										<BarChart responsive labels={labels} data={values1} />
+									</div>
+                  <div className='pb-10 flex space-x-10 justify-between'>
+									<div>
+										<Button
+											label='View detailed report'
+											name='transparent'
+											right
+										/>
+									</div>
+									<div className=''>
+										<span className=''>20 Aug</span>
+									</div>
+								</div>
 								</div>
 							}
 						/>

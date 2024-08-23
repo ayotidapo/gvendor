@@ -5,8 +5,8 @@ import { registerables, Chart } from 'chart.js'
 import { Bar } from 'react-chartjs-2'
 
 interface Props {
-  labels: number[]
-  data: number[]
+  labels: number[] | string[]
+  data: number[] | string[]
   width?: number
   height?: number
   responsive: boolean
