@@ -6,6 +6,7 @@ import TextInput from '@/components/input/TextInput';
 import Button from '@/components/buttons/Button';
 import { Icon } from '@/components/icon/icon';
 import Select from '@/components/select/Select';
+import ImageUpload from '@/components/image/ImageUpload';
 
 const ProfilePage = () => {
 	const [selectedValue, setSelectedValue] = useState<string | number>('');
@@ -25,7 +26,14 @@ const ProfilePage = () => {
 			<div>
 				<Header header={'Profile picture'} />
 			</div>
-			<div>{/* profile pic */}</div>
+			<div className='mt-8 flex space-x-10'>
+				<div>
+					<ImageUpload />
+				</div>
+				<div className='pt-14'>
+					<Button label={'Edit profile'} name={'inverted'}/>
+				</div>
+			</div>
 
 			<div className='pt-6'>
 				<span>
