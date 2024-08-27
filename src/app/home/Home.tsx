@@ -71,9 +71,15 @@ const HomePage: React.FC = () => {
 						content={
 							<div>
 								<div className='pt-6'>
-									<BarChart responsive labels={labels} data={values1} />
+									<BarChart
+										responsive
+										labels={labels}
+										data={values1}
+										barThickness={5}
+										yGridDisplay={true}
+									/>
 								</div>
-								<div className='pb-10 flex space-x-10 justify-between'>
+								<div className='pb-10 flex space-x-10 justify-beeetwn'>
 									<div>
 										<Button
 											label='View detailed report'
@@ -85,7 +91,6 @@ const HomePage: React.FC = () => {
 										<span className=''>20 Aug</span>
 									</div>
 								</div>
-
 							</div>
 						}
 					/>
@@ -105,21 +110,27 @@ const HomePage: React.FC = () => {
 							}
 							content={
 								<div>
-									<div className='pt-6'>
-										<BarChart responsive labels={labels} data={values1} />
-									</div>
-                  <div className='pb-10 flex space-x-10 justify-between'>
-									<div>
-										<Button
-											label='View detailed report'
-											name='transparent'
-											right
+									<div className=''>
+										<BarChart
+											responsive
+											labels={labels}
+											data={values1}
+											barThickness={5}
+											yGridDisplay={true}
 										/>
 									</div>
-									<div className=''>
-										<span className=''>20 Aug</span>
+									<div className='pb-10 flex space-x-10 justify-between'>
+										<div>
+											<Button
+												label='View detailed report'
+												name='transparent'
+												right
+											/>
+										</div>
+										<div className=''>
+											<span className=''>20 Aug</span>
+										</div>
 									</div>
-								</div>
 								</div>
 							}
 						/>
