@@ -11,6 +11,7 @@ interface SelectProps {
   onChange: (value: string | number) => void;
   placeholder?: string;
   disabled?: boolean;
+  error?: string;
 }
 
 const Select: React.FC<SelectProps> = ({
@@ -19,6 +20,7 @@ const Select: React.FC<SelectProps> = ({
   onChange,
   placeholder = 'Select an option',
   disabled = false,
+  error,
 }) => {
   return (
     <div className="w-full">
@@ -26,8 +28,9 @@ const Select: React.FC<SelectProps> = ({
         value={value}
         onChange={(e) => onChange(e.target.value)}
         disabled={disabled}
-        className={`w-full text-secondary-black h-[56px] p-2 border rounded-md focus:outline-none 
-           ${disabled ? 'bg-gray-100 cursor-not-allowed' : ''}`}
+        className={`w-full p-2 h-[56px] border rounded-md focus:outline-none ${
+          error ? 'border-red-500' : 'border-gray-300'
+        } ${disabled ? 'bg-gray-100 cursor-not-allowed' : ''}`}
       >
         <option value="" disabled>
           {placeholder}
@@ -38,6 +41,7 @@ const Select: React.FC<SelectProps> = ({
           </option>
         ))}
       </select>
+      {error && <p className="text-sm text-red-500 mt-1">{error}</p>}
     </div>
   );
 };

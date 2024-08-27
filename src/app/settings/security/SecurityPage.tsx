@@ -40,7 +40,7 @@ const SecurityPage = () => {
 			<div className='mt-6 w-[183px]'>
 				<Button label={'Change password'} />
 			</div>
-			<div className='pt-[74px]'>
+			<div className='pt-[74px] gap-6'>
 				<div>
 					<Header header={'Close your account'} className='text-[#F25A68]' />
 				</div>
@@ -49,8 +49,9 @@ const SecurityPage = () => {
 					account. You will lose all your sales, orders, teams and other data.
 				</div>
 				<div>
+					<div className='pt-4'>Please select the reason for closing your Good account</div>
 					{reasons.map((reason, idx) => (
-						<div key={idx} className='relative flex items-center py-4'>
+						<div key={idx} className='relative flex items-center py-2'>
 							<div
 								onClick={() => setDeleteReason(reason)}
 								className='flex w-full hover:cursor-pointer'
