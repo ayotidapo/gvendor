@@ -45,7 +45,7 @@ const Button: FC<ButtonProps> = ({
         'w-full rounded-md flex gap-2 justify-center items-center relative px-3',
         {
           'bg-black text-white': name === 'primary',
-          'bg-white text-black shadow-lg': name === 'inverted',
+          'bg-white text-secondary-black shadow-lg': name === 'inverted',
           'bg-transparent text-black': name === 'outline',
           'text-sm py-2': small,
           'py-3': !small,

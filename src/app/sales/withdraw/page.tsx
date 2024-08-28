@@ -39,8 +39,8 @@ const Withdraw = () => {
 						name={''}
 					/>
 				</div>
-				<div className='pt-4 pr-6 pb-4 pl-6 w-[400px] '>
-					<Button label={'Withdraw'} />
+				<div className=' w-[400px]'>
+					<Button label={'Withdraw'}/>
 				</div>
 			</div>
 		</PageWrapper>

@@ -20,10 +20,10 @@ const ImageUpload: React.FC = () => {
         {image ? (
           <img src={image} alt="Uploaded" className="rounded-full w-full h-full object-cover" />
               ) : (
-                      <div className='w-[105px] h-[164px] py-4'>
+                      <div className='w-[105px] h-[164px] py-4 flex flex-col items-center justify-center'>
                           
                       <Icon svg={'camera'} height={100} width={100} />
-                      <span>Upload image</span>
+                      <span className=''>Upload image</span>
                       </div>
         )}
           </label>

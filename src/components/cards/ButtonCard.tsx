@@ -6,7 +6,7 @@ import Button from '../buttons/Button';
 interface CountCardProps {
 	count: number;
 	text: string;
-  label: string;
+	label: string;
 	icon?: string;
 	isCurrency: boolean;
 }
@@ -15,7 +15,7 @@ const CountCard: React.FC<CountCardProps> = ({
 	count,
 	text,
 	icon,
-  label,
+	label,
 	isCurrency,
 }) => {
 	return (
@@ -32,7 +32,7 @@ const CountCard: React.FC<CountCardProps> = ({
 				</div>
 			)}
 			<div>
-        <Button label={label}/>
+				<Button label={label} />
 			</div>
 		</div>
 	);
