@@ -1,16 +1,15 @@
 'use client';
 
-import { ReactNode, useState } from 'react';
+import { useState } from 'react';
 import Button from '@/components/buttons/Button';
 import TextInput from '@/components/input/TextInput';
-import { Gilroy, GilroyMedium } from '@/fonts/font';
+import { Gilroy } from '@/fonts/font';
 import { useForgotPasswordMutation } from '@/redux/reducers/auth/authSlice';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import * as Types from '@/types/types';
-import { AuthHeader } from '@/components/typography/AuthHeader';
 import { toast } from 'react-toastify';
-import Link from 'next/link';
+import Wrapper from '../Wrapper';
 
 type Response = {
   data: {
@@ -26,42 +25,6 @@ export const EmailSchema = Yup.object({
     .required('A valid email is required'),
 });
 
-const Wrapper = ({ children }: { children: ReactNode }) => {
-  return (
-    <div
-      className={`
-              ${Gilroy.variable} h-screen
-              overflow-hidden lg:flex justify-center items-center
-          `}
-    >
-      <div
-        className='
-                  w-[100%] lg:w-[50%]  
-                  p-4
-                  md:flex md:justify-center lg:justify-end
-                  lg:px-24 lg:pb-0
-                  max-h-full
-                  overflow-y-scroll hide-scroll-bar
-                  '
-      >
-        <div className='md:max-w-[500px] w-[100%]'>
-          <AuthHeader title='Forgot Password' className='text-center mb-10' />
-          <ForgotPassword />
-        </div>
-      </div>
-      <div
-        className={`
-                  w-[100%] lg:w-[50%]  
-                  lg:block hidden 
-                  min-h-[100vh]
-                  bg-[url('/assets/login-bg.svg')]
-                  bg-no-repeat
-                  bg-cover
-              `}
-      ></div>
-    </div>
-  );
-};
 
 const ForgotPassword = ({ onFinish }: { onFinish?: () => void }) => {
   const [forgotPassword, { isLoading }] = useForgotPasswordMutation();
@@ -101,7 +64,7 @@ const ForgotPassword = ({ onFinish }: { onFinish?: () => void }) => {
   });
 
   return (
-    <div>
+    <Wrapper title={'Forgot Password'}>
       {!linkSent ? (
         <form onSubmit={handleSubmit} className='flex flex-col gap-4 md:gap-6'>
           <div className={`${Gilroy.className}`}>
@@ -126,7 +89,7 @@ const ForgotPassword = ({ onFinish }: { onFinish?: () => void }) => {
               loading={isLoading}
               spinColor='#ffffff'
               type='submit'
-              label='Send Reset Link'
+              label='Get Link'
               additionalClass='!py-4'
             />
           </div>
@@ -138,8 +101,8 @@ const ForgotPassword = ({ onFinish }: { onFinish?: () => void }) => {
           </div>
         </div>
       )}
-    </div>
+    </Wrapper>
   );
 };
 
-export default Wrapper;
+export default ForgotPassword;

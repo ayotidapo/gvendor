@@ -14,6 +14,7 @@ import { useSearchParams, useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
 import * as Yup from 'yup';
 import { AuthHeader } from '@/components/typography/AuthHeader';
+import Wrapper from '../Wrapper';
 
 const LoginSchema = Yup.object({
   email: Yup.string()
@@ -23,44 +24,9 @@ const LoginSchema = Yup.object({
 });
 
 
-const Wrapper = ({ children }: { children: ReactNode }) => {
-  return (
-    <div
-      className={`
-			${Gilroy.variable} h-screen
-			overflow-hidden lg:flex justify-center items-center
-		`}
-    >
-      <div
-        className='
-				w-[100%] lg:w-[50%]  
-				p-4
-				md:flex md:justify-center lg:justify-end
-				lg:px-24 lg:pb-0
-				max-h-full
-				overflow-y-scroll hide-scroll-bar
-				'
-      >
-        <div className='md:max-w-[500px] w-[100%]'>
-          <AuthHeader title='Welcome back' className='text-center mb-10' />
-          <LoginForm />
-        </div>
-      </div>
-      <div
-        className={`
-				w-[100%] lg:w-[50%]  
-				lg:block hidden 
-				min-h-[100vh]
-				bg-[url('/assets/login-bg.svg')]
-				bg-no-repeat
-        bg-cover
-			`}
-      ></div>
-    </div>
-  );
-};
 
-const LoginForm = ({ onFinish }: { onFinish?: () => void }) => {
+
+const LoginPage = ({ onFinish }: { onFinish?: () => void }) => {
   const [login, { isLoading }] = useLoginMutation();
   const dispatch = useAppDispatch();
   const router = useRouter();
@@ -100,7 +66,7 @@ const LoginForm = ({ onFinish }: { onFinish?: () => void }) => {
   };
 
   return (
-    <div>
+    <Wrapper title={'Welcome Back'}>
       <form onSubmit={handleSubmit}>
         <div className={`${Gilroy.className}`}>
           <div>
@@ -153,9 +119,9 @@ const LoginForm = ({ onFinish }: { onFinish?: () => void }) => {
           />
         </div>
       </form>
-    </div>
+    </Wrapper>
   );
 };
 
-export default Wrapper;
+export default LoginPage;
 
