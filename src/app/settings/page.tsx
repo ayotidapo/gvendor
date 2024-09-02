@@ -1,10 +1,13 @@
 import React from 'react';
 import PageWrapper from '@/containers/PageWrapper';
+import {SettingsPage} from '@/app/settings/profile/Settings'
 
 const Settings: React.FC = () => {
   return (
     <PageWrapper pageHeader='Settings'>
-      <h1>Your Settings will appear here</h1>
+      <div>
+        <SettingsPage/>
+      </div>
     </PageWrapper>
   );
 };

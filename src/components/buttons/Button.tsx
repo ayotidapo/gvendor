@@ -2,7 +2,7 @@ import { Gilroy } from '@/fonts/font';
 import clsx from 'clsx';
 import { FC } from 'react';
 import { Icon } from '../icon/icon';
-import CircularSpinner from '../loaders/CircularSpinner';
+import { ArrowDown, ChevronDown, ListFilter, CircleHelp, ArrowRight } from 'lucide-react';
 
 type ButtonProps = {
   label: string;
@@ -10,26 +10,31 @@ type ButtonProps = {
   arrow?: boolean;
   svg?: string;
   type?: 'button' | 'submit' | 'reset' | undefined;
-  name?: 'primary' | 'inverted' | 'secondary' | 'outline' | 'transparent';
+  name?: 'primary' | 'inverted' | 'outline' | 'transparent';
   loading?: boolean;
   spinColor?: string;
   small?: boolean;
   disabled?: boolean;
   onClick?: () => void;
+  filter?: boolean;
+  download?: boolean;
+  question?: boolean;
+  right?: boolean;
 };
 
 const Button: FC<ButtonProps> = ({
   label,
   arrow,
-  svg,
+  question,
+  right,
   type,
-  spinColor,
-  loading,
   onClick,
   additionalClass,
   disabled,
   name = 'primary',
   small = false,
+  filter = false,
+  download = false,
 }) => {
   return (
     <button
@@ -40,8 +45,7 @@ const Button: FC<ButtonProps> = ({
         'w-full rounded-md flex gap-2 justify-center items-center relative px-3',
         {
           'bg-black text-white': name === 'primary',
-          'bg-white text-black shadow-lg': name === 'inverted',
-          'bg-brand-orange text-white': name === 'secondary',
+          'bg-white text-secondary-black shadow-lg': name === 'inverted',
           'bg-transparent text-black': name === 'outline',
           'text-sm py-2': small,
           'py-3': !small,
@@ -53,25 +57,17 @@ const Button: FC<ButtonProps> = ({
         additionalClass
       )}
     >
-      {svg && (
-        <div className=''>
-          <Icon width={24} height={24} svg={svg} />
-        </div>
+      {download && <ArrowDown width={24} />}
+      {filter && <ListFilter width={24} />}
+
+      {label}
+      {arrow && (
+        <span className=''>
+          <ChevronDown width={24} />
+        </span>
       )}
-      {loading ? (
-        <div className={`cursor-pointer flex justify-center`}>
-          <CircularSpinner color={spinColor} />
-        </div>
-      ) : (
-        <>
-          {label}
-          {arrow && (
-            <span className='ml-2'>
-              <Icon width={8} height={13} svg='right-arrow' />
-            </span>
-          )}
-        </>
-      )}
+      {right && <ArrowRight width={24} />}
+      {question && <CircleHelp width={15} />}
     </button>
   );
 };

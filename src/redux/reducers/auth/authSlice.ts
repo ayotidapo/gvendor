@@ -32,11 +32,16 @@ export const authApiSlice = apiSlice.injectEndpoints({
         }
       },
     }),
-    signup: builder.mutation<AuthResponse, Partial<User>>({
-      query: credentials => ({
-        url: '/auth/register',
+    signup: builder.mutation<AuthResponse, { address: string; phone: string; password: string; reference: string; }>({
+      query: params => ({
+        url: `/auth/accept-invitation/${params.reference}`,
         method: 'POST',
-        body: credentials,
+        body: {
+          address: params.address,
+          phone: params.phone,
+          password: params.password,
+
+        },
       }),
       transformResponse: (response: { data: AuthResponse }) => response.data,
       async onQueryStarted(arg, { dispatch, queryFulfilled }) {
@@ -63,10 +68,7 @@ export const authApiSlice = apiSlice.injectEndpoints({
         body: email,
       }),
     }),
-    resetPassword: builder.mutation<
-      ResetPasswordResponse,
-      Partial<ResetPassword>
-    >({
+    resetPassword: builder.mutation<ResetPasswordResponse,Partial<ResetPassword>>({
       query: email => ({
         url: '/auth/reset-password',
         method: 'POST',
