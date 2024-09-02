@@ -12,7 +12,6 @@ import Link from 'next/link';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
 import * as Yup from 'yup';
-import { AuthHeader } from '@/components/typography/AuthHeader';
 import Wrapper from '../Wrapper';
 
 const LoginSchema = Yup.object({
@@ -22,17 +21,7 @@ const LoginSchema = Yup.object({
 	password: Yup.string().required('Please enter your password'),
 });
 
-
-const LoginPage = () => {
-	return (
-		<Wrapper>
-			<AuthHeader title='Welcome back' className='text-center mb-10' />
-			<LoginForm />
-		</Wrapper>
-	);
-};
-
-const LoginForm = ({ onFinish }: { onFinish?: () => void }) => {
+const LoginPage = ({ onFinish }: { onFinish?: () => void }) => {
 	const [login, { isLoading }] = useLoginMutation();
 	const dispatch = useAppDispatch();
 	const router = useRouter();
@@ -72,7 +61,7 @@ const LoginForm = ({ onFinish }: { onFinish?: () => void }) => {
 	};
 
 	return (
-		<div>
+		<Wrapper title={'Welcome Back'}>
 			<form onSubmit={handleSubmit}>
 				<div className={`${Gilroy.className}`}>
 					<div>
@@ -125,7 +114,7 @@ const LoginForm = ({ onFinish }: { onFinish?: () => void }) => {
 					/>
 				</div>
 			</form>
-		</div>
+		</Wrapper>
 	);
 };
 
