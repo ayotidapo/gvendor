@@ -113,7 +113,7 @@ const Sales: React.FC = () => {
 		<PageWrapper pageHeader='Sales'>
 			<div className='pb-10 flex justify-between'>
 				<div>
-					<Search onSearch='' placeholder='Search sales' />
+					<Search placeholder='Search sales' />
 				</div>
 				<div className='pb-10 flex space-x-4'>
 					<div>

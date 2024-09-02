@@ -8,8 +8,10 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import Link from 'next/link';
 import { toast } from 'react-toastify';
-import { useParams, useRouter, useSearchParams } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import Wrapper from '../Wrapper';
+import { getErrorMessage } from '@/helpers';
+import { APIErrorResponse } from '@/types/types';
 
 const SignUpSchema = Yup.object({
 	address: Yup.string().required('Address is required'),
@@ -19,8 +21,6 @@ const SignUpSchema = Yup.object({
 
 const SignUp = () => {
 	const [signup, { isLoading, isSuccess }] = useSignupMutation();
-
-	const params = useParams<{ reference: string }>();
 	const searchParams = useSearchParams();
 	const reference = searchParams.get('reference');
 	const router = useRouter();
@@ -30,11 +30,12 @@ const SignUp = () => {
 		}
 	}, [isSuccess]);
 
-	const onSignUp = async (values: any) => {
+	const onSignUp = async (values: { address: string; password: string; phone: string }) => {
 		try {
-			await signup({ ...values, reference });
+			await signup({ ...values, reference: reference ?? '' });
 		} catch (error) {
-			toast.error('Failed to sign up. Please try again.');
+			const message = getErrorMessage(error as APIErrorResponse);
+			toast.error(message);
 		}
 	};
 
