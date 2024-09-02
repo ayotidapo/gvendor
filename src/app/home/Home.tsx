@@ -5,7 +5,6 @@ import React from 'react';
 import BarChart from '@/components/charts/BarChart';
 import SectionCard from '@/components/cards/SectionCard';
 import { Header } from '@/components/typography/Header';
-import { Divide } from 'lucide-react';
 
 const unitsSold = [
 	{ product: 'Stanley cups', quantity: '30' },

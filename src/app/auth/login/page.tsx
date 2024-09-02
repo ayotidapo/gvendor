@@ -21,7 +21,7 @@ const LoginSchema = Yup.object({
 	password: Yup.string().required('Please enter your password'),
 });
 
-const LoginPage = ({ onFinish }: { onFinish?: () => void }) => {
+const LoginPage = () => {
 	const [login, { isLoading }] = useLoginMutation();
 	const dispatch = useAppDispatch();
 	const router = useRouter();
@@ -47,13 +47,8 @@ const LoginPage = ({ onFinish }: { onFinish?: () => void }) => {
 			if (userAuthData?.data?.user) {
 				dispatch(updateUserWithAuth(userAuthData));
 				toast.success('Login successful', { theme: 'colored' });
-
-				if (onFinish) {
-					onFinish();
-				} else {
-					const redirect = searchParams.get('redirect');
-					router.push(redirect || '/');
-				}
+				const redirect = searchParams.get('redirect');
+				router.push(redirect || '/');
 			}
 		} catch (error) {
 			return error;
