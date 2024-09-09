@@ -1,0 +1,37 @@
+definitions:
+  services:
+    docker1:
+      memory: 7168
+      type: docker 
+pipelines:
+  branches:
+    staging:
+      - step:
+          size: 2x # Total memory is 8GB
+          name: Build and Push to ACR Staging
+          services:
+            - docker1
+          script:
+            - export IMAGE_TAG=$BITBUCKET_BUILD_NUMBER
+            - echo "$ACR_PASSWORD" | docker login -u "$ACR_USERNAME"
+              --password-stdin "$ACR_REGISTRY"
+            - docker build -t "$ACR_REGISTRY/$ACR_IMAGE_NAME_BETA:$IMAGE_TAG" .
+            - docker push "$ACR_REGISTRY/$ACR_IMAGE_NAME_BETA:$IMAGE_TAG"
+
+      - step:
+          name: Deploy to AKS Staging
+          script:
+            - export IMAGE_TAG=$BITBUCKET_BUILD_NUMBER
+            - apt-get update && apt-get install -y bash gettext
+            - envsubst < deployment.yaml > deployment.yaml.tmp && mv deployment.yaml.tmp deployment.yaml
+            - cat deployment.yaml  # Optional: for debugging purposes to see the replaced content
+            - pipe: microsoft/azure-aks-deploy:1.0.2
+              variables:
+                AZURE_APP_ID: $AZURE_APP_ID
+                AZURE_PASSWORD: $AZURE_PASSWORD
+                AZURE_TENANT_ID: $AZURE_TENANT_ID
+                AZURE_AKS_NAME: $AKS_CLUSTER_NAME
+                AZURE_RESOURCE_GROUP: $RESOURCE_GROUP
+                KUBECTL_COMMAND: 'apply'
+                KUBECTL_ARGUMENTS: '-f deployment.yaml'
+                DEBUG: 'true'
