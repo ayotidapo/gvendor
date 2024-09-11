@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: goodlist-vendor-frontend-staging
+  name: goodlist-vendor-frontend-${ENV_NAME}
 spec:
   replicas: 1
   strategy:
@@ -11,15 +11,15 @@ spec:
       maxSurge: 1  # Allow maximum 1 extra pod during updates
   selector:
     matchLabels:
-      app: goodlist-vendor-frontend-staging
+      app: goodlist-vendor-frontend-${ENV_NAME}
   template:
     metadata:
       labels:
-        app: goodlist-vendor-frontend-staging
+        app: goodlist-vendor-frontend-${ENV_NAME}
     spec:
       containers:
-        - name: goodlist-vendor-frontend-staging
-          image: goodliststaging.azurecr.io/goodlist-vendor-frontend-staging:${IMAGE_TAG}
+        - name: goodlist-vendor-frontend-${ENV_NAME}
+          image: goodlist${ENV_ACR}.azurecr.io/goodlist-vendor-frontend-${ENV_NAME}:${IMAGE_TAG}
           imagePullPolicy: Always
           ports:
             - containerPort: 3000
@@ -31,7 +31,7 @@ spec:
           #      memory: "1.5Gi"
           #      cpu: "2m"
       #     volumeMounts:
-      #     - name: secrets-store-vendor-staging
+      #     - name: secrets-store-vendor-${ENV_NAME}
       #       mountPath: "/mnt/secrets-store"
       #       readOnly: true
       #     env:
@@ -71,7 +71,7 @@ spec:
       #           name: goodlist-admin
       #           key: CLIENT-SECRET
       # volumes:
-      #   - name: secrets-store-admin-staging
+      #   - name: secrets-store-admin-${ENV_NAME}
       #     csi:
       #       driver: secrets-store.csi.k8s.io
       #       readOnly: true
@@ -90,12 +90,12 @@ spec:
 # apiVersion: autoscaling/v2
 # kind: HorizontalPodAutoscaler
 # metadata:
-#   name: goodlist-vendor-frontend-staging-hpa
+#   name: goodlist-vendor-frontend-${ENV_NAME}-hpa
 # spec:
 #   scaleTargetRef:
 #     apiVersion: apps/v1
 #     kind: Deployment
-#     name: goodlist-vendor-frontend-staging
+#     name: goodlist-vendor-frontend-${ENV_NAME}
 #   minReplicas: 1
 #   maxReplicas: 3  # Adjust based on your workload and resource limits
 #   metrics:
@@ -115,30 +115,30 @@ spec:
 apiVersion: policy/v1
 kind: PodDisruptionBudget
 metadata:
-  name: goodlist-vendor-frontend-staging-pdb  # You can customize this name
+  name: goodlist-vendor-frontend-${ENV_NAME}-pdb  # You can customize this name
 spec:
   minAvailable: 1  # Minimum number of pods to be available at all times
   selector:
     matchLabels:
-      app: goodlist-vendor-frontend-staging  # Label that identifies the pods to protect
+      app: goodlist-vendor-frontend-${ENV_NAME}  # Label that identifies the pods to protect
   # Alternatively, you can use a selector based on other criteria
   # maxUnavailable: 1  # Optional: Maximum number of pods that can be unavailable during disruption (absolute number or percentage)
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: goodlist-vendor-frontend-staging
+  name: goodlist-vendor-frontend-${ENV_NAME}
 spec:
   type: NodePort
   ports:
     - port: 3000
   selector:
-    app: goodlist-vendor-frontend-staging
+    app: goodlist-vendor-frontend-${ENV_NAME}
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: goodlist-vendor-frontend-staging-ingress
+  name: goodlist-vendor-frontend-${ENV_NAME}-ingress
   annotations:
     # nginx.ingress.kubernetes.io/ssl-redirect: "false"
     # nginx.ingress.kubernetes.io/use-regex: "true"
@@ -148,28 +148,28 @@ spec:
   ingressClassName: nginx
   tls:
     - hosts:
-        - www.vendor-web.staging.goodthingco.xyz
-        - vendor-web.staging.goodthingco.xyz
-      secretName: tls-secret-vendor-frontend-staging
+        - www.vendor-web.${ENV_NAME}.goodthingco.xyz
+        - vendor-web.${ENV_NAME}.goodthingco.xyz
+      secretName: tls-secret-vendor-frontend-${ENV_NAME}
   rules:
-    - host: www.vendor-web.staging.goodthingco.xyz
+    - host: www.vendor-web.${ENV_NAME}.goodthingco.xyz
       http:
         paths:
           - path: /
             pathType: Prefix
             backend:
               service:
-                name: goodlist-vendor-frontend-staging
+                name: goodlist-vendor-frontend-${ENV_NAME}
                 port:
                   number: 3000
-    - host: vendor-web.staging.goodthingco.xyz
+    - host: vendor-web.${ENV_NAME}.goodthingco.xyz
       http:
         paths:
           - path: /
             pathType: Prefix
             backend:
               service:
-                name: goodlist-vendor-frontend-staging
+                name: goodlist-vendor-frontend-${ENV_NAME}
                 port:
                   number: 3000
 
