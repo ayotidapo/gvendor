@@ -25,24 +25,22 @@ export const dashboardApiSlice = apiSlice.injectEndpoints({
 					}`,
 					method: 'GET',
 				}),
-				providesTags: [{ type: 'DASHBOARD', id: 'METRICS_COUNT' }],
+				// providesTags: [{ type: 'DASHBOARD', id: 'METRICS_COUNT' }],
 			}
 		),
-		getDashboardSalesValue: builder.query<DashboardSalesValue, Queryparams>({
-			query: ({ startDate, endDate }) => ({
-				url: `/order/stats${
-					startDate ? `?startDate=${startDate}` : ''
-				}${endDate ? `&endDate=${endDate}` : ''}`,
+		getDashboardSalesValue: builder.query<DashboardSalesValue, void>({
+			query: () => ({
+				url: `/order/stats`,
 				method: 'GET',
 			}),
-			providesTags: [{ type: 'DASHBOARD', id: 'SALES_VALUE' }],
+			// providesTags: [{ type: 'DASHBOARD', id: 'SALES_VALUE' }],
 		}),
 		getRecentOrders: builder.query<RecentOrdersResponse, { limit: number }>({
 			query: ({ limit }) => ({
 				url: `/order/recent-order?limit=${limit}`,
 				method: 'GET',
 			}),
-			providesTags: [{ type: 'DASHBOARD', id: 'RECENT_ORDERS' }],
+			// providesTags: [{ type: 'DASHBOARD', id: 'RECENT_ORDERS' }],
 		}),
 	}),
 });

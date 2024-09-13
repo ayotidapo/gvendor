@@ -81,7 +81,7 @@ const ProfilePage = () => {
 						</div>
 						<div className=''>
 							<Header header={'AMOS EDOS OSAMUDIAMEN'} />
-							<div className='flex space-x-3 items-center text-sm text-[#000000]'>
+							<div className='flex space-x-3 items-center text-sm text-[#000000] md:w-[400px] md:gap-6'>
 								<p>FIRST BANK OF NIGERIA</p>
 								<p>|</p>
 								<p>0001112278</p>
@@ -89,7 +89,7 @@ const ProfilePage = () => {
 						</div>
 					</div>
 				</div>
-				<div className='pt-6 space-y-4 w-[800px]'>
+				<div className='pt-6 space-y-4 w-[800px] '>
 					<TextInput type={'text'} name={''} placeholder='Bank' />
 					<TextInput type={'text'} name={''} placeholder='Account name' />
 					<TextInput type={'text'} name={''} placeholder='Account number' />

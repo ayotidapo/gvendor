@@ -8,6 +8,7 @@ import { Header } from '@/components/typography/Header';
 import ButtonCard from '@/components/cards/ButtonCard';
 import LineChart from '@/components/charts/LineChart';
 import { TableComponent } from '@/components/table/Table';
+import { CountCardContainer } from '@/containers/CountCardWrapper';
 
 const data = [
 	{
@@ -111,11 +112,11 @@ const values1 = data.map(item => item.count);
 const Sales: React.FC = () => {
 	return (
 		<PageWrapper pageHeader='Sales'>
-			<div className='pb-10 flex justify-between'>
-				<div>
+			<div className='flex flex-col md:flex-row gap-4 items-center justify-between mb-10'>
+				<div className='w-full md:w-auto md:max-w-[400px]'>
 					<Search placeholder='Search sales' />
 				</div>
-				<div className='pb-10 flex space-x-4'>
+				<div className='w-full md:w-auto flex space-x-4'>
 					<div>
 						<Button label='Today' name='outline' arrow />
 					</div>
@@ -124,10 +125,17 @@ const Sales: React.FC = () => {
 					</div>
 				</div>
 			</div>
+			<CountCardContainer>
 			<div className='grid grid-cols-1 space-y-7 max-w-lg gap-0'>
-				<ButtonCard count={0} text={'WALLET BALANCE'} isCurrency={false} label={'Withdraw'} />
+				<ButtonCard
+					count={0}
+					text={'WALLET BALANCE'}
+					isCurrency={false}
+					label={'Withdraw'}
+				/>
 				<CountCard count={0} text={'SALES(TODAY)'} isCurrency={false} />
-			</div>
+				</div>
+				</CountCardContainer>
 			<div className='pt-6'>
 				<SectionCard
 					header={

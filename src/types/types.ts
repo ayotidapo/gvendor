@@ -72,3 +72,7 @@ export interface Auth {
   user: User;
   token?: string | null;
 }
+
+export type StatusTypes = 'new' | 'processing' | 'fulfilled' 
+
+export type PaymentStatus = 'Successful' | 'Failed'

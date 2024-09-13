@@ -1,22 +1,32 @@
-import React from 'react';
+'use client'
+
+import React, { useState } from 'react';
 import PageWrapper from '@/containers/PageWrapper';
 import Search from '@/components/input/Search';
 import Button from '@/components/buttons/Button';
 import CountCard from '@/components/cards/CountCard';
 import { TableComponent } from '@/components/table/Table';
+import { CountCardContainer } from '@/containers/CountCardWrapper';
+import { Status } from '@/components/cards/StatusTag';
+import { LoadingOval } from '@/components/spinner/Spinner';
+import { PRIMARY_COLOR } from '@/constants';
+import Dropdown from '@/components/input/dropdown';
+import { Icon } from '@/components/icon/icon';
 
 const tableData = [
 	{
 		id: '1',
 		price: '$100',
-		orderStatus: 'Delivered',
+		orderStatus: 'Fulfilled',
+		type: 'succes',
 		paymentStatus: 'Paid',
 		dateTime: '2021-09-10 12:00:00',
 	},
 	{
 		id: '2',
 		price: '$200',
-		orderStatus: 'Pending',
+		orderStatus: 'Processing',
+		type: 'warn',
 		paymentStatus: 'Unpaid',
 		dateTime: '2021-09-10 12:00:00',
 	},
@@ -24,13 +34,15 @@ const tableData = [
 		id: '3',
 		price: '$300',
 		orderStatus: 'Processing',
+		type: 'warn',
 		paymentStatus: 'Paid',
 		dateTime: '2021-09-10 12:00:00',
 	},
 	{
 		id: '4',
 		price: '$400',
-		orderStatus: 'Delivered',
+		orderStatus: 'New',
+		type: 'danger',
 		paymentStatus: 'Paid',
 		dateTime: '2021-09-10 12:00:00',
 	},
@@ -38,26 +50,36 @@ const tableData = [
 		id: '5',
 		price: '$500',
 		orderStatus: 'Delivered',
+		type: 'success',
 		paymentStatus: 'Paid',
 		dateTime: '2021-09-10 12:00:00',
 	},
 ];
 
 const Orders: React.FC = () => {
+
 	return (
 		<PageWrapper pageHeader='Orders'>
-			<div className='pb-10 flex justify-between'>
-				<div>
+			<div className='flex flex-col md:flex-row gap-4 items-center justify-between mb-10'>
+				<div className='w-full md:w-auto md:max-w-[400px]'>
 					<Search placeholder='Search orders' />
 				</div>
-				<div className=''>
+				<div className='w-full md:w-auto'>
 					<Button filter label='Order Status' name='outline' />
 				</div>
 			</div>
-			<div className='grid grid-cols-4 gap-4'>
+
+			<CountCardContainer
+							className='
+							grid grid-flow-row 
+							grid-cols-1 sm:grid-cols-2 lg:grid-cols-3
+							gap-10
+		
+				   '>
 				<CountCard count={0} text={'TOTAL SALES'} isCurrency={false} />
 				<CountCard count={0} text={'TOTAL ORDER'} isCurrency={false} />
-			</div>
+			</CountCardContainer>
+
 			<TableComponent
 				headers={[
 					'ORDER ID',
@@ -65,13 +87,45 @@ const Orders: React.FC = () => {
 					'ORDER STATUS',
 					'PAYMENT STATUS',
 					'DATE & TIME',
+					<div className="w-full flex justify-end" key={`header-controls`}>
+					{/* {isLoading || updatingOrder ? ( */}
+					  {/* <LoadingOval
+						loaderHeight="25"
+						loaderWidth="25"
+						color={PRIMARY_COLOR}
+					  /> */}
+					{/* ) : (
+					  ''
+					)} */}
+				  </div>
 				]}
 				rows={tableData.map(data => ({
 					id: data.id,
 					content: [
 						data.id,
 						data.price,
-						data.orderStatus,
+						<div
+							key={data.id}
+							className="flex items-center gap-2 overflow-visible"
+						>
+							<Status
+								type={'new'}
+								text={data.orderStatus} />
+							
+							<Dropdown
+								menuClassName="max-h-[170px]"
+								menuButton={
+									<div className="bg-primary/5 text-primary rounded-full p-2">
+										<Icon
+											id="left-caret"
+											height={10}
+											width={10}
+											className="-rotate-90"
+										/>
+									</div>
+								}
+							/>
+						</div>,
 						data.paymentStatus,
 						data.dateTime,
 					],
