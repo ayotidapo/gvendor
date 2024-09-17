@@ -1,7 +1,7 @@
 'use client';
 import { useEffect } from 'react';
 import Button from '@/components/buttons/Button';
-import TextInput from '@/components/input/TextInput';
+import  TextInput  from '@/components/input/TextInput';
 import { Gilroy } from '@/fonts/font';
 import { useSignupMutation } from '@/redux/reducers/auth/authSlice';
 import { useFormik } from 'formik';

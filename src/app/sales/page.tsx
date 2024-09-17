@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 import PageWrapper from '@/containers/PageWrapper';
 import Search from '@/components/input/Search';
@@ -8,6 +10,9 @@ import { Header } from '@/components/typography/Header';
 import ButtonCard from '@/components/cards/ButtonCard';
 import LineChart from '@/components/charts/LineChart';
 import { TableComponent } from '@/components/table/Table';
+import { CountCardContainer } from '@/containers/CountCardWrapper';
+import Dropdown from '@/components/input/dropdown';
+import { Icon } from '@/components/icon/icon';
 
 const data = [
 	{
@@ -111,11 +116,11 @@ const values1 = data.map(item => item.count);
 const Sales: React.FC = () => {
 	return (
 		<PageWrapper pageHeader='Sales'>
-			<div className='pb-10 flex justify-between'>
-				<div>
+			<div className='flex flex-col md:flex-row gap-4 items-center justify-between mb-10'>
+				<div className='w-full md:w-auto md:max-w-[400px]'>
 					<Search placeholder='Search sales' />
 				</div>
-				<div className='pb-10 flex space-x-4'>
+				<div className='w-full md:w-auto flex space-x-4'>
 					<div>
 						<Button label='Today' name='outline' arrow />
 					</div>
@@ -124,10 +129,19 @@ const Sales: React.FC = () => {
 					</div>
 				</div>
 			</div>
-			<div className='grid grid-cols-1 space-y-7 max-w-lg gap-0'>
-				<ButtonCard count={0} text={'WALLET BALANCE'} isCurrency={false} label={'Withdraw'} />
-				<CountCard count={0} text={'SALES(TODAY)'} isCurrency={false} />
-			</div>
+			<CountCardContainer>
+				<div className='grid grid-cols-1 space-y-7 max-w-lg gap-0'>
+					<ButtonCard
+						count={0}
+						text={'WALLET BALANCE'}
+						isCurrency={false}
+						label={'Withdraw'}
+						href='/sales/withdraw'
+					/>
+
+					<CountCard count={0} text={'SALES(TODAY)'} isCurrency={false} />
+				</div>
+			</CountCardContainer>
 			<div className='pt-6'>
 				<SectionCard
 					header={
@@ -143,12 +157,40 @@ const Sales: React.FC = () => {
 				/>
 			</div>
 			<div className='pt-6'>
-				<Header className='pl-6' header={'Transaction Breakdown'} />
+				<Header className='pl-' header={'Transaction Breakdown'} />
 				<TableComponent
-					headers={['ORDER ID', 'PAYMENT METHOD', 'AMOUNT', 'DATE AND TIME']}
+					headers={[
+						'ORDER ID',
+						'PAYMENT METHOD',
+						'AMOUNT',
+						'DATE AND TIME',
+						' ',
+					]}
 					rows={tableData.map(data => ({
 						id: data.id,
-						content: [data.id, data.method, data.amount, data.dateTime],
+						content: [
+							data.id,
+							data.method,
+							data.amount,
+							data.dateTime,
+							<Dropdown
+								key={`${data.id}-controls`}
+								menuButton={
+									<Icon svg='ellipses' height={18} width={18} className='' />
+								}
+								onClickMenuItem={() => {}}
+								menuItems={[
+									{
+										name: (
+											<button className='disabled:opacity-30 w-full text-left'>
+												Request delivery
+											</button>
+										),
+										value: '',
+									},
+								]}
+							/>,
+						],
 					}))}
 					name='categories-table'
 					loading={false}

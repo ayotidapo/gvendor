@@ -72,3 +72,5 @@ export interface Auth {
   user: User;
   token?: string | null;
 }
+
+export type StatusTypes = 'success' | 'fail' | 'warn' 
