@@ -18,7 +18,7 @@ export const rtkQueryResponseFeedbackMiddleware: Middleware =
 		if (actionType() === 'mutation') {
 			if (isRejectedWithValue(action)) {
 				if (action?.payload?.data?.error?.includes('authorization')) {
-					Cookies.remove('@good_auth')
+					Cookies.remove('@vendor_auth')
 					dispatch(signOut())
 					toast.error('Session expired, please login', { theme: 'colored' })
 				}
@@ -28,7 +28,7 @@ export const rtkQueryResponseFeedbackMiddleware: Middleware =
 		if (actionType() === 'query') {
 			if (isRejectedWithValue(action)) {
 				if (action?.payload?.data?.error?.includes('authorization')) {
-					Cookies.remove('@good_auth')
+					Cookies.remove('@vendor_auth')
 					dispatch(signOut())
 					window.location.href = '/login'
 				}
