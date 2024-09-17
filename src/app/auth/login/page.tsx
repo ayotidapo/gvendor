@@ -106,6 +106,7 @@ const LoginPage = () => {
 						type='submit'
 						label='Sign in'
 						additionalClass='!py-4'
+
 					/>
 				</div>
 			</form>

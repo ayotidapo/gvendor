@@ -1,14 +1,16 @@
 export const baseUrlSwitch = () => {
-  let BASE_URL = '';
+	let BASE_URL = process.env.NEXT_PUBLIC_VENDOR_BACKEND_BASE_URL;
+	if (!BASE_URL) {
+		const location = process.env.NEXT_PUBLIC_LOCATION ?? 'staging';
 
-  const location = process.env.ENVIRONMENT ?? 'staging';
-  if (location === 'local') {
-    BASE_URL = 'https://good-list-backend-vendor.onrender.com/api/v1';
-  } else if (location === 'staging') {
-    BASE_URL = 'https://good-list-backend-vendor.onrender.com/api/v1';
-  } else {
-    BASE_URL = 'https://good-list-backend-vendor.onrender.com/api/v1';
-  }
+		if (location === 'local') {
+			BASE_URL = 'https://vendor-api.staging.goodthingco.xyz/api/v1';
+		} else if (location === 'staging') {
+			BASE_URL = 'https://vendor-api.staging.goodthingco.xyz/api/v1';
+		} else {
+			BASE_URL = 'https://vendor-api.beta.goodthingco.xyz/api/v1';
+		}
+	}
 
-  return BASE_URL;
+	return BASE_URL;
 };
