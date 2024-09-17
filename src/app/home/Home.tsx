@@ -8,7 +8,7 @@ import BarChart from '@/components/charts/BarChart';
 import SectionCard from '@/components/cards/SectionCard';
 import { Header } from '@/components/typography/Header';
 import { CountCardContainer } from '@/containers/CountCardWrapper';
-import { useGetDashboardSalesValueQuery , useGetDashboardMetricsCountQuery} from '@/redux/dashboard/dashboard.slice';
+import { useGetDashboardSalesValueQuery, useGetDashboardMetricsCountQuery } from '@/redux/dashboard/dashboard.slice';
 
 const unitsSold = [
 	{ product: 'Stanley cups', quantity: '30' },
@@ -43,12 +43,16 @@ const values1 = data.map(item => item.count);
 
 const HomePage: React.FC = () => {
 
-	// const { data: salesValue } = useGetDashboardSalesValueQuery()
-	// const { data: metricsData } = useGetDashboardMetricsCountQuery({
-	// 	startDate: '2024-08-20', 
-	// 	endDate: '2023-08-07',    
-	//   });
-	
+	const { data: salesValue } = useGetDashboardSalesValueQuery()
+	const { data: metricsData } = useGetDashboardMetricsCountQuery({
+		startDate: '2024-08-20',
+		endDate: '2023-08-07',
+	});
+
+	useEffect(() => {
+		console.log({ salesValue, metricsData })
+	}, [salesValue, metricsData])
+
 	// const sales = { salesValue?.data }
 
 	return (
@@ -60,7 +64,7 @@ const HomePage: React.FC = () => {
 			</div>
 			<CountCardContainer
 				className='
-					grid grid-flow-row 
+					grid grid-flow-row
 					grid-cols-1 sm:grid-cols-2 lg:grid-cols-4
 					gap-10
 
@@ -80,7 +84,7 @@ const HomePage: React.FC = () => {
 
 			<div
 				className='
-					grid grid-flow-row 
+					grid grid-flow-row
 					grid-cols-1 sm:grid-cols-2 lg:grid-cols-3
 					gap-10
 
