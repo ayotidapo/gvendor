@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import React from 'react';
 import PageWrapper from '@/containers/PageWrapper';
@@ -130,16 +130,18 @@ const Sales: React.FC = () => {
 				</div>
 			</div>
 			<CountCardContainer>
-			<div className='grid grid-cols-1 space-y-7 max-w-lg gap-0'>
-				<ButtonCard
-					count={0}
-					text={'WALLET BALANCE'}
-					isCurrency={false}
-					label={'Withdraw'}
-				/>
-				<CountCard count={0} text={'SALES(TODAY)'} isCurrency={false} />
+				<div className='grid grid-cols-1 space-y-7 max-w-lg gap-0'>
+					<ButtonCard
+						count={0}
+						text={'WALLET BALANCE'}
+						isCurrency={false}
+						label={'Withdraw'}
+						href='/sales/withdraw'
+					/>
+
+					<CountCard count={0} text={'SALES(TODAY)'} isCurrency={false} />
 				</div>
-				</CountCardContainer>
+			</CountCardContainer>
 			<div className='pt-6'>
 				<SectionCard
 					header={
@@ -157,7 +159,13 @@ const Sales: React.FC = () => {
 			<div className='pt-6'>
 				<Header className='pl-' header={'Transaction Breakdown'} />
 				<TableComponent
-					headers={['ORDER ID', 'PAYMENT METHOD', 'AMOUNT', 'DATE AND TIME', ' ']}
+					headers={[
+						'ORDER ID',
+						'PAYMENT METHOD',
+						'AMOUNT',
+						'DATE AND TIME',
+						' ',
+					]}
 					rows={tableData.map(data => ({
 						id: data.id,
 						content: [
@@ -166,22 +174,22 @@ const Sales: React.FC = () => {
 							data.amount,
 							data.dateTime,
 							<Dropdown
-							key={`${data.id}-controls`}
-							menuButton={
-								<Icon svg='ellipses' height={18} width={18} className='' />
-							}
-							onClickMenuItem={() => {}}
-							menuItems={[
-								{
-									name: (
-										<button className='disabled:opacity-30 w-full text-left'>
-											Request delivery
-										</button>
-									),
-									value: '',
-								},
-							]}
-						/>,
+								key={`${data.id}-controls`}
+								menuButton={
+									<Icon svg='ellipses' height={18} width={18} className='' />
+								}
+								onClickMenuItem={() => {}}
+								menuItems={[
+									{
+										name: (
+											<button className='disabled:opacity-30 w-full text-left'>
+												Request delivery
+											</button>
+										),
+										value: '',
+									},
+								]}
+							/>,
 						],
 					}))}
 					name='categories-table'
