@@ -15,8 +15,8 @@ pipelines:
             - export IMAGE_TAG=$BITBUCKET_BUILD_NUMBER
             - echo "$ACR_PASSWORD" | docker login -u "$ACR_USERNAME"
               --password-stdin "$ACR_REGISTRY"
-            - docker build -t "$ACR_REGISTRY/$ACR_IMAGE_NAME:$IMAGE_TAG" .
-            - docker push "$ACR_REGISTRY/$ACR_IMAGE_NAME:$IMAGE_TAG"
+            - docker build -t "$ACR_REGISTRY/$ACR_IMAGE_NAME_STAGING:$IMAGE_TAG" .
+            - docker push "$ACR_REGISTRY/$ACR_IMAGE_NAME_STAGING:$IMAGE_TAG"
 
       - step:
           name: Deploy to AKS Staging
@@ -86,8 +86,8 @@ pipelines:
             - export IMAGE_TAG=$BITBUCKET_BUILD_NUMBER
             - echo "$ACR_PASSWORD" | docker login -u "$ACR_USERNAME"
               --password-stdin "$ACR_REGISTRY"
-            - docker build -t "$ACR_REGISTRY/$ACR_IMAGE_NAME_BETA:$IMAGE_TAG" .
-            - docker push "$ACR_REGISTRY/$ACR_IMAGE_NAME_BETA:$IMAGE_TAG"
+            - docker build -t "$ACR_REGISTRY/$ACR_IMAGE_NAME_PROD:$IMAGE_TAG" .
+            - docker push "$ACR_REGISTRY/$ACR_IMAGE_NAME_PROD:$IMAGE_TAG"
 
       - step:
           name: Deploy to AKS Prod
