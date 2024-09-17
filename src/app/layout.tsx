@@ -5,22 +5,22 @@ import './globals.css';
 import Container from '@/containers/Container';
 
 export const metadata: Metadata = {
-  title: 'The Good Thing',
-  description: 'Perfect Picks For A Good Day',
+	title: 'Good Vendor',
+	description: 'Sell, Manage and Grow',
 };
 
 export default function RootLayout({
-  children,
+	children,
 }: {
-  children: React.ReactNode;
+	children: React.ReactNode;
 }) {
-  return (
-    <html lang='en'>
-      <body>
-        <main>
-          <Container>{children}</Container>
-        </main>
-      </body>
-    </html>
-  );
+	return (
+		<html lang='en'>
+			<body>
+				<main>
+					<Container>{children}</Container>
+				</main>
+			</body>
+		</html>
+	);
 }
