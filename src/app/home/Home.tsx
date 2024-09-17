@@ -65,7 +65,6 @@ const HomePage: React.FC = () => {
 					gap-10
 
 		   '>
-				{/* <div className='grid grid-cols-4 gap-4'> */}
 				<CountCard count={0} text={'TOTAL ORDER'} isCurrency={false} />
 				<CountCard count={0} text={'COMPLETED ORDER'} isCurrency={false} />
 				<CountCard count={0} text={'PENDING ORDER'} isCurrency={false} />s
@@ -77,7 +76,6 @@ const HomePage: React.FC = () => {
 					text={'PROCESSING ORDER COUNT'}
 					isCurrency={false}
 				/>
-				{/* </div> */}
 			</CountCardContainer>
 
 			<div
