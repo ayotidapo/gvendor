@@ -9,9 +9,9 @@ export const Status: React.FC<{
     <div
       className={`
       lowercase
-      ${type === 'new' && 'bg-success-light text-success'}
-      ${type === 'processing' && 'bg-danger-light text-danger'}
-      ${type === 'fulfilled' && 'bg-warn-light text-warn'}
+      ${type === 'success' && 'bg-success-light text-success'}
+      ${type === 'fail' && 'bg-danger-light text-danger'}
+      ${type === 'warn' && 'bg-warn-light text-warn'}
       px-4 py-[1px]
       font-medium
       border border-transparent

@@ -1,3 +1,5 @@
+'use client'
+
 import React from 'react';
 import PageWrapper from '@/containers/PageWrapper';
 import Button from '@/components/buttons/Button';
@@ -7,6 +9,9 @@ import SectionCard from '@/components/cards/SectionCard';
 import BarChart from '@/components/charts/BarChart';
 import { TableComponent } from '@/components/table/Table';
 import { CountCardContainer } from '@/containers/CountCardWrapper';
+import Dropdown from '@/components/input/dropdown';
+import { Icon } from '@/components/icon/icon';
+import { formatCurrency } from '@/helpers';
 
 const data = [
 	{ goods: 'Hand', count: '750' },
@@ -25,39 +30,44 @@ const data = [
 
 const tableData = [
 	{
+		id: 1,
 		name: 'Jollof rice and duck',
 		category: 'Food',
 		instock: 6,
 		unitsold: 89,
-		price: 'N85,000',
+		price: 85000,
 	},
 	{
+		id: 2,
 		name: 'Jollof rice and duck',
 		category: 'Food',
 		instock: 6,
 		unitsold: 89,
-		price: 'N85,000',
+		price: 85000,
 	},
 	{
+		id: 3,
 		name: 'Jollof rice and duck',
 		category: 'Food',
 		instock: 6,
 		unitsold: 89,
-		price: 'N85,000',
+		price: 85000,
 	},
 	{
+		id: 4,
 		name: 'Jollof rice and duck',
 		category: 'Food',
 		instock: 6,
 		unitsold: 89,
-		price: 'N85,000',
+		price: 85000,
 	},
 	{
+		id: 5,
 		name: 'Jollof rice and duck',
 		category: 'Food',
 		instock: 6,
 		unitsold: 89,
-		price: 'N85,000',
+		price: 85000,
 	},
 ];
 
@@ -105,7 +115,7 @@ const Inventory: React.FC = () => {
 				/>
 			</div>
 			<TableComponent
-				headers={['PRODUCT NAME', 'CATEGORY', 'INSTOCK', 'UNITSOLD', 'PRICE']}
+				headers={['PRODUCT NAME', 'CATEGORY', 'INSTOCK', 'UNITSOLD', 'PRICE', ' ']}
 				rows={tableData.map(data => ({
 					id: data.name,
 					content: [
@@ -113,7 +123,24 @@ const Inventory: React.FC = () => {
 						data.category,
 						data.instock,
 						data.unitsold,
-						data.price,
+						`${formatCurrency(data.price)}`,
+						<Dropdown
+							key={`${data.id}-controls`}
+							menuButton={
+								<Icon svg='ellipses' height={18} width={18} className='' />
+							}
+							onClickMenuItem={() => {}}
+							menuItems={[
+								{
+									name: (
+										<button className='disabled:opacity-30 w-full text-left'>
+											Request delivery
+										</button>
+									),
+									value: '',
+								},
+							]}
+						/>,
 					],
 				}))}
 				name='categories-table'

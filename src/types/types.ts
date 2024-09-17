@@ -73,6 +73,4 @@ export interface Auth {
   token?: string | null;
 }
 
-export type StatusTypes = 'new' | 'processing' | 'fulfilled' 
-
-export type PaymentStatus = 'Successful' | 'Failed'
+export type StatusTypes = 'success' | 'fail' | 'warn' 

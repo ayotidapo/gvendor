@@ -1,3 +1,5 @@
+'use client'
+
 import React from 'react';
 import PageWrapper from '@/containers/PageWrapper';
 import Search from '@/components/input/Search';
@@ -9,6 +11,8 @@ import ButtonCard from '@/components/cards/ButtonCard';
 import LineChart from '@/components/charts/LineChart';
 import { TableComponent } from '@/components/table/Table';
 import { CountCardContainer } from '@/containers/CountCardWrapper';
+import Dropdown from '@/components/input/dropdown';
+import { Icon } from '@/components/icon/icon';
 
 const data = [
 	{
@@ -151,12 +155,34 @@ const Sales: React.FC = () => {
 				/>
 			</div>
 			<div className='pt-6'>
-				<Header className='pl-6' header={'Transaction Breakdown'} />
+				<Header className='pl-' header={'Transaction Breakdown'} />
 				<TableComponent
-					headers={['ORDER ID', 'PAYMENT METHOD', 'AMOUNT', 'DATE AND TIME']}
+					headers={['ORDER ID', 'PAYMENT METHOD', 'AMOUNT', 'DATE AND TIME', ' ']}
 					rows={tableData.map(data => ({
 						id: data.id,
-						content: [data.id, data.method, data.amount, data.dateTime],
+						content: [
+							data.id,
+							data.method,
+							data.amount,
+							data.dateTime,
+							<Dropdown
+							key={`${data.id}-controls`}
+							menuButton={
+								<Icon svg='ellipses' height={18} width={18} className='' />
+							}
+							onClickMenuItem={() => {}}
+							menuItems={[
+								{
+									name: (
+										<button className='disabled:opacity-30 w-full text-left'>
+											Request delivery
+										</button>
+									),
+									value: '',
+								},
+							]}
+						/>,
+						],
 					}))}
 					name='categories-table'
 					loading={false}

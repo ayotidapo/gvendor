@@ -44,10 +44,10 @@ const values1 = data.map(item => item.count);
 const HomePage: React.FC = () => {
 
 	// const { data: salesValue } = useGetDashboardSalesValueQuery()
-	const { data: metricsData } = useGetDashboardMetricsCountQuery({
-		startDate: '2024-08-20', 
-		endDate: '2023-08-07',    
-	  });
+	// const { data: metricsData } = useGetDashboardMetricsCountQuery({
+	// 	startDate: '2024-08-20', 
+	// 	endDate: '2023-08-07',    
+	//   });
 	
 	// const sales = { salesValue?.data }
 
