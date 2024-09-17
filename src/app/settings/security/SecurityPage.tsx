@@ -24,7 +24,7 @@ const SecurityPage = () => {
 			<div>
 				<Header header={'Password'} />
 			</div>
-			<div className='space-y-4 w-[800px]'>
+			<div className='space-y-4 md:w-[800px]'>
 				<TextInput
 					type={'password'}
 					placeholder={'Current password'}

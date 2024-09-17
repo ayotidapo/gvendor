@@ -20,6 +20,7 @@ type ButtonProps = {
   download?: boolean;
   question?: boolean;
   right?: boolean;
+  href?: string; 
 };
 
 const Button: FC<ButtonProps> = ({
@@ -27,7 +28,7 @@ const Button: FC<ButtonProps> = ({
   arrow,
   question,
   right,
-  type,
+  type = 'button',
   onClick,
   additionalClass,
   disabled,
@@ -35,31 +36,12 @@ const Button: FC<ButtonProps> = ({
   small = false,
   filter = false,
   download = false,
+  href, 
 }) => {
-  return (
-    <button
-      type={type ? type : 'submit'}
-      onClick={onClick}
-      disabled={disabled}
-      className={clsx(
-        `w-full rounded-md flex gap-2 justify-center items-center relative px-3`,
-        {
-          'bg-black text-white': name === 'primary',
-          'bg-white text-secondary-black shadow-lg': name === 'inverted',
-          'bg-transparent text-black': name === 'outline',
-          'text-sm py-2': small,
-          'py-3': !small,
-          'border border-gray-100': name === 'inverted',
-          'outline outline-1  ': name === 'outline',
-          'opacity-10': disabled,
-          'bg-transparent text-black  border-black': name === 'transparent',
-        },
-        additionalClass
-      )}
-    >
+  const buttonContent = (
+    <>
       {download && <ArrowDown width={24} />}
       {filter && <ListFilter width={24} />}
-
       {label}
       {arrow && (
         <span className=''>
@@ -68,6 +50,44 @@ const Button: FC<ButtonProps> = ({
       )}
       {right && <ArrowRight width={24} />}
       {question && <CircleHelp width={15} />}
+    </>
+  );
+
+  const buttonClasses = clsx(
+    'w-full rounded-md flex gap-2 justify-center items-center relative px-3',
+    {
+      'bg-black text-white': name === 'primary',
+      'bg-white text-secondary-black shadow-lg': name === 'inverted',
+      'bg-transparent text-black': name === 'outline',
+      'text-sm py-2': small,
+      'py-3': !small,
+      'border border-gray-100': name === 'inverted',
+      'outline outline-1': name === 'outline',
+      'opacity-10': disabled,
+      'bg-transparent text-black border-black': name === 'transparent',
+    },
+    additionalClass
+  );
+
+  if (href) {
+    return (
+      <a
+        href={href}
+        className={buttonClasses}
+      >
+        {buttonContent}
+      </a>
+    );
+  }
+
+  return (
+    <button
+      type={type}
+      onClick={onClick}
+      disabled={disabled}
+      className={buttonClasses}
+    >
+      {buttonContent}
     </button>
   );
 };
