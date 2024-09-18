@@ -87,7 +87,7 @@ const Inventory: React.FC = () => {
 			</div>
 			<CountCardContainer
 				className='
-					grid grid-flow-row 
+					grid grid-flow-row
 					grid-cols-1 sm:grid-cols-2 lg:grid-cols-4
 					gap-10'
 			>
@@ -117,7 +117,7 @@ const Inventory: React.FC = () => {
 			<TableComponent
 				headers={['PRODUCT NAME', 'CATEGORY', 'INSTOCK', 'UNITSOLD', 'PRICE', ' ']}
 				rows={tableData.map(data => ({
-					id: data.name,
+					id: data.id,
 					content: [
 						data.name,
 						data.category,
@@ -129,7 +129,7 @@ const Inventory: React.FC = () => {
 							menuButton={
 								<Icon svg='ellipses' height={18} width={18} className='' />
 							}
-							onClickMenuItem={() => {}}
+							onClickMenuItem={() => { }}
 							menuItems={[
 								{
 									name: (
