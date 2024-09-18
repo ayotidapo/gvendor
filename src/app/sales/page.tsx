@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import PageWrapper from '@/containers/PageWrapper';
 import Search from '@/components/input/Search';
 import Button from '@/components/buttons/Button';
@@ -13,6 +13,8 @@ import { TableComponent } from '@/components/table/Table';
 import { CountCardContainer } from '@/containers/CountCardWrapper';
 import Dropdown from '@/components/input/dropdown';
 import { Icon } from '@/components/icon/icon';
+import { useGetAllTransactionsQuery } from '@/redux/transactions/transactions.slice';
+
 
 const data = [
 	{
@@ -77,43 +79,18 @@ const data = [
 	},
 ];
 
-const tableData = [
-	{
-		id: '#15285047',
-		method: 'Card',
-		amount: 500,
-		dateTime: '14/5/2005 3:01PM',
-	},
-	{
-		id: '#15285047',
-		method: 'Card',
-		amount: 500,
-		dateTime: '14/5/2005 3:01PM',
-	},
-	{
-		id: '#15285047',
-		method: 'Card',
-		amount: 500,
-		dateTime: '14/5/2005 3:01PM',
-	},
-	{
-		id: '#15285047',
-		method: 'Card',
-		amount: 500,
-		dateTime: '14/5/2005 3:01PM',
-	},
-	{
-		id: '#15285047',
-		method: 'Card',
-		amount: 500,
-		dateTime: '14/5/2005 3:01PM',
-	},
-];
 
 const labels = data.map(item => item.total);
 const values1 = data.map(item => item.count);
 
 const Sales: React.FC = () => {
+
+	const { data: transactionData } = useGetAllTransactionsQuery();
+
+	// useEffect(() => {
+	// 	console.log({transactions})
+	// }, [transactions])
+
 	return (
 		<PageWrapper pageHeader='Sales'>
 			<div className='flex flex-col md:flex-row gap-4 items-center justify-between mb-10'>
@@ -157,7 +134,7 @@ const Sales: React.FC = () => {
 				/>
 			</div>
 			<div className='pt-6'>
-				<Header className='pl-' header={'Transaction Breakdown'} />
+				<Header className='pb-4' header={'Transaction Breakdown'} />
 				<TableComponent
 					headers={[
 						'ORDER ID',
@@ -166,15 +143,15 @@ const Sales: React.FC = () => {
 						'DATE AND TIME',
 						' ',
 					]}
-					rows={tableData.map(data => ({
-						id: data.id,
+					rows={(transactionData?.data.transactions || []).map((transactions) => ({
+						id: transactions._id,
 						content: [
-							data.id,
-							data.method,
-							data.amount,
-							data.dateTime,
+							transactions._id,
+							transactions.type,
+							transactions.amount,
+							transactions.createdAt,
 							<Dropdown
-								key={`${data.id}-controls`}
+								key={`${transactions._id}-controls`}
 								menuButton={
 									<Icon svg='ellipses' height={18} width={18} className='' />
 								}

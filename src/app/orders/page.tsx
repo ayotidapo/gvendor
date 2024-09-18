@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PageWrapper from '@/containers/PageWrapper';
 import Search from '@/components/input/Search';
 import Button from '@/components/buttons/Button';
@@ -14,6 +14,7 @@ import Dropdown from '@/components/input/dropdown';
 import { Icon } from '@/components/icon/icon';
 import { formatCurrency } from '@/helpers';
 import { StatusTypes } from '@/types/types';
+import { useGetAllOrdersQuery } from '@/redux/orders/orders.slice';
 
 const tableData = [
 	{
@@ -59,6 +60,13 @@ const tableData = [
 ];
 
 const Orders: React.FC = () => {
+
+	const { data: order } = useGetAllOrdersQuery({})
+	
+	useEffect(() => {
+		console.log(order)
+	}, [order])
+
 	return (
 		<PageWrapper pageHeader='Orders'>
 			<div className='flex flex-col md:flex-row gap-4 items-center justify-between mb-10'>

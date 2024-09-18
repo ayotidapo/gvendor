@@ -30,7 +30,6 @@ export const rtkQueryResponseFeedbackMiddleware: Middleware =
 				if (action?.payload?.data?.error?.includes('authorization')) {
 					Cookies.remove('@vendor_auth')
 					dispatch(signOut())
-					window.location.href = '/login'
 				}
 			}
 		}

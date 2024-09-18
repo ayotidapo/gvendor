@@ -74,3 +74,25 @@ export interface Auth {
 }
 
 export type StatusTypes = 'success' | 'fail' | 'warn' 
+
+export interface Transactions {
+  _id: string
+  userId: string
+  amount: number
+  type: string
+  createdAt: string
+  metadata: {
+    intent: string
+    reference: string
+  }
+  status: string 
+}
+
+export interface TransactionsResponse {
+  success: boolean
+  message: string
+  data: {
+    totalCount: number
+    transactions: Transactions[]
+  }
+}
