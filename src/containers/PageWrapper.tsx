@@ -1,3 +1,5 @@
+'use client'
+
 import { Header } from '@/components/typography/Header';
 import { useAppSelector } from '@/hooks/reduxHooks';
 import { authSelector } from '@/redux/reducers/auth/auth.selector';

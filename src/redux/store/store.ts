@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import Cookies from 'js-cookie'
 import { combineReducers, configureStore, isRejectedWithValue, Middleware } from '@reduxjs/toolkit';
 import { persistStore, persistReducer } from 'redux-persist';
@@ -13,11 +14,11 @@ export const rtkQueryResponseFeedbackMiddleware: Middleware =
 		const dispatch = store.dispatch
 		// returns action type: query || mutation
 
-		const actionType = (): string => action?.meta?.arg?.type || '';
+		const actionType = (): string => (action as any)?.meta?.arg?.type || '';
 
 		if (actionType() === 'mutation') {
 			if (isRejectedWithValue(action)) {
-				if (action?.payload?.data?.error?.includes('authorization')) {
+				if ((action as any)?.payload?.data?.error?.includes('authorization')) {
 					Cookies.remove('@vendor_auth')
 					dispatch(signOut())
 					toast.error('Session expired, please login', { theme: 'colored' })
@@ -27,10 +28,9 @@ export const rtkQueryResponseFeedbackMiddleware: Middleware =
 
 		if (actionType() === 'query') {
 			if (isRejectedWithValue(action)) {
-				if (action?.payload?.data?.error?.includes('authorization')) {
+				if ((action as any)?.payload?.data?.error?.includes('authorization')) {
 					Cookies.remove('@vendor_auth')
 					dispatch(signOut())
-					window.location.href = '/login'
 				}
 			}
 		}

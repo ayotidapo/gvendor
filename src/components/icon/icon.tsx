@@ -16,6 +16,7 @@ export const Icon = ({
 }) => {
 	return (
 		<svg
+			id={id}
 			onClick={onClick}
 			className={className}
 			width={width ? width : 20}

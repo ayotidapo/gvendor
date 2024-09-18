@@ -2,7 +2,6 @@
 
 import Button from '@/components/buttons/Button';
 import CountCard from '@/components/cards/CountCard';
-import Dropdown from '@/components/input/dropdown';
 import TextInput from '@/components/input/TextInput';
 import Select from '@/components/select/Select';
 import PageWrapper from '@/containers/PageWrapper';
@@ -41,7 +40,7 @@ const Withdraw = () => {
 					/>
 				</div>
 				<div className=' w-[400px]'>
-					<Button label={'Withdraw'}/>
+					<Button label={'Withdraw'} />
 				</div>
 			</div>
 		</PageWrapper>
