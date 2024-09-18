@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import PageWrapper from '@/containers/PageWrapper';
 import Search from '@/components/input/Search';
 import Button from '@/components/buttons/Button';
@@ -8,8 +8,6 @@ import CountCard from '@/components/cards/CountCard';
 import { TableComponent } from '@/components/table/Table';
 import { CountCardContainer } from '@/containers/CountCardWrapper';
 import { Status } from '@/components/cards/StatusTag';
-import { LoadingOval } from '@/components/spinner/Spinner';
-import { PRIMARY_COLOR } from '@/constants';
 import Dropdown from '@/components/input/dropdown';
 import { Icon } from '@/components/icon/icon';
 import { formatCurrency } from '@/helpers';
@@ -63,9 +61,9 @@ const Orders: React.FC = () => {
 
 	const { data: order } = useGetAllOrdersQuery({})
 	
-	useEffect(() => {
-		console.log(order)
-	}, [order])
+	// useEffect(() => {
+	// 	console.log(order)
+	// }, [order])
 
 	return (
 		<PageWrapper pageHeader='Orders'>
@@ -80,10 +78,10 @@ const Orders: React.FC = () => {
 
 			<CountCardContainer
 				className='
-							grid grid-flow-row 
+							grid grid-flow-row
 							grid-cols-1 sm:grid-cols-2 lg:grid-cols-3
 							gap-10
-		
+
 				   '
 			>
 				<CountCard count={0} text={'TOTAL SALES'} isCurrency={false} />
@@ -125,7 +123,7 @@ const Orders: React.FC = () => {
 							menuButton={
 								<Icon svg='ellipses' height={18} width={18} className='' />
 							}
-							onClickMenuItem={() => {}}
+							onClickMenuItem={() => { }}
 							menuItems={[
 								{
 									name: (
