@@ -3,6 +3,7 @@
 import React, { useEffect } from 'react';
 import PageWrapper from '@/containers/PageWrapper';
 import Search from '@/components/input/Search';
+import { format } from 'date-fns'
 import Button from '@/components/buttons/Button';
 import CountCard from '@/components/cards/CountCard';
 import SectionCard from '@/components/cards/SectionCard';
@@ -14,9 +15,10 @@ import { CountCardContainer } from '@/containers/CountCardWrapper';
 import Dropdown from '@/components/input/dropdown';
 import { Icon } from '@/components/icon/icon';
 import { useGetAllTransactionsQuery } from '@/redux/transactions/transactions.slice';
+import { formatCurrency } from '@/helpers';
 
 
-const data = [
+const data2 = [
 	{
 		time: 12,
 		total: 1771001,
@@ -80,16 +82,16 @@ const data = [
 ];
 
 
-const labels = data.map(item => item.total);
-const values1 = data.map(item => item.count);
+const labels = data2.map(item => item.total);
+const values1 = data2.map(item => item.count);
 
 const Sales: React.FC = () => {
 
-	const { data: transactionData } = useGetAllTransactionsQuery();
+	const { data: transactionData, isSuccess, isLoading } = useGetAllTransactionsQuery();
 
-	// useEffect(() => {
-	// 	console.log({transactions})
-	// }, [transactions])
+	useEffect(() => {
+		console.log(transactionData, isSuccess, isLoading )
+	}, [transactionData])
 
 	return (
 		<PageWrapper pageHeader='Sales'>
@@ -148,8 +150,8 @@ const Sales: React.FC = () => {
 						content: [
 							transactions._id,
 							transactions.type,
-							transactions.amount,
-							transactions.createdAt,
+							`${formatCurrency(transactions.amount)}`,
+							`${format(transactions.createdAt, 'yyyy-mm-dd h:mm:a')}`,
 							<Dropdown
 								key={`${transactions._id}-controls`}
 								menuButton={

@@ -28,3 +28,16 @@ export const ORDERSTATUS = [
 		type: 'success',
 	},
 ];
+
+export const PAYMENTSTATUS = [
+	{
+		id: '1',
+		name: 'paid',
+		type: 'success'
+	},
+	{
+		id: '2',
+		name: 'not Paid',
+		type: 'danger'
+	}
+]

@@ -75,6 +75,8 @@ export interface Auth {
 
 export type StatusTypes = 'success' | 'fail' | 'warn' 
 
+export type PaymentTypes = 'paid' | 'not Paid'
+
 export interface Transactions {
   _id: string
   userId: string
@@ -89,10 +91,14 @@ export interface Transactions {
 }
 
 export interface TransactionsResponse {
+  _id: any;
+  type: any;
+  amount: any;
+  createdAt: any;
   success: boolean
   message: string
   data: {
-    totalCount: number
     transactions: Transactions[]
+    totalCount: number
   }
 }

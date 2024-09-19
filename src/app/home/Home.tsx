@@ -3,11 +3,12 @@
 import CountCard from '@/components/cards/CountCard';
 import PageWrapper from '@/containers/PageWrapper';
 import Button from '@/components/buttons/Button';
-import React from 'react';
+import React, { useEffect } from 'react';
 import BarChart from '@/components/charts/BarChart';
 import SectionCard from '@/components/cards/SectionCard';
 import { Header } from '@/components/typography/Header';
 import { CountCardContainer } from '@/containers/CountCardWrapper';
+import { useGetDashboardSalesValueQuery } from '@/redux/dashboard/dashboard.slice';
 
 const unitsSold = [
 	{ product: 'Stanley cups', quantity: '30' },
@@ -42,15 +43,15 @@ const values1 = data.map(item => item.count);
 
 const HomePage: React.FC = () => {
 
-	//const { data: salesValue } = useGetDashboardSalesValueQuery()
+	const { data: salesValue } = useGetDashboardSalesValueQuery()
 	//const { data: metricsData } = useGetDashboardMetricsCountQuery({
 	//	startDate: '2024-08-20',
 	//	endDate: '2023-08-07',
 	//});
 
-	//useEffect(() => {
-	//	console.log({ salesValue, metricsData })
-	//}, [salesValue, metricsData])
+	useEffect(() => {
+		console.log({ salesValue })
+	}, [salesValue])
 
 	// const sales = { salesValue?.data }
 
