@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import CountCard from '@/components/cards/CountCard';
 import PageWrapper from '@/containers/PageWrapper';
@@ -8,50 +8,30 @@ import BarChart from '@/components/charts/BarChart';
 import SectionCard from '@/components/cards/SectionCard';
 import { Header } from '@/components/typography/Header';
 import { CountCardContainer } from '@/containers/CountCardWrapper';
-import { useGetDashboardSalesValueQuery } from '@/redux/dashboard/dashboard.slice';
+import {
+	useGetDashboardMetricsCountQuery,
+	useGetDashboardSalesValueQuery,
+	useGetRecentOrdersQuery,
+	useGetTopSellersQuery,
+} from '@/redux/dashboard/dashboard.slice';
 
-const unitsSold = [
-	{ product: 'Stanley cups', quantity: '30' },
-	{ product: 'Fish pie', quantity: '30' },
-	{ product: 'Sunscreen', quantity: '30' },
-	{ product: 'Table cloth', quantity: '30' },
-	{ product: 'Refrigerator', quantity: '30' },
-	{ product: 'Cars', quantity: '30' },
-];
-
-const data = [
-	{ total: 1771001, count: 500 },
-	{ total: 713500, count: 100 },
-	{ total: 240501, count: 500 },
-	{ total: 56500, count: 100 },
-	{ total: 0, count: 200 },
-	{ total: 411000, count: 200 },
-	{ total: 411000, count: 300 },
-	{ total: 4110, count: 400 },
-	{ total: 41100, count: 300 },
-	{ total: 41000, count: 100 },
-	{ total: 4000, count: 500 },
-	{ total: 411000, count: 200 },
-];
-
-
-const labels = data.map(item => item.total);
-const values1 = data.map(item => item.count);
-
-// const labels = metricsData?.data.map(item => item.day) || [];
-// const values = metricsData?.data.map(item => item.total) || [];
 
 const HomePage: React.FC = () => {
+	const { data: salesValue } = useGetDashboardSalesValueQuery();
+	const { data: metricsData } = useGetDashboardMetricsCountQuery({
+		startDate: '2024-08-20',
+		endDate: '2023-08-07',
+	});
+	const { data: topSellersResponse } = useGetTopSellersQuery()
+	const { data: recentOrders } = useGetRecentOrdersQuery()
 
-	const { data: salesValue } = useGetDashboardSalesValueQuery()
-	//const { data: metricsData } = useGetDashboardMetricsCountQuery({
-	//	startDate: '2024-08-20',
-	//	endDate: '2023-08-07',
-	//});
+	const labels = metricsData?.data?.result.map(item => item.day) || [];
+	const values1 = metricsData?.data?.result.map(item => item.total) || [];
+	const topSellers = topSellersResponse?.data || []
 
 	useEffect(() => {
-		console.log({ salesValue })
-	}, [salesValue])
+		console.log({ salesValue, topSellers,metricsData, recentOrders});
+	}, [salesValue, topSellers,metricsData, recentOrders]);
 
 	// const sales = { salesValue?.data }
 
@@ -68,7 +48,8 @@ const HomePage: React.FC = () => {
 					grid-cols-1 sm:grid-cols-2 lg:grid-cols-4
 					gap-10
 
-		   '>
+		   '
+			>
 				<CountCard count={0} text={'TOTAL ORDER'} isCurrency={false} />
 				<CountCard count={0} text={'COMPLETED ORDER'} isCurrency={false} />
 				<CountCard count={0} text={'PENDING ORDER'} isCurrency={false} />
@@ -178,13 +159,13 @@ const HomePage: React.FC = () => {
 						}
 						content={
 							<div>
-								{unitsSold.map(item => (
+								{topSellers.map(top => (
 									<div
 										className='mt-6 flex justify-between'
-										key={item.quantity}
+										key={top._id}
 									>
-										<div>{item.product}</div>
-										<div className='text-secondary-black'>{item.quantity}</div>
+										<div>{top.product}</div>
+										<div className='text-secondary-black'>{top.unitsSold}</div>
 									</div>
 								))}
 							</div>

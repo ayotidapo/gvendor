@@ -102,3 +102,23 @@ export interface TransactionsResponse {
     totalCount: number
   }
 }
+
+export interface DailyResponse {
+  success: boolean
+  message: string
+  data: {
+    day: string
+    total: number
+    count: number
+  }
+}
+
+export interface CustomerReport {
+  success: boolean
+  message: string
+  data: {
+    day: string
+    total: number
+    count: number
+  }
+}

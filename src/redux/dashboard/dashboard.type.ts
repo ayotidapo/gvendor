@@ -1,9 +1,14 @@
 export interface DashboardMetricsCount {
+  success: boolean
+  message: string
   data: {
-    day: string
-    total: number
-    count: number
-  }[]
+    result: {
+      date: string
+      day: string
+      total: number
+      count: number 
+    }
+  }
 }    
 
 export interface DashboardSalesValue {
@@ -26,4 +31,15 @@ export interface RecentOrdersResponse {
       total: number
       count: number
     }[]
+}
+  
+
+export interface TopSellersResponse{
+  success: boolean
+  message: string
+  data: {
+    _id: string
+    product: string
+    unitsSold: string
   }
+}

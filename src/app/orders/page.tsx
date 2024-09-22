@@ -16,48 +16,6 @@ import { PaymentTypes, StatusTypes } from '@/types/types';
 import { useGetAllOrdersQuery } from '@/redux/orders/orders.slice';
 import { ORDERSTATUS, PAYMENTSTATUS } from '@/utils/constants';
 
-const tableData = [
-	{
-		id: '1',
-		price: 100,
-		orderStatus: 'Fulfilled',
-		type: 'success',
-		paymentStatus: 'Paid',
-		dateTime: '2021-09-10 12:00:00',
-	},
-	{
-		id: '2',
-		price: 200,
-		orderStatus: 'Processing',
-		type: 'warn',
-		paymentStatus: 'Unpaid',
-		dateTime: '2021-09-10 12:00:00',
-	},
-	{
-		id: '3',
-		price: 300,
-		orderStatus: 'Processing',
-		type: 'warn',
-		paymentStatus: 'Paid',
-		dateTime: '2021-09-10 12:00:00',
-	},
-	{
-		id: '4',
-		price: 400,
-		orderStatus: 'New',
-		type: 'fail',
-		paymentStatus: 'Paid',
-		dateTime: '2021-09-10 12:00:00',
-	},
-	{
-		id: '5',
-		price: 500,
-		orderStatus: 'Delivered',
-		type: 'success',
-		paymentStatus: 'Paid',
-		dateTime: '2021-09-10 12:00:00',
-	},
-];
 
 const Orders: React.FC = () => {
 

@@ -3,7 +3,7 @@
 import React, { useEffect } from 'react';
 import PageWrapper from '@/containers/PageWrapper';
 import Search from '@/components/input/Search';
-import { format } from 'date-fns'
+import { format } from 'date-fns';
 import Button from '@/components/buttons/Button';
 import CountCard from '@/components/cards/CountCard';
 import SectionCard from '@/components/cards/SectionCard';
@@ -14,84 +14,29 @@ import { TableComponent } from '@/components/table/Table';
 import { CountCardContainer } from '@/containers/CountCardWrapper';
 import Dropdown from '@/components/input/dropdown';
 import { Icon } from '@/components/icon/icon';
-import { useGetAllTransactionsQuery } from '@/redux/transactions/transactions.slice';
+import {
+	useGetAllTransactionsQuery,
+	useGetCustomerReportQuery,
+	useGetDailyTransactionsChartQuery,
+} from '@/redux/transactions/transactions.slice';
 import { formatCurrency } from '@/helpers';
 
 
-const data2 = [
-	{
-		time: 12,
-		total: 1771001,
-		count: 500,
-	},
-	{
-		time: 1,
-		total: 713500,
-		count: 100,
-	},
-	{
-		time: 2,
-		total: 240501,
-		count: 500,
-	},
-	{
-		time: 3,
-		total: 56500,
-		count: 100,
-	},
-	{
-		time: 4,
-		total: 0,
-		count: 200,
-	},
-	{
-		time: 5,
-		total: 49000,
-		count: 200,
-	},
-	{
-		time: 6,
-		total: 411000,
-		count: 300,
-	},
-	{
-		time: 7,
-		total: 4110,
-		count: 400,
-	},
-	{
-		time: 8,
-		total: 41100,
-		count: 300,
-	},
-	{
-		time: 9,
-		total: 41000,
-		count: 100,
-	},
-	{
-		time: 10,
-		total: 4000,
-		count: 500,
-	},
-	{
-		time: 11,
-		total: 411000,
-		count: 200,
-	},
-];
-
-
-const labels = data2.map(item => item.total);
-const values1 = data2.map(item => item.count);
-
 const Sales: React.FC = () => {
-
-	const { data: transactionData, isSuccess, isLoading } = useGetAllTransactionsQuery();
+	const { data: dailyTransaction } = useGetDailyTransactionsChartQuery();
+	const {
+		data: transactionData,
+		isSuccess,
+		isLoading,
+	} = useGetAllTransactionsQuery();
+	const { data: customerReport} = useGetCustomerReportQuery()
 
 	useEffect(() => {
-		console.log(transactionData, isSuccess, isLoading )
-	}, [transactionData])
+		console.log(customerReport);
+	}, [customerReport]);
+
+	const labels = dailyTransaction?.data.map(item => item.day);
+	const values1 = dailyTransaction?.data.map(item => item.total);
 
 	return (
 		<PageWrapper pageHeader='Sales'>
@@ -145,32 +90,34 @@ const Sales: React.FC = () => {
 						'DATE AND TIME',
 						' ',
 					]}
-					rows={(transactionData?.data.transactions || []).map((transactions) => ({
-						id: transactions._id,
-						content: [
-							transactions._id,
-							transactions.type,
-							`${formatCurrency(transactions.amount)}`,
-							`${format(transactions.createdAt, 'yyyy-mm-dd h:mm:a')}`,
-							<Dropdown
-								key={`${transactions._id}-controls`}
-								menuButton={
-									<Icon svg='ellipses' height={18} width={18} className='' />
-								}
-								onClickMenuItem={() => {}}
-								menuItems={[
-									{
-										name: (
-											<button className='disabled:opacity-30 w-full text-left'>
-												Request delivery
-											</button>
-										),
-										value: '',
-									},
-								]}
-							/>,
-						],
-					}))}
+					rows={(transactionData?.data.transactions || []).map(
+						transactions => ({
+							id: transactions._id,
+							content: [
+								transactions._id,
+								transactions.type,
+								`${formatCurrency(transactions.amount)}`,
+								`${format(transactions.createdAt, 'yyyy-mm-dd h:mm:a')}`,
+								<Dropdown
+									key={`${transactions._id}-controls`}
+									menuButton={
+										<Icon svg='ellipses' height={18} width={18} className='' />
+									}
+									onClickMenuItem={() => {}}
+									menuItems={[
+										{
+											name: (
+												<button className='disabled:opacity-30 w-full text-left'>
+													Request delivery
+												</button>
+											),
+											value: '',
+										},
+									]}
+								/>,
+							],
+						})
+					)}
 					name='categories-table'
 					loading={false}
 					isEmpty={false}
