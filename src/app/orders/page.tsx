@@ -10,53 +10,16 @@ import { CountCardContainer } from '@/containers/CountCardWrapper';
 import { Status } from '@/components/cards/StatusTag';
 import Dropdown from '@/components/input/dropdown';
 import { Icon } from '@/components/icon/icon';
+import { format } from 'date-fns'
 import { formatCurrency } from '@/helpers';
-import { StatusTypes } from '@/types/types';
+import { PaymentTypes, StatusTypes } from '@/types/types';
+import { useGetAllOrdersQuery } from '@/redux/orders/orders.slice';
+import { ORDERSTATUS, PAYMENTSTATUS } from '@/utils/constants';
 
-const tableData = [
-	{
-		id: '1',
-		price: 100,
-		orderStatus: 'Fulfilled',
-		type: 'success',
-		paymentStatus: 'Paid',
-		dateTime: '2021-09-10 12:00:00',
-	},
-	{
-		id: '2',
-		price: 200,
-		orderStatus: 'Processing',
-		type: 'warn',
-		paymentStatus: 'Unpaid',
-		dateTime: '2021-09-10 12:00:00',
-	},
-	{
-		id: '3',
-		price: 300,
-		orderStatus: 'Processing',
-		type: 'warn',
-		paymentStatus: 'Paid',
-		dateTime: '2021-09-10 12:00:00',
-	},
-	{
-		id: '4',
-		price: 400,
-		orderStatus: 'New',
-		type: 'fail',
-		paymentStatus: 'Paid',
-		dateTime: '2021-09-10 12:00:00',
-	},
-	{
-		id: '5',
-		price: 500,
-		orderStatus: 'Delivered',
-		type: 'success',
-		paymentStatus: 'Paid',
-		dateTime: '2021-09-10 12:00:00',
-	},
-];
 
 const Orders: React.FC = () => {
+	const { data: orderData } = useGetAllOrdersQuery({});
+
 	return (
 		<PageWrapper pageHeader='Orders'>
 			<div className='flex flex-col md:flex-row gap-4 items-center justify-between mb-10'>
@@ -93,25 +56,37 @@ const Orders: React.FC = () => {
 						key={`header-controls`}
 					></div>,
 				]}
-				rows={tableData.map(data => ({
-					id: data.id,
+				rows={(orderData?.data.docs || []).map(order => ({
+					id: order._id,
 					content: [
-						data.id,
-						`${formatCurrency(data.price)}`,
+						order._id,
+						`${formatCurrency(order.amount)}`,
 						<div
-							key={data.id}
+							key={order._id}
 							className='flex items-center gap-2 overflow-visible'
 						>
-							<Status type={data.type as StatusTypes} text={data.orderStatus} />
+							<Status
+								text={order.status}
+								type={
+									(ORDERSTATUS.find(
+										(status) =>
+											status.orderStatus.toLowerCase() === order.status.toLowerCase(),
+									)?.type ?? 'warn') as StatusTypes
+								} />
 						</div>,
 						<Status
-							key={data.id}
-							text={data.paymentStatus ? 'Unpaid' : 'Paid'}
-							type={data.paymentStatus ? 'fail' : 'success'}
+							key={order._id}
+							text={order.paymentStatus}
+							type={
+								(PAYMENTSTATUS.find(
+									(status) =>
+										status.name.toLowerCase() === order.paymentStatus.toLocaleLowerCase()
+								)?.type ?? 'fail') as PaymentTypes
+							}
 						/>,
-						data.dateTime,
+						`${format(order.createdAt, 'yyyy-mm-dd h:mm:a')}`,
 						<Dropdown
-							key={`${data.id}-controls`}
+							key={`${order._id}-controls`}
 							menuButton={
 								<Icon svg='ellipses' height={18} width={18} className='' />
 							}

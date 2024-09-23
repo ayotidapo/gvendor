@@ -8,8 +8,8 @@ import { EmptyState } from '../emptyState/emptyState'
 const NUMBER_OF_ITEMS_PER_PAGE = 20
 
 export const TableComponent: React.FC<{
-	headers: (ReactNode | string)[]
-	rows: Array<{ id: number | string; content: (ReactNode | string)[] }>
+	headers: ReactNode[] | string[]
+	rows: Array<{ id: number | string; content: ReactNode[] | string[] }>
 	name?: string
 	showName?: boolean
 	isRowClickable?: boolean
@@ -116,7 +116,7 @@ export const TableComponent: React.FC<{
                         `}
 												onClick={() => {
 													if (isRowClickable) {
-														onRowClick(id);
+														onRowClick(id)
 													}
 												}}
 											>

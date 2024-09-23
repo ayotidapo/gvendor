@@ -40,6 +40,7 @@ export const rtkQueryResponseFeedbackMiddleware: Middleware =
 
 const rootReducer = combineReducers({
 	auth: authReducer,
+	[apiSlice.reducerPath]: apiSlice.reducer,
 });
 
 const persistConfig = {

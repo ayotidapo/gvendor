@@ -29,7 +29,7 @@ const Select: React.FC<SelectProps> = ({
         onChange={(e) => onChange(e.target.value)}
         disabled={disabled}
         className={`w-full p-2 h-[56px] border rounded-md focus:outline-none ${
-          error ? 'border-red-500' : 'border-gray-300'
+          error ? 'border-red-500' : 'border-black'
         } ${disabled ? 'bg-gray-100 cursor-not-allowed' : ''}`}
       >
         <option value="" disabled>
