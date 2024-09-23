@@ -29,7 +29,7 @@ const ProfilePage = () => {
 		setSelectedValue(value);
 	};
 
-	const { handleBlur, handleChange, handleSubmit, values, errors } = useFormik({
+	const { handleBlur, handleChange, handleSubmit, values, errors, resetForm } = useFormik({
 		initialValues: {
 			address: '',
 			email: '',
@@ -42,6 +42,7 @@ const ProfilePage = () => {
 			if (!isLoading) {
 				console.log('Form Submitted', values);
 				toast.success('Profile updated successfully');
+				resetForm()
 			}
 		},
 	});
@@ -154,8 +155,7 @@ const ProfilePage = () => {
 				<span className='block mt-2'>
 					Configure the standard hours pf operation for this business
 				</span>
-
-
+					{/* Time Component */}
 				<div className='mt-6 w-[143px]'>
 					<Button label={'Save Schedule'} />
 				</div>
@@ -194,3 +194,4 @@ const ProfilePage = () => {
 };
 
 export default ProfilePage;
+
