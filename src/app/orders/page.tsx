@@ -19,11 +19,11 @@ import { ORDERSTATUS, PAYMENTSTATUS } from '@/utils/constants';
 
 const Orders: React.FC = () => {
 
-	const { data: orderData } = useGetAllOrdersQuery({})
+	const { data: orderData } = useGetAllOrdersQuery({});
 	
 	useEffect(() => {
 		console.log(orderData)
-	}, [orderData])
+	}, [orderData]);
 
 	return (
 		<PageWrapper pageHeader='Orders'>

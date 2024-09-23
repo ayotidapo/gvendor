@@ -22,12 +22,12 @@ const HomePage: React.FC = () => {
 		startDate: '2024-08-20',
 		endDate: '2023-08-07',
 	});
-	const { data: topSellersResponse } = useGetTopSellersQuery()
-	const { data: recentOrders } = useGetRecentOrdersQuery()
+	const { data: topSellersResponse } = useGetTopSellersQuery();
+	const { data: recentOrders } = useGetRecentOrdersQuery();
 
 	const labels = metricsData?.data?.result.map(item => item.day) || [];
 	const values1 = metricsData?.data?.result.map(item => item.total) || [];
-	const topSellers = topSellersResponse?.data || []
+	const topSellers = topSellersResponse?.data || [];
 
 	useEffect(() => {
 		console.log({ salesValue, topSellers,metricsData, recentOrders});
