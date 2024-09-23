@@ -8,10 +8,9 @@ import { Icon } from '@/components/icon/icon';
 import Select from '@/components/select/Select';
 import * as Yup from 'yup';
 import ImageUpload from '@/components/image/ImageUpload';
-import { useGetProfileQuery } from '@/redux/profile/profile.slice';
+import { useGetProfileQuery, useUpdateProfileMutation } from '@/redux/profile/profile.slice';
 import { useFormik } from 'formik';
 import { toast } from 'react-toastify';
-import Switch from '@/components/switch/Switch';
 
 const profileSchema = Yup.object({
 	address: Yup.string().required('Business address is required'),
@@ -24,23 +23,35 @@ const profileSchema = Yup.object({
 const ProfilePage = () => {
 	const [selectedValue, setSelectedValue] = useState<string | number>('');
 	const { data: profile, isLoading } = useGetProfileQuery();
+	const [updateProfile] = useUpdateProfileMutation();
+
+	useEffect(() => {
+		if (profile) {
+			setFieldValue('address', profile.address);
+			setFieldValue('email', profile.email);
+			setFieldValue('phone', profile.phone);
+			setFieldValue('website', profile.website);
+			setFieldValue('description', profile.description);
+		}
+	}, [profile]);
 
 	const handleSelectChange = (value: string | number) => {
 		setSelectedValue(value);
 	};
 
-	const { handleBlur, handleChange, handleSubmit, values, errors, resetForm } = useFormik({
+	const { handleBlur, handleChange, handleSubmit, values, errors, resetForm, setFieldValue } = useFormik({
 		initialValues: {
-			address: '',
-			email: '',
-			phone: '',
-			website: '',
-			description: '',
+			address: profile?.address ?? '',
+			email: profile?.email ?? '',
+			phone: profile?.phone ?? '',
+			website: profile?.website ?? '',
+			description: profile?.description ?? '',
 		},
 		validationSchema: profileSchema,
 		onSubmit: values => {
 			if (!isLoading) {
-				console.log('Form Submitted', values);
+				// console.log('Form Submitted', values);
+				updateProfile(values);
 				toast.success('Profile updated successfully');
 				resetForm()
 			}
@@ -76,7 +87,7 @@ const ProfilePage = () => {
 					description.
 				</span>
 				<div className='grid grid-cols-1 md:grid-cols-2 gap-4 mt-6'>
-					
+
 					<div className='bg-off-white border border-[#EAEAEA] shadow-sm p-4 rounded-md'>
 						<span className='text-secondary-black'>Store name</span>
 						<span className='text-black block'>
@@ -155,7 +166,7 @@ const ProfilePage = () => {
 				<span className='block mt-2'>
 					Configure the standard hours pf operation for this business
 				</span>
-					{/* Time Component */}
+				{/* Time Component */}
 				<div className='mt-6 w-[143px]'>
 					<Button label={'Save Schedule'} />
 				</div>

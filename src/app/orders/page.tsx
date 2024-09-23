@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import PageWrapper from '@/containers/PageWrapper';
 import Search from '@/components/input/Search';
 import Button from '@/components/buttons/Button';
@@ -18,12 +18,7 @@ import { ORDERSTATUS, PAYMENTSTATUS } from '@/utils/constants';
 
 
 const Orders: React.FC = () => {
-
 	const { data: orderData } = useGetAllOrdersQuery({});
-	
-	useEffect(() => {
-		console.log(orderData)
-	}, [orderData]);
 
 	return (
 		<PageWrapper pageHeader='Orders'>
@@ -74,9 +69,9 @@ const Orders: React.FC = () => {
 								text={order.status}
 								type={
 									(ORDERSTATUS.find(
-										(status) => 
+										(status) =>
 											status.orderStatus.toLowerCase() === order.status.toLowerCase(),
-									) ?. type ?? 'warn') as StatusTypes
+									)?.type ?? 'warn') as StatusTypes
 								} />
 						</div>,
 						<Status
@@ -86,7 +81,7 @@ const Orders: React.FC = () => {
 								(PAYMENTSTATUS.find(
 									(status) =>
 										status.name.toLowerCase() === order.paymentStatus.toLocaleLowerCase()
-								) ?. type ?? 'fail') as PaymentTypes
+								)?.type ?? 'fail') as PaymentTypes
 							}
 						/>,
 						`${format(order.createdAt, 'yyyy-mm-dd h:mm:a')}`,

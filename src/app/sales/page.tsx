@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect } from 'react';
+import React from 'react';
 import PageWrapper from '@/containers/PageWrapper';
 import Search from '@/components/input/Search';
 import { format } from 'date-fns';
@@ -16,7 +16,7 @@ import Dropdown from '@/components/input/dropdown';
 import { Icon } from '@/components/icon/icon';
 import {
 	useGetAllTransactionsQuery,
-	useGetCustomerReportQuery,
+	// useGetCustomerReportQuery,
 	useGetDailyTransactionsChartQuery,
 } from '@/redux/transactions/transactions.slice';
 import { formatCurrency } from '@/helpers';
@@ -26,17 +26,17 @@ const Sales: React.FC = () => {
 	const { data: dailyTransaction } = useGetDailyTransactionsChartQuery();
 	const {
 		data: transactionData,
-		isSuccess,
-		isLoading,
+		//isSuccess,
+		//isLoading,
 	} = useGetAllTransactionsQuery();
-	const { data: customerReport} = useGetCustomerReportQuery()
+	//const { data: customerReport } = useGetCustomerReportQuery()
 
-	useEffect(() => {
-		console.log(customerReport);
-	}, [customerReport]);
+	//useEffect(() => {
+	//	console.log(customerReport, transactionData, dailyTransaction);
+	//}, [customerReport, transactionData, dailyTransaction]);
 
-	const labels = dailyTransaction?.data.map(item => item.day);
-	const values1 = dailyTransaction?.data.map(item => item.total);
+	const labels: string[] = dailyTransaction?.data.map(item => item.day) || [];
+	const values1: number[] = dailyTransaction?.data.map(item => item.total) || [];
 
 	return (
 		<PageWrapper pageHeader='Sales'>
@@ -103,7 +103,7 @@ const Sales: React.FC = () => {
 									menuButton={
 										<Icon svg='ellipses' height={18} width={18} className='' />
 									}
-									onClickMenuItem={() => {}}
+									onClickMenuItem={() => { }}
 									menuItems={[
 										{
 											name: (

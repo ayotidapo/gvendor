@@ -3,35 +3,35 @@
 import CountCard from '@/components/cards/CountCard';
 import PageWrapper from '@/containers/PageWrapper';
 import Button from '@/components/buttons/Button';
-import React, { useEffect } from 'react';
+import React from 'react';
 import BarChart from '@/components/charts/BarChart';
 import SectionCard from '@/components/cards/SectionCard';
 import { Header } from '@/components/typography/Header';
 import { CountCardContainer } from '@/containers/CountCardWrapper';
 import {
 	useGetDashboardMetricsCountQuery,
-	useGetDashboardSalesValueQuery,
-	useGetRecentOrdersQuery,
+	// useGetDashboardSalesValueQuery,
+	//useGetRecentOrdersQuery,
 	useGetTopSellersQuery,
 } from '@/redux/dashboard/dashboard.slice';
 
 
 const HomePage: React.FC = () => {
-	const { data: salesValue } = useGetDashboardSalesValueQuery();
+	//const { data: salesValue } = useGetDashboardSalesValueQuery();
 	const { data: metricsData } = useGetDashboardMetricsCountQuery({
 		startDate: '2024-08-20',
 		endDate: '2023-08-07',
 	});
 	const { data: topSellersResponse } = useGetTopSellersQuery();
-	const { data: recentOrders } = useGetRecentOrdersQuery();
+	// const { data: recentOrders } = useGetRecentOrdersQuery();
 
 	const labels = metricsData?.data?.result.map(item => item.day) || [];
 	const values1 = metricsData?.data?.result.map(item => item.total) || [];
 	const topSellers = topSellersResponse?.data || [];
 
-	useEffect(() => {
-		console.log({ salesValue, topSellers,metricsData, recentOrders});
-	}, [salesValue, topSellers,metricsData, recentOrders]);
+	//useEffect(() => {
+	//	console.log({ salesValue, topSellers,metricsData, recentOrders});
+	//}, [salesValue, topSellers,metricsData, recentOrders]);
 
 	// const sales = { salesValue?.data }
 
