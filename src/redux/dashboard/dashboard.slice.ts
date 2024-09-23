@@ -3,6 +3,7 @@ import {
 	DashboardMetricsCount,
 	DashboardSalesValue,
 	RecentOrdersResponse,
+	TopSellersResponse,
 } from './dashboard.type';
 
 interface Queryparams {
@@ -25,7 +26,6 @@ export const dashboardApiSlice = apiSlice.injectEndpoints({
 					}`,
 					method: 'GET',
 				}),
-				// providesTags: [{ type: 'DASHBOARD', id: 'METRICS_COUNT' }],
 			}
 		),
 		getDashboardSalesValue: builder.query<DashboardSalesValue, void>({
@@ -33,15 +33,19 @@ export const dashboardApiSlice = apiSlice.injectEndpoints({
 				url: `/order/stats`,
 				method: 'GET',
 			}),
-			// providesTags: [{ type: 'DASHBOARD', id: 'SALES_VALUE' }],
 		}),
-		getRecentOrders: builder.query<RecentOrdersResponse, { limit: number }>({
-			query: ({ limit }) => ({
-				url: `/order/recent-order?limit=${limit}`,
+		getRecentOrders: builder.query<RecentOrdersResponse, void>({
+			query: () => ({
+				url: `/order/recent`,
 				method: 'GET',
 			}),
-			// providesTags: [{ type: 'DASHBOARD', id: 'RECENT_ORDERS' }],
 		}),
+		getTopSellers: builder.query<TopSellersResponse, void>({
+			query: () => ({
+				url: `/order/top-sellers`,
+				method: 'GET',
+			})
+		})
 	}),
 });
 
@@ -49,4 +53,5 @@ export const {
 	useGetDashboardMetricsCountQuery,
 	useGetDashboardSalesValueQuery,
 	useGetRecentOrdersQuery,
+	useGetTopSellersQuery,
 } = dashboardApiSlice;
