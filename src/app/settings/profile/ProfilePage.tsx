@@ -4,13 +4,18 @@ import React, { useEffect, useState } from 'react';
 import { Header } from '@/components/typography/Header';
 import TextInput from '@/components/input/TextInput';
 import Button from '@/components/buttons/Button';
+import '../profile/timeinput.css'
 import { Icon } from '@/components/icon/icon';
 import Select from '@/components/select/Select';
 import * as Yup from 'yup';
 import ImageUpload from '@/components/image/ImageUpload';
-import { useGetProfileQuery, useUpdateProfileMutation } from '@/redux/profile/profile.slice';
+import {
+	useGetProfileQuery,
+	useUpdateProfileMutation,
+} from '@/redux/profile/profile.slice';
 import { useFormik } from 'formik';
 import { toast } from 'react-toastify';
+import Switch from '@/components/switch/Switch';
 
 const profileSchema = Yup.object({
 	address: Yup.string().required('Business address is required'),
@@ -39,7 +44,14 @@ const ProfilePage = () => {
 		setSelectedValue(value);
 	};
 
-	const { handleBlur, handleChange, handleSubmit, values, errors, resetForm, setFieldValue } = useFormik({
+	const {
+		handleBlur,
+		handleChange,
+		handleSubmit,
+		values,
+		errors,
+		setFieldValue,
+	} = useFormik({
 		initialValues: {
 			address: profile?.address ?? '',
 			email: profile?.email ?? '',
@@ -53,7 +65,6 @@ const ProfilePage = () => {
 				// console.log('Form Submitted', values);
 				updateProfile(values);
 				toast.success('Profile updated successfully');
-				resetForm()
 			}
 		},
 	});
@@ -87,18 +98,13 @@ const ProfilePage = () => {
 					description.
 				</span>
 				<div className='grid grid-cols-1 md:grid-cols-2 gap-4 mt-6'>
-
 					<div className='bg-off-white border border-[#EAEAEA] shadow-sm p-4 rounded-md'>
 						<span className='text-secondary-black'>Store name</span>
-						<span className='text-black block'>
-							{/* {profile?.data?.name} */}
-						</span>
+						<span className='text-black block'>{profile?.name}</span>
 					</div>
 					<div className='bg-off-white border border-[#EAEAEA] shadow-sm p-4 rounded-md'>
 						<span className='text-secondary-black'>Workshop ID</span>
-						<span className='text-black block'>
-							{/* {profile?.data?._id} */}
-						</span>
+						<span className='text-black block'>{profile?._id}</span>
 					</div>
 					<TextInput
 						type={'text'}
@@ -164,9 +170,33 @@ const ProfilePage = () => {
 					<Header header={'Set standard hours'} />
 				</span>
 				<span className='block mt-2'>
-					Configure the standard hours pf operation for this business
+					Configure the standard hours <ol></ol>f operation for this business
 				</span>
-				{/* Time Component */}
+				<div className='mt-6'>
+					{/* {profile?.availableHours?.map((day) => ( */}
+						<>
+							<div>
+								{profile?.availableHours}
+							</div>
+							<button
+								disabled={false }
+								key={profile._id}
+								onClick={() => {
+
+								}}
+							>
+								<Switch
+									checked={day?.sunday?.open}
+									// disabled={}
+								/>
+								<span>
+									{day?.friday?.open ? 'Open' : 'Closed'}
+								</span>
+							</button>
+							<input type='time' className='custom-time-input'></input>
+						</>
+					{/* ))}  */}
+				</div>
 				<div className='mt-6 w-[143px]'>
 					<Button label={'Save Schedule'} />
 				</div>
@@ -205,4 +235,3 @@ const ProfilePage = () => {
 };
 
 export default ProfilePage;
-

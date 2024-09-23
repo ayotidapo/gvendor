@@ -24,7 +24,7 @@ export interface AvailableDay {
     updatedAt: string;
     phone: string;
     address: string;
-    availableHours: AvailableHours;
+    availableHours: AvailableHours[];
     firstLogin: boolean;
     logo: string;
     website: string;
