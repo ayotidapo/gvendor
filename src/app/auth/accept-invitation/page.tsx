@@ -1,7 +1,7 @@
 'use client';
 import { useEffect } from 'react';
 import Button from '@/components/buttons/Button';
-import  TextInput  from '@/components/input/TextInput';
+import TextInput from '@/components/input/TextInput';
 import { Gilroy } from '@/fonts/font';
 import { useSignupMutation } from '@/redux/reducers/auth/authSlice';
 import { useFormik } from 'formik';
@@ -30,7 +30,11 @@ const SignUp = () => {
 		}
 	}, [isSuccess]);
 
-	const onSignUp = async (values: { address: string; password: string; phone: string }) => {
+	const onSignUp = async (values: {
+		address: string;
+		password: string;
+		phone: string;
+	}) => {
 		try {
 			await signup({ ...values, reference: reference ?? '' });
 		} catch (error) {

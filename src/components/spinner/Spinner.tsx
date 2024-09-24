@@ -1,43 +1,40 @@
-'use client'
+'use client';
 
-import React from 'react'
-import './Spinner.css'
-import { Oval } from 'react-loader-spinner'
-import { PRIMARY_COLOR } from '../../constants'
+import React from 'react';
+import './Spinner.css';
+import { Oval } from 'react-loader-spinner';
+import { PRIMARY_COLOR } from '../../constants';
 
 export const LoadingOval: React.FC<{
-	loaderHeight: string
-	loaderWidth: string
-	color?: string
+	loaderHeight: string;
+	loaderWidth: string;
+	color?: string;
 }> = ({ loaderHeight = '25', loaderWidth = '25', color = '#ffffff' }) => {
 	return (
 		<Oval
 			visible={true}
 			height={loaderHeight}
 			width={loaderWidth}
-			ariaLabel="oval-loading"
+			ariaLabel='oval-loading'
 			wrapperStyle={{}}
-			wrapperClass=""
+			wrapperClass=''
 			color={color}
 			strokeWidth={1}
 			strokeWidthSecondary={5}
 		/>
-	)
-}
+	);
+};
 
-const Spinner = ({
-	fullScreen = true,
-}: {
-	fullScreen?: boolean
-}) => {
+const Spinner = ({ fullScreen = true }: { fullScreen?: boolean }) => {
 	return (
 		<div
-			className={`${fullScreen ? 'h-screen' : ''
-				} flex items-center justify-center`}
+			className={`${
+				fullScreen ? 'h-screen' : ''
+			} flex items-center justify-center`}
 		>
-			<LoadingOval loaderHeight="30" loaderWidth="30" color={PRIMARY_COLOR} />
+			<LoadingOval loaderHeight='30' loaderWidth='30' color={PRIMARY_COLOR} />
 		</div>
-	)
-}
+	);
+};
 
-export default Spinner
+export default Spinner;

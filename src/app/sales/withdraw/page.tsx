@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import Button from '@/components/buttons/Button';
 import CountCard from '@/components/cards/CountCard';

@@ -15,7 +15,6 @@ import {
 	useGetTopSellersQuery,
 } from '@/redux/dashboard/dashboard.slice';
 
-
 const HomePage: React.FC = () => {
 	//const { data: salesValue } = useGetDashboardSalesValueQuery();
 	const { data: metricsData } = useGetDashboardMetricsCountQuery({
@@ -71,107 +70,98 @@ const HomePage: React.FC = () => {
 
 		   '
 			>
-				<div>
-					<SectionCard
-						header={
-							<div className='space-y-3'>
-								<div className=''>
-									<Header header={'Total Orders'} />
-								</div>
-								<div className=''>320</div>
+				<SectionCard
+					header={
+						<div className='space-y-3'>
+							<div className=''>
+								<Header header={'Total Orders'} />
 							</div>
-						}
-						content={
-							<div>
-								<div className='pt-6'>
-									<BarChart
-										responsive
-										labels={labels}
-										data={values1}
-										barThickness={5}
-										yGridDisplay={true}
+							<div className=''>320</div>
+						</div>
+					}
+					content={
+						<div>
+							<div className='pt-6'>
+								<BarChart
+									responsive
+									labels={labels}
+									data={values1}
+									barThickness={5}
+									yGridDisplay={true}
+								/>
+							</div>
+							<div className='flex flex-col md:flex-row gap-4 items-center justify-between'>
+								<div>
+									<Button
+										label='View detailed report'
+										name='transparent'
+										right
 									/>
 								</div>
-								<div className='flex flex-col md:flex-row gap-4 items-center justify-between'>
-									<div>
-										<Button
-											label='View detailed report'
-											name='transparent'
-											right
-										/>
-									</div>
-									<div className=''>
-										<span className=''>20 Aug</span>
-									</div>
+								<div className=''>
+									<span className=''>20 Aug</span>
 								</div>
 							</div>
-						}
-					/>
-				</div>
-				<div>
-					<div className=''>
-						<SectionCard
-							header={
-								<div className='flex space-x-6'>
-									<div className='flex pb-8 flex-col md:flex-row gap-4 items-center justify-between'>
-										<Header header={'Sales Analysis'} />
-									</div>
-									<div className=''>
-										<Button label='Today' name='outline' arrow />
-									</div>
+						</div>
+					}
+				/>
+
+				<SectionCard
+					header={
+						<div className='flex space-x-6'>
+							<div className='flex pb-8 flex-col md:flex-row gap-4 items-center justify-between'>
+								<Header header={'Sales Analysis'} />
+							</div>
+							<div className=''>
+								<Button label='Today' name='outline' arrow />
+							</div>
+						</div>
+					}
+					content={
+						<div>
+							<div className=''>
+								<BarChart
+									responsive
+									labels={labels}
+									data={values1}
+									barThickness={5}
+									yGridDisplay={true}
+								/>
+							</div>
+							<div className='flex flex-col md:flex-row gap-4 items-center justify-between'>
+								<div className=''>
+									<Button
+										label='View detailed report'
+										name='transparent'
+										right
+									/>
 								</div>
-							}
-							content={
-								<div>
-									<div className=''>
-										<BarChart
-											responsive
-											labels={labels}
-											data={values1}
-											barThickness={5}
-											yGridDisplay={true}
-										/>
-									</div>
-									<div className='flex flex-col md:flex-row gap-4 items-center justify-between'>
-										<div className=''>
-											<Button
-												label='View detailed report'
-												name='transparent'
-												right
-											/>
-										</div>
-										<div className=''>
-											<span className=''>20 Aug</span>
-										</div>
-									</div>
+								<div className=''>
+									<span className=''>20 Aug</span>
 								</div>
-							}
+							</div>
+						</div>
+					}
+				/>
+
+				<SectionCard
+					header={
+						<Header
+							className='text-center'
+							header={'Top products by units sold'}
 						/>
-					</div>
-				</div>
-				<div>
-					<SectionCard
-						header={
-							<Header
-								className='text-center'
-								header={'Top products by units sold'}
-							/>
-						}
-						content={
-							<div>
-								{topSellers.map(top => (
-									<div
-										className='mt-6 flex justify-between'
-										key={top._id}
-									>
-										<div>{top.product}</div>
-										<div className='text-secondary-black'>{top.unitsSold}</div>
-									</div>
-								))}
-							</div>
-						}
-					/>
-				</div>
+					}
+					content={
+						<div>
+							{topSellers.map(top => (
+								<div className='mt-6 flex justify-between' key={top._id}>
+									<div>{top.product}</div>
+									<div className='text-secondary-black'>{top.unitsSold}</div>
+								</div>
+							))}
+						</div>
+					}
+				/>
 			</div>
 		</PageWrapper>
 	);

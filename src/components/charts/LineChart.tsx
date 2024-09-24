@@ -1,18 +1,18 @@
-'use client'
+'use client';
 
-import React from 'react'
-import { registerables, Chart } from 'chart.js'
-import { Line } from 'react-chartjs-2'
+import React from 'react';
+import { registerables, Chart } from 'chart.js';
+import { Line } from 'react-chartjs-2';
 
 interface Props {
-	labels: (number | string)[]
-	data: number[]
-	width?: number
-	height?: number
-	responsive: boolean
+	labels: (number | string)[];
+	data: number[];
+	width?: number;
+	height?: number;
+	responsive: boolean;
 }
 
-Chart.register(...registerables)
+Chart.register(...registerables);
 
 const LineChart: React.FC<Props> = ({
 	data,
@@ -23,7 +23,7 @@ const LineChart: React.FC<Props> = ({
 }) => {
 	return (
 		<Line
-			datasetIdKey="line"
+			datasetIdKey='line'
 			data={{
 				labels,
 
@@ -35,7 +35,6 @@ const LineChart: React.FC<Props> = ({
 						data,
 						cubicInterpolationMode: 'monotone',
 						tension: 0.6,
-
 					},
 				],
 			}}
@@ -45,23 +44,23 @@ const LineChart: React.FC<Props> = ({
 					x: {
 						grid: {
 							display: true,
-							color: '#EAEAEA'
+							color: '#EAEAEA',
 						},
 						border: {
 							display: false,
 						},
 						ticks: {
-							color: '#050301'
+							color: '#050301',
 						},
 						display: true,
 					},
 					y: {
 						grid: {
 							display: true,
-							color: '#EAEAEA'
+							color: '#EAEAEA',
 						},
 						ticks: {
-							color: '#050301'
+							color: '#050301',
 						},
 						display: true,
 					},
@@ -75,7 +74,7 @@ const LineChart: React.FC<Props> = ({
 			width={width}
 			height={height}
 		/>
-	)
-}
+	);
+};
 
-export default LineChart
+export default LineChart;

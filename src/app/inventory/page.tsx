@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import React from 'react';
 import PageWrapper from '@/containers/PageWrapper';
@@ -115,7 +115,14 @@ const Inventory: React.FC = () => {
 				/>
 			</div>
 			<TableComponent
-				headers={['PRODUCT NAME', 'CATEGORY', 'INSTOCK', 'UNITSOLD', 'PRICE', ' ']}
+				headers={[
+					'PRODUCT NAME',
+					'CATEGORY',
+					'INSTOCK',
+					'UNITSOLD',
+					'PRICE',
+					' ',
+				]}
 				rows={tableData.map(data => ({
 					id: data.id,
 					content: [
@@ -129,7 +136,7 @@ const Inventory: React.FC = () => {
 							menuButton={
 								<Icon svg='ellipses' height={18} width={18} className='' />
 							}
-							onClickMenuItem={() => { }}
+							onClickMenuItem={() => {}}
 							menuItems={[
 								{
 									name: (
