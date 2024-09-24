@@ -2,7 +2,13 @@ import { Gilroy } from '@/fonts/font';
 import clsx from 'clsx';
 import { FC } from 'react';
 import { Icon } from '../icon/icon';
-import { ArrowDown, ChevronDown, ListFilter, CircleHelp, ArrowRight } from 'lucide-react';
+import {
+	ArrowDown,
+	ChevronDown,
+	ListFilter,
+	CircleHelp,
+	ArrowRight,
+} from 'lucide-react';
 
 type ButtonProps = {
 	label: string;
@@ -72,10 +78,7 @@ const Button: FC<ButtonProps> = ({
 
 	if (href) {
 		return (
-			<a
-				href={href}
-				className={buttonClasses}
-			>
+			<a href={href} className={buttonClasses}>
 				{buttonContent}
 			</a>
 		);

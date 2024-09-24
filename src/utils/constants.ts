@@ -33,11 +33,11 @@ export const PAYMENTSTATUS = [
 	{
 		id: '1',
 		name: 'paid',
-		type: 'success'
+		type: 'success',
 	},
 	{
 		id: '2',
 		name: 'not Paid',
-		type: 'danger'
-	}
-]
+		type: 'danger',
+	},
+];

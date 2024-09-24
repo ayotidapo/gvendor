@@ -21,7 +21,6 @@ import {
 } from '@/redux/transactions/transactions.slice';
 import { formatCurrency } from '@/helpers';
 
-
 const Sales: React.FC = () => {
 	const { data: dailyTransaction } = useGetDailyTransactionsChartQuery();
 	const {
@@ -36,7 +35,8 @@ const Sales: React.FC = () => {
 	//}, [customerReport, transactionData, dailyTransaction]);
 
 	const labels: string[] = dailyTransaction?.data.map(item => item.day) || [];
-	const values1: number[] = dailyTransaction?.data.map(item => item.total) || [];
+	const values1: number[] =
+		dailyTransaction?.data.map(item => item.total) || [];
 
 	return (
 		<PageWrapper pageHeader='Sales'>
@@ -103,7 +103,7 @@ const Sales: React.FC = () => {
 									menuButton={
 										<Icon svg='ellipses' height={18} width={18} className='' />
 									}
-									onClickMenuItem={() => { }}
+									onClickMenuItem={() => {}}
 									menuItems={[
 										{
 											name: (

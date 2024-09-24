@@ -31,7 +31,10 @@ export const authApiSlice = apiSlice.injectEndpoints({
 				}
 			},
 		}),
-		signup: builder.mutation<AuthResponse, { address: string; phone: string; password: string; reference: string; }>({
+		signup: builder.mutation<
+			AuthResponse,
+			{ address: string; phone: string; password: string; reference: string }
+		>({
 			query: params => ({
 				url: `/auth/accept-invitation/${params.reference}`,
 				method: 'POST',
@@ -39,7 +42,6 @@ export const authApiSlice = apiSlice.injectEndpoints({
 					address: params.address,
 					phone: params.phone,
 					password: params.password,
-
 				},
 			}),
 			transformResponse: (response: { data: AuthResponse }) => response.data,
@@ -67,7 +69,10 @@ export const authApiSlice = apiSlice.injectEndpoints({
 				body: email,
 			}),
 		}),
-		resetPassword: builder.mutation<ResetPasswordResponse, Partial<ResetPassword>>({
+		resetPassword: builder.mutation<
+			ResetPasswordResponse,
+			Partial<ResetPassword>
+		>({
 			query: email => ({
 				url: '/auth/reset-password',
 				method: 'POST',

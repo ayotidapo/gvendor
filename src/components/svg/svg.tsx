@@ -2,7 +2,6 @@ export const GoodLogo = ({ fill }: { fill: string }) => {
 	return (
 		<svg
 			id='good-logo'
-
 			width={62}
 			height={20}
 			viewBox='0 0 70 20'
