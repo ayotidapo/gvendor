@@ -6,7 +6,7 @@ interface Option {
 }
 
 interface SelectProps {
-  options: Option[];
+  options: Option[]; 
   value: string | number;
   onChange: (value: string | number) => void;
   placeholder?: string;
@@ -15,7 +15,7 @@ interface SelectProps {
 }
 
 const Select: React.FC<SelectProps> = ({
-  options,
+  options =[],
   value,
   onChange,
   placeholder = 'Select an option',
@@ -35,7 +35,7 @@ const Select: React.FC<SelectProps> = ({
         <option value="" disabled>
           {placeholder}
         </option>
-        {options.map((option) => (
+        {Array.isArray(options) && options.map((option) => (
           <option key={option.value} value={option.value}>
             {option.label}
           </option>

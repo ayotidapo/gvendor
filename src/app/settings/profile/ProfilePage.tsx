@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { Header } from '@/components/typography/Header';
 import TextInput from '@/components/input/TextInput';
 import Button from '@/components/buttons/Button';
-import '../profile/timeinput.css'
+import '../profile/timeinput.css';
 import { Icon } from '@/components/icon/icon';
 import Select from '@/components/select/Select';
 import * as Yup from 'yup';
@@ -16,6 +16,7 @@ import {
 import { useFormik } from 'formik';
 import { toast } from 'react-toastify';
 import Switch from '@/components/switch/Switch';
+import { useGetBankQuery } from '@/redux/miscellaneous/getbank.slice';
 
 const profileSchema = Yup.object({
 	address: Yup.string().required('Business address is required'),
@@ -29,6 +30,14 @@ const ProfilePage = () => {
 	const [selectedValue, setSelectedValue] = useState<string | number>('');
 	const { data: profile, isLoading } = useGetProfileQuery();
 	const [updateProfile] = useUpdateProfileMutation();
+	const { data: bankData } = useGetBankQuery();
+
+	const formattedBankOptions = bankData?.data
+		? bankData.data.map((bank: any) => ({
+				label: bank.name,
+				value: bank.code,
+			}))
+		: [];
 
 	useEffect(() => {
 		if (profile) {
@@ -38,7 +47,8 @@ const ProfilePage = () => {
 			setFieldValue('website', profile.website);
 			setFieldValue('description', profile.description);
 		}
-	}, [profile]);
+		console.log(bankData);
+	}, [profile, bankData]);
 
 	const handleSelectChange = (value: string | number) => {
 		setSelectedValue(value);
@@ -174,7 +184,7 @@ const ProfilePage = () => {
 				</span>
 				<div className='mt-6'>
 					{/* {profile?.availableHours?.map((day) => ( */}
-						<>
+					{/* <>
 							<div>
 								{profile?.availableHours}
 							</div>
@@ -194,7 +204,7 @@ const ProfilePage = () => {
 								</span>
 							</button>
 							<input type='time' className='custom-time-input'></input>
-						</>
+						</> */}
 					{/* ))}  */}
 				</div>
 				<div className='mt-6 w-[143px]'>
@@ -222,7 +232,15 @@ const ProfilePage = () => {
 					</div>
 				</div>
 				<div className='pt-6 space-y-4 md:w-[800px]'>
-					<TextInput type={'text'} name={''} placeholder='Bank' />
+					{/* {getbank.map(bank => ( */}
+					<Select
+						options={formattedBankOptions}
+						placeholder='Bank'
+						value={selectedValue}
+						onChange={handleSelectChange}
+					/>
+					{/* // ))} */}
+					{/* <TextInput type={'text'} name={''} placeholder='Bank' /> */}
 					<TextInput type={'text'} name={''} placeholder='Account name' />
 					<TextInput type={'text'} name={''} placeholder='Account number' />
 				</div>
