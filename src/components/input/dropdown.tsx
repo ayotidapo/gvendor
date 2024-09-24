@@ -4,12 +4,12 @@ import {
 	MenuItem,
 	MenuItems,
 	Transition,
-} from '@headlessui/react'
-import clsx from 'clsx'
-import { Fragment, ReactNode } from 'react'
-import React from 'react'
-import { LoadingOval } from '../spinner/Spinner'
-import { PRIMARY_COLOR } from '../../constants'
+} from '@headlessui/react';
+import clsx from 'clsx';
+import { Fragment, ReactNode } from 'react';
+import React from 'react';
+import { LoadingOval } from '../spinner/Spinner';
+import { PRIMARY_COLOR } from '../../constants';
 
 const Dropdown = ({
 	menuItems,
@@ -23,26 +23,26 @@ const Dropdown = ({
 	menuClassName = '',
 	loading = false,
 }: {
-	menuButton: ReactNode | string
-	onClickMenuItem?: (item: { name: string | ReactNode; value: string }) => void
-	menuItems?: { name: string | ReactNode; value: string }[]
-	customMenuItems?: ReactNode
-	position?: string
-	widthClass?: string
-	className?: string
-	closeOnClick?: boolean
-	menuClassName?: string
-	loading?: boolean
+	menuButton: ReactNode | string;
+	onClickMenuItem?: (item: { name: string | ReactNode; value: string }) => void;
+	menuItems?: { name: string | ReactNode; value: string }[];
+	customMenuItems?: ReactNode;
+	position?: string;
+	widthClass?: string;
+	className?: string;
+	closeOnClick?: boolean;
+	menuClassName?: string;
+	loading?: boolean;
 }) => {
 	return (
-		<Menu as="div" className={`relative inline-block text-left ${className}`}>
+		<Menu as='div' className={`relative inline-block text-left ${className}`}>
 			<MenuButton
 				as={'a'}
 				className={
 					'cursor-pointer hover:scale-[0.98] transition-all duration-300'
 				}
-				onClick={(e) => {
-					e.stopPropagation()
+				onClick={e => {
+					e.stopPropagation();
 				}}
 			>
 				{menuButton}
@@ -50,12 +50,12 @@ const Dropdown = ({
 
 			<Transition
 				as={Fragment}
-				enter="transition ease-out duration-100"
-				enterFrom="transform opacity-0 scale-95"
-				enterTo="transform opacity-100 scale-100"
-				leave="transition ease-in duration-75"
-				leaveFrom="transform opacity-100 scale-100"
-				leaveTo="transform opacity-0 scale-95"
+				enter='transition ease-out duration-100'
+				enterFrom='transform opacity-0 scale-95'
+				enterTo='transform opacity-100 scale-100'
+				leave='transition ease-in duration-75'
+				leaveFrom='transform opacity-100 scale-100'
+				leaveTo='transform opacity-0 scale-95'
 			>
 				<MenuItems
 					className={clsx(
@@ -75,15 +75,15 @@ const Dropdown = ({
 							'left-0 right-0': position === 'center',
 							'right-0': position === 'right',
 							'left-0': position === 'left',
-						},
+						}
 					)}
 				>
 					{loading && (
-						<div className="py-8 flex items-center justify-center">
+						<div className='py-8 flex items-center justify-center'>
 							<LoadingOval
 								color={PRIMARY_COLOR}
-								loaderHeight="25"
-								loaderWidth="25"
+								loaderHeight='25'
+								loaderWidth='25'
 							/>
 						</div>
 					)}
@@ -94,37 +94,37 @@ const Dropdown = ({
 
 					{!loading && !customMenuItems
 						? menuItems?.map((item, index) => {
-							const key = `menu-item-${index}`
-							return (
-								<MenuItem key={key}>
-									{({ focus }) => (
-										<button
-											type="button"
-											className={clsx(
-												'w-full',
-												focus && 'bg-primary/5 text-black',
-												'block px-4 py-2 text-sm text-left',
-											)}
-											onClick={(e) => {
-												if (!closeOnClick) {
-													e.preventDefault();
-												}
-												if (onClickMenuItem) {
-													onClickMenuItem(item);
-												}
-											}}
-										>
-											{item.name}
-										</button>
-									)}
-								</MenuItem>
-							)
-						})
+								const key = `menu-item-${index}`;
+								return (
+									<MenuItem key={key}>
+										{({ focus }) => (
+											<button
+												type='button'
+												className={clsx(
+													'w-full',
+													focus && 'bg-primary/5 text-black',
+													'block px-4 py-2 text-sm text-left'
+												)}
+												onClick={e => {
+													if (!closeOnClick) {
+														e.preventDefault();
+													}
+													if (onClickMenuItem) {
+														onClickMenuItem(item);
+													}
+												}}
+											>
+												{item.name}
+											</button>
+										)}
+									</MenuItem>
+								);
+							})
 						: undefined}
 				</MenuItems>
 			</Transition>
 		</Menu>
-	)
-}
+	);
+};
 
-export default Dropdown
+export default Dropdown;

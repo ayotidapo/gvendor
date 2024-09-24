@@ -1,22 +1,20 @@
-import { APIErrorResponse } from "@/types/types"
+import { APIErrorResponse } from '@/types/types';
 
 const formatCurrency = (amount: string | number): string => {
 	return new Intl.NumberFormat('en-NG', {
 		currency: 'NGN',
 		style: 'currency',
-	}).format(Number(amount))
-}
+	}).format(Number(amount));
+};
 
 const formatNumber = (count: number): string => {
 	return new Intl.NumberFormat('en-IN', {
 		maximumSignificantDigits: 3,
-	}).format(count)
-}
+	}).format(count);
+};
 
 const getErrorMessage = (error: APIErrorResponse) => {
+	return error.error?.data?.error ?? 'Something went wrong, try again later.';
+};
 
-	return error.error?.data?.error ?? 'Something went wrong, try again later.'
-}
-
-export { formatCurrency, formatNumber, getErrorMessage }
-
+export { formatCurrency, formatNumber, getErrorMessage };

@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { Header } from '@/components/typography/Header';
 import TextInput from '@/components/input/TextInput';
 import Button from '@/components/buttons/Button';
-import '../profile/timeinput.css';
+import '../profile/timeinput.css'
 import { Icon } from '@/components/icon/icon';
 import Select from '@/components/select/Select';
 import * as Yup from 'yup';
@@ -30,18 +30,6 @@ const ProfilePage = () => {
 	const [selectedValue, setSelectedValue] = useState<string | number>('');
 	const { data: profile, isLoading } = useGetProfileQuery();
 	const [updateProfile] = useUpdateProfileMutation();
-	const { data: bankData } = useGetBankQuery();
-	const { data: account } = useGetAccountQuery({
-		accountNumber: '0480819437',
-		bankCode: '058',
-	});
-
-	const formattedBankOptions = bankData?.data
-		? bankData.data.map((bank: any) => ({
-				label: bank.name,
-				value: bank.code,
-			}))
-		: [];
 
 	useEffect(() => {
 		if (profile) {
@@ -50,6 +38,7 @@ const ProfilePage = () => {
 			setFieldValue('phone', profile.phone);
 			setFieldValue('website', profile.website);
 			setFieldValue('description', profile.description);
+			setAvailableHours(profile.availableHours);
 		}
 		console.log(account);
 	}, [profile, account]);
@@ -184,11 +173,11 @@ const ProfilePage = () => {
 					<Header header={'Set standard hours'} />
 				</span>
 				<span className='block mt-2'>
-					Configure the standard hours <ol></ol>f operation for this business
+					Configure the standard hours of operation for this business
 				</span>
 				<div className='mt-6'>
 					{/* {profile?.availableHours?.map((day) => ( */}
-					{/* <>
+						<>
 							<div>
 								{profile?.availableHours}
 							</div>
@@ -208,11 +197,35 @@ const ProfilePage = () => {
 								</span>
 							</button>
 							<input type='time' className='custom-time-input'></input>
-						</> */}
+						</>
 					{/* ))}  */}
 				</div>
 				<div className='mt-6 w-[143px]'>
-					<Button label={'Save Schedule'} />
+					<Button
+						onClick={() => {
+							// loop through availableHours and remove opening time and closing time if open is false
+							const updatedHours = Object.entries(availableHours).reduce(
+								(acc, [day, hours]) => {
+									if (!hours.open) {
+										return {
+											...acc,
+											[day]: {
+												open: false,
+											},
+										};
+									} else {
+										return {
+											...acc,
+											[day]: hours,
+										};
+									}
+								},
+								{}
+							);
+							updateProfile({ availableHours: updatedHours });
+						}}
+						label={'Save Schedule'}
+					/>
 				</div>
 			</div>
 
@@ -253,6 +266,23 @@ const ProfilePage = () => {
 				</div>
 			</div>
 		</div>
+	);
+};
+
+const TimeInput = ({
+	value,
+	onChange,
+}: {
+	value: string;
+	onChange: (value: string) => void;
+}) => {
+	return (
+		<input
+			onChange={e => onChange(e.target.value)}
+			value={value}
+			type='time'
+			className='bg-transparent border border-default-gray rounded-lg p-4 text-secondary-black md:w-52 md:h-14'
+		/>
 	);
 };
 
