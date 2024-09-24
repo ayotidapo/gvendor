@@ -10,12 +10,11 @@ import { CountCardContainer } from '@/containers/CountCardWrapper';
 import { Status } from '@/components/cards/StatusTag';
 import Dropdown from '@/components/input/dropdown';
 import { Icon } from '@/components/icon/icon';
-import { format } from 'date-fns'
+import { format } from 'date-fns';
 import { formatCurrency } from '@/helpers';
 import { PaymentTypes, StatusTypes } from '@/types/types';
 import { useGetAllOrdersQuery } from '@/redux/orders/orders.slice';
 import { ORDERSTATUS, PAYMENTSTATUS } from '@/utils/constants';
-
 
 const Orders: React.FC = () => {
 	const { data: orderData } = useGetAllOrdersQuery({});
@@ -69,18 +68,21 @@ const Orders: React.FC = () => {
 								text={order.status}
 								type={
 									(ORDERSTATUS.find(
-										(status) =>
-											status.orderStatus.toLowerCase() === order.status.toLowerCase(),
+										status =>
+											status.orderStatus.toLowerCase() ===
+											order.status.toLowerCase()
 									)?.type ?? 'warn') as StatusTypes
-								} />
+								}
+							/>
 						</div>,
 						<Status
 							key={order._id}
 							text={order.paymentStatus}
 							type={
 								(PAYMENTSTATUS.find(
-									(status) =>
-										status.name.toLowerCase() === order.paymentStatus.toLocaleLowerCase()
+									status =>
+										status.name.toLowerCase() ===
+										order.paymentStatus.toLocaleLowerCase()
 								)?.type ?? 'fail') as PaymentTypes
 							}
 						/>,
@@ -90,7 +92,7 @@ const Orders: React.FC = () => {
 							menuButton={
 								<Icon svg='ellipses' height={18} width={18} className='' />
 							}
-							onClickMenuItem={() => { }}
+							onClickMenuItem={() => {}}
 							menuItems={[
 								{
 									name: (

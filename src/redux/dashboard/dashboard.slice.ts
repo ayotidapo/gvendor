@@ -44,8 +44,8 @@ export const dashboardApiSlice = apiSlice.injectEndpoints({
 			query: () => ({
 				url: `/order/top-sellers`,
 				method: 'GET',
-			})
-		})
+			}),
+		}),
 	}),
 });
 

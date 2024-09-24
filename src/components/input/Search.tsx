@@ -7,10 +7,7 @@ interface SearchBarProps {
 	extraClass?: string;
 }
 
-const SearchBar: FC<SearchBarProps> = ({
-	placeholder,
-	extraClass = '',
-}) => {
+const SearchBar: FC<SearchBarProps> = ({ placeholder, extraClass = '' }) => {
 	const [query, setQuery] = useState<string>('');
 
 	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -18,7 +15,9 @@ const SearchBar: FC<SearchBarProps> = ({
 	};
 
 	return (
-		<div className={`relative flex rounded-full p-4 md:p-4 items-center w-full md:w-[400px] h-[58px] overflow-hidden bg-default-gray-2 ${extraClass}`}>
+		<div
+			className={`relative flex rounded-full p-4 md:p-4 items-center w-full md:w-[400px] h-[58px] overflow-hidden bg-default-gray-2 ${extraClass}`}
+		>
 			<SearchIcon width={20} className='text-default-gray' />
 			<input
 				type='text'

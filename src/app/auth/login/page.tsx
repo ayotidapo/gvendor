@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import Button from '@/components/buttons/Button';
 import TextInput from '@/components/input/TextInput';
@@ -106,7 +106,6 @@ const LoginPage = () => {
 						type='submit'
 						label='Sign in'
 						additionalClass='!py-4'
-
 					/>
 				</div>
 			</form>
@@ -115,4 +114,3 @@ const LoginPage = () => {
 };
 
 export default LoginPage;
-

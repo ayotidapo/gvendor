@@ -1,5 +1,5 @@
 import Button from '@/components/buttons/Button';
-import  TextInput  from '@/components/input/TextInput';
+import TextInput from '@/components/input/TextInput';
 import { Header } from '@/components/typography/Header';
 import React, { useState } from 'react';
 import clsx from 'clsx';

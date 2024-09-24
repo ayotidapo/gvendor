@@ -1,23 +1,23 @@
 import { RecoletaMedium } from '@/fonts/font';
 
 export const AuthHeader = ({
-  title,
-  className = '',
+	title,
+	className = '',
 }: {
-  title: string;
-  className?: string;
+	title: string;
+	className?: string;
 }) => {
-  return (
-    <div
-      className={`
+	return (
+		<div
+			className={`
 			${RecoletaMedium.className}
 			text-2xl md:text-[40px]
 			w-full
 			!font-black
 			${className}
 			`}
-    >
-      {title}
-    </div>
-  );
+		>
+			{title}
+		</div>
+	);
 };

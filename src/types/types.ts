@@ -73,21 +73,21 @@ export interface Auth {
 	token?: string | null;
 }
 
-export type StatusTypes = 'success' | 'fail' | 'warn'
+export type StatusTypes = 'success' | 'fail' | 'warn';
 
-export type PaymentTypes = 'paid' | 'not Paid'
+export type PaymentTypes = 'paid' | 'not Paid';
 
 export interface Transactions {
-	_id: string
-	userId: string
-	amount: number
-	type: string
-	createdAt: string
+	_id: string;
+	userId: string;
+	amount: number;
+	type: string;
+	createdAt: string;
 	metadata: {
-		intent: string
-		reference: string
-	}
-	status: string
+		intent: string;
+		reference: string;
+	};
+	status: string;
 }
 
 export interface TransactionsResponse {
@@ -95,30 +95,30 @@ export interface TransactionsResponse {
 	type: string;
 	amount: string;
 	createdAt: string;
-	success: boolean
-	message: string
+	success: boolean;
+	message: string;
 	data: {
-		transactions: Transactions[]
-		totalCount: number
-	}
+		transactions: Transactions[];
+		totalCount: number;
+	};
 }
 
 export interface DailyResponse {
-	success: boolean
-	message: string
+	success: boolean;
+	message: string;
 	data: {
-		day: string
-		total: number
-		count: number
-	}[]
+		day: string;
+		total: number;
+		count: number;
+	}[];
 }
 
 export interface CustomerReport {
-	success: boolean
-	message: string
+	success: boolean;
+	message: string;
 	data: {
-		day: string
-		total: number
-		count: number
-	}
+		day: string;
+		total: number;
+		count: number;
+	};
 }

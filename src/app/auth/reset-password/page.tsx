@@ -1,6 +1,6 @@
 'use client';
 import Button from '@/components/buttons/Button';
-import  TextInput  from '@/components/input/TextInput';
+import TextInput from '@/components/input/TextInput';
 import { Gilroy, GilroyMedium } from '@/fonts/font';
 import { useResetPasswordMutation } from '@/redux/reducers/auth/authSlice';
 import { useFormik } from 'formik';
@@ -22,7 +22,11 @@ const ResetPassword = () => {
 	const [resetPassword, { isLoading }] = useResetPasswordMutation();
 	const router = useRouter();
 
-	const onResetPassword = async (val: { email: string; password: string; code: string; }) => {
+	const onResetPassword = async (val: {
+		email: string;
+		password: string;
+		code: string;
+	}) => {
 		try {
 			const payload = {
 				email: val.email,

@@ -1,13 +1,13 @@
-import React from 'react'
-import { PaymentTypes, StatusTypes } from '../../types/types'
+import React from 'react';
+import { PaymentTypes, StatusTypes } from '../../types/types';
 
 export const Status: React.FC<{
-  type: StatusTypes | PaymentTypes
-  text: string
+	type: StatusTypes | PaymentTypes;
+	text: string;
 }> = ({ type, text }) => {
-  return (
-    <div
-      className={`
+	return (
+		<div
+			className={`
       lowercase
       ${type === 'success' && 'bg-success-light text-success'}
       ${type === 'fail' && 'bg-danger-light text-danger'}
@@ -18,8 +18,8 @@ export const Status: React.FC<{
       rounded-full
       w-fit
         `}
-    >
-      {text}
-    </div>
-  )
-}
+		>
+			{text}
+		</div>
+	);
+};
