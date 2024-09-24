@@ -16,7 +16,7 @@ import {
 import { useFormik } from 'formik';
 import { toast } from 'react-toastify';
 import Switch from '@/components/switch/Switch';
-import { useGetBankQuery } from '@/redux/miscellaneous/getbank.slice';
+import { useGetAccountQuery, useGetBankQuery } from '@/redux/miscellaneous/getbank.slice';
 
 const profileSchema = Yup.object({
 	address: Yup.string().required('Business address is required'),
@@ -31,6 +31,10 @@ const ProfilePage = () => {
 	const { data: profile, isLoading } = useGetProfileQuery();
 	const [updateProfile] = useUpdateProfileMutation();
 	const { data: bankData } = useGetBankQuery();
+	const { data: account } = useGetAccountQuery({
+		accountNumber: '0480819437',
+		bankCode: '058',
+	});
 
 	const formattedBankOptions = bankData?.data
 		? bankData.data.map((bank: any) => ({
@@ -47,8 +51,8 @@ const ProfilePage = () => {
 			setFieldValue('website', profile.website);
 			setFieldValue('description', profile.description);
 		}
-		console.log(bankData);
-	}, [profile, bankData]);
+		console.log(account);
+	}, [profile, account]);
 
 	const handleSelectChange = (value: string | number) => {
 		setSelectedValue(value);

@@ -21,3 +21,15 @@ export interface GetBankResponse{
     message: string;
     data: Bank[];
 }
+
+export interface Account{
+    account_number: string;
+    account_name: string;
+    bank_id: number;
+}
+
+export interface ResolveAccountResponse{
+    success: boolean;
+    message: string;
+    data: Account[];
+}
