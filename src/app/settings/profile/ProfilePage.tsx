@@ -4,7 +4,6 @@ import React, { useEffect, useState } from 'react';
 import { Header } from '@/components/typography/Header';
 import TextInput from '@/components/input/TextInput';
 import Button from '@/components/buttons/Button';
-import '../profile/timeinput.css'
 import { Icon } from '@/components/icon/icon';
 import Select from '@/components/select/Select';
 import * as Yup from 'yup';
@@ -16,7 +15,10 @@ import {
 import { useFormik } from 'formik';
 import { toast } from 'react-toastify';
 import Switch from '@/components/switch/Switch';
-import { useGetAccountQuery, useGetBankQuery } from '@/redux/miscellaneous/getbank.slice';
+import {
+	useGetAccountQuery,
+	useGetBankQuery,
+} from '@/redux/miscellaneous/getbank.slice';
 
 const profileSchema = Yup.object({
 	address: Yup.string().required('Business address is required'),
@@ -30,6 +32,20 @@ const ProfilePage = () => {
 	const [selectedValue, setSelectedValue] = useState<string | number>('');
 	const { data: profile, isLoading } = useGetProfileQuery();
 	const [updateProfile] = useUpdateProfileMutation();
+	const { data: bankData } = useGetBankQuery()
+	const { data: account } = useGetAccountQuery({
+		bankCode: '058',
+		accountNumber: '0480819437',
+	});
+	const [availableHours, setAvailableHours] = useState<{
+		[key: string]: { open: boolean; openingTime: string; closingTime: string };
+	}>({});
+
+	const formattedBankOptions = bankData?.data ? bankData?.data?.map((bank: any) => ({
+		label: bank.name,
+		value: bank.id,
+	})) : [];
+
 
 	useEffect(() => {
 		if (profile) {
@@ -176,32 +192,63 @@ const ProfilePage = () => {
 					Configure the standard hours of operation for this business
 				</span>
 				<div className='mt-6'>
-					{/* {profile?.availableHours?.map((day) => ( */}
-						<>
-							<div>
-								{profile?.availableHours}
-							</div>
-							<button
-								disabled={false }
-								key={profile._id}
-								onClick={() => {
-
-								}}
-							>
-								<Switch
-									checked={day?.sunday?.open}
-									// disabled={}
-								/>
-								<span>
-									{day?.friday?.open ? 'Open' : 'Closed'}
-								</span>
-							</button>
-							<input type='time' className='custom-time-input'></input>
-						</>
-					{/* ))}  */}
+					{profile?.availableHours
+						? Object.entries(availableHours).map(([day, availableHours]) => (
+								<div
+									key={day}
+									className='grid min-h-14 grid-cols-3 sm:grid-cols-4 lg:grid-cols-7 gap-4 items-center mb-4 border-b border-default-gray-2 pb-4 lg:border-transparent'
+								>
+									<p className='font-bold capitalize'>{day}</p>
+									<div className='flex items-center space-x-2'>
+										<Switch
+											enabled={availableHours.open}
+											setEnabled={value => {
+												setAvailableHours(prevHours => ({
+													...prevHours,
+													[day]: {
+														...prevHours[day],
+														open: value,
+													},
+												}));
+											}}
+										/>
+										<span>{availableHours.open ? 'Open' : 'Closed'}</span>
+									</div>
+									{availableHours.open && (
+										<div className='col-span-3 flex space-x-4 items-center'>
+											<TimeInput
+												value={availableHours.openingTime}
+												onChange={value => {
+													setAvailableHours(prevHours => ({
+														...prevHours,
+														[day]: {
+															...prevHours[day],
+															openingTime: value,
+														},
+													}));
+												}}
+											/>
+											<span>To</span>
+											<TimeInput
+												value={availableHours.closingTime}
+												onChange={value => {
+													setAvailableHours(prevHours => ({
+														...prevHours,
+														[day]: {
+															...prevHours[day],
+															closingTime: value,
+														},
+													}));
+												}}
+											/>
+										</div>
+									)}
+								</div>
+							))
+						: null}
 				</div>
 				<div className='mt-6 w-[143px]'>
-					<Button
+				<Button
 						onClick={() => {
 							// loop through availableHours and remove opening time and closing time if open is false
 							const updatedHours = Object.entries(availableHours).reduce(
