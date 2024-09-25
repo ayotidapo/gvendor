@@ -18,6 +18,7 @@ import Switch from '@/components/switch/Switch';
 import {
 	useGetAccountQuery,
 	useGetBankQuery,
+	useUpdateAccountMutation,
 } from '@/redux/miscellaneous/getbank.slice';
 
 const profileSchema = Yup.object({
@@ -26,26 +27,50 @@ const profileSchema = Yup.object({
 	phone: Yup.string().required('Phone number is required'),
 	website: Yup.string().required('Website URL is required'),
 	description: Yup.string().required('Business description is required'),
+	accountName: Yup.string().required('Account name is required'),
+	accountNumber: Yup.string().required('Account Number is required')
 });
 
 const ProfilePage = () => {
 	const [selectedValue, setSelectedValue] = useState<string | number>('');
+	const [accountNumber, setAccountNumber] = useState<string>('')
+	const [accountName, setAccountName] = useState<string>('')
+	const [displayedAccount, setDisplayedAccount] = useState<{
+		name: string,
+		number: string,
+		bank:string | number,
+	} |null>(null)
 	const { data: profile, isLoading } = useGetProfileQuery();
 	const [updateProfile] = useUpdateProfileMutation();
+	const [updateAccount] = useUpdateAccountMutation();
 	const { data: bankData } = useGetBankQuery()
-	const { data: account } = useGetAccountQuery({
-		bankCode: '058',
-		accountNumber: '0480819437',
-	});
+	const { data: account , refetch: refetchAccount } = useGetAccountQuery({
+		// bankCode: '057',
+		// accountNumber: '2051103255',
+		bankCode: selectedValue, accountNumber
+	},{ skip: !selectedValue || !accountNumber});
+	
 	const [availableHours, setAvailableHours] = useState<{
 		[key: string]: { open: boolean; openingTime: string; closingTime: string };
 	}>({});
 
 	const formattedBankOptions = bankData?.data ? bankData?.data?.map((bank: any) => ({
 		label: bank.name,
-		value: bank.id,
+		value: bank.code,
 	})) : [];
 
+	useEffect(() => {
+		if (selectedValue && accountNumber) {
+			refetchAccount()
+		}
+	}, [selectedValue, accountNumber, refetchAccount])
+	
+	useEffect(() => {
+		if (account && account.account_name) {
+			setAccountName(account.account_name)
+			setFieldValue('accountName', account.account_name)
+		}
+	},[account])
 
 	useEffect(() => {
 		if (profile) {
@@ -77,6 +102,8 @@ const ProfilePage = () => {
 			phone: profile?.phone ?? '',
 			website: profile?.website ?? '',
 			description: profile?.description ?? '',
+			accountName: '',
+			accountNumber: '',
 		},
 		validationSchema: profileSchema,
 		onSubmit: values => {
@@ -84,9 +111,18 @@ const ProfilePage = () => {
 				// console.log('Form Submitted', values);
 				updateProfile(values);
 				toast.success('Profile updated successfully');
+				// updateAccount(values)
 			}
 		},
 	});
+
+	const handleAccount = () => {
+		setDisplayedAccount({
+			name: accountName,
+			number: accountNumber,
+			bank: selectedValue,
+		})
+	}
 
 	const options = [
 		{ label: 'Option 1', value: 'option1' },
@@ -286,31 +322,50 @@ const ProfilePage = () => {
 							<Icon svg={'bank'} />
 						</div>
 						<div className=''>
-							<Header header={'AMOS EDOS OSAMUDIAMEN'} />
+							<Header header={displayedAccount ? displayedAccount.name : 'No bank Name'} />
 							<div className='flex space-x-3 items-center text-sm text-[#000000] md:w-[400px] md:gap-6'>
-								<p>FIRST BANK OF NIGERIA</p>
+								<p>{ displayedAccount ? bankData?.data?.find(bank => bank.code === displayedAccount.bank)?.name : "No selected bank"}</p>
 								<p>|</p>
-								<p>0001112278</p>
+								<p>{ displayedAccount ? displayedAccount.number : 'No account number'}</p>
 							</div>
 						</div>
 					</div>
 				</div>
+
+
+				<form onSubmit={handleSubmit}>
 				<div className='pt-6 space-y-4 md:w-[800px]'>
-					{/* {getbank.map(bank => ( */}
 					<Select
 						options={formattedBankOptions}
 						placeholder='Bank'
 						value={selectedValue}
 						onChange={handleSelectChange}
 					/>
-					{/* // ))} */}
-					{/* <TextInput type={'text'} name={''} placeholder='Bank' /> */}
-					<TextInput type={'text'} name={''} placeholder='Account name' />
-					<TextInput type={'text'} name={''} placeholder='Account number' />
-				</div>
+						<TextInput
+							type={'text'}
+							name='accountName'
+							value={accountName || values.accountName}
+							onChange={handleChange}
+							onBlur={handleBlur}
+							placeholder='Account name'
+						/>
+						<TextInput
+							type={'text'}
+							name='accountNumber'
+							value={values.accountNumber}
+							onChange={(e) => {
+								setAccountNumber(e.target.value);
+								handleChange(e)
+							}}
+							onBlur={handleBlur}
+							placeholder='Account number'
+						/>
+					</div>
+					
 				<div className='mt-6 w-[183px]'>
-					<Button label={'Add account'} />
+						<Button label={'Add account'} onClick={handleAccount} />
 				</div>
+				</form>
 			</div>
 		</div>
 	);

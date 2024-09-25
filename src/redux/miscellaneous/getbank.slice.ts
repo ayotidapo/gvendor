@@ -11,12 +11,12 @@ export const bankApiSlice = apiSlice.injectEndpoints({
 				method: 'GET',
 			}),
 		}),
-        getAccount: builder.query<ResolveAccountResponse, { accountNumber: string | number; bankCode: string | number}>({
+        getAccount: builder.query<Account, { accountNumber: string | number; bankCode: string | number}>({
 			query: ({accountNumber, bankCode}) => ({
 				url: `/misc/banks/resolve?accountNumber=${accountNumber}&bankCode=${bankCode}`,
 				method: 'GET',
 			}),
-			transformResponse: (response: { data: ResolveAccountResponse }) => response.data,
+			transformResponse: (response: { data: Account }) => response.data,
 			async onQueryStarted(arg, { queryFulfilled }) {
 				try {
 					await queryFulfilled;
@@ -28,7 +28,7 @@ export const bankApiSlice = apiSlice.injectEndpoints({
 				}
 			},
 		}),
-        updateAccount: builder.mutation<ResolveAccountResponse, { accountNumber: string | number; bankCode: string | number; data: Partial<Account>}>({
+        updateAccount: builder.mutation<Account, { accountNumber: string | number; bankCode: string | number; data: Partial<Account>}>({
 			query: ({accountNumber, bankCode, data}) => ({
 				url: `/misc/banks/resolve?accountNumber=${accountNumber}&bankCode=${bankCode}`,
 				method: 'PUT',
@@ -49,5 +49,5 @@ export const bankApiSlice = apiSlice.injectEndpoints({
 	}),
 });
 
-export const { useGetBankQuery, useGetAccountQuery, useUpdateAccountMutation } =
+export const { useGetBankQuery, useGetAccountQuery, useUpdateAccountMutation} =
 	bankApiSlice;
