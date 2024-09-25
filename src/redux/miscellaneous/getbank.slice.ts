@@ -28,10 +28,10 @@ export const bankApiSlice = apiSlice.injectEndpoints({
 				}
 			},
 		}),
-        updateAccount: builder.mutation<Account, { accountNumber: string | number; bankCode: string | number; data: Partial<Account>}>({
-			query: ({accountNumber, bankCode, data}) => ({
-				url: `/misc/banks/resolve?accountNumber=${accountNumber}&bankCode=${bankCode}`,
-				method: 'PUT',
+        updateAccount: builder.mutation<Account, Partial<Account>>({
+			query: data => ({
+				url: `/profile/account`,
+				method: 'PATCH',
 				body: data,
 			}),
 			async onQueryStarted(arg, { queryFulfilled }) {

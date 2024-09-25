@@ -45,8 +45,6 @@ const ProfilePage = () => {
 	const [updateAccount] = useUpdateAccountMutation();
 	const { data: bankData } = useGetBankQuery()
 	const { data: account , refetch: refetchAccount } = useGetAccountQuery({
-		// bankCode: '057',
-		// accountNumber: '2051103255',
 		bankCode: selectedValue, accountNumber
 	},{ skip: !selectedValue || !accountNumber});
 	
@@ -81,8 +79,7 @@ const ProfilePage = () => {
 			setFieldValue('description', profile.description);
 			setAvailableHours(profile.availableHours);
 		}
-		console.log(account);
-	}, [profile, account]);
+	}, [profile, account, updateAccount]);
 
 	const handleSelectChange = (value: string | number) => {
 		setSelectedValue(value);
@@ -108,21 +105,34 @@ const ProfilePage = () => {
 		validationSchema: profileSchema,
 		onSubmit: values => {
 			if (!isLoading) {
-				// console.log('Form Submitted', values);
 				updateProfile(values);
 				toast.success('Profile updated successfully');
-				// updateAccount(values)
 			}
 		},
 	});
 
-	const handleAccount = () => {
-		setDisplayedAccount({
-			name: accountName,
-			number: accountNumber,
-			bank: selectedValue,
-		})
-	}
+	const handleAccount = async () => {
+		try {
+			const updatedAccount = await updateAccount({
+				accountNumber,  
+				bankCode: selectedValue,  
+				data: {                 
+					name: accountName,  
+				},
+			}).unwrap();
+			
+			setDisplayedAccount({
+				name: accountName,  
+				number: accountNumber,      
+				bank: selectedValue,        
+			});
+	
+			toast.success('Account updated successfully');
+		} catch (error) {
+			toast.error('Failed to update account');
+			console.error('Error updating account:', error);
+		}
+	};
 
 	const options = [
 		{ label: 'Option 1', value: 'option1' },
