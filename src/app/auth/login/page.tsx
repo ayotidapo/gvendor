@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import Button from '@/components/buttons/Button';
 import TextInput from '@/components/input/TextInput';
@@ -114,4 +114,3 @@ const LoginPage = () => {
 };
 
 export default LoginPage;
-

@@ -1,63 +1,47 @@
+'use client';
+
 import React from 'react';
 import PageWrapper from '@/containers/PageWrapper';
 import Search from '@/components/input/Search';
 import Button from '@/components/buttons/Button';
 import CountCard from '@/components/cards/CountCard';
 import { TableComponent } from '@/components/table/Table';
-
-const tableData = [
-	{
-		id: '1',
-		price: '$100',
-		orderStatus: 'Delivered',
-		paymentStatus: 'Paid',
-		dateTime: '2021-09-10 12:00:00',
-	},
-	{
-		id: '2',
-		price: '$200',
-		orderStatus: 'Pending',
-		paymentStatus: 'Unpaid',
-		dateTime: '2021-09-10 12:00:00',
-	},
-	{
-		id: '3',
-		price: '$300',
-		orderStatus: 'Processing',
-		paymentStatus: 'Paid',
-		dateTime: '2021-09-10 12:00:00',
-	},
-	{
-		id: '4',
-		price: '$400',
-		orderStatus: 'Delivered',
-		paymentStatus: 'Paid',
-		dateTime: '2021-09-10 12:00:00',
-	},
-	{
-		id: '5',
-		price: '$500',
-		orderStatus: 'Delivered',
-		paymentStatus: 'Paid',
-		dateTime: '2021-09-10 12:00:00',
-	},
-];
+import { CountCardContainer } from '@/containers/CountCardWrapper';
+import { Status } from '@/components/cards/StatusTag';
+import Dropdown from '@/components/input/dropdown';
+import { Icon } from '@/components/icon/icon';
+import { format } from 'date-fns';
+import { formatCurrency } from '@/helpers';
+import { PaymentTypes, StatusTypes } from '@/types/types';
+import { useGetAllOrdersQuery } from '@/redux/orders/orders.slice';
+import { ORDERSTATUS, PAYMENTSTATUS } from '@/utils/constants';
 
 const Orders: React.FC = () => {
+	const { data: orderData } = useGetAllOrdersQuery({});
+
 	return (
 		<PageWrapper pageHeader='Orders'>
-			<div className='pb-10 flex justify-between'>
-				<div>
+			<div className='flex flex-col md:flex-row gap-4 items-center justify-between mb-10'>
+				<div className='w-full md:w-auto md:max-w-[400px]'>
 					<Search placeholder='Search orders' />
 				</div>
-				<div className=''>
+				<div className='w-full md:w-auto'>
 					<Button filter label='Order Status' name='outline' />
 				</div>
 			</div>
-			<div className='grid grid-cols-4 gap-4'>
+
+			<CountCardContainer
+				className='
+							grid grid-flow-row
+							grid-cols-1 sm:grid-cols-2 lg:grid-cols-3
+							gap-10
+
+				   '
+			>
 				<CountCard count={0} text={'TOTAL SALES'} isCurrency={false} />
 				<CountCard count={0} text={'TOTAL ORDER'} isCurrency={false} />
-			</div>
+			</CountCardContainer>
+
 			<TableComponent
 				headers={[
 					'ORDER ID',
@@ -65,15 +49,61 @@ const Orders: React.FC = () => {
 					'ORDER STATUS',
 					'PAYMENT STATUS',
 					'DATE & TIME',
+					' ',
+					<div
+						className='w-full flex justify-end'
+						key={`header-controls`}
+					></div>,
 				]}
-				rows={tableData.map(data => ({
-					id: data.id,
+				rows={(orderData?.data.docs || []).map(order => ({
+					id: order._id,
 					content: [
-						data.id,
-						data.price,
-						data.orderStatus,
-						data.paymentStatus,
-						data.dateTime,
+						order._id,
+						`${formatCurrency(order.amount)}`,
+						<div
+							key={order._id}
+							className='flex items-center gap-2 overflow-visible'
+						>
+							<Status
+								text={order.status}
+								type={
+									(ORDERSTATUS.find(
+										status =>
+											status.orderStatus.toLowerCase() ===
+											order.status.toLowerCase()
+									)?.type ?? 'warn') as StatusTypes
+								}
+							/>
+						</div>,
+						<Status
+							key={order._id}
+							text={order.paymentStatus}
+							type={
+								(PAYMENTSTATUS.find(
+									status =>
+										status.name.toLowerCase() ===
+										order.paymentStatus.toLocaleLowerCase()
+								)?.type ?? 'fail') as PaymentTypes
+							}
+						/>,
+						`${format(order.createdAt, 'yyyy-mm-dd h:mm:a')}`,
+						<Dropdown
+							key={`${order._id}-controls`}
+							menuButton={
+								<Icon svg='ellipses' height={18} width={18} className='' />
+							}
+							onClickMenuItem={() => {}}
+							menuItems={[
+								{
+									name: (
+										<button className='disabled:opacity-30 w-full text-left'>
+											Request delivery
+										</button>
+									),
+									value: '',
+								},
+							]}
+						/>,
 					],
 				}))}
 				name='categories-table'

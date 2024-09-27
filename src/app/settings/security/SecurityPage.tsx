@@ -24,7 +24,7 @@ const SecurityPage = () => {
 			<div>
 				<Header header={'Password'} />
 			</div>
-			<div className='space-y-4 w-[800px]'>
+			<div className='space-y-4 md:w-[800px]'>
 				<TextInput
 					type={'password'}
 					placeholder={'Current password'}
@@ -49,7 +49,9 @@ const SecurityPage = () => {
 					account. You will lose all your sales, orders, teams and other data.
 				</div>
 				<div>
-					<div className='pt-4'>Please select the reason for closing your Good account</div>
+					<div className='pt-4'>
+						Please select the reason for closing your Good account
+					</div>
 					{reasons.map((reason, idx) => (
 						<div key={idx} className='relative flex items-center py-2'>
 							<div

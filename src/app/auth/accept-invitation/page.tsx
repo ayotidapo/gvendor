@@ -30,7 +30,11 @@ const SignUp = () => {
 		}
 	}, [isSuccess]);
 
-	const onSignUp = async (values: { address: string; password: string; phone: string }) => {
+	const onSignUp = async (values: {
+		address: string;
+		password: string;
+		phone: string;
+	}) => {
 		try {
 			await signup({ ...values, reference: reference ?? '' });
 		} catch (error) {

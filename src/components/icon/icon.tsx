@@ -1,12 +1,14 @@
 export const Icon = ({
 	svg,
+	id,
 	width = 20,
 	height = 20,
 	className,
 	onClick,
 	...props
 }: {
-	svg: string;
+	id?: string;
+	svg?: string;
 	width?: number;
 	height?: number;
 	className?: string;
@@ -14,6 +16,7 @@ export const Icon = ({
 }) => {
 	return (
 		<svg
+			id={id}
 			onClick={onClick}
 			className={className}
 			width={width ? width : 20}

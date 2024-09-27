@@ -9,6 +9,7 @@ interface CountCardProps {
 	label: string;
 	icon?: string;
 	isCurrency: boolean;
+	href?: string;
 }
 
 const CountCard: React.FC<CountCardProps> = ({
@@ -17,6 +18,7 @@ const CountCard: React.FC<CountCardProps> = ({
 	icon,
 	label,
 	isCurrency,
+	href,
 }) => {
 	return (
 		<div className='bg-off-white border border-[#EAEAEA] shadow-sm p-4 rounded-md flex items-center justify-between'>
@@ -32,7 +34,7 @@ const CountCard: React.FC<CountCardProps> = ({
 				</div>
 			)}
 			<div>
-				<Button label={label} />
+				<Button label={label} href={href} />
 			</div>
 		</div>
 	);

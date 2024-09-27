@@ -26,7 +26,6 @@ const EmailSchema = Yup.object({
 		.required('A valid email is required'),
 });
 
-
 const ForgotPassword = () => {
 	const [forgotPassword, { isLoading }] = useForgotPasswordMutation();
 	const [linkSent, setLinkSent] = useState<boolean>(false);
@@ -54,7 +53,7 @@ const ForgotPassword = () => {
 			email: '',
 		},
 		validationSchema: EmailSchema,
-		onSubmit: (values) => {
+		onSubmit: values => {
 			if (!isLoading) {
 				onForgotPassword(values);
 			}
@@ -80,7 +79,6 @@ const ForgotPassword = () => {
 							/>
 						</div>
 					</div>
-
 
 					<div className='mt-6'>
 						<Button

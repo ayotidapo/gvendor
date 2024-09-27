@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import Button from '@/components/buttons/Button';
 import CountCard from '@/components/cards/CountCard';
@@ -40,7 +40,7 @@ const Withdraw = () => {
 					/>
 				</div>
 				<div className=' w-[400px]'>
-					<Button label={'Withdraw'}/>
+					<Button label={'Withdraw'} />
 				</div>
 			</div>
 		</PageWrapper>

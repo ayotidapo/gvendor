@@ -1,8 +1,26 @@
-import { AuthHeader } from "@/components/typography/AuthHeader";
-import { Gilroy } from "@/fonts/font";
-import { ReactNode } from "react";
+import { AuthHeader } from '@/components/typography/AuthHeader';
+import { Gilroy } from '@/fonts/font';
+import { useAppSelector } from '@/hooks/reduxHooks';
+import { authSelector } from '@/redux/reducers/auth/auth.selector';
+import { useRouter } from 'next/navigation';
+import { ReactNode, useEffect } from 'react';
 
-const Wrapper = ({ children, title }: { children: ReactNode; title: string; }) => {
+const Wrapper = ({
+	children,
+	title,
+}: {
+	children: ReactNode;
+	title: string;
+}) => {
+	const router = useRouter();
+	const authData = useAppSelector(authSelector);
+
+	useEffect(() => {
+		if (authData.signedIn) {
+			router.push('/');
+		}
+	}, [authData.signedIn]);
+
 	return (
 		<div
 			className={`
@@ -39,5 +57,4 @@ const Wrapper = ({ children, title }: { children: ReactNode; title: string; }) =
 	);
 };
 
-
-export default Wrapper
+export default Wrapper;
