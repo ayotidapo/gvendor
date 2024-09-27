@@ -47,7 +47,6 @@ const Navbar = ({
 				</button>
 
 				<GoodLogo fill={'#F45D2C'} />
-				{process.env.NEXT_PUBLIC_VENDOR_BACKEND_BASE_URL} {'>>>>>'} Backend URL
 			</div>
 
 			{!showBlandNav && (
