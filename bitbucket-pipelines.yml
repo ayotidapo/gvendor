@@ -12,6 +12,9 @@ pipelines:
           services:
             - docker1
           script:
+            - echo "NEXT_PUBLIC_VENDOR_BACKEND_BASE_URL=${NEXT_PUBLIC_VENDOR_BACKEND_BASE_URL_STAGING}" >> .env
+            - echo "NEXT_PUBLIC_LOCATION=${NEXT_PUBLIC_LOCATION_STAGING}" >> .env
+            - cat .env
             - export IMAGE_TAG=$BITBUCKET_BUILD_NUMBER
             - echo "$ACR_PASSWORD" | docker login -u "$ACR_USERNAME"
               --password-stdin "$ACR_REGISTRY"
@@ -21,8 +24,6 @@ pipelines:
       - step:
           name: Deploy to AKS Staging
           script:
-            - echo "NEXT_PUBLIC_VENDOR_BACKEND_BASE_URL=${NEXT_PUBLIC_VENDOR_BACKEND_BASE_URL_STAGING}" >> .env
-            - echo "NEXT_PUBLIC_LOCATION=${NEXT_PUBLIC_LOCATION_STAGING}" >> .env
             - export IMAGE_TAG=$BITBUCKET_BUILD_NUMBER
             - export ENV_SECRET=$ENV_SECRET_STAGING
             - export ENV_NAME=$ENV_NAME_STAGING
@@ -47,7 +48,8 @@ pipelines:
           services:
             - docker1
           script:
-          
+            - echo "NEXT_PUBLIC_VENDOR_BACKEND_BASE_URL=${NEXT_PUBLIC_VENDOR_BACKEND_BASE_URL_BETA}" >> .env
+            - echo "NEXT_PUBLIC_LOCATION=${NEXT_PUBLIC_LOCATION_BETA}" >> .env
             - export IMAGE_TAG=$BITBUCKET_BUILD_NUMBER
             - echo "$ACR_PASSWORD" | docker login -u "$ACR_USERNAME"
               --password-stdin "$ACR_REGISTRY"
@@ -57,8 +59,6 @@ pipelines:
       - step:
           name: Deploy to AKS Beta
           script:
-            - echo "NEXT_PUBLIC_VENDOR_BACKEND_BASE_URL=${NEXT_PUBLIC_VENDOR_BACKEND_BASE_URL_BETA}" >> .env
-            - echo "NEXT_PUBLIC_LOCATION=${NEXT_PUBLIC_LOCATION_BETA}" >> .env
             - export IMAGE_TAG=$BITBUCKET_BUILD_NUMBER
             - export ENV_SECRET=$ENV_SECRET_BETA
             - export ENV_NAME=$ENV_NAME_BETA
@@ -83,6 +83,8 @@ pipelines:
           services:
             - docker1
           script:
+            - echo "NEXT_PUBLIC_VENDOR_BACKEND_BASE_URL=${NEXT_PUBLIC_VENDOR_BACKEND_BASE_URL_PROD}" >> .env
+            - echo "NEXT_PUBLIC_LOCATION=${NEXT_PUBLIC_LOCATION_PROD}" >> .env
             - export IMAGE_TAG=$BITBUCKET_BUILD_NUMBER
             - echo "$ACR_PASSWORD" | docker login -u "$ACR_USERNAME"
               --password-stdin "$ACR_REGISTRY"
@@ -92,8 +94,6 @@ pipelines:
       - step:
           name: Deploy to AKS Prod
           script:
-            - echo "NEXT_PUBLIC_VENDOR_BACKEND_BASE_URL=${NEXT_PUBLIC_VENDOR_BACKEND_BASE_URL_PROD}" >> .env
-            - echo "NEXT_PUBLIC_LOCATION=${NEXT_PUBLIC_LOCATION_PROD}" >> .env
             - export IMAGE_TAG=$BITBUCKET_BUILD_NUMBER
             - export ENV_SECRET=$ENV_SECRET_PROD
             - export ENV_NAME=$ENV_NAME_PROD
