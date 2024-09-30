@@ -34,7 +34,7 @@ const data = [
 const Inventory: React.FC = () => {
 	const { data: inventoryData } = useGetInventoryQuery();
 
-	const labels = inventoryData?.data?.inventory.Products.map(item => item.amountSold);
+	const labels = inventoryData?.data?.inventory.Products.map(item => item.name);
 	const values1 = inventoryData?.data?.inventory.Products.map(item => item.unitsSold);
 
 	return (
