@@ -1,0 +1,238 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: goodlist-vendor-frontend-${ENV_NAME}
+spec:
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 0  # Ensure at least one pod is always running
+      maxSurge: 1  # Allow maximum 1 extra pod during updates
+  selector:
+    matchLabels:
+      app: goodlist-vendor-frontend-${ENV_NAME}
+  template:
+    metadata:
+      labels:
+        app: goodlist-vendor-frontend-${ENV_NAME}
+    spec:
+      containers:
+        - name: goodlist-vendor-frontend-${ENV_NAME}
+          image: goodlist${ENV_ACR}.azurecr.io/goodlist-vendor-frontend-${ENV_NAME}:${IMAGE_TAG}
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 3000
+          # resources:
+          #   requests:
+          #      memory: "1.2Gi"
+          #      cpu: "1m"
+          #   limits:
+          #      memory: "1.5Gi"
+          #      cpu: "2m"
+      #     volumeMounts:
+      #     - name: secrets-store-vendor-${ENV_NAME}
+      #       mountPath: "/mnt/secrets-store"
+      #       readOnly: true
+      #     env:
+      #     - name: REACT_APP_BACKEND_BASE_URL
+      #       valueFrom:
+      #         secretKeyRef:
+      #           name: goodlist-admin
+      #           key: REACT-APP-BACKEND-BASE-URL-BETA
+      #     - name: REACT_APP_AUTH_COOKIE_KEY
+      #       valueFrom:
+      #         secretKeyRef:
+      #           name: goodlist-admin
+      #           key: REACT-APP-AUTH-COOKIE-KEY
+      #     - name: NEXT_PUBLIC_ALGOLIA_APP_ID
+      #       valueFrom:
+      #         secretKeyRef:
+      #           name: goodlist-admin
+      #           key: NEXT-PUBLIC-ALGOLIA-APP-ID
+      #     - name: NEXT_PUBLIC_ALGOLIA_API_KEY
+      #       valueFrom:
+      #         secretKeyRef:
+      #           name: goodlist-admin
+      #           key: NEXT-PUBLIC-ALGOLIA-API-KEY
+      #     - name: NEXTAUTH_SECRET
+      #       valueFrom:
+      #         secretKeyRef:
+      #           name: goodlist-admin
+      #           key: NEXTAUTH-SECRET
+      #     - name: CLIENT_ID
+      #       valueFrom:
+      #         secretKeyRef:
+      #           name: goodlist-admin
+      #           key: CLIENT-ID
+      #     - name: CLIENT_SECRET
+      #       valueFrom:
+      #         secretKeyRef:
+      #           name: goodlist-admin
+      #           key: CLIENT-SECRET
+      # volumes:
+      #   - name: secrets-store-admin-${ENV_NAME}
+      #     csi:
+      #       driver: secrets-store.csi.k8s.io
+      #       readOnly: true
+      #       volumeAttributes:
+      #         secretProviderClass: azure-kvname-admin
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: agentpool
+                operator: In
+                values:
+                - userpool
+# ---
+# apiVersion: autoscaling/v2
+# kind: HorizontalPodAutoscaler
+# metadata:
+#   name: goodlist-vendor-frontend-${ENV_NAME}-hpa
+# spec:
+#   scaleTargetRef:
+#     apiVersion: apps/v1
+#     kind: Deployment
+#     name: goodlist-vendor-frontend-${ENV_NAME}
+#   minReplicas: 1
+#   maxReplicas: 3  # Adjust based on your workload and resource limits
+#   metrics:
+#   - type: Resource
+#     resource:
+#       name: memory
+#       target:
+#         type: Utilization
+#         averageUtilization: 70  # Adjust based on your workload and memory limits
+#   - type: Resource
+#     resource:
+#       name: cpu
+#       target:
+#         type: Utilization
+#         averageUtilization: 50  # Adjust based on your workload and memory limits
+---
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: goodlist-vendor-frontend-${ENV_NAME}-pdb  # You can customize this name
+spec:
+  minAvailable: 1  # Minimum number of pods to be available at all times
+  selector:
+    matchLabels:
+      app: goodlist-vendor-frontend-${ENV_NAME}  # Label that identifies the pods to protect
+  # Alternatively, you can use a selector based on other criteria
+  # maxUnavailable: 1  # Optional: Maximum number of pods that can be unavailable during disruption (absolute number or percentage)
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: goodlist-vendor-frontend-${ENV_NAME}
+spec:
+  type: NodePort
+  ports:
+    - port: 3000
+  selector:
+    app: goodlist-vendor-frontend-${ENV_NAME}
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: goodlist-vendor-frontend-${ENV_NAME}-ingress
+  annotations:
+    # nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    # nginx.ingress.kubernetes.io/use-regex: "true"
+    # nginx.ingress.kubernetes.io/rewrite-target: /$2
+    cert-manager.io/cluster-issuer: letsencrypt
+spec:
+  ingressClassName: nginx
+  tls:
+    - hosts:
+        - www.vendor-web.${ENV_NAME}.goodthingco.xyz
+        - vendor-web.${ENV_NAME}.goodthingco.xyz
+      secretName: tls-secret-vendor-frontend-${ENV_NAME}
+  rules:
+    - host: www.vendor-web.${ENV_NAME}.goodthingco.xyz
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: goodlist-vendor-frontend-${ENV_NAME}
+                port:
+                  number: 3000
+    - host: vendor-web.${ENV_NAME}.goodthingco.xyz
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: goodlist-vendor-frontend-${ENV_NAME}
+                port:
+                  number: 3000
+
+#Get envs from azure vault
+# ---
+# apiVersion: secrets-store.csi.x-k8s.io/v1
+# kind: SecretProviderClass
+# metadata:
+#   name: azure-kvname-admin
+# spec:
+#   provider: azure
+#   secretObjects:
+#   - secretName: goodlist-admin
+#     type: Opaque
+#     data:
+#     - objectName: REACT-APP-BACKEND-BASE-URL-BETA
+#       key: REACT-APP-BACKEND-BASE-URL-BETA
+#     - objectName: REACT-APP-AUTH-COOKIE-KEY
+#       key: REACT-APP-AUTH-COOKIE-KEY
+#     - objectName: NEXT-PUBLIC-ALGOLIA-APP-ID
+#       key: NEXT-PUBLIC-ALGOLIA-APP-ID
+#     - objectName: NEXT-PUBLIC-ALGOLIA-API-KEY
+#       key: NEXT-PUBLIC-ALGOLIA-API-KEY
+#     - objectName: NEXTAUTH-SECRET
+#       key: NEXTAUTH-SECRET
+#     - objectName: CLIENT-ID
+#       key: CLIENT-ID
+#     - objectName: CLIENT-SECRET
+#       key: CLIENT-SECRET
+#   parameters:
+#       usePodIdentity: "false"
+#       useVMManagedIdentity: "true"          # Set to true for using managed identity
+#       userAssignedIdentityID: 508abb09-28c0-488d-b4e3-e7a99cd454b7   # Set the clientID of the user-assigned managed identity to use
+#       keyvaultName: goodlist-admin-scrt-stag       # Set to the name of your key vault
+#       cloudName: ""                         # [OPTIONAL for Azure] if not provided, the Azure environment defaults to AzurePublicCloud
+#       objects:  |
+#         array:
+#           - |
+#             objectName: REACT-APP-BACKEND-BASE-URL-BETA
+#             objectType: secret              
+#             objectVersion: ""               
+#           - |
+#             objectName: REACT-APP-AUTH-COOKIE-KEY
+#             objectType: secret
+#             objectVersion: ""
+#           - |
+#             objectName: NEXT-PUBLIC-ALGOLIA-APP-ID
+#             objectType: secret              
+#             objectVersion: ""               
+#           - |
+#             objectName: NEXT-PUBLIC-ALGOLIA-API-KEY
+#             objectType: secret
+#             objectVersion: ""
+#           - |
+#             objectName: NEXTAUTH-SECRET
+#             objectType: secret              
+#             objectVersion: ""               
+#           - |
+#             objectName: CLIENT-ID
+#             objectType: secret
+#             objectVersion: ""
+#           - |
+#             objectName: CLIENT-SECRET
+#             objectType: secret              
+#             objectVersion: ""               
+#       tenantId: 6777c474-4033-4c37-a92b-caa3c6b3ee92                # The tenant ID of the key vault
