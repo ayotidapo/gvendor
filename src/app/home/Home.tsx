@@ -14,6 +14,7 @@ import {
 	//useGetRecentOrdersQuery,
 	useGetTopSellersQuery,
 } from '@/redux/dashboard/dashboard.slice';
+import { useGetInventoryQuery } from '@/redux/inventory/inventory.slice';
 
 const HomePage: React.FC = () => {
 	//const { data: salesValue } = useGetDashboardSalesValueQuery();
@@ -21,12 +22,11 @@ const HomePage: React.FC = () => {
 		startDate: '2024-08-20',
 		endDate: '2023-08-07',
 	});
-	const { data: topSellersResponse } = useGetTopSellersQuery();
+	const { data: inventoryData } = useGetInventoryQuery();
 	// const { data: recentOrders } = useGetRecentOrdersQuery();
 
 	const labels = metricsData?.data?.result.map(item => item.day) || [];
 	const values1 = metricsData?.data?.result.map(item => item.total) || [];
-	const topSellers = topSellersResponse?.data || [];
 
 	//useEffect(() => {
 	//	console.log({ salesValue, topSellers,metricsData, recentOrders});
@@ -153,10 +153,12 @@ const HomePage: React.FC = () => {
 					}
 					content={
 						<div>
-							{topSellers.map(top => (
-								<div className='mt-6 flex justify-between' key={top._id}>
-									<div>{top.product}</div>
-									<div className='text-secondary-black'>{top.unitsSold}</div>
+							{inventoryData?.data?.inventory?.Products?.map(product => (
+								<div className='mt-6 flex justify-between' key={product._id}>
+									<div>{product.name}</div>
+									<div className='text-secondary-black'>
+										{product.unitsSold}
+									</div>
 								</div>
 							))}
 						</div>
