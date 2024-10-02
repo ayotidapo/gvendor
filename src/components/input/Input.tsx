@@ -10,7 +10,7 @@ export const Input = ({
 	value = '',
 	placeholder = 'Placeholder',
 	onChange,
-	onBlur = () => { },
+	onBlur = () => {},
 	hasIcon = true,
 	iconSvg = '',
 	iconDimension = 20,

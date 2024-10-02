@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect } from 'react';
+import React from 'react';
 import PageWrapper from '@/containers/PageWrapper';
 import Button from '@/components/buttons/Button';
 import CountCard from '@/components/cards/CountCard';
@@ -13,29 +13,14 @@ import Dropdown from '@/components/input/dropdown';
 import { Icon } from '@/components/icon/icon';
 import { formatCurrency } from '@/helpers';
 import { useGetInventoryQuery } from '@/redux/inventory/inventory.slice';
-import { useGetTopSellersQuery } from '@/redux/dashboard/dashboard.slice';
-
-const data = [
-	{ goods: 'Hand', count: '750' },
-	{ goods: 'White rice', count: '500' },
-	{ goods: 'Fish Sauce', count: '500' },
-	{ goods: 'Johhnie', count: '250' },
-	{ goods: 'Honey', count: '600' },
-	{ goods: 'Rice', count: '750' },
-	{ goods: 'red', count: '0' },
-	{ goods: 'Juice', count: '100' },
-	{ goods: 'Spag', count: '750' },
-	{ goods: 'Fruit', count: '500' },
-	{ goods: 'rice', count: '250' },
-	{ goods: 'rice', count: '500' },
-];
-
 
 const Inventory: React.FC = () => {
 	const { data: inventoryData } = useGetInventoryQuery();
 
 	const labels = inventoryData?.data?.inventory.Products.map(item => item.name);
-	const values1 = inventoryData?.data?.inventory.Products.map(item => item.unitsSold);
+	const values1 = inventoryData?.data?.inventory.Products.map(
+		item => item.unitsSold
+	);
 
 	return (
 		<PageWrapper pageHeader='Inventory'>
@@ -54,18 +39,18 @@ const Inventory: React.FC = () => {
 					gap-10'
 			>
 				<CountCard
-					count={inventoryData?.data?.inventory.totalUnitsSold}
+					count={inventoryData?.data?.inventory?.totalUnitsSold ?? 0}
 					text={'TOTAL UNITS SOLD'}
 					isCurrency={false}
 				/>
 				<CountCard
-					count={inventoryData?.data.productsInStock}
+					count={inventoryData?.data?.productsInStock ?? 0}
 					text={'PRODUCT IN STOCK'}
 					isCurrency={false}
 				/>
 			</CountCardContainer>
 
-			<div className='pt-6'>
+			<div className='my-8'>
 				<SectionCard
 					header={
 						<div>
@@ -77,8 +62,8 @@ const Inventory: React.FC = () => {
 							xGridDisplay={true}
 							yGridDisplay={false}
 							responsive
-							labels={labels}
-							data={values1}
+							labels={labels ?? []}
+							data={values1 ?? []}
 							barThickness={24}
 						/>
 					}
@@ -106,7 +91,7 @@ const Inventory: React.FC = () => {
 							menuButton={
 								<Icon svg='ellipses' height={18} width={18} className='' />
 							}
-							onClickMenuItem={() => {}}
+							onClickMenuItem={() => { }}
 							menuItems={[
 								{
 									name: (

@@ -3,16 +3,14 @@ import { InventoryResponse } from './inventory.type';
 
 export const inventoryApiSlice = apiSlice.injectEndpoints({
 	overrideExisting: true,
-    endpoints: builder => ({
-        getInventory: builder.query<InventoryResponse, void>({
-            query: () => ({
-                url: '/inventory/',
-                method: 'GET',
-            })
-        })
-    }),
+	endpoints: builder => ({
+		getInventory: builder.query<InventoryResponse, void>({
+			query: () => ({
+				url: '/inventory/',
+				method: 'GET',
+			}),
+		}),
+	}),
 });
 
-export const {
-    useGetInventoryQuery,
-} = inventoryApiSlice
+export const { useGetInventoryQuery } = inventoryApiSlice;

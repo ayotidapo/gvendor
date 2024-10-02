@@ -71,9 +71,9 @@ const ProfilePage = () => {
 
 	const formattedBankOptions = bankData?.data
 		? bankData?.data?.map((bank: Bank) => ({
-				label: bank.name,
-				value: bank.code,
-			}))
+			label: bank.name,
+			value: bank.code,
+		}))
 		: [];
 
 	useEffect(() => {
@@ -232,57 +232,57 @@ const ProfilePage = () => {
 				<div className='mt-6'>
 					{profile?.availableHours
 						? Object.entries(availableHours).map(([day, availableHours]) => (
-								<div
-									key={day}
-									className='grid min-h-14 grid-cols-3 sm:grid-cols-4 lg:grid-cols-7 gap-4 items-center mb-4 border-b border-default-gray-2 pb-4 lg:border-transparent'
-								>
-									<p className='font-bold capitalize'>{day}</p>
-									<div className='flex items-center space-x-2'>
-										<Switch
-											enabled={availableHours.open}
-											setEnabled={value => {
+							<div
+								key={day}
+								className='grid min-h-14 grid-cols-3 sm:grid-cols-4 lg:grid-cols-7 gap-4 items-center mb-4 border-b border-default-gray-2 pb-4 lg:border-transparent'
+							>
+								<p className='font-bold capitalize'>{day}</p>
+								<div className='flex items-center space-x-2'>
+									<Switch
+										enabled={availableHours.open}
+										setEnabled={value => {
+											setAvailableHours(prevHours => ({
+												...prevHours,
+												[day]: {
+													...prevHours[day],
+													open: value,
+												},
+											}));
+										}}
+									/>
+									<span>{availableHours.open ? 'Open' : 'Closed'}</span>
+								</div>
+								{availableHours.open && (
+									<div className='col-span-3 flex space-x-4 items-center'>
+										<TimeInput
+											value={availableHours.openingTime}
+											onChange={value => {
 												setAvailableHours(prevHours => ({
 													...prevHours,
 													[day]: {
 														...prevHours[day],
-														open: value,
+														openingTime: value,
 													},
 												}));
 											}}
 										/>
-										<span>{availableHours.open ? 'Open' : 'Closed'}</span>
+										<span>To</span>
+										<TimeInput
+											value={availableHours.closingTime}
+											onChange={value => {
+												setAvailableHours(prevHours => ({
+													...prevHours,
+													[day]: {
+														...prevHours[day],
+														closingTime: value,
+													},
+												}));
+											}}
+										/>
 									</div>
-									{availableHours.open && (
-										<div className='col-span-3 flex space-x-4 items-center'>
-											<TimeInput
-												value={availableHours.openingTime}
-												onChange={value => {
-													setAvailableHours(prevHours => ({
-														...prevHours,
-														[day]: {
-															...prevHours[day],
-															openingTime: value,
-														},
-													}));
-												}}
-											/>
-											<span>To</span>
-											<TimeInput
-												value={availableHours.closingTime}
-												onChange={value => {
-													setAvailableHours(prevHours => ({
-														...prevHours,
-														[day]: {
-															...prevHours[day],
-															closingTime: value,
-														},
-													}));
-												}}
-											/>
-										</div>
-									)}
-								</div>
-							))
+								)}
+							</div>
+						))
 						: null}
 				</div>
 
@@ -325,11 +325,11 @@ const ProfilePage = () => {
 							<Icon width={40} height={40} svg={'bank'} />
 						</div>
 						<div className=''>
-							<Header header={account?.account_name ?? ''} />
+							<Header header={profile?.settlementAccount?.accountName ?? ''} />
 							<div className='flex space-x-3 items-center text-sm text-[#000000] md:w-[400px] md:gap-6'>
-								<p>{accountData.bankName ?? ''}</p>
+								<p>{profile?.settlementAccount?.bankName ?? ''}</p>
 								<p>|</p>
-								<p>{accountData.accountNumber ?? ''}</p>
+								<p>{profile?.settlementAccount?.accountNumber ?? ''}</p>
 							</div>
 						</div>
 					</div>
@@ -360,7 +360,7 @@ const ProfilePage = () => {
 							type={'text'}
 							name='accountName'
 							value={account?.account_name ?? ''}
-							onChange={() => {}}
+							onChange={() => { }}
 							disabled
 							placeholder='Account name'
 						/>

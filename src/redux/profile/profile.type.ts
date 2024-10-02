@@ -47,6 +47,12 @@ export interface ProfileData {
 	businessDetails: BusinessDetails;
 	nameOfPrimaryContact: string;
 	positionOfPrimaryContact: string;
+	settlementAccount: {
+		accountName: string;
+		accountNumber: string;
+		bankCode: string;
+		bankName: string;
+	};
 }
 
 export interface BusinessDetails {
