@@ -12,69 +12,16 @@ import { CountCardContainer } from '@/containers/CountCardWrapper';
 import Dropdown from '@/components/input/dropdown';
 import { Icon } from '@/components/icon/icon';
 import { formatCurrency } from '@/helpers';
-
-const data = [
-	{ goods: 'Hand', count: '750' },
-	{ goods: 'White rice', count: '500' },
-	{ goods: 'Fish Sauce', count: '500' },
-	{ goods: 'Johhnie', count: '250' },
-	{ goods: 'Honey', count: '600' },
-	{ goods: 'Rice', count: '750' },
-	{ goods: 'red', count: '0' },
-	{ goods: 'Juice', count: '100' },
-	{ goods: 'Spag', count: '750' },
-	{ goods: 'Fruit', count: '500' },
-	{ goods: 'rice', count: '250' },
-	{ goods: 'rice', count: '500' },
-];
-
-const tableData = [
-	{
-		id: 1,
-		name: 'Jollof rice and duck',
-		category: 'Food',
-		instock: 6,
-		unitsold: 89,
-		price: 85000,
-	},
-	{
-		id: 2,
-		name: 'Jollof rice and duck',
-		category: 'Food',
-		instock: 6,
-		unitsold: 89,
-		price: 85000,
-	},
-	{
-		id: 3,
-		name: 'Jollof rice and duck',
-		category: 'Food',
-		instock: 6,
-		unitsold: 89,
-		price: 85000,
-	},
-	{
-		id: 4,
-		name: 'Jollof rice and duck',
-		category: 'Food',
-		instock: 6,
-		unitsold: 89,
-		price: 85000,
-	},
-	{
-		id: 5,
-		name: 'Jollof rice and duck',
-		category: 'Food',
-		instock: 6,
-		unitsold: 89,
-		price: 85000,
-	},
-];
-
-const labels = data.map(item => item.goods);
-const values1 = data.map(item => item.count);
+import { useGetInventoryQuery } from '@/redux/inventory/inventory.slice';
 
 const Inventory: React.FC = () => {
+	const { data: inventoryData } = useGetInventoryQuery();
+
+	const labels = inventoryData?.data?.inventory.Products.map(item => item.name);
+	const values1 = inventoryData?.data?.inventory.Products.map(
+		item => item.unitsSold
+	);
+
 	return (
 		<PageWrapper pageHeader='Inventory'>
 			<div className='pb-10 flex space-x-4 justify-end'>
@@ -91,11 +38,19 @@ const Inventory: React.FC = () => {
 					grid-cols-1 sm:grid-cols-2 lg:grid-cols-4
 					gap-10'
 			>
-				<CountCard count={0} text={'TOTAL UNITS SOLD'} isCurrency={false} />
-				<CountCard count={0} text={'PRODUCT IN STOCK'} isCurrency={false} />
+				<CountCard
+					count={inventoryData?.data?.inventory?.totalUnitsSold ?? 0}
+					text={'TOTAL UNITS SOLD'}
+					isCurrency={false}
+				/>
+				<CountCard
+					count={inventoryData?.data?.productsInStock ?? 0}
+					text={'PRODUCT IN STOCK'}
+					isCurrency={false}
+				/>
 			</CountCardContainer>
 
-			<div className='pt-6'>
+			<div className='my-8'>
 				<SectionCard
 					header={
 						<div>
@@ -107,8 +62,8 @@ const Inventory: React.FC = () => {
 							xGridDisplay={true}
 							yGridDisplay={false}
 							responsive
-							labels={labels}
-							data={values1}
+							labels={labels ?? []}
+							data={values1 ?? []}
 							barThickness={24}
 						/>
 					}
@@ -123,20 +78,20 @@ const Inventory: React.FC = () => {
 					'PRICE',
 					' ',
 				]}
-				rows={tableData.map(data => ({
-					id: data.id,
+				rows={(inventoryData?.data?.inventory?.Products || []).map(product => ({
+					id: product._id,
 					content: [
-						data.name,
-						data.category,
-						data.instock,
-						data.unitsold,
-						`${formatCurrency(data.price)}`,
+						product.name,
+						product.category,
+						product.inStock,
+						product.unitsSold,
+						`${formatCurrency(product.price)}`,
 						<Dropdown
-							key={`${data.id}-controls`}
+							key={`${product._id}-controls`}
 							menuButton={
 								<Icon svg='ellipses' height={18} width={18} className='' />
 							}
-							onClickMenuItem={() => {}}
+							onClickMenuItem={() => { }}
 							menuItems={[
 								{
 									name: (

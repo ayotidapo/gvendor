@@ -22,12 +22,13 @@ const Container: FC<Iprops> = ({ children }) => {
 			<div className='flex grow h-screen flex-col overflow-y-auto border-r border-gray-200 bg-white'>
 				<Navbar setSidebarOpen={setSidebarOpen} />
 				<div>
-					{!pathname.includes('auth') && (
-						<SideBar
-							sidebarOpen={sidebarOpen}
-							setSidebarOpen={setSidebarOpen}
-						/>
-					)}
+					{!pathname.includes('auth') &&
+						!pathname.includes('business-details') && (
+							<SideBar
+								sidebarOpen={sidebarOpen}
+								setSidebarOpen={setSidebarOpen}
+							/>
+						)}
 					{children}
 					<ToastContainer autoClose={2000} position='top-center' />
 				</div>

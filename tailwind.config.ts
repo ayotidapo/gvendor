@@ -18,6 +18,7 @@ module.exports = {
 				'default-gray': '#7A7978',
 				'off-white': '#FAFAFA',
 				'default-gray-2': '#F3F3F3',
+				'light-gray': '#C2C3C3',
 				danger: '#F25A68',
 				'danger-light': '#FCE3E5',
 				warn: '#F1872D',

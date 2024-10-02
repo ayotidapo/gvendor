@@ -37,8 +37,14 @@ export interface TopSellersResponse {
 	success: boolean;
 	message: string;
 	data: {
-		_id: string;
-		product: string;
-		unitsSold: string;
+		bestSellingProducts: {
+			_id: string;
+			products: string;
+			unitsSold: number;
+			amountSold: number;
+		}[];
+		totalUnitsSold: {
+			count: number;
+		};
 	}[];
 }

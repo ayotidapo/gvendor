@@ -12,71 +12,87 @@ import {
 	useGetProfileQuery,
 	useUpdateProfileMutation,
 } from '@/redux/profile/profile.slice';
-import { useFormik } from 'formik';
+import { Form, Formik } from 'formik';
 import { toast } from 'react-toastify';
 import Switch from '@/components/switch/Switch';
+import {
+	useGetAccountQuery,
+	useGetBankQuery,
+	useUpdateAccountMutation,
+} from '@/redux/miscellaneous/getbank.slice';
+import { Bank } from '@/redux/miscellaneous/getbank.type';
+import AddressInput from '@/components/common/AddressInput';
 
 const profileSchema = Yup.object({
-	address: Yup.string().required('Business address is required'),
+	address: Yup.object().shape({
+		address: Yup.string().required('Address is required'),
+		latitude: Yup.number().required('Latitude is required'),
+		longitude: Yup.number().required('Longitude is required'),
+		sourceGooglePlaceID: Yup.string().required('Google Place ID is required'),
+	}),
 	email: Yup.string().required('Email address is required'),
 	phone: Yup.string().required('Phone number is required'),
 	website: Yup.string().required('Website URL is required'),
 	description: Yup.string().required('Business description is required'),
+	accountName: Yup.string().required('Account name is required'),
+	accountNumber: Yup.string().required('Account Number is required'),
 });
 
 const ProfilePage = () => {
-	const [selectedValue, setSelectedValue] = useState<string | number>('');
 	const { data: profile, isLoading } = useGetProfileQuery();
 	const [updateProfile] = useUpdateProfileMutation();
+	const [updateAccount] = useUpdateAccountMutation();
+	const { data: bankData } = useGetBankQuery();
+	const [accountData, setAccountData] = useState<{
+		accountNumber: string;
+		bankCode: string;
+		bankName: string;
+	}>({
+		accountNumber: '',
+		bankCode: '',
+		bankName: '',
+	});
+	const { data: account, refetch: refetchAccount } = useGetAccountQuery(
+		{
+			bankCode: accountData.bankCode,
+			accountNumber: accountData.accountNumber,
+		},
+		{
+			skip:
+				!accountData.bankCode ||
+				!accountData.accountNumber ||
+				accountData.accountNumber.length < 10,
+		}
+	);
+
 	const [availableHours, setAvailableHours] = useState<{
 		[key: string]: { open: boolean; openingTime: string; closingTime: string };
 	}>({});
 
+	const formattedBankOptions = bankData?.data
+		? bankData?.data?.map((bank: Bank) => ({
+			label: bank.name,
+			value: bank.code,
+		}))
+		: [];
+
+	useEffect(() => {
+		if (accountData.accountNumber.length === 10 && accountData.bankCode) {
+			refetchAccount();
+		}
+	}, [accountData.accountNumber, accountData.bankCode]);
+
 	useEffect(() => {
 		if (profile) {
-			setFieldValue('address', profile.address);
-			setFieldValue('email', profile.email);
-			setFieldValue('phone', profile.phone);
-			setFieldValue('website', profile.website);
-			setFieldValue('description', profile.description);
 			setAvailableHours(profile.availableHours);
 		}
 	}, [profile]);
 
-	const handleSelectChange = (value: string | number) => {
-		setSelectedValue(value);
+	const handleUpdateAccount = async () => {
+		if (accountData) {
+			await updateAccount(accountData);
+		}
 	};
-
-	const {
-		handleBlur,
-		handleChange,
-		handleSubmit,
-		values,
-		errors,
-		setFieldValue,
-	} = useFormik({
-		initialValues: {
-			address: profile?.address ?? '',
-			email: profile?.email ?? '',
-			phone: profile?.phone ?? '',
-			website: profile?.website ?? '',
-			description: profile?.description ?? '',
-		},
-		validationSchema: profileSchema,
-		onSubmit: values => {
-			if (!isLoading) {
-				// console.log('Form Submitted', values);
-				updateProfile(values);
-				toast.success('Profile updated successfully');
-			}
-		},
-	});
-
-	const options = [
-		{ label: 'Option 1', value: 'option1' },
-		{ label: 'Option 2', value: 'option2' },
-		{ label: 'Option 3', value: 'option3' },
-	];
 
 	return (
 		<div className='pt-8'>
@@ -85,14 +101,13 @@ const ProfilePage = () => {
 			</div>
 			<div className='mt-8 flex flex-col md:flex-row md:space-x-10'>
 				<div>
-					<ImageUpload />
+					<ImageUpload currentImage={profile?.logo} />
 				</div>
 				<div className='pt-6 md:pt-14'>
 					<Button label={'Edit profile'} name={'inverted'} />
 				</div>
 			</div>
-
-			<form onSubmit={handleSubmit} className='pt-6'>
+			<div className='pt-12'>
 				<span>
 					<Header header={'Profile Information'} />
 				</span>
@@ -100,73 +115,112 @@ const ProfilePage = () => {
 					Set up your business as a workspace. Define your industry and business
 					description.
 				</span>
-				<div className='grid grid-cols-1 md:grid-cols-2 gap-4 mt-6'>
-					<div className='bg-off-white border border-[#EAEAEA] shadow-sm p-4 rounded-md'>
-						<span className='text-secondary-black'>Store name</span>
-						<span className='text-black block'>{profile?.name}</span>
-					</div>
-					<div className='bg-off-white border border-[#EAEAEA] shadow-sm p-4 rounded-md'>
-						<span className='text-secondary-black'>Workshop ID</span>
-						<span className='text-black block'>{profile?._id}</span>
-					</div>
-					<TextInput
-						type={'text'}
-						name='address'
-						value={values.address}
-						onChange={handleChange}
-						onBlur={handleBlur}
-						placeholder='Business address'
-						errors={errors?.address}
-					/>
-					<TextInput
-						type={'text'}
-						name='email'
-						value={values.email}
-						onChange={handleChange}
-						onBlur={handleBlur}
-						placeholder='Email address'
-						errors={errors?.email}
-					/>
-					<TextInput
-						type={'text'}
-						name='phone'
-						value={values.phone}
-						onChange={handleChange}
-						onBlur={handleBlur}
-						placeholder='Phone number'
-						errors={errors?.phone}
-					/>
-					<TextInput
-						type={'text'}
-						name='website'
-						value={values.website}
-						onChange={handleChange}
-						onBlur={handleBlur}
-						placeholder='Website url'
-						errors={errors?.website}
-					/>
-					<Select
-						options={options}
-						placeholder='Choose industry'
-						value={selectedValue}
-						onChange={handleSelectChange}
-					/>
-				</div>
-				<div className='mt-6'>
-					<TextInput
-						type={'textarea'}
-						name='description'
-						value={values.description}
-						onChange={handleChange}
-						onBlur={handleBlur}
-						placeholder='Description'
-						errors={errors?.description}
-					/>
-				</div>
-				<div className='mt-6 w-full md:w-[120px] pb-10'>
-					<Button label={'Update'} onClick={handleSubmit} />
-				</div>
-			</form>
+				<Formik
+					initialValues={{
+						name: profile?.name ?? '',
+						address: profile?.businessDetails.businessAddress ?? {
+							address: '',
+							latitude: 0,
+							longitude: 0,
+							sourceGooglePlaceID: '',
+						},
+						email: profile?.email ?? '',
+						phone: profile?.phone ?? '',
+						website: profile?.website ?? '',
+						description: profile?.description ?? '',
+					}}
+					validationSchema={profileSchema}
+					onSubmit={values => {
+						if (!isLoading) {
+							updateProfile(values);
+							toast.success('Profile updated successfully');
+						}
+					}}
+					enableReinitialize
+				>
+					{({
+						values,
+						handleBlur,
+						handleChange,
+						errors,
+						touched,
+						setFieldValue,
+					}) => (
+						<Form className='pt-6'>
+							<div className='grid grid-cols-1 md:grid-cols-2 gap-4 mt-6'>
+								<TextInput
+									type={'text'}
+									name='name'
+									value={values.name}
+									onChange={handleChange}
+									onBlur={handleBlur}
+									placeholder='Business Name'
+									errors={touched.name ? errors?.name : ''}
+								/>
+								<AddressInput
+									editAddress={address => {
+										setFieldValue('address', {
+											address: address.address,
+											latitude: address.latitude,
+											longitude: address.longitude,
+											sourceGooglePlaceID: address.sourceGooglePlaceID,
+										});
+									}}
+									value={values.address.address}
+								/>
+								<TextInput
+									type={'text'}
+									name='email'
+									value={values.email}
+									onChange={handleChange}
+									onBlur={handleBlur}
+									placeholder='Email address'
+									errors={errors?.email}
+								/>
+								<TextInput
+									type={'text'}
+									name='phone'
+									value={values.phone}
+									onChange={handleChange}
+									onBlur={handleBlur}
+									placeholder='Phone number'
+									errors={errors?.phone}
+								/>
+								<TextInput
+									type={'text'}
+									name='website'
+									value={values.website}
+									onChange={handleChange}
+									onBlur={handleBlur}
+									placeholder='Website url'
+									errors={errors?.website}
+								/>
+								{/*<Select
+									options={options}
+									placeholder='Choose industry'
+
+									value={selectedValue}
+									onChange={handleSelectChange}
+								/>*/}
+							</div>
+							<div className='mt-6'>
+								<TextInput
+									type={'textarea'}
+									name='description'
+									value={values.description}
+									onChange={handleChange}
+									onBlur={handleBlur}
+									placeholder='Description'
+									errors={errors?.description}
+								/>
+							</div>
+							<div className='mt-6 w-full md:w-[120px] pb-10'>
+								<Button label={'Update'} type='submit' />
+							</div>
+						</Form>
+					)}
+				</Formik>
+			</div>
 
 			<div className='pt-6'>
 				<span>
@@ -178,59 +232,60 @@ const ProfilePage = () => {
 				<div className='mt-6'>
 					{profile?.availableHours
 						? Object.entries(availableHours).map(([day, availableHours]) => (
-								<div
-									key={day}
-									className='grid min-h-14 grid-cols-3 sm:grid-cols-4 lg:grid-cols-7 gap-4 items-center mb-4 border-b border-default-gray-2 pb-4 lg:border-transparent'
-								>
-									<p className='font-bold capitalize'>{day}</p>
-									<div className='flex items-center space-x-2'>
-										<Switch
-											enabled={availableHours.open}
-											setEnabled={value => {
+							<div
+								key={day}
+								className='grid min-h-14 grid-cols-3 sm:grid-cols-4 lg:grid-cols-7 gap-4 items-center mb-4 border-b border-default-gray-2 pb-4 lg:border-transparent'
+							>
+								<p className='font-bold capitalize'>{day}</p>
+								<div className='flex items-center space-x-2'>
+									<Switch
+										enabled={availableHours.open}
+										setEnabled={value => {
+											setAvailableHours(prevHours => ({
+												...prevHours,
+												[day]: {
+													...prevHours[day],
+													open: value,
+												},
+											}));
+										}}
+									/>
+									<span>{availableHours.open ? 'Open' : 'Closed'}</span>
+								</div>
+								{availableHours.open && (
+									<div className='col-span-3 flex space-x-4 items-center'>
+										<TimeInput
+											value={availableHours.openingTime}
+											onChange={value => {
 												setAvailableHours(prevHours => ({
 													...prevHours,
 													[day]: {
 														...prevHours[day],
-														open: value,
+														openingTime: value,
 													},
 												}));
 											}}
 										/>
-										<span>{availableHours.open ? 'Open' : 'Closed'}</span>
+										<span>To</span>
+										<TimeInput
+											value={availableHours.closingTime}
+											onChange={value => {
+												setAvailableHours(prevHours => ({
+													...prevHours,
+													[day]: {
+														...prevHours[day],
+														closingTime: value,
+													},
+												}));
+											}}
+										/>
 									</div>
-									{availableHours.open && (
-										<div className='col-span-3 flex space-x-4 items-center'>
-											<TimeInput
-												value={availableHours.openingTime}
-												onChange={value => {
-													setAvailableHours(prevHours => ({
-														...prevHours,
-														[day]: {
-															...prevHours[day],
-															openingTime: value,
-														},
-													}));
-												}}
-											/>
-											<span>To</span>
-											<TimeInput
-												value={availableHours.closingTime}
-												onChange={value => {
-													setAvailableHours(prevHours => ({
-														...prevHours,
-														[day]: {
-															...prevHours[day],
-															closingTime: value,
-														},
-													}));
-												}}
-											/>
-										</div>
-									)}
-								</div>
-							))
+								)}
+							</div>
+						))
 						: null}
 				</div>
+
 				<div className='mt-6 w-[143px]'>
 					<Button
 						onClick={() => {
@@ -267,26 +322,70 @@ const ProfilePage = () => {
 				<div className='bg-off-white md:w-[580px] border border-[#EAEAEA] shadow-sm p-[24px] rounded-md flex items-center justify-between'>
 					<div className='flex gap-7 items-center'>
 						<div className='flex'>
-							<Icon svg={'bank'} />
+							<Icon width={40} height={40} svg={'bank'} />
 						</div>
 						<div className=''>
-							<Header header={'AMOS EDOS OSAMUDIAMEN'} />
+							<Header header={profile?.settlementAccount?.accountName ?? ''} />
 							<div className='flex space-x-3 items-center text-sm text-[#000000] md:w-[400px] md:gap-6'>
-								<p>FIRST BANK OF NIGERIA</p>
+								<p>{profile?.settlementAccount?.bankName ?? ''}</p>
 								<p>|</p>
-								<p>0001112278</p>
+								<p>{profile?.settlementAccount?.accountNumber ?? ''}</p>
 							</div>
 						</div>
 					</div>
 				</div>
-				<div className='pt-6 space-y-4 md:w-[800px]'>
-					<TextInput type={'text'} name={''} placeholder='Bank' />
-					<TextInput type={'text'} name={''} placeholder='Account name' />
-					<TextInput type={'text'} name={''} placeholder='Account number' />
-				</div>
-				<div className='mt-6 w-[183px]'>
-					<Button label={'Add account'} />
-				</div>
+
+				<form
+					onSubmit={e => {
+						e.preventDefault();
+						handleUpdateAccount();
+					}}
+				>
+					<div className='pt-6 space-y-4 md:w-[800px]'>
+						<Select
+							options={formattedBankOptions}
+							placeholder='Bank'
+							value={accountData?.bankCode || ''}
+							onChange={value => {
+								setAccountData(prevAccountData => ({
+									...prevAccountData,
+									bankCode: value as string,
+									bankName: bankData?.data?.find(bank => bank.code === value)
+										?.name as string,
+									accountNumber: prevAccountData?.accountNumber || '',
+								}));
+							}}
+						/>
+						<TextInput
+							type={'text'}
+							name='accountName'
+							value={account?.account_name ?? ''}
+							onChange={() => { }}
+							disabled
+							placeholder='Account name'
+						/>
+						<TextInput
+							type={'text'}
+							name='accountNumber'
+							value={accountData?.accountNumber}
+							onChange={e => {
+								setAccountData(prevAccountData => ({
+									...prevAccountData,
+									accountNumber: e.target.value,
+								}));
+							}}
+							placeholder='Account number'
+						/>
+					</div>
+
+					<div className='mt-6 w-[183px]'>
+						<Button
+							disabled={!account?.account_name}
+							label={'Add account'}
+							type='submit'
+						/>
+					</div>
+				</form>
 			</div>
 		</div>
 	);

@@ -39,6 +39,14 @@ export type ForgotPassword = {
 	email: string;
 };
 
+export type SelectedAddress = {
+	address: string;
+	latitude: number;
+	longitude: number;
+	sourceGooglePlaceID: string;
+	_id?: string;
+};
+
 export type APIErrorResponse = {
 	error: {
 		status: number;

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useAppSelector } from '@/hooks/reduxHooks';
 import { authSelector } from '@/redux/reducers/auth/auth.selector';
@@ -7,7 +7,8 @@ import { Icon } from '../icon/icon';
 import { GoodLogo } from '../svg/svg';
 import { Avatar } from '../avatar/Avatar';
 import Dropdown from '../input/dropdown';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
+import { useGetProfileQuery } from '@/redux/profile/profile.slice';
 
 const Navbar = ({
 	sidebarOpen,
@@ -18,13 +19,23 @@ const Navbar = ({
 }) => {
 	const dispatch = useDispatch();
 	const pathname = usePathname();
-	const { user } = useAppSelector(authSelector);
+	const router = useRouter();
+	const authData = useAppSelector(authSelector);
+	const { data: profile, isLoading } = useGetProfileQuery();
+
+	useEffect(() => {
+		if (authData.signedIn && profile && !profile?.businessDetails) {
+			// redirect to business details page
+			router.push('/business-details');
+		}
+	}, [profile, isLoading]);
 
 	const handleLogout = (): void => {
 		dispatch(signOut());
 	};
 
-	const showBlandNav = pathname.includes('auth');
+	const showBlandNav =
+		pathname.includes('auth') || pathname.includes('business-details');
 
 	return (
 		<div
@@ -60,15 +71,13 @@ const Navbar = ({
 					<Icon svg='notification-icon' height={20} width={20} />
 
 					<Dropdown
-						menuButton={
-							<Avatar name={`${user?.firstname} ${user?.lastname}`} />
-						}
+						menuButton={<Avatar name={`${authData.user?.email} `} />}
 						onClickMenuItem={() => { }}
 						menuItems={[
 							{
 								name: (
 									<div>
-										<span className='text-base font-recoleta-medium'>{`${user?.firstname} ${user?.lastname}`}</span>
+										{/*<span className='text-base font-recoleta-medium'>{`${authData.user?.email}`}</span>*/}
 										<div
 											className='
                       text-sm text-sec-black
@@ -76,7 +85,7 @@ const Navbar = ({
                       space-x-2
                       '
 										>
-											<span className='text-xs'>{user?.email}</span>
+											<span className='text-xs'>{authData.user?.email}</span>
 										</div>
 									</div>
 								),

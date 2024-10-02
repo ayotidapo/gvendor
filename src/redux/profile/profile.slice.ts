@@ -1,6 +1,6 @@
 import { toast } from 'react-toastify';
 import { apiSlice } from '../apis/api.slice';
-import { ProfileData } from './profile.type';
+import { CreateProfile, ProfileData } from './profile.type';
 
 export const profileApiSlice = apiSlice.injectEndpoints({
 	overrideExisting: true,
@@ -14,6 +14,24 @@ export const profileApiSlice = apiSlice.injectEndpoints({
 			async onQueryStarted(arg, { queryFulfilled }) {
 				try {
 					await queryFulfilled;
+				} catch (err: unknown) {
+					if (typeof err === 'object' && err !== null && 'error' in err) {
+						const error = err as { error: { data: { error: string } } };
+						toast.error(error.error.data.error);
+					}
+				}
+			},
+		}),
+		createProfile: builder.mutation<ProfileData, CreateProfile>({
+			query: data => ({
+				url: '/vendor/business-record',
+				method: 'POST',
+				body: data,
+			}),
+			async onQueryStarted(arg, { queryFulfilled }) {
+				try {
+					await queryFulfilled;
+					toast.success('Profile updated successfully');
 				} catch (err: unknown) {
 					if (typeof err === 'object' && err !== null && 'error' in err) {
 						const error = err as { error: { data: { error: string } } };
@@ -43,4 +61,8 @@ export const profileApiSlice = apiSlice.injectEndpoints({
 	}),
 });
 
-export const { useGetProfileQuery, useUpdateProfileMutation } = profileApiSlice;
+export const {
+	useGetProfileQuery,
+	useUpdateProfileMutation,
+	useCreateProfileMutation,
+} = profileApiSlice;

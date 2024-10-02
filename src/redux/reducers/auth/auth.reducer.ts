@@ -44,9 +44,6 @@ const purgeUserData = (state: Auth) => {
 	state.user = initialState.user;
 	state.signedIn = false;
 	Cookies.remove('@vendor_auth');
-	Cookies.set('good_social_auth', '{}', {
-		expires: -2,
-	});
 };
 
 export const { updateUserWithAuth, signOut, updateUserNoAuth } =
