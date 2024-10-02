@@ -1,18 +1,21 @@
 import { toast } from 'react-toastify';
 import { apiSlice } from '../apis/api.slice';
-import { Account, GetBankResponse, ResolveAccountResponse } from './getbank.type';
+import { Account, AccountPayload, GetBankResponse } from './getbank.type';
 
 export const bankApiSlice = apiSlice.injectEndpoints({
 	overrideExisting: true,
 	endpoints: builder => ({
 		getBank: builder.query<GetBankResponse, void>({
 			query: () => ({
-				url:'/misc/banks',
+				url: '/misc/banks',
 				method: 'GET',
 			}),
 		}),
-        getAccount: builder.query<Account, { accountNumber: string | number; bankCode: string | number}>({
-			query: ({accountNumber, bankCode}) => ({
+		getAccount: builder.query<
+			Account,
+			{ accountNumber: string | number; bankCode: string | number }
+		>({
+			query: ({ accountNumber, bankCode }) => ({
 				url: `/misc/banks/resolve?accountNumber=${accountNumber}&bankCode=${bankCode}`,
 				method: 'GET',
 			}),
@@ -28,7 +31,7 @@ export const bankApiSlice = apiSlice.injectEndpoints({
 				}
 			},
 		}),
-        updateAccount: builder.mutation<Account, Partial<Account>>({
+		updateAccount: builder.mutation<Account, Partial<AccountPayload>>({
 			query: data => ({
 				url: `/profile/account`,
 				method: 'PATCH',
@@ -49,5 +52,5 @@ export const bankApiSlice = apiSlice.injectEndpoints({
 	}),
 });
 
-export const { useGetBankQuery, useGetAccountQuery, useUpdateAccountMutation} =
+export const { useGetBankQuery, useGetAccountQuery, useUpdateAccountMutation } =
 	bankApiSlice;

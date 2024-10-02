@@ -42,3 +42,13 @@ export interface TopSellersResponse {
 		unitsSold: string;
 	}[];
 }
+
+export interface ErrorType {
+	error: {
+		status: number;
+		data: {
+			error: string;
+			success: boolean;
+		};
+	};
+}
