@@ -1,7 +1,12 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Icon } from '@/components/icon/icon';
 
-const ImageUpload: React.FC = () => {
+const ImageUpload = ({ currentImage = '' }: { currentImage?: string }) => {
+	useEffect(() => {
+		if (currentImage) {
+			setImage(currentImage);
+		}
+	}, [currentImage]);
 	const [image, setImage] = useState<string | null>(null);
 
 	const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {

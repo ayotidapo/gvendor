@@ -47,12 +47,12 @@ const TextInput: FC<TextProps> = ({
 	const [showText, setShowText] = useState<boolean>(false);
 
 	const className = `
-	block w-full ${type !== 'textarea' && 'h-12 sm:h-14'} 
-	${type === 'textarea' && 'py-4'} 
-	rounded-md border-0 
-	p-2 text-gray-900 shadow-sm ring-inset 
-	ring-default-gray placeholder:text-gray-400 
-	ring-1 focus:ring-inset focus:ring-dark-gray 
+	block w-full ${type !== 'textarea' && 'h-12 sm:h-14'}
+	${type === 'textarea' && 'py-4'}
+	rounded-md border-0
+	py-2 px-4 text-gray-900 shadow-sm ring-inset
+	ring-default-gray placeholder:text-gray-400
+	ring-1 focus:ring-inset focus:ring-dark-gray
 	text-sm sm:text-base sm:leading-6 resize-none ${extraClass}
 	`;
 

@@ -64,7 +64,7 @@ export const Input = ({
         border border-divider-gray
         rounded-md bg-transparent
         text-black
-        p-4
+        py-4
         focus-within:!border-black
         transition-all duration-300
         ${className}
