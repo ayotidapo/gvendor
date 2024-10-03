@@ -10,6 +10,7 @@ interface Queryparams {
 	startDate?: string;
 	endDate?: string;
 }
+type OrderStatus = 'COMPLETED' | 'PENDING' | 'PROCESSING' | '';
 
 export const dashboardApiSlice = apiSlice.injectEndpoints({
 	overrideExisting: true,
@@ -28,9 +29,9 @@ export const dashboardApiSlice = apiSlice.injectEndpoints({
 				}),
 			}
 		),
-		getDashboardSalesValue: builder.query<DashboardSalesValue, void>({
-			query: () => ({
-				url: `/order/stats`,
+		getDashboardSalesValue: builder.query<DashboardSalesValue, OrderStatus>({
+			query: (status: OrderStatus) => ({
+				url: status? `/order/stats?status=${status}` : `/order/stats`,
 				method: 'GET',
 			}),
 		}),

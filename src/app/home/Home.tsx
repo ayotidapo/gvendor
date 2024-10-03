@@ -3,12 +3,12 @@
 import CountCard from '@/components/cards/CountCard';
 import PageWrapper from '@/containers/PageWrapper';
 import Button from '@/components/buttons/Button';
-import React from 'react';
+import React, { useEffect } from 'react';
 import BarChart from '@/components/charts/BarChart';
 import SectionCard from '@/components/cards/SectionCard';
 import { Header } from '@/components/typography/Header';
 import { CountCardContainer } from '@/containers/CountCardWrapper';
-import { useGetDashboardMetricsCountQuery } from '@/redux/dashboard/dashboard.slice';
+import { useGetDashboardMetricsCountQuery, useGetDashboardSalesValueQuery } from '@/redux/dashboard/dashboard.slice';
 import { useGetInventoryQuery } from '@/redux/inventory/inventory.slice';
 
 const HomePage: React.FC = () => {
@@ -19,6 +19,10 @@ const HomePage: React.FC = () => {
 	const { data: inventoryData } = useGetInventoryQuery();
 	const labels = metricsData?.data?.result.map(item => item.day) || [];
 	const values1 = metricsData?.data?.result.map(item => item.total) || [];
+	const { data: totalValue } = useGetDashboardSalesValueQuery('')
+	const {data: completeValue } = useGetDashboardSalesValueQuery('COMPLETED')
+	const { data: pendingValue } = useGetDashboardSalesValueQuery('PENDING')
+	const { data: processingValue} = useGetDashboardSalesValueQuery('PROCESSING')
 
 	return (
 		<PageWrapper pageHeader='Home'>
@@ -35,14 +39,14 @@ const HomePage: React.FC = () => {
 
 		   '
 			>
-				<CountCard count={0} text={'TOTAL ORDER'} isCurrency={false} />
-				<CountCard count={0} text={'COMPLETED ORDER'} isCurrency={false} />
-				<CountCard count={0} text={'PENDING ORDER'} isCurrency={false} />
-				<CountCard count={0} text={'PROCESSING ORDER'} isCurrency={false} />
-				<CountCard count={0} text={'TOTAL ORDER COUNT'} isCurrency={false} />
-				<CountCard count={0} text={'PENDING ORDER COUNT'} isCurrency={false} />
+				<CountCard count={totalValue?.data?.totalSaleValue ?? 0} text={'TOTAL ORDER'} isCurrency={false} />
+				<CountCard count={completeValue ?.data?.totalSaleValue ?? 0} text={'COMPLETED ORDER'} isCurrency={false} />
+				<CountCard count={pendingValue?.data?.totalSaleValue ?? 0} text={'PENDING ORDER'} isCurrency={false} />
+				<CountCard count={processingValue?.data?.totalSaleValue ?? 0} text={'PROCESSING ORDER'} isCurrency={false} />
+				<CountCard count={totalValue?.data?.noOfOrders ?? 0} text={'TOTAL ORDER COUNT'} isCurrency={false} />
+				<CountCard count={pendingValue?.data?.noOfOrders ?? 0} text={'PENDING ORDER COUNT'} isCurrency={false} />
 				<CountCard
-					count={0}
+					count={processingValue?.data?.noOfOrders ?? 0}
 					text={'PROCESSING ORDER COUNT'}
 					isCurrency={false}
 				/>

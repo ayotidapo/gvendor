@@ -12,15 +12,13 @@ export interface DashboardMetricsCount {
 }
 
 export interface DashboardSalesValue {
+	success: boolean;
+	message: string;
 	data: {
-		totalOrderValue: number;
-		completedOrderValue: number;
-		pendingOrderValue: number;
-		processingOrderValue: number;
-		totalOrderCount: number;
-		pendingOrderCount: number;
-		processingOrderCount: number;
-	};
+		totalSaleValue: number;
+		noOfOrders: number;
+		noOfCustomers: number;
+	}
 }
 
 export interface RecentOrdersResponse {

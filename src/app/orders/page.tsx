@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import PageWrapper from '@/containers/PageWrapper';
 import Search from '@/components/input/Search';
 import Button from '@/components/buttons/Button';
@@ -15,9 +15,15 @@ import { formatCurrency } from '@/helpers';
 import { PaymentTypes, StatusTypes } from '@/types/types';
 import { useGetAllOrdersQuery } from '@/redux/orders/orders.slice';
 import { ORDERSTATUS, PAYMENTSTATUS } from '@/utils/constants';
+import { useGetDashboardSalesValueQuery } from '@/redux/dashboard/dashboard.slice';
 
 const Orders: React.FC = () => {
 	const { data: orderData } = useGetAllOrdersQuery({});
+	const { data: salesValue} = useGetDashboardSalesValueQuery('')
+	
+	useEffect(() => {
+		console.log(salesValue)
+	},[salesValue]) 
 
 	return (
 		<PageWrapper pageHeader='Orders'>
@@ -38,8 +44,8 @@ const Orders: React.FC = () => {
 
 				   '
 			>
-				<CountCard count={0} text={'TOTAL SALES'} isCurrency={false} />
-				<CountCard count={0} text={'TOTAL ORDER'} isCurrency={false} />
+				<CountCard count={salesValue?.data?.totalSaleValue ?? 0} text={'TOTAL SALES'} isCurrency={false} />
+				<CountCard count={salesValue?.data?.noOfOrders ?? 0} text={'TOTAL ORDER'} isCurrency={false} />
 			</CountCardContainer>
 
 			<TableComponent
