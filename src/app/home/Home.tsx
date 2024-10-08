@@ -22,9 +22,9 @@ import { Status } from '@/components/cards/StatusTag';
 import { ORDERSTATUS, PAYMENTSTATUS } from '@/utils/constants';
 import { TableComponent } from '@/components/table/Table';
 import { useGetAllOrdersQuery } from '@/redux/orders/orders.slice';
-import SideCard from '@/components/cards/SideCard';
-import RingChart from '@/components/charts/RingChart';
 import Link from 'next/link';
+import DoughnutChart from '@/components/charts/Doughnut';
+import CategoryList from './CategoriesList';
 
 const orderData = [
 	{
@@ -132,6 +132,27 @@ const data = [
 	},
 ];
 
+const categories = [
+	{
+		name: 'Food',
+		percentage: 25,
+		color: '#F45D2C',
+		productCount: 1359,
+	},
+	{
+		name: 'Drinks',
+		percentage: 20,
+		color: '#F45D2C',
+		productCount: 135,
+	},
+	{
+		name: 'Dessert',
+		percentage: 15,
+		color: '#F45D2C80',
+		productCount: 359,
+	},
+];
+
 const HomePage: React.FC = () => {
 	// const { data: metricsData } = useGetDashboardMetricsCountQuery({
 	// 	startDate: '2024-08-20',
@@ -218,76 +239,32 @@ const HomePage: React.FC = () => {
 
 		   '
 			>
-				<SectionCard
-					header={
-						<div className='space-y-3'>
-							<div className=''>
-								<Header header={'Total Orders'} />
+				<div className='col-span-2'>
+					<SectionCard
+						header={
+							<div className='space-y-3'>
+								<div className=''>
+									<Header header={'Sales by Category'} />
+								</div>
 							</div>
-							<div className=''>320</div>
-						</div>
-					}
-					content={
-						<div>
-							<div className='pt-6'>
-								<BarChart
-									responsive
-									labels={labels}
-									data={values1}
-									barThickness={5}
-									yGridDisplay={true}
-								/>
-							</div>
-							<div className='flex flex-col md:flex-row gap-4 items-center justify-between'>
-								<div>
-									<Button
-										label='View detailed report'
-										name='transparent'
-										right
+						}
+						content={
+							<div className='grid grid-cols-2 gap-4 pt-6'>
+								<div className='flex flex-col justify-center items-start'>
+								<CategoryList categories={categories} />
+								</div>
+								<div className='pt-6'>
+									<DoughnutChart
+										data={[300, 50, 100]}
+										width={400}
+										height={400}
+										responsive={true}
 									/>
 								</div>
-								<div className=''>
-									<span className=''>20 Aug</span>
-								</div>
 							</div>
-						</div>
-					}
-				/>
-
-				<SectionCard
-					header={
-						<div className='flex space-x-6'>
-							<div className='flex pb-8 flex-col md:flex-row gap-4 items-center justify-between'>
-								<Header header={'Sales Analysis'} />
-							</div>
-						</div>
-					}
-					content={
-						<div>
-							<div className=''>
-								<BarChart
-									responsive
-									labels={labels}
-									data={values1}
-									barThickness={5}
-									yGridDisplay={true}
-								/>
-							</div>
-							<div className='flex flex-col md:flex-row gap-4 items-center justify-between'>
-								<div className=''>
-									<Button
-										label='View detailed report'
-										name='transparent'
-										right
-									/>
-								</div>
-								<div className=''>
-									<span className=''>20 Aug</span>
-								</div>
-							</div>
-						</div>
-					}
-				/>
+						}
+					/>
+				</div>
 
 				<SectionCard
 					header={
@@ -344,8 +321,7 @@ const HomePage: React.FC = () => {
 								type={
 									(ORDERSTATUS.find(
 										status =>
-											status.type.toLowerCase() ===
-											order.status.toLowerCase()
+											status.type.toLowerCase() === order.status.toLowerCase()
 									)?.type ?? 'warn') as StatusTypes
 								}
 							/>,
