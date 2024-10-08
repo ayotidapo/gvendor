@@ -5,6 +5,8 @@ import React, { useState } from 'react';
 import clsx from 'clsx';
 import parse from 'html-react-parser';
 import { CheckIcon } from '@heroicons/react/24/outline';
+import Checkbox from '@/components/common/Checkbox';
+import CheckboxInput from '@/components/common/Checkbox';
 
 const reasons = [
 	'I no longer use this account.',
@@ -78,8 +80,15 @@ const SecurityPage = () => {
 							</div>
 						</div>
 					))}
+					<CheckboxInput
+						extraClass='pt-4'
+						name={''}
+						label={
+							'By selecting this checkbox, you agree to permanently delete your account and all your data'
+						}
+					/>
 					<div className='mt-6 w-[183px]'>
-						<Button label={'Delete account'} />
+						<Button name='delete' label={'Delete account'} />
 					</div>
 				</div>
 			</div>

@@ -26,13 +26,15 @@ const Withdraw = () => {
 					<CountCard count={0} text={'WALLET BALANCE'} isCurrency={false} />
 				</div>
 				<div className='w-[600px] space-y-10'>
-					<TextInput type={'text'} placeholder={'Enter amount'} name={''} />
-					<Select
+				<Select
 						options={options}
-						placeholder='Select account'
+						placeholder='Select bank'
 						value={selectedValue}
 						onChange={handleSelectChange}
 					/>
+					<TextInput type={'text'} placeholder={'Account Number'} name={''} />
+					<TextInput type={'text'} placeholder={'Account Name '} name={''} />
+					<TextInput type={'text'} placeholder={'Amount'} name={''} />
 					<TextInput
 						type={'password'}
 						placeholder={'Enter password'}

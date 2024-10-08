@@ -4,11 +4,13 @@ import React, { useState } from 'react';
 import clsx from 'clsx';
 import ProfilePage from './ProfilePage';
 import SecurityPage from '../security/SecurityPage';
+import NotificationPage from '../notification/NotificationPage'
 
 export const SettingsPage: React.FC = () => {
 	const [tabs, setTabs] = useState([
 		{ name: 'Profile', isActive: true },
 		{ name: 'Security', isActive: false },
+		{ name: 'Notifications', isActive: false },
 	]);
 	const [activeTab, setActiveTab] = useState('Profile');
 
@@ -44,6 +46,7 @@ export const SettingsPage: React.FC = () => {
 
 			{activeTab === 'Profile' && <ProfilePage />}
 			{activeTab === 'Security' && <SecurityPage />}
+			{activeTab === 'Notifications' && <NotificationPage />}
 		</div>
 	);
 };

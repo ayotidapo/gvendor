@@ -7,6 +7,7 @@ export interface CheckProps {
 	label: ReactNode;
 	reverse?: boolean;
 	onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
+	extraClass?: string;
 }
 
 const CheckboxInput: FC<CheckProps> = ({
@@ -14,12 +15,13 @@ const CheckboxInput: FC<CheckProps> = ({
 	label,
 	checked,
 	onChange,
+	extraClass,
 	reverse = false,
 	type = 'checkbox',
 }) => {
 	return (
 		<div
-			className={`relative flex items-start ${reverse && 'flex-row-reverse'}`}
+			className={`relative flex items-start ${reverse && 'flex-row-reverse'} ${extraClass}`}
 		>
 			<div className='flex h-6 items-center'>
 				<input
