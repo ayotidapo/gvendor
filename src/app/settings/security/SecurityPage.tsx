@@ -12,12 +12,13 @@ import { useUpdatePasswordMutation } from '@/redux/profile/profile.slice';
 import { Form, Formik } from 'formik';
 import { toast } from 'react-toastify';
 
+
 const changePasswordSchema = Yup.object({
     currentPassword: Yup.string().required('Current password is required'),
     newPassword: Yup.string().required('New password is required'),
     confirmPassword: Yup.string()
-        .oneOf([Yup.ref('new')], 'Password must match')
-        .required('Confirm new password'),
+        .oneOf([Yup.ref('newPassword')], 'Passwords must match')
+        .required('Confirm new password is required'),
 });
 
 const reasons = [
@@ -70,7 +71,7 @@ const SecurityPage = () => {
                             <TextInput
                                 type={'password'}
                                 placeholder={'Current password'}
-                                name={'current'}
+                                name={'currentPassword'}
                                 value={values.currentPassword}
                                 errors={touched.currentPassword ? errors?.currentPassword : ''}
                                 onChange={handleChange}
@@ -79,7 +80,7 @@ const SecurityPage = () => {
                             <TextInput
                                 type={'password'}
                                 placeholder={'New password'}
-                                name={'new'}
+                                name={'newPassword'}
                                 value={values.newPassword}
                                 errors={touched.newPassword ? errors?.newPassword : ''}
                                 onChange={handleChange}
@@ -88,7 +89,7 @@ const SecurityPage = () => {
                             <TextInput
                                 type={'password'}
                                 placeholder={'Confirm password'}
-                                name={'confirm'}
+                                name={'confirmPassword'}
                                 value={values.confirmPassword}
                                 errors={touched.confirmPassword ? errors?.confirmPassword : ''}
                                 onChange={handleChange}
