@@ -24,11 +24,13 @@ import { TableComponent } from '@/components/table/Table';
 import { useGetAllOrdersQuery } from '@/redux/orders/orders.slice';
 import SideCard from '@/components/cards/SideCard';
 import RingChart from '@/components/charts/RingChart';
+import Link from 'next/link';
 
 const orderData = [
 	{
 		id: '#15285047',
 		status: 'new',
+		type: 'success',
 		name: 'Ahmed Johnson',
 		address: 'West Street, Ikoyi, Lagos',
 		dateTime: '14/5/2005 3:01PM',
@@ -36,6 +38,7 @@ const orderData = [
 	{
 		id: '#15285047',
 		status: 'new',
+		type: 'success',
 		name: 'Ahmed Johnson',
 		address: 'West Street, Ikoyi, Lagos',
 		dateTime: '14/5/2005 3:01PM',
@@ -43,6 +46,7 @@ const orderData = [
 	{
 		id: '#15285047',
 		status: 'new',
+		type: 'success',
 		name: 'Ahmed Johnson',
 		address: 'West Street, Ikoyi, Lagos',
 		dateTime: '14/5/2005 3:01PM',
@@ -50,6 +54,7 @@ const orderData = [
 	{
 		id: '#15285047',
 		status: 'new',
+		type: 'success',
 		name: 'Ahmed Johnson',
 		address: 'West Street, Ikoyi, Lagos',
 		dateTime: '14/5/2005 3:01PM',
@@ -57,6 +62,7 @@ const orderData = [
 	{
 		id: '#15285047',
 		status: 'new',
+		type: 'success',
 		name: 'Ahmed Johnson',
 		address: 'West Street, Ikoyi, Lagos',
 		dateTime: '14/5/2005 3:01PM',
@@ -126,22 +132,12 @@ const data = [
 	},
 ];
 
-const data2 = [
-	{
-		lenght: 25,
-		breath: 65,
-	}
-]
-
 const HomePage: React.FC = () => {
 	// const { data: metricsData } = useGetDashboardMetricsCountQuery({
 	// 	startDate: '2024-08-20',
 	// 	endDate: '2023-08-07',
 	// });
 	// const { data: orderData } = useGetAllOrdersQuery({});
-	const circle = data2.map(item => item.lenght)
-	const circle2 = data2.map(item => item.breath)
-
 	const labels = data.map(item => item.total);
 	const values1 = data.map(item => item.count);
 	const { data: inventoryData } = useGetInventoryQuery();
@@ -314,61 +310,70 @@ const HomePage: React.FC = () => {
 					}
 				/>
 			</div>
+			<div className='pt-6'>
+				<div className='flex justify-between items-center'>
+					<div>
+						<Header className='pb-4' header={'Recent Orders'} />
+					</div>
+					<div className='text-default-blue'>
+						<Link href={''}>View all</Link>
+					</div>
+				</div>
+				<TableComponent
+					headers={[
+						'ORDER ID',
+						'CUSTOMER NAME',
+						'CUSTOMER ADDRESS',
+						'PAYMENT STATUS',
+						'DATE & TIME',
+						' ',
+						<div
+							className='w-full flex justify-end'
+							key={`header-controls`}
+						></div>,
+					]}
+					rows={orderData.map(order => ({
+						id: order.id,
+						content: [
+							order.id,
+							order.name,
+							order.address,
 
-			<TableComponent
-				headers={[
-					'ORDER ID',
-					'CUSTOMER NAME',
-					'CUSTOMER ADDRESS',
-					'PAYMENT STATUS',
-					'DATE & TIME',
-					' ',
-					<div
-						className='w-full flex justify-end'
-						key={`header-controls`}
-					></div>,
-				]}
-				rows={orderData.map(order => ({
-					id: order.id,
-					content: [
-						order.id,
-						order.name,
-						order.address,
-
-						<Status
-							text={order.status}
-							type={
-								(ORDERSTATUS.find(
-									status =>
-										status.orderStatus.toLowerCase() ===
-										order.status.toLowerCase()
-								)?.type ?? 'warn') as StatusTypes
-							}
-						/>,
-						order.dateTime,
-						<Dropdown
-							key={`${order.id}-controls`}
-							menuButton={
-								<Icon svg='ellipses' height={18} width={18} className='' />
-							}
-							onClickMenuItem={() => {}}
-							menuItems={[
-								{
-									name: (
-										<button className='disabled:opacity-30 w-full text-left'>
-											Request delivery
-										</button>
-									),
-									value: '',
-								},
-							]}
-						/>,
-					],
-				}))}
-				name='categories-table'
-				loading={false}
-				isEmpty={false}
-			/>
+							<Status
+								text={order.status}
+								type={
+									(ORDERSTATUS.find(
+										status =>
+											status.type.toLowerCase() ===
+											order.status.toLowerCase()
+									)?.type ?? 'warn') as StatusTypes
+								}
+							/>,
+							order.dateTime,
+							<Dropdown
+								key={`${order.id}-controls`}
+								menuButton={
+									<Icon svg='ellipses' height={18} width={18} className='' />
+								}
+								onClickMenuItem={() => {}}
+								menuItems={[
+									{
+										name: (
+											<button className='disabled:opacity-30 w-full text-left'>
+												Request delivery
+											</button>
+										),
+										value: '',
+									},
+								]}
+							/>,
+						],
+					}))}
+					name='categories-table'
+					loading={false}
+					isEmpty={false}
+				/>
+			</div>
 		</PageWrapper>
 	);
 };

@@ -1,6 +1,6 @@
 import { toast } from 'react-toastify';
 import { apiSlice } from '../apis/api.slice';
-import { CreateProfile, ProfileData } from './profile.type';
+import { CreateProfile, ProfileData, UpdatePasswordData } from './profile.type';
 
 export const profileApiSlice = apiSlice.injectEndpoints({
 	overrideExisting: true,
@@ -58,11 +58,30 @@ export const profileApiSlice = apiSlice.injectEndpoints({
 				}
 			},
 		}),
+		updatePassword: builder.mutation<UpdatePasswordData, Partial<UpdatePasswordData>>({
+			query: data => ({
+				url: '/profile/change-password',
+				method: 'PATCH',
+				body: data,
+			}),
+			async onQueryStarted(arg, { queryFulfilled }) {
+				try {
+					await queryFulfilled;
+					toast.success('Password Changed Successfully');
+				} catch (err: unknown) {
+					if (typeof err === 'object' && err !== null && 'error' in err) {
+						const error = err as { error: { data: { error: string } } }
+						toast.error(error.error.data.error)
+					}
+				}
+			}
+		})
 	}),
 });
 
 export const {
 	useGetProfileQuery,
 	useUpdateProfileMutation,
+	useUpdatePasswordMutation,
 	useCreateProfileMutation,
 } = profileApiSlice;

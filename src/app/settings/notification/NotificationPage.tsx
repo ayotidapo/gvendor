@@ -4,6 +4,7 @@ import { CheckIcon } from '@heroicons/react/24/outline';
 import parse from 'html-react-parser';
 import React, { useState } from 'react';
 import clsx from 'clsx';
+import Button from '@/components/buttons/Button';
 
 const orderNotification = [
 	'Notification only',
@@ -234,7 +235,10 @@ const NotificationPage = () => {
 						</div>
 					))}
 				</div>
-			</div>
+            </div>
+            <div className='w-[160px]'>
+                <Button label={'Save'}/>
+            </div>
 		</div>
 	);
 };

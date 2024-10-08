@@ -41,7 +41,7 @@ const Withdraw = () => {
 						name={''}
 					/>
 				</div>
-				<div className=' w-[400px]'>
+				<div className='w-[400px]'>
 					<Button label={'Withdraw'} />
 				</div>
 			</div>

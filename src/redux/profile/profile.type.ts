@@ -82,3 +82,8 @@ export interface ProfileResponse {
 	message: string;
 	data: ProfileData[];
 }
+
+export interface UpdatePasswordData {
+	currentPassword: string;
+	newPassword: string;
+}
