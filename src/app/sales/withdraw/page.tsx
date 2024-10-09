@@ -22,10 +22,10 @@ const Withdraw = () => {
 	return (
 		<PageWrapper pageHeader={'Sales'}>
 			<div className='space-y-10'>
-				<div className='w-[580px]'>
-					<CountCard count={0} text={'WALLET BALANCE'} isCurrency={false} />
+				<div className='md:w-[580px]'>
+					<CountCard count={0} text={'AVAILABLE BALANCE'} isCurrency={false} />
 				</div>
-				<div className='w-[600px] space-y-10'>
+				<div className='md:w-[600px] space-y-10'>
 				<Select
 						options={options}
 						placeholder='Select bank'
@@ -41,8 +41,10 @@ const Withdraw = () => {
 						name={''}
 					/>
 				</div>
+				<div className='flex md:justify-center'>
 				<div className='w-[400px]'>
 					<Button label={'Withdraw'} />
+				</div>
 				</div>
 			</div>
 		</PageWrapper>

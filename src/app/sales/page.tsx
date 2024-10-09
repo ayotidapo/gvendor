@@ -54,15 +54,7 @@ const Sales: React.FC = () => {
 				</div>
 			</div>
 			<CountCardContainer>
-				<div className='grid grid-cols-1 space-y-7 max-w-lg gap-0'>
-					<ButtonCard
-						count={0}
-						text={'WALLET BALANCE'}
-						isCurrency={false}
-						label={'Withdraw'}
-						href='/sales/withdraw'
-					/>
-
+				<div className='grid grid-cols-1 space-y-7 md:w-[302px] gap-0'>
 					<CountCard count={0} text={'SALES(TODAY)'} isCurrency={false} />
 				</div>
 			</CountCardContainer>

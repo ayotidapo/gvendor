@@ -7,7 +7,7 @@ interface SectionCardProps {
 
 const SectionCard: React.FC<SectionCardProps> = ({ header, content }) => {
 	return (
-		<div className='bg-off-white rounded-xl p-6'>
+		<div className='bg-white rounded-xl p-6'>
 			<div>{header}</div>
 			<div>{content}</div>
 		</div>

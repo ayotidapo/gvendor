@@ -178,7 +178,7 @@ const HomePage: React.FC = () => {
 				</div>
 			</div>
 			<div className='grid grid-row grid-cols-2 gap-5'>
-				<div className='my-8 g'>
+				<div className='my-8'>
 					<SectionCard
 						header={
 							<div>
@@ -205,29 +205,29 @@ const HomePage: React.FC = () => {
 
 		   '
 				>
-					{/* <CountCard count={totalValue?.data?.totalSaleValue ?? 0} text={'TOTAL ORDER'} isCurrency={false} />
-				<CountCard count={completeValue ?.data?.totalSaleValue ?? 0} text={'COMPLETED ORDER'} isCurrency={false} />
-				<CountCard count={pendingValue?.data?.totalSaleValue ?? 0} text={'PENDING ORDER'} isCurrency={false} /> */}
+				<CountCard count={totalValue?.data?.totalSaleValue ?? 0} text={'Total Transactions'} isCurrency={false} />
+				{/* <CountCard count={completeValue ?.data?.totalSaleValue ?? 0} text={'COMPLETED ORDER'} isCurrency={false} />
+				<CountCard count={pendingValue?.data?.totalSaleValue ?? 0} text={'PENDING ORDER'} isCurrency={false} />  */}
 					<CountCard
 						count={processingValue?.data?.totalSaleValue ?? 0}
-						text={'PROCESSING ORDER'}
+						text={'Total Products'}
 						isCurrency={false}
 					/>
 					<CountCard
 						count={totalValue?.data?.noOfOrders ?? 0}
-						text={'TOTAL ORDER COUNT'}
+						text={'Total Revenue'}
 						isCurrency={false}
 					/>
 					<CountCard
 						count={pendingValue?.data?.noOfOrders ?? 0}
-						text={'PENDING ORDER COUNT'}
+						text={'Pending Order Count'}
 						isCurrency={false}
 					/>
-					<CountCard
+					{/* <CountCard
 						count={processingValue?.data?.noOfOrders ?? 0}
 						text={'PROCESSING ORDER COUNT'}
 						isCurrency={false}
-					/>
+					/> */}
 				</CountCardContainer>
 			</div>
 
