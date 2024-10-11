@@ -1,6 +1,5 @@
 'use client';
 
-import CountCard from '@/components/cards/CountCard';
 import PageWrapper from '@/containers/PageWrapper';
 import Button from '@/components/buttons/Button';
 import React, { useEffect } from 'react';
@@ -10,10 +9,16 @@ import BarChart from '@/components/charts/BarChart';
 import SectionCard from '@/components/cards/SectionCard';
 import { Header } from '@/components/typography/Header';
 import { CountCardContainer } from '@/containers/CountCardWrapper';
-import { PaymentTypes, StatusTypes } from '@/types/types';
+import { StatusTypes } from '@/types/types';
 import {
 	useGetDashboardMetricsCountQuery,
 	useGetDashboardSalesValueQuery,
+	useGetPendingOrderQuery,
+	useGetRecentOrdersQuery,
+	useGetSalesQuery,
+	useGetTotalProductsQuery,
+	useGetTotalRevenueQuery,
+	useGetTotalTransactionsQuery,
 } from '@/redux/dashboard/dashboard.slice';
 import { useGetInventoryQuery } from '@/redux/inventory/inventory.slice';
 import { Icon } from '@/components/icon/icon';
@@ -25,6 +30,7 @@ import { useGetAllOrdersQuery } from '@/redux/orders/orders.slice';
 import Link from 'next/link';
 import DoughnutChart from '@/components/charts/Doughnut';
 import CategoryList from './CategoriesList';
+import PercentageCard from '@/components/cards/PercentageCard';
 
 const orderData = [
 	{
@@ -154,21 +160,23 @@ const categories = [
 ];
 
 const HomePage: React.FC = () => {
-	// const { data: metricsData } = useGetDashboardMetricsCountQuery({
-	// 	startDate: '2024-08-20',
-	// 	endDate: '2023-08-07',
-	// });
-	// const { data: orderData } = useGetAllOrdersQuery({});
-	const labels = data.map(item => item.total);
-	const values1 = data.map(item => item.count);
+	const { data: metricsData } = useGetDashboardMetricsCountQuery('COMPLETED');
 	const { data: inventoryData } = useGetInventoryQuery();
-	// const labels = metricsData?.data?.result.map(item => item.day) || [];
-	// const values1 = metricsData?.data?.result.map(item => item.total) || [];
-	const { data: totalValue } = useGetDashboardSalesValueQuery('');
-	const { data: completeValue } = useGetDashboardSalesValueQuery('COMPLETED');
-	const { data: pendingValue } = useGetDashboardSalesValueQuery('PENDING');
-	const { data: processingValue } =
-		useGetDashboardSalesValueQuery('PROCESSING');
+	const { data: recentOrder } = useGetRecentOrdersQuery();
+	const labels =
+		metricsData?.data?.result.map((item: { day: string }) => item.day) || [];
+	const values1 =
+		metricsData?.data?.result.map((item: { total: number }) => item.total) ||
+		[];
+	const { data: totalProducts } = useGetTotalProductsQuery();
+	const { data: totalRevenue } = useGetTotalRevenueQuery();
+	const { data: getSales } = useGetSalesQuery();
+	const { data: pendingValue } = useGetPendingOrderQuery();
+	const { data: totalTransactions } = useGetTotalTransactionsQuery();
+
+	useEffect(() => {
+		console.log(pendingValue, getSales);
+	}, [pendingValue, getSales]);
 
 	return (
 		<PageWrapper pageHeader='Home'>
@@ -205,29 +213,35 @@ const HomePage: React.FC = () => {
 
 		   '
 				>
-				<CountCard count={totalValue?.data?.totalSaleValue ?? 0} text={'Total Transactions'} isCurrency={false} />
-				{/* <CountCard count={completeValue ?.data?.totalSaleValue ?? 0} text={'COMPLETED ORDER'} isCurrency={false} />
-				<CountCard count={pendingValue?.data?.totalSaleValue ?? 0} text={'PENDING ORDER'} isCurrency={false} />  */}
-					<CountCard
-						count={processingValue?.data?.totalSaleValue ?? 0}
+					<PercentageCard
+						count={totalTransactions?.data?.totalRevenue ?? 0}
+						text={'Total Transactions'}
+						isCurrency={true}
+						percentageChange={totalTransactions?.data?.percentageIncrease ?? 0}
+						percentageText={' increase in the past 28 days'}
+					/>
+					<PercentageCard
+						count={totalProducts?.data?.totalRevenue ?? 0}
 						text={'Total Products'}
-						isCurrency={false}
+						isCurrency={true}
+						percentageChange={totalProducts?.data?.percentageIncrease ?? 0}
+						percentageText={'increase in the past 28 days'}
 					/>
-					<CountCard
-						count={totalValue?.data?.noOfOrders ?? 0}
+
+					<PercentageCard
+						count={totalRevenue?.data?.totalRevenue ?? 0}
 						text={'Total Revenue'}
-						isCurrency={false}
+						isCurrency={true}
+						percentageChange={totalRevenue?.data?.percentageIncrease ?? 0}
+						percentageText={'increase in the past 28 days'}
 					/>
-					<CountCard
-						count={pendingValue?.data?.noOfOrders ?? 0}
+					<PercentageCard
+						count={pendingValue?.data?.getPendingOrderCount ?? 0}
 						text={'Pending Order Count'}
 						isCurrency={false}
+						percentageChange={pendingValue?.data?.percentageIncrease ?? 0}
+						percentageText={'increase in the past 28 days'}
 					/>
-					{/* <CountCard
-						count={processingValue?.data?.noOfOrders ?? 0}
-						text={'PROCESSING ORDER COUNT'}
-						isCurrency={false}
-					/> */}
 				</CountCardContainer>
 			</div>
 
@@ -251,7 +265,7 @@ const HomePage: React.FC = () => {
 						content={
 							<div className='grid grid-cols-2 gap-4 pt-6'>
 								<div className='flex flex-col justify-center items-start'>
-								<CategoryList categories={categories} />
+									<CategoryList categories={categories} />
 								</div>
 								<div className='pt-6'>
 									<DoughnutChart
@@ -276,13 +290,14 @@ const HomePage: React.FC = () => {
 					content={
 						<div>
 							{inventoryData?.data?.inventory?.Products?.map(product => (
-								<div className='mt-6 flex justify-between' key={product._id}>
-									<div>{product.name}</div>
-									<div className='text-secondary-black'>
-										{product.unitsSold}
+									<div className='mt-6 flex justify-between' key={product._id}>
+										<div>{product.name}</div>
+										<div className='text-secondary-black'>
+											{product.unitsSold}
+										</div>
 									</div>
-								</div>
-							))}
+								)
+							)}
 						</div>
 					}
 				/>
@@ -299,50 +314,34 @@ const HomePage: React.FC = () => {
 				<TableComponent
 					headers={[
 						'ORDER ID',
-						'CUSTOMER NAME',
-						'CUSTOMER ADDRESS',
-						'PAYMENT STATUS',
+						'ITEMS ORDERED',
+						'QUANTITY',
+						'STATUS',
 						'DATE & TIME',
-						' ',
+						'PRICE',
 						<div
 							className='w-full flex justify-end'
 							key={`header-controls`}
 						></div>,
 					]}
-					rows={orderData.map(order => ({
-						id: order.id,
+					rows={(recentOrder?.data?.result || []).map(recent => ({
+						id: recent._id,
 						content: [
-							order.id,
-							order.name,
-							order.address,
+							recent._id,
+							recent.itemsOrdered,
+							recent.quantity,
 
 							<Status
-								text={order.status}
+								text={recent.status}
 								type={
 									(ORDERSTATUS.find(
 										status =>
-											status.type.toLowerCase() === order.status.toLowerCase()
+											status.orderStatus.toLowerCase() === recent.status.toLowerCase()
 									)?.type ?? 'warn') as StatusTypes
 								}
 							/>,
-							order.dateTime,
-							<Dropdown
-								key={`${order.id}-controls`}
-								menuButton={
-									<Icon svg='ellipses' height={18} width={18} className='' />
-								}
-								onClickMenuItem={() => {}}
-								menuItems={[
-									{
-										name: (
-											<button className='disabled:opacity-30 w-full text-left'>
-												Request delivery
-											</button>
-										),
-										value: '',
-									},
-								]}
-							/>,
+							recent.date,
+							`${formatCurrency(recent.price)}`,
 						],
 					}))}
 					name='categories-table'

@@ -53,7 +53,8 @@ const SecurityPage = () => {
                 validationSchema={changePasswordSchema}
                 onSubmit={values => {
                     if (!isLoading) {
-                        updatePassword(values); 
+                    const { currentPassword, newPassword } = values;
+                        updatePassword({currentPassword, newPassword}); 
                         toast.success('Password updated successfully');
                     }
                 }}

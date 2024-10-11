@@ -21,14 +21,39 @@ export interface DashboardSalesValue {
 	}
 }
 
+export interface TotalRevenue {
+	success: boolean;
+	message: string;
+	data: {
+		totalRevenue: number;
+		percentageIncrease: number;
+	}
+}
+
+export interface PendingOrder {
+	success: boolean;
+	message: string;
+	data: {
+		getPendingOrderCount: number;
+		percentageIncrease: number;
+	}
+}
+
+export interface Order{
+	_id: string;
+	itemsOrdered: string[];
+	quantity: number;
+	status: string;
+	date: string;
+	price: number;
+}
+
 export interface RecentOrdersResponse {
 	success: boolean;
 	message: string;
 	data: {
-		day: string;
-		total: number;
-		count: number;
-	}[];
+		result: Order[];
+	};
 }
 
 export interface TopSellersResponse {
