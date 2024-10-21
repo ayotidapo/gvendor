@@ -10,7 +10,7 @@ import Button from '@/components/buttons/Button';
 
 export const OrderPage: React.FC = () => {
 	const [tabs, setTabs] = useState([
-		{ name: 'New', isActive: true },
+		{ name: 'Pending', isActive: true },
 		{ name: 'Processing', isActive: false },
 		{ name: 'Fulfilled', isActive: false },
 	]);
