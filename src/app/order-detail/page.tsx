@@ -22,12 +22,17 @@ const data = [
 const OrderDetails = () => {
 	return (
 		<PageWrapper pageHeader='Order Detail'>
-			<div className='pb-10 pt-4'>
-                <div className='mt-6 pb-6'>
-                    <ShipmentInfo status={'processing'} deliveyType={'processing'}/>
+			<div className=''>
+                <div className='mt-6 pb-10'>
+					<ShipmentInfo
+						status={'PROCESSING'}
+						deliveyType={'PROCESSING'}
+						deliveryDate='2023-01-09'
+						estimatedDeliveryDate='2024-01-17'
+					/>
                 </div>
                 <hr />
-				<div className='flex flex-col md:flex-row gap-10'>
+				<div className='flex flex-col pt-10 md:flex-row gap-10'>
 					<div className='basis-2/3'>
 						{/* Product Details */}
 						<div className='bg-white border border-[#EAEAEA] shadow-sm p-4 rounded-md'>
@@ -94,8 +99,8 @@ const OrderDetails = () => {
 									<span className='space-y-4'>Good Wallet</span>
 									<div className='flex items-center justify-between'>
 										<div>
-											<label>Color: </label>
-											<span>black</span>
+											<label>Total:</label>
+											<span> ₦175,560.00</span>
 										</div>
 										<div>
 											<Status type={'success'} text={'paid'} />
@@ -115,8 +120,8 @@ const OrderDetails = () => {
 											</span>
 										</div>
 										<div>
-											<label>Color: </label>
-											<span>black</span>
+											<label>Phone:</label>
+											<span> +2348019284726</span>
 										</div>
 									</div>
 								</div>

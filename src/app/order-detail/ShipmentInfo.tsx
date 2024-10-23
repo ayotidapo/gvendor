@@ -20,65 +20,65 @@ const ShipmentInfo = ({
 	const deliverySteps = [
 		{
 			name: 'CREATED',
-			value: 'Order placed',
-			writeUp: 'Your order details have been received.',
+			value: 'New Order',
+			writeUp: 'A new order has been placed',
 			done: false,
 		},
 		{
 			name: 'PROCESSING',
 			value: 'Processing',
-			writeUp: 'Your order is being organized.',
+			writeUp: 'This order is currently being worked on',
 			done: false,
 		},
 		{
 			name: 'PREPARING_TO_SHIP',
-			value: 'Preparing to send',
-			writeUp: 'Delivery driver is picking up your package.',
+			value: 'Ready to dispatch',
+			writeUp: 'Order is being picked up by the delivery driver',
 			done: false,
 		},
 		{
 			name: 'SHIPPED',
-			value: 'Sent',
-			writeUp: 'Your package is on its way to you.',
+			value: 'Ongoing Delivery',
+			writeUp: 'The package is enroute to the customer',
 			done: false,
 		},
 		{
 			name: 'DELIVERED',
-			value: 'Delivered',
+			value: 'Order Delivered',
 			done: false,
-			writeUp: 'Your package has been delivered.',
+			writeUp: 'Order has been delivered',
 		},
 	];
 
 	const pickupSteps = [
 		{
 			name: 'CREATED',
-			value: 'Order placed',
-			writeUp: 'Your order details have been received.',
+			value: 'New Order',
+			writeUp: 'A new order has been placed',
 			done: false,
 		},
 		{
 			name: 'PROCESSING',
 			value: 'Processing',
-			writeUp: 'Your order is being organized.',
+			writeUp: 'This order is currently being worked on',
 			done: false,
 		},
 		{
 			name: 'PREPARING_TO_SHIP',
-			value: 'Preparing for pickup',
-			writeUp: 'Your package is heading to the pickup center.',
+			value: 'Prep to send',
+			writeUp: 'Order is being picked up by the delivery driver',
 			done: false,
 		},
 		{
 			name: 'SHIPPED',
-			value: 'Ready for pickup',
-			writeUp: 'Your package is ready for pickup',
+			value: 'Ongoing Delivery',
+			writeUp: 'The package is enroute to the customer',
 			done: false,
 		},
 		{
 			name: 'DELIVERED',
-			value: 'Picked Up',
-			writeUp: 'Your package has been picked up.',
+			value: 'Order Delivered',
+			writeUp: 'Order has been delivered',
 			done: false,
 		},
 	];
@@ -111,7 +111,7 @@ const ShipmentInfo = ({
 			<p className='text-sm'>
 				{deliveryDate && (
 					<div>
-						Delivered on {format(new Date(deliveryDate), 'eeee MMM do')}
+						This item was delivered on {format(new Date(deliveryDate), 'eeee MMM do')}
 					</div>
 				)}
 				{estimatedDeliveryDate && !deliveryDate && (

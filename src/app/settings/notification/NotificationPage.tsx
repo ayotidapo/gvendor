@@ -220,6 +220,8 @@ const NotificationPage = () => {
 					))}
 				</div>
 			</div>
+			<hr />
+
 			<div className='flex justify-center items-center'>
 				<div className='w-[160px]'>
 					<Button label={'Save'} />
