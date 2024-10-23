@@ -31,9 +31,9 @@ export const dashboardApiSlice = apiSlice.injectEndpoints({
 				method: 'GET',
 			}),
 		}),
-		getTotalRevenue: builder.query<TotalRevenue, void>({
-			query: () => ({
-				url: `/order/total-revenue?timeframe=28`,
+		getTotalRevenue: builder.query<TotalRevenue, Queryparams>({
+			query: ({ startDate, endDate }) => ({
+				url: `order/total-revenue?endDate=${endDate}&startDate=${startDate}`,
 				method: 'GET',
 			}),
 		}),
@@ -49,9 +49,9 @@ export const dashboardApiSlice = apiSlice.injectEndpoints({
 				method: 'GET',
 			}),
 		}),
-		getPendingOrder: builder.query<PendingOrder, void>({
-			query: () => ({
-				url: `/order/pending-orders-count?timeframe=28`,
+		getPendingOrder: builder.query<PendingOrder, Queryparams>({
+			query: ({ startDate, endDate }) => ({
+				url: `/order/pending-orders-count?endDate=${endDate}&startDate=${startDate}`,
 				method: 'GET',
 			}),
 		}),

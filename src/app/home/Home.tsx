@@ -169,9 +169,9 @@ const HomePage: React.FC = () => {
 		metricsData?.data?.result.map((item: { total: number }) => item.total) ||
 		[];
 	const { data: totalProducts } = useGetTotalProductsQuery();
-	const { data: totalRevenue } = useGetTotalRevenueQuery();
+	const { data: totalRevenue } = useGetTotalRevenueQuery({ startDate: '2024-09-13', endDate: '2024-09-23' });
 	const { data: getSales } = useGetSalesQuery();
-	const { data: pendingValue } = useGetPendingOrderQuery();
+	const { data: pendingValue } = useGetPendingOrderQuery({ startDate: '2024-09-13', endDate: '2024-09-23' });
 	const { data: totalTransactions } = useGetTotalTransactionsQuery();
 
 	useEffect(() => {
@@ -339,7 +339,8 @@ const HomePage: React.FC = () => {
 											status.orderStatus.toLowerCase() === recent.status.toLowerCase()
 									)?.type ?? 'warn') as StatusTypes
 								}
-							/>,
+							/>
+							,
 							recent.date,
 							`${formatCurrency(recent.price)}`,
 						],
