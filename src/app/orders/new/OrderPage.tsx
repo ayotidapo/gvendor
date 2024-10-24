@@ -14,7 +14,7 @@ export const OrderPage: React.FC = () => {
 		{ name: 'Processing', isActive: false },
 		{ name: 'Fulfilled', isActive: false },
 	]);
-	const [activeTab, setActiveTab] = useState('New');
+	const [activeTab, setActiveTab] = useState('Pending');
 
 	return (
 		<div className='bg-white rounded-md '>
@@ -54,7 +54,7 @@ export const OrderPage: React.FC = () => {
 				</nav>
 			</div>
 
-			{activeTab === 'New' && <New />}
+			{activeTab === 'Pending' && <New />}
 			{activeTab === 'Processing' && <Processing />}
 			{activeTab === 'Fulfilled' && <Fulfilled />}
 		</div>

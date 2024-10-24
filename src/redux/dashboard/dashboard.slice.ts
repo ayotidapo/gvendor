@@ -1,5 +1,6 @@
 import { apiSlice } from '../apis/api.slice';
 import {
+	CategorySales,
 	DashboardMetricsCount,
 	DashboardSalesValue,
 	PendingOrder,
@@ -9,28 +10,24 @@ import {
 } from './dashboard.type';
 
 interface Queryparams {
+	status?: string;
 	startDate?: string;
 	endDate?: string;
+	duration?: string;
 }
 type OrderStatus = 'COMPLETED' | 'PENDING' | 'PROCESSING' | '';
 
 export const dashboardApiSlice = apiSlice.injectEndpoints({
 	overrideExisting: true,
 	endpoints: builder => ({
-		getDashboardMetricsCount: builder.query<DashboardMetricsCount, OrderStatus>(
+		getDashboardMetricsCount: builder.query<DashboardMetricsCount, Queryparams>(
 			{
-				query: (status: OrderStatus) => ({
-					url: status ? `/order/metrics?status=${status}` : `/order/metrics`,
+				query: ({status, startDate, endDate, duration}) => ({
+					url: `order/metrics?status=${status}&duration=${duration}`,
 					method: 'GET',
-				}),
-			}
+				})
+			} 
 		),
-		getDashboardSalesValue: builder.query<DashboardSalesValue, OrderStatus>({
-			query: (status: OrderStatus) => ({
-				url: status ? `/order/stats?status=${status}` : `/order/stats`,
-				method: 'GET',
-			}),
-		}),
 		getTotalRevenue: builder.query<TotalRevenue, Queryparams>({
 			query: ({ startDate, endDate }) => ({
 				url: `order/total-revenue?endDate=${endDate}&startDate=${startDate}`,
@@ -55,13 +52,12 @@ export const dashboardApiSlice = apiSlice.injectEndpoints({
 				method: 'GET',
 			}),
 		}),
-		getSales: builder.query<TotalRevenue, void>({
+		getSales: builder.query<CategorySales, void>({
 			query: () => ({
 				url: `/order/sales-by-category`,
 				method: 'GET',
 			}),
 		}),
-
 		getRecentOrders: builder.query<RecentOrdersResponse, void>({
 			query: () => ({
 				url: `/order/recent`,
@@ -79,7 +75,6 @@ export const dashboardApiSlice = apiSlice.injectEndpoints({
 
 export const {
 	useGetDashboardMetricsCountQuery,
-	useGetDashboardSalesValueQuery,
 	useGetTotalRevenueQuery,
 	useGetPendingOrderQuery,
 	useGetSalesQuery,

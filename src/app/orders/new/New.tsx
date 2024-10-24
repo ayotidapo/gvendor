@@ -15,19 +15,29 @@ import { formatCurrency } from '@/helpers';
 import { PaymentTypes, StatusTypes } from '@/types/types';
 import { useGetAllOrdersQuery } from '@/redux/orders/orders.slice';
 import { ORDERSTATUS, PAYMENTSTATUS } from '@/utils/constants';
-import { useGetDashboardSalesValueQuery } from '@/redux/dashboard/dashboard.slice';
+import {
+	useGetPendingOrderQuery,
+	useGetTotalRevenueQuery,
+} from '@/redux/dashboard/dashboard.slice';
 
-const Orders: React.FC = () => {
+const New: React.FC = () => {
 	const { data: orderData } = useGetAllOrdersQuery({});
-	const { data: salesValue} = useGetDashboardSalesValueQuery('')
-	
+	const { data: totalRevenue } = useGetTotalRevenueQuery({
+		startDate: '2024-09-13',
+		endDate: '2024-09-23',
+	});
+	const { data: pendingValue } = useGetPendingOrderQuery({
+		startDate: '2024-09-13',
+		endDate: '2024-09-23',
+	});
+
 	useEffect(() => {
-		console.log(salesValue)
-	},[salesValue]) 
+		console.log(orderData);
+	}, [orderData]);
 
 	return (
 		<div>
-						<CountCardContainer
+			<CountCardContainer
 				className='
 							grid grid-flow-row
 							grid-cols-1 sm:grid-cols-2 lg:grid-cols-3
@@ -35,8 +45,16 @@ const Orders: React.FC = () => {
 
 				   '
 			>
-				<CountCard count={salesValue?.data?.totalSaleValue ?? 0} text={'TOTAL SALES'} isCurrency={false} />
-				<CountCard count={salesValue?.data?.noOfOrders ?? 0} text={'TOTAL ORDER'} isCurrency={false} />
+				<CountCard
+					count={totalRevenue?.data?.percentageIncrease ?? 0}
+					text={'TOTAL SALES'}
+					isCurrency={false}
+				/>
+				<CountCard
+					count={pendingValue?.data?.getPendingOrderCount ?? 0}
+					text={'TOTAL ORDER'}
+					isCurrency={false}
+				/>
 			</CountCardContainer>
 
 			<TableComponent
@@ -108,8 +126,7 @@ const Orders: React.FC = () => {
 				isEmpty={false}
 			/>
 		</div>
-
 	);
 };
 
-export default Orders;
+export default New;

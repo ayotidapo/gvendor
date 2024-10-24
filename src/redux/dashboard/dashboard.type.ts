@@ -30,6 +30,12 @@ export interface TotalRevenue {
 	}
 }
 
+export interface CategorySales {
+	data: [];
+	success: boolean;
+	message: string;
+}
+
 export interface PendingOrder {
 	success: boolean;
 	message: string;

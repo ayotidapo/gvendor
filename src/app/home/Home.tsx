@@ -12,7 +12,6 @@ import { CountCardContainer } from '@/containers/CountCardWrapper';
 import { StatusTypes } from '@/types/types';
 import {
 	useGetDashboardMetricsCountQuery,
-	useGetDashboardSalesValueQuery,
 	useGetPendingOrderQuery,
 	useGetRecentOrdersQuery,
 	useGetSalesQuery,
@@ -160,7 +159,7 @@ const categories = [
 ];
 
 const HomePage: React.FC = () => {
-	const { data: metricsData } = useGetDashboardMetricsCountQuery('COMPLETED');
+	const { data: metricsData } = useGetDashboardMetricsCountQuery({ startDate: '2024-09-13', endDate: '2024-09-23', status: 'COMPLETED', duration: 'day' });
 	const { data: inventoryData } = useGetInventoryQuery();
 	const { data: recentOrder } = useGetRecentOrdersQuery();
 	const labels =
@@ -336,7 +335,7 @@ const HomePage: React.FC = () => {
 								type={
 									(ORDERSTATUS.find(
 										status =>
-											status.orderStatus.toLowerCase() === recent.status.toLowerCase()
+											status?.orderStatus?.toLowerCase() === recent?.status?.toLowerCase()
 									)?.type ?? 'warn') as StatusTypes
 								}
 							/>
