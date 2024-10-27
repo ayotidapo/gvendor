@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import PageWrapper from '@/containers/PageWrapper';
 import ShipmentInfo from './ShipmentInfo';
@@ -21,17 +21,25 @@ const data = [
 
 const OrderDetails = () => {
 	return (
-		<PageWrapper pageHeader='Order Detail'>
+		<PageWrapper pageHeader=''>
+			<div className='flex item-center justify-center'>
+				<div className='grid grid-cols-2'>
+					<Header header={'Order #15285047'} />
+					<Status type={'success'} text={'Fulfilled'} />
+					<span>Date: 14/08/2023</span>
+					<span> 3:01PM</span>
+				</div>
+			</div>
 			<div className=''>
-                <div className='mt-6 pb-10'>
+				<div className='mt-6 pb-10'>
 					<ShipmentInfo
 						status={'PROCESSING'}
 						deliveyType={'PROCESSING'}
 						deliveryDate='2023-01-09'
 						estimatedDeliveryDate='2024-01-17'
 					/>
-                </div>
-                <hr />
+				</div>
+				<hr />
 				<div className='flex flex-col pt-10 md:flex-row gap-10'>
 					<div className='basis-2/3'>
 						{/* Product Details */}
@@ -90,45 +98,44 @@ const OrderDetails = () => {
 								</div>
 							</div>
 						</div>
-                        {/* Payment Method */}
-                        <div className='pt-10'>
-                        <div className='bg-white border border-[#EAEAEA] shadow-sm p-4 rounded-md'>
-							<div className='grid grid-cols-2 gap-4'>
-								<div className='space-y-4'>
-                                    <Header header={'Payment Method'} />
-									<span className='space-y-4'>Good Wallet</span>
-									<div className='flex items-center justify-between'>
-										<div>
-											<label>Total:</label>
-											<span> ₦175,560.00</span>
-										</div>
-										<div>
-											<Status type={'success'} text={'paid'} />
+						{/* Payment Method */}
+						<div className='pt-10'>
+							<div className='bg-white border border-[#EAEAEA] shadow-sm p-4 rounded-md'>
+								<div className='grid grid-cols-2 gap-4'>
+									<div className='space-y-4'>
+										<Header header={'Payment Method'} />
+										<span className='space-y-4'>Good Wallet</span>
+										<div className='flex items-center justify-between'>
+											<div>
+												<label>Total:</label>
+												<span> ₦175,560.00</span>
+											</div>
+											<div>
+												<Status type={'success'} text={'paid'} />
+											</div>
 										</div>
 									</div>
-								</div>
-								{/* Billing Address */}
-								<div className='space-y-4'>
-									<Header header={'Billing Address'} />
+									{/* Billing Address */}
 									<div className='space-y-4'>
-										<div>
-											<span>Shadow Unique</span>
-										</div>
-										<div>
-											<span>
-												15 Sasegbon St, Ikeja GRA, Ikeja 101233, Lagos
-											</span>
-										</div>
-										<div>
-											<label>Phone:</label>
-											<span> +2348019284726</span>
+										<Header header={'Billing Address'} />
+										<div className='space-y-4'>
+											<div>
+												<span>Shadow Unique</span>
+											</div>
+											<div>
+												<span>
+													15 Sasegbon St, Ikeja GRA, Ikeja 101233, Lagos
+												</span>
+											</div>
+											<div>
+												<label>Phone:</label>
+												<span> +2348019284726</span>
+											</div>
 										</div>
 									</div>
 								</div>
 							</div>
 						</div>
-                        </div>
-
 					</div>
 
 					<div className='basis-1/3 space-y-6'>

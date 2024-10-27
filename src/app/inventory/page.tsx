@@ -1,4 +1,4 @@
-'use client';
+'use client'
 
 import React from 'react';
 import PageWrapper from '@/containers/PageWrapper';
@@ -17,10 +17,8 @@ import { useGetInventoryQuery } from '@/redux/inventory/inventory.slice';
 const Inventory: React.FC = () => {
 	const { data: inventoryData } = useGetInventoryQuery();
 
-	const labels = inventoryData?.data?.inventory.Products.map(item => item.name);
-	const values1 = inventoryData?.data?.inventory.Products.map(
-		item => item.unitsSold
-	);
+	const labels = inventoryData?.data?.products.map(item => item.name);
+	const values1 = inventoryData?.data?.products.map(item => item.inStock);
 
 	return (
 		<PageWrapper pageHeader='Inventory'>
@@ -32,20 +30,18 @@ const Inventory: React.FC = () => {
 					<Button download label='Export CSV' name='outline' />
 				</div>
 			</div>
+
 			<CountCardContainer
-				className='
-					grid grid-flow-row
-					grid-cols-1 sm:grid-cols-2 lg:grid-cols-4
-					gap-10'
+				className='grid grid-flow-row grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10'
 			>
 				<CountCard
-					count={inventoryData?.data?.inventory?.totalUnitsSold ?? 0}
+					count={inventoryData?.data?.totalUnitsSold ?? 0}
 					text={'TOTAL UNITS SOLD'}
 					isCurrency={false}
 				/>
 				<CountCard
 					count={inventoryData?.data?.productsInStock ?? 0}
-					text={'PRODUCT IN STOCK'}
+					text={'PRODUCTS IN STOCK'}
 					isCurrency={false}
 				/>
 			</CountCardContainer>
@@ -69,29 +65,28 @@ const Inventory: React.FC = () => {
 					}
 				/>
 			</div>
+
 			<TableComponent
 				headers={[
 					'PRODUCT NAME',
 					'CATEGORY',
 					'INSTOCK',
-					'UNITSOLD',
 					'PRICE',
 					' ',
 				]}
-				rows={(inventoryData?.data?.inventory?.Products || []).map(product => ({
+				rows={(inventoryData?.data?.products || []).map(product => ({
 					id: product._id,
 					content: [
 						product.name,
 						product.category,
 						product.inStock,
-						product.unitsSold,
 						`${formatCurrency(product.price)}`,
 						<Dropdown
 							key={`${product._id}-controls`}
 							menuButton={
 								<Icon svg='ellipses' height={18} width={18} className='' />
 							}
-							onClickMenuItem={() => { }}
+							onClickMenuItem={() => {}}
 							menuItems={[
 								{
 									name: (
