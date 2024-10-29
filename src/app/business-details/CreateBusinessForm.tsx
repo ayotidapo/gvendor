@@ -290,8 +290,8 @@ const CreateBusinessForm = ({
 												option.value
 											)
 												? values.servicesOffered.filter(
-													service => service !== option.value
-												)
+														service => service !== option.value
+													)
 												: [...values.servicesOffered, option.value];
 											setFieldValue('servicesOffered', updatedServices);
 										}}

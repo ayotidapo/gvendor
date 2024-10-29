@@ -12,14 +12,21 @@ import { formatCurrency } from '@/helpers';
 import { PaymentTypes, StatusTypes } from '@/types/types';
 import { useGetAllOrdersQuery } from '@/redux/orders/orders.slice';
 import { ORDERSTATUS, PAYMENTSTATUS } from '@/utils/constants';
-import { useGetPendingOrderQuery, useGetTotalRevenueQuery } from '@/redux/dashboard/dashboard.slice';
+import {
+	useGetPendingOrderQuery,
+	useGetTotalRevenueQuery,
+} from '@/redux/dashboard/dashboard.slice';
 
 const Processing: React.FC = () => {
 	const { data: orderData } = useGetAllOrdersQuery({});
-	const { data: totalRevenue } = useGetTotalRevenueQuery({ startDate: '2024-09-13', endDate: '2024-09-23' });
-	const { data: pendingValue } = useGetPendingOrderQuery({ startDate: '2024-09-13', endDate: '2024-09-23' });
-
-
+	const { data: totalRevenue } = useGetTotalRevenueQuery({
+		startDate: '2024-09-13',
+		endDate: '2024-09-23',
+	});
+	const { data: pendingValue } = useGetPendingOrderQuery({
+		startDate: '2024-09-13',
+		endDate: '2024-09-23',
+	});
 
 	return (
 		<div>
@@ -31,8 +38,16 @@ const Processing: React.FC = () => {
 
 				   '
 			>
-				<CountCard count={totalRevenue?.data?.percentageIncrease ?? 0} text={'TOTAL SALES'} isCurrency={false} />
-				<CountCard count={pendingValue?.data?.getPendingOrderCount ?? 0} text={'TOTAL ORDER'} isCurrency={false} />
+				<CountCard
+					count={totalRevenue?.data?.percentageIncrease ?? 0}
+					text={'TOTAL SALES'}
+					isCurrency={false}
+				/>
+				<CountCard
+					count={pendingValue?.data?.getPendingOrderCount ?? 0}
+					text={'TOTAL ORDER'}
+					isCurrency={false}
+				/>
 			</CountCardContainer>
 
 			<TableComponent
@@ -48,11 +63,11 @@ const Processing: React.FC = () => {
 						key={`header-controls`}
 					></div>,
 				]}
-				rows={(orderData?.data.docs || []).map(order => ({
+				rows={(orderData?.data.orders || []).map(order => ({
 					id: order._id,
 					content: [
 						order._id,
-						`${formatCurrency(order.amount)}`,
+						`${formatCurrency(order.price)}`,
 						<div
 							key={order._id}
 							className='flex items-center gap-2 overflow-visible'
@@ -70,22 +85,22 @@ const Processing: React.FC = () => {
 						</div>,
 						<Status
 							key={order._id}
-							text={order.paymentStatus}
+							text={order.status}
 							type={
 								(PAYMENTSTATUS.find(
 									status =>
 										status.name.toLowerCase() ===
-										order.paymentStatus.toLocaleLowerCase()
+										order.status.toLocaleLowerCase()
 								)?.type ?? 'fail') as PaymentTypes
 							}
 						/>,
-						`${format(order.createdAt, 'yyyy-mm-dd h:mm:a')}`,
+						`${format(order.date, 'yyyy-mm-dd h:mm:a')}`,
 						<Dropdown
 							key={`${order._id}-controls`}
 							menuButton={
 								<Icon svg='ellipses' height={18} width={18} className='' />
 							}
-							onClickMenuItem={() => { }}
+							onClickMenuItem={() => {}}
 							menuItems={[
 								{
 									name: (
@@ -104,7 +119,6 @@ const Processing: React.FC = () => {
 				isEmpty={false}
 			/>
 		</div>
-
 	);
 };
 

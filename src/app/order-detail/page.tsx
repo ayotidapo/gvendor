@@ -49,7 +49,10 @@ const OrderDetails = () => {
 									<Header header={'Product Details'} />
 								</div>
 								{data.map((item, index) => (
-									<div key={index} className='grid grid-cols-3 space-y-2 pt-4 gap-5'>
+									<div
+										key={index}
+										className='grid grid-cols-3 space-y-2 pt-4 gap-5'
+									>
 										<div className='text-sm' key={item.name}>
 											{item.name}
 										</div>

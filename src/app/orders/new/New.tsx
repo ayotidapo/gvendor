@@ -9,24 +9,30 @@ import Dropdown from '@/components/input/dropdown';
 import { Icon } from '@/components/icon/icon';
 import { format } from 'date-fns';
 import { formatCurrency } from '@/helpers';
-import { PaymentTypes, StatusTypes } from '@/types/types';
-import { useGetAllOrdersQuery } from '@/redux/orders/orders.slice';
-import { ORDERSTATUS, PAYMENTSTATUS } from '@/utils/constants';
 import {
-	useGetPendingOrderQuery,
-	useGetTotalRevenueQuery,
-} from '@/redux/dashboard/dashboard.slice';
+	//PaymentTypes,
+	StatusTypes,
+} from '@/types/types';
+import { useGetAllOrdersQuery } from '@/redux/orders/orders.slice';
+import {
+	ORDERSTATUS,
+	// PAYMENTSTATUS
+} from '@/utils/constants';
+//import {
+//	useGetPendingOrderQuery,
+//	useGetTotalRevenueQuery,
+//} from '@/redux/dashboard/dashboard.slice';
 
 const New: React.FC = () => {
 	const { data: orderData } = useGetAllOrdersQuery({});
-	const { data: totalRevenue } = useGetTotalRevenueQuery({
-		startDate: '2024-09-13',
-		endDate: '2024-09-23',
-	});
-	const { data: pendingValue } = useGetPendingOrderQuery({
-		startDate: '2024-09-13',
-		endDate: '2024-09-23',
-	});
+	//const { data: totalRevenue } = useGetTotalRevenueQuery({
+	//	startDate: '2024-09-13',
+	//	endDate: '2024-09-23',
+	//});
+	//const { data: pendingValue } = useGetPendingOrderQuery({
+	//	startDate: '2024-09-13',
+	//	endDate: '2024-09-23',
+	//});
 
 	//useEffect(() => {
 	//	console.log(orderData);
@@ -43,12 +49,12 @@ const New: React.FC = () => {
 				   '
 			>
 				<CountCard
-					count={totalRevenue?.data?.percentageIncrease ?? 0}
+					count={orderData?.data?.totalSales ?? 0}
 					text={'TOTAL SALES'}
-					isCurrency={false}
+					isCurrency={true}
 				/>
 				<CountCard
-					count={pendingValue?.data?.getPendingOrderCount ?? 0}
+					count={orderData?.data?.totalOrders ?? 0}
 					text={'TOTAL ORDER'}
 					isCurrency={false}
 				/>
@@ -59,7 +65,6 @@ const New: React.FC = () => {
 					'ORDER ID',
 					'PRICE',
 					'ORDER STATUS',
-					'PAYMENT STATUS',
 					'DATE & TIME',
 					' ',
 					<div
@@ -67,11 +72,11 @@ const New: React.FC = () => {
 						key={`header-controls`}
 					></div>,
 				]}
-				rows={(orderData?.data.docs || []).map(order => ({
+				rows={(orderData?.data?.orders || []).map(order => ({
 					id: order._id,
 					content: [
 						order._id,
-						`${formatCurrency(order.amount)}`,
+						`${formatCurrency(order.price)}`,
 						<div
 							key={order._id}
 							className='flex items-center gap-2 overflow-visible'
@@ -87,24 +92,13 @@ const New: React.FC = () => {
 								}
 							/>
 						</div>,
-						<Status
-							key={order._id}
-							text={order.paymentStatus}
-							type={
-								(PAYMENTSTATUS.find(
-									status =>
-										status.name.toLowerCase() ===
-										order.paymentStatus.toLocaleLowerCase()
-								)?.type ?? 'fail') as PaymentTypes
-							}
-						/>,
-						`${format(order.createdAt, 'yyyy-mm-dd h:mm:a')}`,
+						`${format(order.date, 'yyyy-MM-dd')}`,
 						<Dropdown
 							key={`${order._id}-controls`}
 							menuButton={
 								<Icon svg='ellipses' height={18} width={18} className='' />
 							}
-							onClickMenuItem={() => { }}
+							onClickMenuItem={() => {}}
 							menuItems={[
 								{
 									name: (

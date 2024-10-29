@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import clsx from 'clsx';
 import ProfilePage from './ProfilePage';
 import SecurityPage from '../security/SecurityPage';
-import NotificationPage from '../notification/NotificationPage'
+import NotificationPage from '../notification/NotificationPage';
 
 export const SettingsPage: React.FC = () => {
 	const [tabs, setTabs] = useState([

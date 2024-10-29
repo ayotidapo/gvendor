@@ -41,9 +41,9 @@ const Account = () => {
 
 	const formattedBankOptions = bankData?.data
 		? bankData?.data?.map((bank: Bank) => ({
-			label: bank.name,
-			value: bank.code,
-		}))
+				label: bank.name,
+				value: bank.code,
+			}))
 		: [];
 
 	useEffect(() => {
@@ -99,7 +99,7 @@ const Account = () => {
 					type={'text'}
 					name='accountName'
 					value={account?.account_name ?? ''}
-					onChange={() => { }}
+					onChange={() => {}}
 					disabled
 					placeholder='Account name'
 				/>
