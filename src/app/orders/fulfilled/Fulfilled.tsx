@@ -1,9 +1,6 @@
 'use client';
 
-import React, { useEffect } from 'react';
-import PageWrapper from '@/containers/PageWrapper';
-import Search from '@/components/input/Search';
-import Button from '@/components/buttons/Button';
+import React from 'react';
 import CountCard from '@/components/cards/CountCard';
 import { TableComponent } from '@/components/table/Table';
 import { CountCardContainer } from '@/containers/CountCardWrapper';
@@ -18,14 +15,14 @@ import { ORDERSTATUS, PAYMENTSTATUS } from '@/utils/constants';
 import { useGetPendingOrderQuery, useGetTotalRevenueQuery } from '@/redux/dashboard/dashboard.slice';
 
 const Fulfilled: React.FC = () => {
-	const { data: orderData } = useGetAllOrdersQuery({}); 
+	const { data: orderData } = useGetAllOrdersQuery({});
 	const { data: totalRevenue } = useGetTotalRevenueQuery({ startDate: '2024-09-13', endDate: '2024-09-23' });
 	const { data: pendingValue } = useGetPendingOrderQuery({ startDate: '2024-09-13', endDate: '2024-09-23' });
 
 
 	return (
 		<div>
-						<CountCardContainer
+			<CountCardContainer
 				className='
 							grid grid-flow-row
 							grid-cols-1 sm:grid-cols-2 lg:grid-cols-3
@@ -87,7 +84,7 @@ const Fulfilled: React.FC = () => {
 							menuButton={
 								<Icon svg='ellipses' height={18} width={18} className='' />
 							}
-							onClickMenuItem={() => {}}
+							onClickMenuItem={() => { }}
 							menuItems={[
 								{
 									name: (

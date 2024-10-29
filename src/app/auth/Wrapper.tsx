@@ -1,9 +1,11 @@
+import { ReactNode, useEffect } from 'react';
 import { AuthHeader } from '@/components/typography/AuthHeader';
 import { Gilroy } from '@/fonts/font';
 import { useAppSelector } from '@/hooks/reduxHooks';
 import { authSelector } from '@/redux/reducers/auth/auth.selector';
+import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { ReactNode, useEffect } from 'react';
+import BGIMG from '../../assets/login-bg.svg'
 
 const Wrapper = ({
 	children,
@@ -46,13 +48,19 @@ const Wrapper = ({
 			<div
 				className={`
                   w-[100%] lg:w-[50%]
-                  lg:block hidden
+                  lg:flex hidden
                   min-h-[100vh]
-                  bg-[url('/assets/login-bg.svg')]
-                  bg-no-repeat
-                  bg-cover
+									justify-center
               `}
-			></div>
+			>
+				<Image
+					src={BGIMG}
+					width={500}
+					height={500}
+					alt='bg image'
+					className='rounded-xl'
+				/>
+			</div>
 		</div>
 	);
 };

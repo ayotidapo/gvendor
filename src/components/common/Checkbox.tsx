@@ -29,7 +29,7 @@ const CheckboxInput: FC<CheckProps> = ({
 					checked={checked}
 					name={name}
 					type={type}
-					className='h-4 w-4 rounded border-dark-gray text-dark-gray focus:ring-dark-gray'
+					className='h-4 w-4 rounded border-dark-gray text-primary text-dark-gray focus:ring-dark-gray'
 				/>
 			</div>
 			<div className={`${reverse ? 'mr-2' : 'ml-3'} text-sm leading-6`}>

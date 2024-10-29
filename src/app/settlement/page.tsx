@@ -14,7 +14,7 @@ import React from 'react';
 const orderData = [
 	{
 		id: 1,
-        accountName: 'Amos Edos Osas',
+		accountName: 'Amos Edos Osas',
 		status: 'new',
 		type: 'success',
 		amount: '1000,000,000',
@@ -22,7 +22,7 @@ const orderData = [
 	},
 	{
 		id: 5,
-        accountName: 'Amos Edos Osas',
+		accountName: 'Amos Edos Osas',
 		status: 'new',
 		type: 'success',
 		amount: '1000,000,000',
@@ -30,7 +30,7 @@ const orderData = [
 	},
 	{
 		id: 2,
-        accountName: 'Amos Edos Osas',
+		accountName: 'Amos Edos Osas',
 		status: 'new',
 		type: 'success',
 		amount: '1000,000,000',
@@ -38,7 +38,7 @@ const orderData = [
 	},
 	{
 		id: 3,
-        accountName: 'Amos Edos Osas',
+		accountName: 'Amos Edos Osas',
 		status: 'new',
 		type: 'success',
 		amount: '1000,000,000',
@@ -46,7 +46,7 @@ const orderData = [
 	},
 	{
 		id: 4,
-        accountName: 'Amos Edos Osas',
+		accountName: 'Amos Edos Osas',
 		status: 'new',
 		type: 'success',
 		amount: '1000,000,000',
@@ -63,18 +63,18 @@ const settlementPage: React.FC = () => {
 						<Button download label='Export CSV' name='outline' />
 					</div>
 				</div>
-            </div>
-            <div className='md:w-[580px] pb-8'>
-            <ButtonCard
+			</div>
+			<div className='md:w-[580px] pb-8'>
+				<ButtonCard
 					count={0}
 					text={'WALLET BALANCE'}
 					isCurrency={false}
 					label={'Withdraw'}
 					href='/sales/withdraw'
 				/>
-            </div>
-            <div>
-            <TableComponent
+			</div>
+			<div>
+				<TableComponent
 					headers={[
 						'ACCOUNT NUMBER',
 						'AMOUNT',
@@ -93,6 +93,7 @@ const settlementPage: React.FC = () => {
 							order.amount,
 
 							<Status
+								key={order.id}
 								text={order.status}
 								type={
 									(ORDERSTATUS.find(
@@ -107,7 +108,7 @@ const settlementPage: React.FC = () => {
 								menuButton={
 									<Icon svg='ellipses' height={18} width={18} className='' />
 								}
-								onClickMenuItem={() => {}}
+								onClickMenuItem={() => { }}
 								menuItems={[
 									{
 										name: (
@@ -125,7 +126,7 @@ const settlementPage: React.FC = () => {
 					loading={false}
 					isEmpty={false}
 				/>
-            </div>
+			</div>
 		</PageWrapper>
 	);
 };

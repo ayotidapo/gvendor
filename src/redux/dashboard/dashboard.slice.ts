@@ -2,7 +2,7 @@ import { apiSlice } from '../apis/api.slice';
 import {
 	CategorySales,
 	DashboardMetricsCount,
-	DashboardSalesValue,
+	// DashboardSalesValue,
 	PendingOrder,
 	RecentOrdersResponse,
 	TopSellersResponse,
@@ -15,18 +15,22 @@ interface Queryparams {
 	endDate?: string;
 	duration?: string;
 }
-type OrderStatus = 'COMPLETED' | 'PENDING' | 'PROCESSING' | '';
+// type OrderStatus = 'COMPLETED' | 'PENDING' | 'PROCESSING' | '';
 
 export const dashboardApiSlice = apiSlice.injectEndpoints({
 	overrideExisting: true,
 	endpoints: builder => ({
 		getDashboardMetricsCount: builder.query<DashboardMetricsCount, Queryparams>(
 			{
-				query: ({status, startDate, endDate, duration}) => ({
-					url: `order/metrics?status=${status}&duration=${duration}`,
-					method: 'GET',
-				})
-			} 
+				query: ({
+					status,
+					//startDate,
+					//endDate,
+					duration }) => ({
+						url: `order/metrics?status=${status}&duration=${duration}`,
+						method: 'GET',
+					})
+			}
 		),
 		getTotalRevenue: builder.query<TotalRevenue, Queryparams>({
 			query: ({ startDate, endDate }) => ({

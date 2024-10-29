@@ -1,9 +1,6 @@
 'use client';
 
-import React, { useEffect } from 'react';
-import PageWrapper from '@/containers/PageWrapper';
-import Search from '@/components/input/Search';
-import Button from '@/components/buttons/Button';
+import React from 'react';
 import CountCard from '@/components/cards/CountCard';
 import { TableComponent } from '@/components/table/Table';
 import { CountCardContainer } from '@/containers/CountCardWrapper';
@@ -31,9 +28,9 @@ const New: React.FC = () => {
 		endDate: '2024-09-23',
 	});
 
-	useEffect(() => {
-		console.log(orderData);
-	}, [orderData]);
+	//useEffect(() => {
+	//	console.log(orderData);
+	//}, [orderData]);
 
 	return (
 		<div>
@@ -107,7 +104,7 @@ const New: React.FC = () => {
 							menuButton={
 								<Icon svg='ellipses' height={18} width={18} className='' />
 							}
-							onClickMenuItem={() => {}}
+							onClickMenuItem={() => { }}
 							menuItems={[
 								{
 									name: (
