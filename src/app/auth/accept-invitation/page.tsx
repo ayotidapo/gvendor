@@ -20,7 +20,9 @@ const SignUpSchema = Yup.object({
 		address: Yup.string().required('Address is required'),
 		latitude: Yup.number().required('Latitude is required'),
 		longitude: Yup.number().required('Longitude is required'),
-		sourceGooglePlaceID: Yup.string().required('Source Google Place ID is required'),
+		sourceGooglePlaceID: Yup.string().required(
+			'Source Google Place ID is required'
+		),
 	}).required('Address is required'),
 	password: Yup.string().required('Password is required'),
 	phone: Yup.string().required('Phone Number is required'),
@@ -56,7 +58,14 @@ const SignUp = () => {
 		}
 	};
 
-	const { handleBlur, handleSubmit, handleChange, values, errors, setFieldValue } = useFormik({
+	const {
+		handleBlur,
+		handleSubmit,
+		handleChange,
+		values,
+		errors,
+		setFieldValue,
+	} = useFormik({
 		initialValues: {
 			address: {
 				address: '',
@@ -68,11 +77,11 @@ const SignUp = () => {
 			phone: '',
 			firstName: '',
 			lastName: '',
-			email: ''
+			email: '',
 		},
 		validationSchema: SignUpSchema,
 		onSubmit: values => {
-			values.phone = formatPhoneNumber(values.phone)
+			values.phone = formatPhoneNumber(values.phone);
 			if (!isLoading) {
 				onSignUp(values);
 			}

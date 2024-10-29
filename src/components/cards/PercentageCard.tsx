@@ -8,8 +8,8 @@ interface PercentageCardProps {
 	text: string;
 	icon?: string;
 	isCurrency: boolean;
-	percentageChange: number;
-	percentageText: string;  
+	percentageChange?: number;
+	percentageText?: string;
 }
 
 const PercentageCard: React.FC<PercentageCardProps> = ({

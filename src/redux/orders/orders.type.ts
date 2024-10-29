@@ -38,10 +38,21 @@ export interface Order {
 	__v: number;
 }
 
+export interface OrderDets {
+	_id: string;
+	itemsOrdered: string[];
+	quantity: number;
+	status: string;
+	date: string;
+	price: number;
+	customerFirstName: string;
+	customerLastName: string;
+}
+
 export interface OrdersData {
-	docs: Order[];
-	total: number;
-	totalPages: number;
+	orders: OrderDets[];
+	totalOrders: number;
+	totalSales: number;
 	currentPage: number;
 	nextPage: number | null;
 	prevPage: number | null;

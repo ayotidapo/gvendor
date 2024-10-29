@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import React from 'react';
 import PageWrapper from '@/containers/PageWrapper';
@@ -31,9 +31,7 @@ const Inventory: React.FC = () => {
 				</div>
 			</div>
 
-			<CountCardContainer
-				className='grid grid-flow-row grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10'
-			>
+			<CountCardContainer className='grid grid-flow-row grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10'>
 				<CountCard
 					count={inventoryData?.data?.totalUnitsSold ?? 0}
 					text={'TOTAL UNITS SOLD'}
@@ -67,13 +65,7 @@ const Inventory: React.FC = () => {
 			</div>
 
 			<TableComponent
-				headers={[
-					'PRODUCT NAME',
-					'CATEGORY',
-					'INSTOCK',
-					'PRICE',
-					' ',
-				]}
+				headers={['PRODUCT NAME', 'CATEGORY', 'INSTOCK', 'PRICE', ' ']}
 				rows={(inventoryData?.data?.products || []).map(product => ({
 					id: product._id,
 					content: [

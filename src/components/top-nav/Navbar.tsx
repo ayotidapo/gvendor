@@ -74,7 +74,7 @@ const Navbar = ({
 
 					<Dropdown
 						menuButton={<Avatar name={`${authData.user?.email} `} />}
-						onClickMenuItem={() => { }}
+						onClickMenuItem={() => {}}
 						menuItems={[
 							{
 								name: (

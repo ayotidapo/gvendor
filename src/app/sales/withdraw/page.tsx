@@ -26,7 +26,7 @@ const Withdraw = () => {
 					<CountCard count={0} text={'AVAILABLE BALANCE'} isCurrency={false} />
 				</div>
 				<div className='md:w-[600px] space-y-10'>
-				<Select
+					<Select
 						options={options}
 						placeholder='Select bank'
 						value={selectedValue}
@@ -42,9 +42,9 @@ const Withdraw = () => {
 					/>
 				</div>
 				<div className='flex md:justify-center'>
-				<div className='w-[400px]'>
-					<Button label={'Withdraw'} />
-				</div>
+					<div className='w-[400px]'>
+						<Button label={'Withdraw'} />
+					</div>
 				</div>
 			</div>
 		</PageWrapper>

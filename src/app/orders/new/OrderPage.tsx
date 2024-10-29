@@ -10,9 +10,9 @@ import Button from '@/components/buttons/Button';
 
 export const OrderPage: React.FC = () => {
 	const [tabs, setTabs] = useState([
-		{ name: 'Pending', isActive: true },
-		{ name: 'Processing', isActive: false },
-		{ name: 'Fulfilled', isActive: false },
+		{ name: 'all', isActive: true },
+		//{ name: 'Processing', isActive: false },
+		//{ name: 'Fulfilled', isActive: false },
 	]);
 	const [activeTab, setActiveTab] = useState('Pending');
 
@@ -44,7 +44,7 @@ export const OrderPage: React.FC = () => {
 								tab.isActive
 									? 'border-black text-black'
 									: 'border-transparent text-default-gray hover:border-gray-300 hover:text-gray-700',
-								'whitespace-nowrap border-b-2 py-4 px-1 text-sm font-medium'
+								'whitespace-nowrap border-b-2 py-4 px-1 text-sm font-medium capitalize'
 							)}
 							aria-current={tab.isActive ? 'page' : undefined}
 						>

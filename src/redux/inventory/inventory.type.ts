@@ -4,18 +4,17 @@ export interface Product {
 	category: string;
 	inStock: number;
 	price: number;
-  }
-  
-  export interface InventoryData {
+}
+
+export interface InventoryData {
 	totalUnitsSold: number;
 	productsInStock: number;
-	bestSellers: Product[]; 
+	bestSellers: Product[];
 	products: Product[];
-  }
-  
-  export interface InventoryResponse {
+}
+
+export interface InventoryResponse {
 	success: boolean;
 	message: string;
 	data: InventoryData;
-  }
-  
+}

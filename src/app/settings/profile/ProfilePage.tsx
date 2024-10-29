@@ -130,63 +130,57 @@ const ProfilePage = () => {
 					}}
 					enableReinitialize
 				>
-					{({
-						values,
-						handleBlur,
-						handleChange,
-						errors,
-						touched,
-					}) => (
-						<Form >
+					{({ values, handleBlur, handleChange, errors, touched }) => (
+						<Form>
 							<div className='space-y-2'>
-							<div className='text-secondary-black'>First name</div>
-							<TextInput
-								type={'text'}
-								name={'name'}
-								value={values.name}
-								onChange={handleChange}
-								onBlur={handleBlur}
-								placeholder='First Name'
-								errors={touched.name ? errors?.name : ''}
-								extraClass='md:w-[800px]'
-							/>
-							<div className='text-secondary-black pt-2'>Last name</div>
-							<TextInput
-								type={'text'}
-								name={'name'}
-								value={values.name}
-								onChange={handleChange}
-								onBlur={handleBlur}
-								placeholder='Last Name'
-								errors={touched.name ? errors?.name : ''}
-								extraClass='md:w-[800px]'
-							/>
-							<div className='text-secondary-black pt-2'>Email Address</div>
-							<TextInput
-								type={'text'}
-								name={'email'}
-								value={values.email}
-								onChange={handleChange}
-								onBlur={handleBlur}
-								placeholder='Email Address'
-								errors={touched.email ? errors?.name : ''}
-								extraClass='md:w-[800px]'
-							/>
-							<div className='text-secondary-black pt-2'>Phone number</div>
-							<TextInput
-								type={'text'}
-								name={'phone'}
-								value={values.phone}
-								onChange={handleChange}
-								onBlur={handleBlur}
-								placeholder='Phone Number'
-								errors={touched.phone ? errors?.name : ''}
-								extraClass='md:w-[800px]'
-							/>	
+								<div className='text-secondary-black'>First name</div>
+								<TextInput
+									type={'text'}
+									name={'name'}
+									value={values.name}
+									onChange={handleChange}
+									onBlur={handleBlur}
+									placeholder='First Name'
+									errors={touched.name ? errors?.name : ''}
+									extraClass='md:w-[800px]'
+								/>
+								<div className='text-secondary-black pt-2'>Last name</div>
+								<TextInput
+									type={'text'}
+									name={'name'}
+									value={values.name}
+									onChange={handleChange}
+									onBlur={handleBlur}
+									placeholder='Last Name'
+									errors={touched.name ? errors?.name : ''}
+									extraClass='md:w-[800px]'
+								/>
+								<div className='text-secondary-black pt-2'>Email Address</div>
+								<TextInput
+									type={'text'}
+									name={'email'}
+									value={values.email}
+									onChange={handleChange}
+									onBlur={handleBlur}
+									placeholder='Email Address'
+									errors={touched.email ? errors?.name : ''}
+									extraClass='md:w-[800px]'
+								/>
+								<div className='text-secondary-black pt-2'>Phone number</div>
+								<TextInput
+									type={'text'}
+									name={'phone'}
+									value={values.phone}
+									onChange={handleChange}
+									onBlur={handleBlur}
+									placeholder='Phone Number'
+									errors={touched.phone ? errors?.name : ''}
+									extraClass='md:w-[800px]'
+								/>
 							</div>
-							
+
 							<div className='mt-6 w-full md:w-[102px] pb-10'>
-								<Button label={'Update'} type='submit'/>
+								<Button label={'Update'} type='submit' />
 							</div>
 						</Form>
 					)}
@@ -202,7 +196,7 @@ const ProfilePage = () => {
 				</span>
 				<Formik
 					initialValues={{
-						name: profile?.name ?? '',
+						name: profile?.businessDetails.businessName ?? '',
 						address: profile?.businessDetails.businessAddress ?? {
 							address: '',
 							latitude: 0,
@@ -211,7 +205,7 @@ const ProfilePage = () => {
 						},
 						email: profile?.email ?? '',
 						phone: profile?.phone ?? '',
-						website: profile?.website ?? '',
+						website: profile?.businessDetails?.website ?? '',
 						description: profile?.description ?? '',
 					}}
 					validationSchema={profileSchema}

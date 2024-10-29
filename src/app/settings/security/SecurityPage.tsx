@@ -11,7 +11,6 @@ import { useUpdatePasswordMutation } from '@/redux/profile/profile.slice';
 import { Form, Formik } from 'formik';
 import { toast } from 'react-toastify';
 
-
 const changePasswordSchema = Yup.object({
 	currentPassword: Yup.string().required('Current password is required'),
 	newPassword: Yup.string().required('New password is required'),
