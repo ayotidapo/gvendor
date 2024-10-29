@@ -21,7 +21,9 @@ const Navbar = ({
 	const pathname = usePathname();
 	const router = useRouter();
 	const authData = useAppSelector(authSelector);
-	const { data: profile, isLoading } = useGetProfileQuery();
+	const { data: profile, isLoading } = useGetProfileQuery(undefined, {
+		skip: pathname.includes('auth'),
+	});
 
 	useEffect(() => {
 		if (authData.signedIn && profile && !profile?.businessDetails) {

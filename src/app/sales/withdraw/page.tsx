@@ -22,25 +22,29 @@ const Withdraw = () => {
 	return (
 		<PageWrapper pageHeader={'Sales'}>
 			<div className='space-y-10'>
-				<div className='w-[580px]'>
-					<CountCard count={0} text={'WALLET BALANCE'} isCurrency={false} />
+				<div className='md:w-[580px]'>
+					<CountCard count={0} text={'AVAILABLE BALANCE'} isCurrency={false} />
 				</div>
-				<div className='w-[600px] space-y-10'>
-					<TextInput type={'text'} placeholder={'Enter amount'} name={''} />
-					<Select
+				<div className='md:w-[600px] space-y-10'>
+				<Select
 						options={options}
-						placeholder='Select account'
+						placeholder='Select bank'
 						value={selectedValue}
 						onChange={handleSelectChange}
 					/>
+					<TextInput type={'text'} placeholder={'Account Number'} name={''} />
+					<TextInput type={'text'} placeholder={'Account Name '} name={''} />
+					<TextInput type={'text'} placeholder={'Amount'} name={''} />
 					<TextInput
 						type={'password'}
 						placeholder={'Enter password'}
 						name={''}
 					/>
 				</div>
-				<div className=' w-[400px]'>
+				<div className='flex md:justify-center'>
+				<div className='w-[400px]'>
 					<Button label={'Withdraw'} />
+				</div>
 				</div>
 			</div>
 		</PageWrapper>

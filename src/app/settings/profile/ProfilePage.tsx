@@ -71,9 +71,9 @@ const ProfilePage = () => {
 
 	const formattedBankOptions = bankData?.data
 		? bankData?.data?.map((bank: Bank) => ({
-			label: bank.name,
-			value: bank.code,
-		}))
+				label: bank.name,
+				value: bank.code,
+			}))
 		: [];
 
 	useEffect(() => {
@@ -104,8 +104,93 @@ const ProfilePage = () => {
 					<ImageUpload currentImage={profile?.logo} />
 				</div>
 				<div className='pt-6 md:pt-14'>
-					<Button label={'Edit profile'} name={'inverted'} />
+					<Button
+						additionalClass='p-4'
+						label={'Edit profile'}
+						name={'primary'}
+					/>
 				</div>
+			</div>
+			<div className='pt-8 space-y-4'>
+				<span>
+					<Header header={'Personal Information'} />
+				</span>
+				<Formik
+					initialValues={{
+						name: profile?.name ?? '',
+						email: profile?.email ?? '',
+						phone: profile?.phone ?? '',
+					}}
+					validationSchema={profileSchema}
+					onSubmit={values => {
+						if (!isLoading) {
+							updateProfile(values);
+							toast.success('Information successfully updated');
+						}
+					}}
+					enableReinitialize
+				>
+					{({
+						values,
+						handleBlur,
+						handleChange,
+						errors,
+						touched,
+					}) => (
+						<Form >
+							<div className='space-y-2'>
+							<div className='text-secondary-black'>First name</div>
+							<TextInput
+								type={'text'}
+								name={'name'}
+								value={values.name}
+								onChange={handleChange}
+								onBlur={handleBlur}
+								placeholder='First Name'
+								errors={touched.name ? errors?.name : ''}
+								extraClass='md:w-[800px]'
+							/>
+							<div className='text-secondary-black pt-2'>Last name</div>
+							<TextInput
+								type={'text'}
+								name={'name'}
+								value={values.name}
+								onChange={handleChange}
+								onBlur={handleBlur}
+								placeholder='Last Name'
+								errors={touched.name ? errors?.name : ''}
+								extraClass='md:w-[800px]'
+							/>
+							<div className='text-secondary-black pt-2'>Email Address</div>
+							<TextInput
+								type={'text'}
+								name={'email'}
+								value={values.email}
+								onChange={handleChange}
+								onBlur={handleBlur}
+								placeholder='Email Address'
+								errors={touched.email ? errors?.name : ''}
+								extraClass='md:w-[800px]'
+							/>
+							<div className='text-secondary-black pt-2'>Phone number</div>
+							<TextInput
+								type={'text'}
+								name={'phone'}
+								value={values.phone}
+								onChange={handleChange}
+								onBlur={handleBlur}
+								placeholder='Phone Number'
+								errors={touched.phone ? errors?.name : ''}
+								extraClass='md:w-[800px]'
+							/>	
+							</div>
+							
+							<div className='mt-6 w-full md:w-[102px] pb-10'>
+								<Button label={'Update'} type='submit'/>
+							</div>
+						</Form>
+					)}
+				</Formik>
 			</div>
 			<div className='pt-12'>
 				<span>
@@ -232,57 +317,57 @@ const ProfilePage = () => {
 				<div className='mt-6'>
 					{profile?.availableHours
 						? Object.entries(availableHours).map(([day, availableHours]) => (
-							<div
-								key={day}
-								className='grid min-h-14 grid-cols-3 sm:grid-cols-4 lg:grid-cols-7 gap-4 items-center mb-4 border-b border-default-gray-2 pb-4 lg:border-transparent'
-							>
-								<p className='font-bold capitalize'>{day}</p>
-								<div className='flex items-center space-x-2'>
-									<Switch
-										enabled={availableHours.open}
-										setEnabled={value => {
-											setAvailableHours(prevHours => ({
-												...prevHours,
-												[day]: {
-													...prevHours[day],
-													open: value,
-												},
-											}));
-										}}
-									/>
-									<span>{availableHours.open ? 'Open' : 'Closed'}</span>
-								</div>
-								{availableHours.open && (
-									<div className='col-span-3 flex space-x-4 items-center'>
-										<TimeInput
-											value={availableHours.openingTime}
-											onChange={value => {
+								<div
+									key={day}
+									className='grid min-h-14 grid-cols-3 sm:grid-cols-4 lg:grid-cols-7 gap-4 items-center mb-4 border-b border-default-gray-2 pb-4 lg:border-transparent'
+								>
+									<p className='font-bold capitalize'>{day}</p>
+									<div className='flex items-center space-x-2'>
+										<Switch
+											enabled={availableHours.open}
+											setEnabled={value => {
 												setAvailableHours(prevHours => ({
 													...prevHours,
 													[day]: {
 														...prevHours[day],
-														openingTime: value,
+														open: value,
 													},
 												}));
 											}}
 										/>
-										<span>To</span>
-										<TimeInput
-											value={availableHours.closingTime}
-											onChange={value => {
-												setAvailableHours(prevHours => ({
-													...prevHours,
-													[day]: {
-														...prevHours[day],
-														closingTime: value,
-													},
-												}));
-											}}
-										/>
+										<span>{availableHours.open ? 'Open' : 'Closed'}</span>
 									</div>
-								)}
-							</div>
-						))
+									{availableHours.open && (
+										<div className='col-span-3 flex space-x-4 items-center'>
+											<TimeInput
+												value={availableHours.openingTime}
+												onChange={value => {
+													setAvailableHours(prevHours => ({
+														...prevHours,
+														[day]: {
+															...prevHours[day],
+															openingTime: value,
+														},
+													}));
+												}}
+											/>
+											<span>To</span>
+											<TimeInput
+												value={availableHours.closingTime}
+												onChange={value => {
+													setAvailableHours(prevHours => ({
+														...prevHours,
+														[day]: {
+															...prevHours[day],
+															closingTime: value,
+														},
+													}));
+												}}
+											/>
+										</div>
+									)}
+								</div>
+							))
 						: null}
 				</div>
 
@@ -360,7 +445,7 @@ const ProfilePage = () => {
 							type={'text'}
 							name='accountName'
 							value={account?.account_name ?? ''}
-							onChange={() => { }}
+							onChange={() => {}}
 							disabled
 							placeholder='Account name'
 						/>

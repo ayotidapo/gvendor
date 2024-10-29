@@ -17,7 +17,7 @@ const AddressInput = ({
 			<Autocomplete
 				placeholder='Business address'
 				onKeyDown={e => e.stopPropagation()}
-				defaultValue={value}
+				value={value}
 				apiKey={'AIzaSyDOWgytq4sghlYgVqrS-ab_SBDUTfB6Tbk'}
 				onPlaceSelected={place => {
 					const selectedAddress = {

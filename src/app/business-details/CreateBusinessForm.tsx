@@ -108,8 +108,8 @@ const CreateBusinessForm = ({
 	return (
 		<Formik
 			initialValues={{
-				name: profile?.name ?? '',
-				address: profile?.businessDetails?.businessAddress ?? {
+				name: profile?.businessDetails?.businessName ?? '',
+				address: profile?.address ?? {
 					address: '',
 					latitude: 0,
 					longitude: 0,
@@ -117,7 +117,7 @@ const CreateBusinessForm = ({
 				},
 				email: profile?.email ?? '',
 				phone: profile?.phone ?? '',
-				website: profile?.website ?? '',
+				website: profile?.businessDetails?.website ?? '',
 				description: profile?.description ?? '',
 				servicesOffered: profile?.businessDetails?.servicesOffered ?? [],
 				yearsOfExperince: profile?.businessDetails?.yearsOfExperince ?? '',
@@ -161,7 +161,7 @@ const CreateBusinessForm = ({
 					const res = await updateProfile(businessData);
 
 					if (res.data) {
-						setStep(3);
+						setStep(5);
 					}
 				}
 			}}
@@ -175,10 +175,9 @@ const CreateBusinessForm = ({
 				touched,
 				setFieldValue,
 			}) => (
-				<Form className='pt-6 flex flex-col space-y-4 max-w-4xl'>
-					{JSON.stringify(errors)}
+				<Form className='flex flex-col space-y-4 max-w-4xl'>
 					{step === 1 && (
-						<div className='pt-3 flex flex-col space-y-6'>
+						<div className='pt-3 flex flex-col space-y-3'>
 							<TextInput
 								type={'text'}
 								name='name'
@@ -188,8 +187,8 @@ const CreateBusinessForm = ({
 								placeholder='Business Name'
 								errors={touched.name ? errors?.name : ''}
 							/>
-
 							<AddressInput
+								value={values.address.address}
 								editAddress={address => {
 									setFieldValue('address', {
 										address: address.address,
@@ -200,7 +199,7 @@ const CreateBusinessForm = ({
 								}}
 							/>
 
-							<TextInput
+							{/*<TextInput
 								type={'text'}
 								name='nameOfPrimaryContact'
 								value={values.nameOfPrimaryContact}
@@ -226,7 +225,7 @@ const CreateBusinessForm = ({
 										? errors?.positionOfPrimaryContact
 										: ''
 								}
-							/>
+							/>*/}
 							<TextInput
 								type={'text'}
 								name='email'
@@ -262,34 +261,55 @@ const CreateBusinessForm = ({
 								onBlur={handleBlur}
 								placeholder='Active social media links'
 							/>
-							<div>
-								<label
-									htmlFor='servicesOffered'
-									className='text-default-gray font-semibold block mb-2'
-								>
-									Select type(s) of products/services offered
-								</label>
-								<div className='grid grid-cols-2 gap-4'>
-									{servicesOfferedOptions.map(option => (
-										<CheckboxInput
-											name='servicesOffered'
-											key={option.value}
-											checked={values.servicesOffered.includes(option.value)}
-											onChange={() => {
-												const updatedServices = values.servicesOffered.includes(
-													option.value
-												)
-													? values.servicesOffered.filter(
-															service => service !== option.value
-														)
-													: [...values.servicesOffered, option.value];
-												setFieldValue('servicesOffered', updatedServices);
-											}}
-											label={option.label}
-										/>
-									))}
-								</div>
+							<div className='mt-6 w-full pb-10'>
+								<Button
+									onClick={() => setStep(2)}
+									label={'Next'}
+									type='button'
+								/>
 							</div>
+						</div>
+					)}
+
+					{step === 2 && (
+						<div>
+							<label
+								htmlFor='servicesOffered'
+								className=' font-semibold block mb-2'
+							>
+								Select type(s) of products/services offered
+							</label>
+							<div className='grid grid-cols-1 gap-4'>
+								{servicesOfferedOptions.map(option => (
+									<CheckboxInput
+										name='servicesOffered'
+										key={option.value}
+										checked={values.servicesOffered.includes(option.value)}
+										onChange={() => {
+											const updatedServices = values.servicesOffered.includes(
+												option.value
+											)
+												? values.servicesOffered.filter(
+													service => service !== option.value
+												)
+												: [...values.servicesOffered, option.value];
+											setFieldValue('servicesOffered', updatedServices);
+										}}
+										label={option.label}
+									/>
+								))}
+							</div>
+							<div className='mt-6 w-full pb-10'>
+								<Button
+									onClick={() => setStep(3)}
+									label={'Next'}
+									type='button'
+								/>
+							</div>
+						</div>
+					)}
+					{step === 3 && (
+						<div className='space-y-6'>
 							<TextInput
 								type={'text'}
 								name='yearsOfExperince'
@@ -302,9 +322,9 @@ const CreateBusinessForm = ({
 							<div>
 								<label
 									htmlFor='businessStructure'
-									className='text-default-gray font-semibold block mb-2'
+									className=' font-semibold block mb-2'
 								>
-									Select type(s) of products/services offered
+									Business Structure
 								</label>
 								<div className='space-y-2'>
 									{businessStructureOptions.map(option => (
@@ -319,7 +339,7 @@ const CreateBusinessForm = ({
 												checked={values.businessStructure === option.value}
 												onChange={handleChange}
 												onBlur={handleBlur}
-												className='text-blue-500'
+												className='text-primary'
 											/>
 											<label className='text-gray-500'>{option.label}</label>
 										</div>
@@ -341,22 +361,22 @@ const CreateBusinessForm = ({
 								</p>
 							</div>
 
-							<div className='mt-6 w-full md:w-[120px] pb-10'>
+							<div className='mt-6 w-full pb-10'>
 								<Button
-									onClick={() => setStep(2)}
-									label={'Continue'}
+									onClick={() => setStep(4)}
+									label={'Next'}
 									type='button'
 								/>
 							</div>
 						</div>
 					)}
 
-					{step === 2 && (
-						<div className='mt-6 space-y-6'>
+					{step === 4 && (
+						<div className='space-y-6'>
 							<div className='space-y-4'>
 								<label
 									htmlFor='registeredWithCAC'
-									className='text-default-gray font-semibold block mb-2'
+									className=' font-semibold block mb-2'
 								>
 									Is your business registered with CAC?
 								</label>
@@ -400,7 +420,7 @@ const CreateBusinessForm = ({
 							<div className='space-y-4'>
 								<label
 									htmlFor='registeredWithNAFDAC'
-									className='text-default-gray font-semibold block mb-2'
+									className=' font-semibold block mb-2'
 								>
 									Is your business registered with NAFDAC?
 								</label>
@@ -444,7 +464,7 @@ const CreateBusinessForm = ({
 							<div className='space-y-4'>
 								<label
 									htmlFor='registeredWithTIN'
-									className='text-default-gray font-semibold block mb-2'
+									className=' font-semibold block mb-2'
 								>
 									Is your business registered with Tax Identification Number
 									(TIN)?
@@ -489,7 +509,7 @@ const CreateBusinessForm = ({
 							<div className='space-y-4'>
 								<label
 									htmlFor='registeredWithSON'
-									className='text-default-gray font-semibold block mb-2'
+									className=' font-semibold block mb-2'
 								>
 									Is your business registered with SON?
 								</label>
@@ -530,8 +550,8 @@ const CreateBusinessForm = ({
 								/>
 							</div>
 
-							<div className='mt-6 w-full md:w-[120px] pb-10'>
-								<Button label={'Update'} type='submit' />
+							<div className='mt-6 w-full pb-10'>
+								<Button label={'Continue'} type='submit' />
 							</div>
 						</div>
 					)}

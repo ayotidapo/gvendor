@@ -5,6 +5,20 @@ import React, { useState } from 'react';
 import clsx from 'clsx';
 import parse from 'html-react-parser';
 import { CheckIcon } from '@heroicons/react/24/outline';
+import * as Yup from 'yup';
+import CheckboxInput from '@/components/common/Checkbox';
+import { useUpdatePasswordMutation } from '@/redux/profile/profile.slice';
+import { Form, Formik } from 'formik';
+import { toast } from 'react-toastify';
+
+
+const changePasswordSchema = Yup.object({
+	currentPassword: Yup.string().required('Current password is required'),
+	newPassword: Yup.string().required('New password is required'),
+	confirmPassword: Yup.string()
+		.oneOf([Yup.ref('newPassword')], 'Passwords must match')
+		.required('Confirm new password is required'),
+});
 
 const reasons = [
 	'I no longer use this account.',
@@ -17,29 +31,78 @@ const reasons = [
 ];
 
 const SecurityPage = () => {
+	const [updatePassword, { isLoading }] = useUpdatePasswordMutation();
 	const [deleteReason, setDeleteReason] = useState('');
+
+	//useEffect(() => {
+	//    console.log(updatePassword);
+	//}, [updatePassword]);
 
 	return (
 		<div className='pt-8 space-y-4'>
 			<div>
 				<Header header={'Password'} />
 			</div>
-			<div className='space-y-4 md:w-[800px]'>
-				<TextInput
-					type={'password'}
-					placeholder={'Current password'}
-					name={''}
-				/>
-				<TextInput type={'password'} placeholder={'New password'} name={''} />
-				<TextInput
-					type={'password'}
-					placeholder={'Confirm password'}
-					name={''}
-				/>
-			</div>
-			<div className='mt-6 w-[183px]'>
-				<Button label={'Change password'} />
-			</div>
+			<Formik
+				initialValues={{
+					currentPassword: '',
+					newPassword: '',
+					confirmPassword: '',
+				}}
+				validationSchema={changePasswordSchema}
+				onSubmit={values => {
+					if (!isLoading) {
+						const { currentPassword, newPassword } = values;
+						updatePassword({ currentPassword, newPassword });
+						toast.success('Password updated successfully');
+					}
+				}}
+			>
+				{({
+					values,
+					handleBlur,
+					handleChange,
+					errors,
+					touched,
+					handleSubmit,
+				}) => (
+					<Form onSubmit={handleSubmit}>
+						<div className='space-y-4 md:w-[800px]'>
+							<TextInput
+								type={'password'}
+								placeholder={'Current password'}
+								name={'currentPassword'}
+								value={values.currentPassword}
+								errors={touched.currentPassword ? errors?.currentPassword : ''}
+								onChange={handleChange}
+								onBlur={handleBlur}
+							/>
+							<TextInput
+								type={'password'}
+								placeholder={'New password'}
+								name={'newPassword'}
+								value={values.newPassword}
+								errors={touched.newPassword ? errors?.newPassword : ''}
+								onChange={handleChange}
+								onBlur={handleBlur}
+							/>
+							<TextInput
+								type={'password'}
+								placeholder={'Confirm password'}
+								name={'confirmPassword'}
+								value={values.confirmPassword}
+								errors={touched.confirmPassword ? errors?.confirmPassword : ''}
+								onChange={handleChange}
+								onBlur={handleBlur}
+							/>
+						</div>
+						<div className='mt-6 w-[183px]'>
+							<Button label={'Change password'} type='submit' />
+						</div>
+					</Form>
+				)}
+			</Formik>
+
 			<div className='pt-[74px] gap-6'>
 				<div>
 					<Header header={'Close your account'} className='text-[#F25A68]' />
@@ -78,8 +141,15 @@ const SecurityPage = () => {
 							</div>
 						</div>
 					))}
+					<CheckboxInput
+						extraClass='pt-4'
+						name={''}
+						label={
+							'By selecting this checkbox, you agree to permanently delete your account and all your data'
+						}
+					/>
 					<div className='mt-6 w-[183px]'>
-						<Button label={'Delete account'} />
+						<Button name='delete' label={'Delete account'} />
 					</div>
 				</div>
 			</div>

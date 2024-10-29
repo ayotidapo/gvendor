@@ -1,67 +1,42 @@
 'use client';
 
-import React, { useState } from 'react';
-import clsx from 'clsx';
-import { Header } from '@/components/typography/Header';
-import { ChevronRight } from 'lucide-react';
+import React, { useState, ReactNode } from 'react';
 import { useGetProfileQuery } from '@/redux/profile/profile.slice';
 import Account from './Account';
 import CreateBusinessForm from './CreateBusinessForm';
+import BGIMG from '../../assets/login-bg.svg'
+import clsx from 'clsx';
+import { AuthHeader } from '@/components/typography/AuthHeader';
+import { Gilroy } from '@/fonts/font';
+import Image from 'next/image';
+import { Minus } from 'lucide-react';
 
-const Wrapper = () => {
+const BusinessDetails = () => {
 	const { data: profile, isLoading } = useGetProfileQuery();
 	const [step, setStep] = useState(1);
 
 	const getHeader = () => {
 		switch (step) {
 			case 1:
-				return 'More about your business';
+				return 'Business Details';
 			case 2:
-				return 'More about your business';
+				return 'Servies Offered';
 			case 3:
-				return 'Now, your account details';
+				return 'Business Structure';
+			case 4:
+				return 'Regulatory Information';
+			case 5:
+				return 'Account Information';
 			default:
-				return 'More about your business';
+				return 'Account Information';
 		}
 	};
 
 	return (
-		<div className='w-full max-w-screen-2xl pt-36 mx-auto px-[16px] md:px-[40px] lg:px-[60px] xl:px-[80px]'>
-			<Header bigger header={getHeader()} className='text-center mb-12' />
-			<nav className='flex items-center space-x-2'>
-				<button
-					className={clsx({
-						'text-black font-semibold': step === 1,
-						'text-light-gray': step !== 1,
-					})}
-					onClick={() => setStep(1)}
-				>
-					Profile
-				</button>
-				<ChevronRight width={16} />
-				<button
-					className={clsx({
-						'text-black font-semibold': step === 2,
-						'text-light-gray': step !== 2,
-					})}
-					onClick={() => setStep(2)}
-				>
-					Regulatory
-				</button>
-				<ChevronRight width={16} />
-				<button
-					className={clsx({
-						'text-black font-semibold': step === 3,
-						'text-light-gray': step !== 3,
-					})}
-					onClick={() => setStep(3)}
-				>
-					Account
-				</button>
-			</nav>
+		<Wrapper title={getHeader()} step={step} setStep={setStep}>
 			{profile ? (
 				<div>
-					{(step === 1 || step === 2) && (
+					{step === 5 ? <Account /> : (
 						<CreateBusinessForm
 							isLoading={isLoading}
 							profile={profile}
@@ -69,11 +44,75 @@ const Wrapper = () => {
 							step={step}
 						/>
 					)}
-					{step === 3 && <Account />}
 				</div>
 			) : null}
+		</Wrapper>
+	);
+};
+
+const Wrapper = ({
+	children,
+	title,
+	step,
+	setStep
+}: {
+	children: ReactNode;
+	title: string;
+	step: number;
+	setStep: (step: number) => void;
+}) => {
+
+	return (
+		<div
+			className={`
+              ${Gilroy.variable}
+              overflow-hidden lg:flex justify-center
+          `}
+		>
+			<div
+				className='
+                  w-[100%] lg:w-[50%]
+                  p-4
+                  md:flex md:justify-center lg:justify-end
+                  lg:px-24 lg:pb-0
+                  h-screen pt-20
+                  overflow-y-scroll hide-scroll-bar
+                  '
+			>
+				<div className='md:max-w-[500px] w-[100%]'>
+					<div className="flex justify-center pb-10">
+						{Array(5).fill(null).map((_, index) => (
+							<div onClick={() => setStep(index + 1)} key={index} className={clsx({
+								'text-primary': step >= index + 1,
+								'text-[#D9D9D9]': step < index + 1
+							})}>
+								<Minus width={40} />
+							</div>
+						))}
+					</div>
+					<AuthHeader title={title} className='text-center mb-10' />
+					{children}
+				</div>
+			</div>
+			<div
+				className={`
+                  w-[100%] lg:w-[50%]
+                  lg:flex hidden
+                  min-h-[100vh]
+									justify-center items-center
+              `}
+			>
+				<Image
+					src={BGIMG}
+					width={500}
+					height={500}
+					alt='bg image'
+					className='rounded-xl'
+				/>
+			</div>
 		</div>
 	);
 };
 
-export default Wrapper;
+
+export default BusinessDetails;
