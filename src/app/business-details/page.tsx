@@ -102,13 +102,15 @@ const Wrapper = ({
 									justify-center items-center
               `}
 			>
-				<Image
-					src={BGIMG}
-					width={500}
-					height={500}
-					alt='bg image'
-					className='rounded-xl'
-				/>
+				<div className=' w-[500px] h-[600px] relative'>
+					<Image
+						src={BGIMG}
+						layout='fill'
+						objectFit='cover'
+						alt='bg image'
+						className='rounded-xl'
+					/>
+				</div>
 			</div>
 		</div>
 	);

@@ -5,7 +5,7 @@ import { useAppSelector } from '@/hooks/reduxHooks';
 import { authSelector } from '@/redux/reducers/auth/auth.selector';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import BGIMG from '../../assets/login-bg.svg'
+import BGIMG from '@/assets/login-bg.svg';
 
 const Wrapper = ({
 	children,
@@ -36,7 +36,7 @@ const Wrapper = ({
                   p-4
                   md:flex md:justify-center lg:justify-end
                   lg:px-24 lg:pb-0
-                  max-h-full
+                  max-h-full pt-40 lg:pt-0
                   overflow-y-scroll hide-scroll-bar
                   '
 			>
@@ -50,16 +50,18 @@ const Wrapper = ({
                   w-[100%] lg:w-[50%]
                   lg:flex hidden
                   min-h-[100vh]
-									justify-center
+									justify-center items-center
               `}
 			>
-				<Image
-					src={BGIMG}
-					width={500}
-					height={500}
-					alt='bg image'
-					className='rounded-xl'
-				/>
+				<div className=' w-[500px] h-[600px] relative'>
+					<Image
+						src={BGIMG}
+						layout='fill'
+						objectFit='cover'
+						alt='bg image'
+						className='rounded-xl'
+					/>
+				</div>
 			</div>
 		</div>
 	);
