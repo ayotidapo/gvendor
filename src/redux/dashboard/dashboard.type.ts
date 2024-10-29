@@ -12,25 +12,54 @@ export interface DashboardMetricsCount {
 }
 
 export interface DashboardSalesValue {
+	success: boolean;
+	message: string;
 	data: {
-		totalOrderValue: number;
-		completedOrderValue: number;
-		pendingOrderValue: number;
-		processingOrderValue: number;
-		totalOrderCount: number;
-		pendingOrderCount: number;
-		processingOrderCount: number;
-	};
+		totalSaleValue: number;
+		noOfOrders: number;
+		noOfCustomers: number;
+	}
+}
+
+export interface TotalRevenue {
+	success: boolean;
+	message: string;
+	data: {
+		totalRevenue: number;
+		percentageIncrease: number;
+	}
+}
+
+export interface CategorySales {
+	data: [];
+	success: boolean;
+	message: string;
+}
+
+export interface PendingOrder {
+	success: boolean;
+	message: string;
+	data: {
+		getPendingOrderCount: number;
+		percentageIncrease: number;
+	}
+}
+
+export interface Order{
+	_id: string;
+	itemsOrdered: string[];
+	quantity: number;
+	status: string;
+	date: string;
+	price: number;
 }
 
 export interface RecentOrdersResponse {
 	success: boolean;
 	message: string;
 	data: {
-		day: string;
-		total: number;
-		count: number;
-	}[];
+		result: Order[];
+	};
 }
 
 export interface TopSellersResponse {

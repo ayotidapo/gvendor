@@ -1,117 +1,15 @@
-'use client';
-
 import React from 'react';
 import PageWrapper from '@/containers/PageWrapper';
-import Search from '@/components/input/Search';
-import Button from '@/components/buttons/Button';
-import CountCard from '@/components/cards/CountCard';
-import { TableComponent } from '@/components/table/Table';
-import { CountCardContainer } from '@/containers/CountCardWrapper';
-import { Status } from '@/components/cards/StatusTag';
-import Dropdown from '@/components/input/dropdown';
-import { Icon } from '@/components/icon/icon';
-import { format } from 'date-fns';
-import { formatCurrency } from '@/helpers';
-import { PaymentTypes, StatusTypes } from '@/types/types';
-import { useGetAllOrdersQuery } from '@/redux/orders/orders.slice';
-import { ORDERSTATUS, PAYMENTSTATUS } from '@/utils/constants';
+import { OrderPage } from '@/app/orders/new/OrderPage';
 
-const Orders: React.FC = () => {
-	const { data: orderData } = useGetAllOrdersQuery({});
-
+const Order: React.FC = () => {
 	return (
 		<PageWrapper pageHeader='Orders'>
-			<div className='flex flex-col md:flex-row gap-4 items-center justify-between mb-10'>
-				<div className='w-full md:w-auto md:max-w-[400px]'>
-					<Search placeholder='Search orders' />
-				</div>
-				<div className='w-full md:w-auto'>
-					<Button filter label='Order Status' name='outline' />
-				</div>
+			<div>
+				<OrderPage />
 			</div>
-
-			<CountCardContainer
-				className='
-							grid grid-flow-row
-							grid-cols-1 sm:grid-cols-2 lg:grid-cols-3
-							gap-10
-
-				   '
-			>
-				<CountCard count={0} text={'TOTAL SALES'} isCurrency={false} />
-				<CountCard count={0} text={'TOTAL ORDER'} isCurrency={false} />
-			</CountCardContainer>
-
-			<TableComponent
-				headers={[
-					'ORDER ID',
-					'PRICE',
-					'ORDER STATUS',
-					'PAYMENT STATUS',
-					'DATE & TIME',
-					' ',
-					<div
-						className='w-full flex justify-end'
-						key={`header-controls`}
-					></div>,
-				]}
-				rows={(orderData?.data.docs || []).map(order => ({
-					id: order._id,
-					content: [
-						order._id,
-						`${formatCurrency(order.amount)}`,
-						<div
-							key={order._id}
-							className='flex items-center gap-2 overflow-visible'
-						>
-							<Status
-								text={order.status}
-								type={
-									(ORDERSTATUS.find(
-										status =>
-											status.orderStatus.toLowerCase() ===
-											order.status.toLowerCase()
-									)?.type ?? 'warn') as StatusTypes
-								}
-							/>
-						</div>,
-						<Status
-							key={order._id}
-							text={order.paymentStatus}
-							type={
-								(PAYMENTSTATUS.find(
-									status =>
-										status.name.toLowerCase() ===
-										order.paymentStatus.toLocaleLowerCase()
-								)?.type ?? 'fail') as PaymentTypes
-							}
-						/>,
-						`${format(order.createdAt, 'yyyy-mm-dd h:mm:a')}`,
-						<Dropdown
-							key={`${order._id}-controls`}
-							menuButton={
-								<Icon svg='ellipses' height={18} width={18} className='' />
-							}
-							onClickMenuItem={() => {}}
-							menuItems={[
-								{
-									name: (
-										<button className='disabled:opacity-30 w-full text-left'>
-											Request delivery
-										</button>
-									),
-									value: '',
-								},
-							]}
-						/>,
-					],
-				}))}
-				name='categories-table'
-				loading={false}
-				isEmpty={false}
-			/>
 		</PageWrapper>
 	);
 };
 
-export default Orders;
+export default Order;

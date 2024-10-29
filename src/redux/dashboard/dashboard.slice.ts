@@ -1,36 +1,64 @@
 import { apiSlice } from '../apis/api.slice';
 import {
+	CategorySales,
 	DashboardMetricsCount,
-	DashboardSalesValue,
+	// DashboardSalesValue,
+	PendingOrder,
 	RecentOrdersResponse,
 	TopSellersResponse,
+	TotalRevenue,
 } from './dashboard.type';
 
 interface Queryparams {
+	status?: string;
 	startDate?: string;
 	endDate?: string;
+	duration?: string;
 }
+// type OrderStatus = 'COMPLETED' | 'PENDING' | 'PROCESSING' | '';
 
 export const dashboardApiSlice = apiSlice.injectEndpoints({
 	overrideExisting: true,
 	endpoints: builder => ({
 		getDashboardMetricsCount: builder.query<DashboardMetricsCount, Queryparams>(
 			{
-				query: ({ startDate, endDate }) => ({
-					url: `/order/metrics${
-						startDate !== undefined && startDate !== ''
-							? `?startDate=${startDate}`
-							: ''
-					}${
-						endDate !== undefined && endDate !== '' ? `&endDate=${endDate}` : ''
-					}`,
-					method: 'GET',
-				}),
+				query: ({
+					status,
+					//startDate,
+					//endDate,
+					duration }) => ({
+						url: `order/metrics?status=${status}&duration=${duration}`,
+						method: 'GET',
+					})
 			}
 		),
-		getDashboardSalesValue: builder.query<DashboardSalesValue, void>({
+		getTotalRevenue: builder.query<TotalRevenue, Queryparams>({
+			query: ({ startDate, endDate }) => ({
+				url: `order/total-revenue?endDate=${endDate}&startDate=${startDate}`,
+				method: 'GET',
+			}),
+		}),
+		getTotalProducts: builder.query<TotalRevenue, void>({
 			query: () => ({
-				url: `/order/stats`,
+				url: `/order/total-products`,
+				method: 'GET',
+			}),
+		}),
+		getTotalTransactions: builder.query<TotalRevenue, void>({
+			query: () => ({
+				url: `/transactions/total-transactions`,
+				method: 'GET',
+			}),
+		}),
+		getPendingOrder: builder.query<PendingOrder, Queryparams>({
+			query: ({ startDate, endDate }) => ({
+				url: `/order/pending-orders-count?endDate=${endDate}&startDate=${startDate}`,
+				method: 'GET',
+			}),
+		}),
+		getSales: builder.query<CategorySales, void>({
+			query: () => ({
+				url: `/order/sales-by-category`,
 				method: 'GET',
 			}),
 		}),
@@ -51,7 +79,11 @@ export const dashboardApiSlice = apiSlice.injectEndpoints({
 
 export const {
 	useGetDashboardMetricsCountQuery,
-	useGetDashboardSalesValueQuery,
+	useGetTotalRevenueQuery,
+	useGetPendingOrderQuery,
+	useGetSalesQuery,
+	useGetTotalTransactionsQuery,
+	useGetTotalProductsQuery,
 	useGetRecentOrdersQuery,
 	useGetTopSellersQuery,
 } = dashboardApiSlice;

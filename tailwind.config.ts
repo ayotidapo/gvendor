@@ -14,6 +14,8 @@ module.exports = {
 				primary: '#F45D2C',
 				orange: '#F45D2C',
 				black: '#050301',
+				red: '#B3434D',
+				'default-blue': '#0D99F2',
 				'secondary-black': '#555555',
 				'default-gray': '#7A7978',
 				'off-white': '#FAFAFA',

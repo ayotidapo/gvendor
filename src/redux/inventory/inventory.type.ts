@@ -3,21 +3,19 @@ export interface Product {
 	name: string;
 	category: string;
 	inStock: number;
-	unitsSold: number;
 	price: number;
-	amountSold: number;
-}
-
-export interface Inventory {
-	Products: Product[];
+  }
+  
+  export interface InventoryData {
 	totalUnitsSold: number;
-}
-
-export interface InventoryResponse {
+	productsInStock: number;
+	bestSellers: Product[]; 
+	products: Product[];
+  }
+  
+  export interface InventoryResponse {
 	success: boolean;
 	message: string;
-	data: {
-		inventory: Inventory;
-		productsInStock: number;
-	};
-}
+	data: InventoryData;
+  }
+  

@@ -11,12 +11,22 @@ import { toast } from 'react-toastify';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Wrapper from '../Wrapper';
 import { getErrorMessage } from '@/helpers';
-import { APIErrorResponse } from '@/types/types';
+import { APIErrorResponse, SelectedAddress } from '@/types/types';
+import AddressInput from '@/components/common/AddressInput';
+import { formatPhoneNumber } from '@/utils/helpers';
 
 const SignUpSchema = Yup.object({
-	address: Yup.string().required('Address is required'),
+	address: Yup.object({
+		address: Yup.string().required('Address is required'),
+		latitude: Yup.number().required('Latitude is required'),
+		longitude: Yup.number().required('Longitude is required'),
+		sourceGooglePlaceID: Yup.string().required('Source Google Place ID is required'),
+	}).required('Address is required'),
 	password: Yup.string().required('Password is required'),
-	phone: Yup.string().required('Phone number is required'),
+	phone: Yup.string().required('Phone Number is required'),
+	firstName: Yup.string().required('First Name is required'),
+	lastName: Yup.string().required('Last Name is required'),
+	email: Yup.string().required('Email is required'),
 });
 
 const SignUp = () => {
@@ -31,9 +41,12 @@ const SignUp = () => {
 	}, [isSuccess]);
 
 	const onSignUp = async (values: {
-		address: string;
+		address: SelectedAddress;
 		password: string;
 		phone: string;
+		firstName: string;
+		lastName: string;
+		email: string;
 	}) => {
 		try {
 			await signup({ ...values, reference: reference ?? '' });
@@ -43,14 +56,23 @@ const SignUp = () => {
 		}
 	};
 
-	const { handleBlur, handleSubmit, handleChange, values, errors } = useFormik({
+	const { handleBlur, handleSubmit, handleChange, values, errors, setFieldValue } = useFormik({
 		initialValues: {
-			address: '',
+			address: {
+				address: '',
+				latitude: 0,
+				longitude: 0,
+				sourceGooglePlaceID: '',
+			},
 			password: '',
 			phone: '',
+			firstName: '',
+			lastName: '',
+			email: ''
 		},
 		validationSchema: SignUpSchema,
 		onSubmit: values => {
+			values.phone = formatPhoneNumber(values.phone)
 			if (!isLoading) {
 				onSignUp(values);
 			}
@@ -60,16 +82,43 @@ const SignUp = () => {
 	return (
 		<Wrapper title={'Sign Up'}>
 			<form onSubmit={handleSubmit} className='flex flex-col gap-4 md:gap-6'>
-				<TextInput
-					id='address'
-					name='address'
-					value={values.address}
-					onChange={handleChange}
-					onBlur={handleBlur}
-					type='text'
-					placeholder='Address'
-					errors={errors?.address}
-					extraClass='!ring-[1.5px]'
+				<div className='flex gap-4 md:gap-6'>
+					<div className='w-[50%]'>
+						<TextInput
+							id='firsName'
+							name='firstName'
+							value={values.firstName}
+							onChange={handleChange}
+							onBlur={handleBlur}
+							type='text'
+							placeholder='First Name'
+							errors={errors?.firstName}
+							extraClass='!ring-[1.5px]'
+						/>
+					</div>
+					<div className='w-[50%]'>
+						<TextInput
+							id='lastname'
+							name='lastName'
+							value={values.lastName}
+							onChange={handleChange}
+							onBlur={handleBlur}
+							type='text'
+							placeholder='Last Name'
+							errors={errors?.lastName}
+							extraClass='!ring-[1.5px]'
+						/>
+					</div>
+				</div>
+				<AddressInput
+					editAddress={address => {
+						setFieldValue('address', {
+							address: address.address,
+							latitude: address.latitude,
+							longitude: address.longitude,
+							sourceGooglePlaceID: address.sourceGooglePlaceID,
+						});
+					}}
 				/>
 
 				<TextInput
@@ -81,6 +130,17 @@ const SignUp = () => {
 					type='text'
 					placeholder='Phone Number'
 					errors={errors?.phone}
+					extraClass='!ring-[1.5px]'
+				/>
+				<TextInput
+					id='email'
+					name='email'
+					value={values.email}
+					onChange={handleChange}
+					onBlur={handleBlur}
+					type='text'
+					placeholder='Email address'
+					errors={errors?.email}
 					extraClass='!ring-[1.5px]'
 				/>
 

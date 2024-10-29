@@ -1,24 +1,72 @@
 'use client';
 
-import CountCard from '@/components/cards/CountCard';
+import React from 'react';
 import PageWrapper from '@/containers/PageWrapper';
 import Button from '@/components/buttons/Button';
-import React from 'react';
+import { formatCurrency } from '@/helpers';
 import BarChart from '@/components/charts/BarChart';
 import SectionCard from '@/components/cards/SectionCard';
 import { Header } from '@/components/typography/Header';
 import { CountCardContainer } from '@/containers/CountCardWrapper';
-import { useGetDashboardMetricsCountQuery } from '@/redux/dashboard/dashboard.slice';
-import { useGetInventoryQuery } from '@/redux/inventory/inventory.slice';
+import { StatusTypes } from '@/types/types';
+import {
+	useGetDashboardMetricsCountQuery,
+	useGetPendingOrderQuery,
+	useGetRecentOrdersQuery,
+	//useGetSalesQuery,
+	useGetTotalProductsQuery,
+	useGetTotalRevenueQuery,
+	useGetTotalTransactionsQuery,
+} from '@/redux/dashboard/dashboard.slice';
+// import { useGetInventoryQuery } from '@/redux/inventory/inventory.slice';
+import { Status } from '@/components/cards/StatusTag';
+import { ORDERSTATUS } from '@/utils/constants';
+import { TableComponent } from '@/components/table/Table';
+import Link from 'next/link';
+import DoughnutChart from '@/components/charts/Doughnut';
+import CategoryList from './CategoriesList';
+import PercentageCard from '@/components/cards/PercentageCard';
+
+
+const categories = [
+	{
+		name: 'Food',
+		percentage: 25,
+		color: '#F45D2C',
+		productCount: 1359,
+	},
+	{
+		name: 'Drinks',
+		percentage: 20,
+		color: '#F45D2C',
+		productCount: 135,
+	},
+	{
+		name: 'Dessert',
+		percentage: 15,
+		color: '#F45D2C80',
+		productCount: 359,
+	},
+];
 
 const HomePage: React.FC = () => {
-	const { data: metricsData } = useGetDashboardMetricsCountQuery({
-		startDate: '2024-08-20',
-		endDate: '2023-08-07',
-	});
-	const { data: inventoryData } = useGetInventoryQuery();
-	const labels = metricsData?.data?.result.map(item => item.day) || [];
-	const values1 = metricsData?.data?.result.map(item => item.total) || [];
+	const { data: metricsData } = useGetDashboardMetricsCountQuery({ startDate: '2024-09-13', endDate: '2024-09-23', status: 'COMPLETED', duration: 'day' });
+	// const { data: inventoryData } = useGetInventoryQuery();
+	const { data: recentOrder } = useGetRecentOrdersQuery();
+	const labels =
+		metricsData?.data?.result.map((item: { day: string }) => item.day) || [];
+	const values1 =
+		metricsData?.data?.result.map((item: { total: number }) => item.total) ||
+		[];
+	const { data: totalProducts } = useGetTotalProductsQuery();
+	const { data: totalRevenue } = useGetTotalRevenueQuery({ startDate: '2024-09-13', endDate: '2024-09-23' });
+	//const { data: getSales } = useGetSalesQuery();
+	const { data: pendingValue } = useGetPendingOrderQuery({ startDate: '2024-09-13', endDate: '2024-09-23' });
+	const { data: totalTransactions } = useGetTotalTransactionsQuery();
+
+	//useEffect(() => {
+	//	console.log(pendingValue, getSales);
+	//}, [pendingValue, getSales]);
 
 	return (
 		<PageWrapper pageHeader='Home'>
@@ -27,26 +75,65 @@ const HomePage: React.FC = () => {
 					<Button label='Today' name='outline' arrow />
 				</div>
 			</div>
-			<CountCardContainer
-				className='
+			<div className='grid grid-row grid-cols-2 gap-5'>
+				<div className='my-8'>
+					<SectionCard
+						header={
+							<div>
+								<Header header={'Total Sales'} />
+							</div>
+						}
+						content={
+							<BarChart
+								xGridDisplay={true}
+								yGridDisplay={false}
+								responsive
+								labels={labels ?? []}
+								data={values1 ?? []}
+								barThickness={24}
+							/>
+						}
+					/>
+				</div>
+				<CountCardContainer
+					className='
 					grid grid-flow-row
-					grid-cols-1 sm:grid-cols-2 lg:grid-cols-4
+					grid-cols-1 sm:grid-cols-2 lg:grid-cols-2
 					gap-10
 
 		   '
-			>
-				<CountCard count={0} text={'TOTAL ORDER'} isCurrency={false} />
-				<CountCard count={0} text={'COMPLETED ORDER'} isCurrency={false} />
-				<CountCard count={0} text={'PENDING ORDER'} isCurrency={false} />
-				<CountCard count={0} text={'PROCESSING ORDER'} isCurrency={false} />
-				<CountCard count={0} text={'TOTAL ORDER COUNT'} isCurrency={false} />
-				<CountCard count={0} text={'PENDING ORDER COUNT'} isCurrency={false} />
-				<CountCard
-					count={0}
-					text={'PROCESSING ORDER COUNT'}
-					isCurrency={false}
-				/>
-			</CountCardContainer>
+				>
+					<PercentageCard
+						count={totalTransactions?.data?.totalRevenue ?? 0}
+						text={'Total Transactions'}
+						isCurrency={true}
+						percentageChange={totalTransactions?.data?.percentageIncrease ?? 0}
+						percentageText={' increase in the past 28 days'}
+					/>
+					<PercentageCard
+						count={totalProducts?.data?.totalRevenue ?? 0}
+						text={'Total Products'}
+						isCurrency={true}
+						percentageChange={totalProducts?.data?.percentageIncrease ?? 0}
+						percentageText={'increase in the past 28 days'}
+					/>
+
+					<PercentageCard
+						count={totalRevenue?.data?.totalRevenue ?? 0}
+						text={'Total Revenue'}
+						isCurrency={true}
+						percentageChange={totalRevenue?.data?.percentageIncrease ?? 0}
+						percentageText={'increase in the past 28 days'}
+					/>
+					<PercentageCard
+						count={pendingValue?.data?.getPendingOrderCount ?? 0}
+						text={'Pending Order Count'}
+						isCurrency={false}
+						percentageChange={pendingValue?.data?.percentageIncrease ?? 0}
+						percentageText={'increase in the past 28 days'}
+					/>
+				</CountCardContainer>
+			</div>
 
 			<div
 				className='
@@ -56,78 +143,34 @@ const HomePage: React.FC = () => {
 
 		   '
 			>
-				<SectionCard
-					header={
-						<div className='space-y-3'>
-							<div className=''>
-								<Header header={'Total Orders'} />
+				<div className='col-span-2'>
+					<SectionCard
+						header={
+							<div className='space-y-3'>
+								<div className=''>
+									<Header header={'Sales by Category'} />
+								</div>
 							</div>
-							<div className=''>320</div>
-						</div>
-					}
-					content={
-						<div>
-							<div className='pt-6'>
-								<BarChart
-									responsive
-									labels={labels}
-									data={values1}
-									barThickness={5}
-									yGridDisplay={true}
-								/>
-							</div>
-							<div className='flex flex-col md:flex-row gap-4 items-center justify-between'>
-								<div>
-									<Button
-										label='View detailed report'
-										name='transparent'
-										right
+						}
+						content={
+							<div className='grid grid-cols-2 gap-4 pt-6'>
+								<div className='flex flex-col justify-center items-start'>
+									<CategoryList categories={categories} />
+								</div>
+								<div className='pt-6'>
+									<DoughnutChart
+										data={[300, 50, 100]}
+										width={400}
+										height={400}
+										responsive={true}
 									/>
 								</div>
-								<div className=''>
-									<span className=''>20 Aug</span>
-								</div>
 							</div>
-						</div>
-					}
-				/>
+						}
+					/>
+				</div>
 
-				<SectionCard
-					header={
-						<div className='flex space-x-6'>
-							<div className='flex pb-8 flex-col md:flex-row gap-4 items-center justify-between'>
-								<Header header={'Sales Analysis'} />
-							</div>
-						</div>
-					}
-					content={
-						<div>
-							<div className=''>
-								<BarChart
-									responsive
-									labels={labels}
-									data={values1}
-									barThickness={5}
-									yGridDisplay={true}
-								/>
-							</div>
-							<div className='flex flex-col md:flex-row gap-4 items-center justify-between'>
-								<div className=''>
-									<Button
-										label='View detailed report'
-										name='transparent'
-										right
-									/>
-								</div>
-								<div className=''>
-									<span className=''>20 Aug</span>
-								</div>
-							</div>
-						</div>
-					}
-				/>
-
-				<SectionCard
+				{/*<SectionCard
 					header={
 						<Header
 							className='text-center'
@@ -137,15 +180,65 @@ const HomePage: React.FC = () => {
 					content={
 						<div>
 							{inventoryData?.data?.inventory?.Products?.map(product => (
-								<div className='mt-6 flex justify-between' key={product._id}>
-									<div>{product.name}</div>
-									<div className='text-secondary-black'>
-										{product.unitsSold}
+									<div className='mt-6 flex justify-between' key={product._id}>
+										<div>{product.name}</div>
+										<div className='text-secondary-black'>
+											{product.unitsSold}
+										</div>
 									</div>
-								</div>
-							))}
+								)
+							)}
 						</div>
 					}
+				/>*/}
+			</div>
+			<div className='pt-6'>
+				<div className='flex justify-between items-center'>
+					<div>
+						<Header className='pb-4' header={'Recent Orders'} />
+					</div>
+					<div className='text-default-blue'>
+						<Link href={''}>View all</Link>
+					</div>
+				</div>
+				<TableComponent
+					headers={[
+						'ORDER ID',
+						'ITEMS ORDERED',
+						'QUANTITY',
+						'STATUS',
+						'DATE & TIME',
+						'PRICE',
+						<div
+							className='w-full flex justify-end'
+							key={`header-controls`}
+						></div>,
+					]}
+					rows={(recentOrder?.data?.result || []).map(recent => ({
+						id: recent._id,
+						content: [
+							recent._id,
+							recent.itemsOrdered,
+							recent.quantity,
+
+							<Status
+								key={recent._id}
+								text={recent.status}
+								type={
+									(ORDERSTATUS.find(
+										status =>
+											status?.orderStatus?.toLowerCase() === recent?.status?.toLowerCase()
+									)?.type ?? 'warn') as StatusTypes
+								}
+							/>
+							,
+							recent.date,
+							`${formatCurrency(recent.price)}`,
+						],
+					}))}
+					name='categories-table'
+					loading={false}
+					isEmpty={false}
 				/>
 			</div>
 		</PageWrapper>

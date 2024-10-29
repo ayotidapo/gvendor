@@ -5,6 +5,7 @@ import {
 	Login,
 	ResetPassword,
 	ResetPasswordResponse,
+	SelectedAddress,
 } from '@/types/types';
 import { toast } from 'react-toastify';
 import { apiSlice } from '../../apis/api.slice';
@@ -33,7 +34,15 @@ export const authApiSlice = apiSlice.injectEndpoints({
 		}),
 		signup: builder.mutation<
 			AuthResponse,
-			{ address: string; phone: string; password: string; reference: string }
+			{
+				firstName: string;
+				lastName: string;
+				address: SelectedAddress;
+				phone: string;
+				password: string;
+				reference: string;
+				email: string;
+			}
 		>({
 			query: params => ({
 				url: `/auth/accept-invitation/${params.reference}`,
@@ -41,7 +50,10 @@ export const authApiSlice = apiSlice.injectEndpoints({
 				body: {
 					address: params.address,
 					phone: params.phone,
+					email: params.email,
 					password: params.password,
+					firstName: params.firstName,
+					lastName: params.lastName,
 				},
 			}),
 			transformResponse: (response: { data: AuthResponse }) => response.data,
