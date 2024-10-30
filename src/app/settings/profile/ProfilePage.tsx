@@ -14,7 +14,6 @@ import {
 } from '@/redux/profile/profile.slice';
 import { Form, Formik } from 'formik';
 import { toast } from 'react-toastify';
-import Switch from '@/components/switch/Switch';
 import {
 	useGetAccountQuery,
 	useGetBankQuery,
@@ -34,6 +33,11 @@ const profileSchema = Yup.object({
 	phone: Yup.string().required('Phone number is required'),
 	website: Yup.string().required('Website URL is required'),
 	description: Yup.string().required('Business description is required'),
+	cacNumber: Yup.string().required('CAC Number is required'),
+	nafdacNumber: Yup.string().required('NAFDAC Number is required'),
+	tinNumber: Yup.string().required('TIN Number is required'),
+	sonNumber: Yup.string().required('SON Number is required'),
+	serviceOffered: Yup.string().required('Service is required'),
 	accountName: Yup.string().required('Account name is required'),
 	accountNumber: Yup.string().required('Account Number is required'),
 });
@@ -65,10 +69,6 @@ const ProfilePage = () => {
 		}
 	);
 
-	const [availableHours, setAvailableHours] = useState<{
-		[key: string]: { open: boolean; openingTime: string; closingTime: string };
-	}>({});
-
 	const formattedBankOptions = bankData?.data
 		? bankData?.data?.map((bank: Bank) => ({
 				label: bank.name,
@@ -81,12 +81,6 @@ const ProfilePage = () => {
 			refetchAccount();
 		}
 	}, [accountData.accountNumber, accountData.bankCode]);
-
-	useEffect(() => {
-		if (profile) {
-			setAvailableHours(profile.availableHours);
-		}
-	}, [profile]);
 
 	const handleUpdateAccount = async () => {
 		if (accountData) {
@@ -106,92 +100,12 @@ const ProfilePage = () => {
 				<div className='pt-6 md:pt-14'>
 					<Button
 						additionalClass='p-4'
-						label={'Edit profile'}
+						label={'Change Photo'}
 						name={'primary'}
 					/>
 				</div>
 			</div>
-			<div className='pt-8 space-y-4'>
-				<span>
-					<Header header={'Personal Information'} />
-				</span>
-				<Formik
-					initialValues={{
-						name: profile?.name ?? '',
-						email: profile?.email ?? '',
-						phone: profile?.phone ?? '',
-					}}
-					validationSchema={profileSchema}
-					onSubmit={values => {
-						if (!isLoading) {
-							updateProfile(values);
-							toast.success('Information successfully updated');
-						}
-					}}
-					enableReinitialize
-				>
-					{({
-						values,
-						handleBlur,
-						handleChange,
-						errors,
-						touched,
-					}) => (
-						<Form >
-							<div className='space-y-2'>
-							<div className='text-secondary-black'>First name</div>
-							<TextInput
-								type={'text'}
-								name={'name'}
-								value={values.name}
-								onChange={handleChange}
-								onBlur={handleBlur}
-								placeholder='First Name'
-								errors={touched.name ? errors?.name : ''}
-								extraClass='md:w-[800px]'
-							/>
-							<div className='text-secondary-black pt-2'>Last name</div>
-							<TextInput
-								type={'text'}
-								name={'name'}
-								value={values.name}
-								onChange={handleChange}
-								onBlur={handleBlur}
-								placeholder='Last Name'
-								errors={touched.name ? errors?.name : ''}
-								extraClass='md:w-[800px]'
-							/>
-							<div className='text-secondary-black pt-2'>Email Address</div>
-							<TextInput
-								type={'text'}
-								name={'email'}
-								value={values.email}
-								onChange={handleChange}
-								onBlur={handleBlur}
-								placeholder='Email Address'
-								errors={touched.email ? errors?.name : ''}
-								extraClass='md:w-[800px]'
-							/>
-							<div className='text-secondary-black pt-2'>Phone number</div>
-							<TextInput
-								type={'text'}
-								name={'phone'}
-								value={values.phone}
-								onChange={handleChange}
-								onBlur={handleBlur}
-								placeholder='Phone Number'
-								errors={touched.phone ? errors?.name : ''}
-								extraClass='md:w-[800px]'
-							/>	
-							</div>
-							
-							<div className='mt-6 w-full md:w-[102px] pb-10'>
-								<Button label={'Update'} type='submit'/>
-							</div>
-						</Form>
-					)}
-				</Formik>
-			</div>
+
 			<div className='pt-12'>
 				<span>
 					<Header header={'Profile Information'} />
@@ -211,6 +125,11 @@ const ProfilePage = () => {
 						},
 						email: profile?.email ?? '',
 						phone: profile?.phone ?? '',
+						cacNumber: profile?.businessDetails.cacNumber ?? '',
+						nafdacNumber: profile?.businessDetails.nafdacNumber ?? '',
+						tinNumber: profile?.businessDetails.tinNumber ?? '',
+						sonNumber: profile?.businessDetails.sonNumber ?? '',
+						serviceOffered: profile?.businessDetails.servicesOffered ?? '',
 						website: profile?.website ?? '',
 						description: profile?.description ?? '',
 					}}
@@ -233,6 +152,24 @@ const ProfilePage = () => {
 					}) => (
 						<Form className='pt-6'>
 							<div className='grid grid-cols-1 md:grid-cols-2 gap-4 mt-6'>
+								<TextInput
+									type={'text'}
+									name='name'
+									value={values.name}
+									onChange={handleChange}
+									onBlur={handleBlur}
+									placeholder='First Name'
+									errors={touched.name ? errors?.name : ''}
+								/>
+								<TextInput
+									type={'text'}
+									name='name'
+									value={values.name}
+									onChange={handleChange}
+									onBlur={handleBlur}
+									placeholder='Last Name'
+									errors={touched.name ? errors?.name : ''}
+								/>
 								<TextInput
 									type={'text'}
 									name='name'
@@ -280,6 +217,53 @@ const ProfilePage = () => {
 									placeholder='Website url'
 									errors={errors?.website}
 								/>
+
+								<TextInput
+									type={'text'}
+									name='service'
+									value={values.serviceOffered}
+									onChange={handleChange}
+									onBlur={handleBlur}
+									placeholder='Service offered'
+									errors={errors?.serviceOffered}
+								/>
+
+								<TextInput
+									type={'text'}
+									name='nadfac'
+									value={values.nafdacNumber}
+									onChange={handleChange}
+									onBlur={handleBlur}
+									placeholder='NAFDAC Number'
+									errors={errors?.nafdacNumber}
+								/>
+								<TextInput
+									type={'text'}
+									name='cac'
+									value={values.cacNumber}
+									onChange={handleChange}
+									onBlur={handleBlur}
+									placeholder='CAC Number'
+									errors={errors?.cacNumber}
+								/>
+								<TextInput
+									type={'text'}
+									name='tin'
+									value={values.tinNumber}
+									onChange={handleChange}
+									onBlur={handleBlur}
+									placeholder='TIN Number'
+									errors={errors?.tinNumber}
+								/>
+								<TextInput
+									type={'text'}
+									name='son'
+									value={values.sonNumber}
+									onChange={handleChange}
+									onBlur={handleBlur}
+									placeholder='SON Number'
+									errors={errors?.sonNumber}
+								/>
 								{/*<Select
 									options={options}
 									placeholder='Choose industry'
@@ -295,12 +279,9 @@ const ProfilePage = () => {
 									value={values.description}
 									onChange={handleChange}
 									onBlur={handleBlur}
-									placeholder='Description'
+									placeholder='Business Description'
 									errors={errors?.description}
 								/>
-							</div>
-							<div className='mt-6 w-full md:w-[120px] pb-10'>
-								<Button label={'Update'} type='submit' />
 							</div>
 						</Form>
 					)}
@@ -309,187 +290,82 @@ const ProfilePage = () => {
 
 			<div className='pt-6'>
 				<span>
-					<Header header={'Set standard hours'} />
+					<Header header={'Personal bank account'} className='pb-4' />
 				</span>
-				<span className='block mt-2'>
-					Configure the standard hours of operation for this business
-				</span>
-				<div className='mt-6'>
-					{profile?.availableHours
-						? Object.entries(availableHours).map(([day, availableHours]) => (
-								<div
-									key={day}
-									className='grid min-h-14 grid-cols-3 sm:grid-cols-4 lg:grid-cols-7 gap-4 items-center mb-4 border-b border-default-gray-2 pb-4 lg:border-transparent'
-								>
-									<p className='font-bold capitalize'>{day}</p>
-									<div className='flex items-center space-x-2'>
-										<Switch
-											enabled={availableHours.open}
-											setEnabled={value => {
-												setAvailableHours(prevHours => ({
-													...prevHours,
-													[day]: {
-														...prevHours[day],
-														open: value,
-													},
-												}));
-											}}
-										/>
-										<span>{availableHours.open ? 'Open' : 'Closed'}</span>
-									</div>
-									{availableHours.open && (
-										<div className='col-span-3 flex space-x-4 items-center'>
-											<TimeInput
-												value={availableHours.openingTime}
-												onChange={value => {
-													setAvailableHours(prevHours => ({
-														...prevHours,
-														[day]: {
-															...prevHours[day],
-															openingTime: value,
-														},
-													}));
-												}}
-											/>
-											<span>To</span>
-											<TimeInput
-												value={availableHours.closingTime}
-												onChange={value => {
-													setAvailableHours(prevHours => ({
-														...prevHours,
-														[day]: {
-															...prevHours[day],
-															closingTime: value,
-														},
-													}));
-												}}
-											/>
-										</div>
-									)}
-								</div>
-							))
-						: null}
-				</div>
 
-				<div className='mt-6 w-[143px]'>
-					<Button
-						onClick={() => {
-							// loop through availableHours and remove opening time and closing time if open is false
-							const updatedHours = Object.entries(availableHours).reduce(
-								(acc, [day, hours]) => {
-									if (!hours.open) {
-										return {
-											...acc,
-											[day]: {
-												open: false,
-											},
-										};
-									} else {
-										return {
-											...acc,
-											[day]: hours,
-										};
-									}
-								},
-								{}
-							);
-							updateProfile({ availableHours: updatedHours });
-						}}
-						label={'Save Schedule'}
-					/>
-				</div>
-			</div>
-
-			<div className='pt-6'>
-				<span>
-					<Header header={'Bank Account'} className='pb-4' />
-				</span>
-				<div className='bg-off-white md:w-[580px] border border-[#EAEAEA] shadow-sm p-[24px] rounded-md flex items-center justify-between'>
-					<div className='flex gap-7 items-center'>
-						<div className='flex'>
-							<Icon width={40} height={40} svg={'bank'} />
-						</div>
-						<div className=''>
-							<Header header={profile?.settlementAccount?.accountName ?? ''} />
-							<div className='flex space-x-3 items-center text-sm text-[#000000] md:w-[400px] md:gap-6'>
-								<p>{profile?.settlementAccount?.bankName ?? ''}</p>
-								<p>|</p>
-								<p>{profile?.settlementAccount?.accountNumber ?? ''}</p>
-							</div>
-						</div>
-					</div>
-				</div>
-
-				<form
-					onSubmit={e => {
-						e.preventDefault();
-						handleUpdateAccount();
+				<Formik
+					initialValues={{
+						accountProvider: profile?.settlementAccount?.bankName ?? '',
+						accountName: profile?.settlementAccount?.accountName ?? '',
+						accountNumber: profile?.settlementAccount?.accountNumber ?? '',
 					}}
+					validationSchema={profileSchema}
+					onSubmit={values => {
+						if (!isLoading) {
+							updateProfile(values);
+							toast.success('Profile updated successfully');
+						}
+					}}
+					enableReinitialize
 				>
-					<div className='pt-6 space-y-4 md:w-[800px]'>
-						<Select
-							options={formattedBankOptions}
-							placeholder='Bank'
-							value={accountData?.bankCode || ''}
-							onChange={value => {
-								setAccountData(prevAccountData => ({
-									...prevAccountData,
-									bankCode: value as string,
-									bankName: bankData?.data?.find(bank => bank.code === value)
-										?.name as string,
-									accountNumber: prevAccountData?.accountNumber || '',
-								}));
-							}}
-						/>
-						<TextInput
-							type={'text'}
-							name='accountName'
-							value={account?.account_name ?? ''}
-							onChange={() => {}}
-							disabled
-							placeholder='Account name'
-						/>
-						<TextInput
-							type={'text'}
-							name='accountNumber'
-							value={accountData?.accountNumber}
-							onChange={e => {
-								setAccountData(prevAccountData => ({
-									...prevAccountData,
-									accountNumber: e.target.value,
-								}));
-							}}
-							placeholder='Account number'
-						/>
-					</div>
+					{({
+						values,
+						handleBlur,
+						handleChange,
+						errors,
+						touched,
+						setFieldValue,
+					}) => (
+						<Form className='pt-6'>
+							<div className='space-y-4 md:w-[800px]'>
+								<div className='text-secondary-black'>Account Provider</div>
+								<TextInput
+									type={'text'}
+									name='name'
+									value={values.accountProvider}
+									onChange={handleChange}
+									onBlur={handleBlur}
+									placeholder='Account Provider'
+									errors={errors?.accountProvider}
+								/>
+								<div className='text-secondary-black'>Account Number</div>
+								<TextInput
+									type={'text'}
+									name='name'
+									value={values.accountNumber}
+									onChange={handleChange}
+									onBlur={handleBlur}
+									placeholder='Account Number'
+									errors={errors?.accountNumber}
+								/>
+								<div className='text-secondary-black'>Account Name</div>
+								<TextInput
+									type={'text'}
+									name='name'
+									value={values.accountName}
+									onChange={handleChange}
+									onBlur={handleBlur}
+									placeholder='Account Name'
+									errors={errors?.accountName}
+								/>
+							</div>
 
-					<div className='mt-6 w-[183px]'>
-						<Button
-							disabled={!account?.account_name}
-							label={'Add account'}
-							type='submit'
-						/>
-					</div>
-				</form>
+							<div className='mt-6 pb-10'>
+								<div className='flex items-center justify-center pt-2 space-x-4'>
+									<div className='md:w-[138px]'>
+										<Button label={'Cancel'} name='outline' />
+									</div>
+									<div className='md:w-[138px]'>
+										<Button label={'Save'} type='submit' />
+									</div>
+								</div>
+							</div>
+						</Form>
+					)}
+				</Formik>
+				{/* </form> */}
 			</div>
 		</div>
-	);
-};
-
-const TimeInput = ({
-	value,
-	onChange,
-}: {
-	value: string;
-	onChange: (value: string) => void;
-}) => {
-	return (
-		<input
-			onChange={e => onChange(e.target.value)}
-			value={value}
-			type='time'
-			className='bg-transparent border border-default-gray rounded-lg p-4 text-secondary-black md:w-52 md:h-14'
-		/>
 	);
 };
 

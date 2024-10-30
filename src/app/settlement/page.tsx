@@ -76,7 +76,7 @@ const settlementPage: React.FC = () => {
             <div>
             <TableComponent
 					headers={[
-						'ACCOUNT NUMBER',
+						'ACCOUNT NAME',
 						'AMOUNT',
 						'STATUS',
 						'DATE & TIME',

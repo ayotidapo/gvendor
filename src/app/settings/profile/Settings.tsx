@@ -5,14 +5,16 @@ import clsx from 'clsx';
 import ProfilePage from './ProfilePage';
 import SecurityPage from '../security/SecurityPage';
 import NotificationPage from '../notification/NotificationPage'
+import WorkhoursPage from '../workhours/Workhours';
 
 export const SettingsPage: React.FC = () => {
 	const [tabs, setTabs] = useState([
-		{ name: 'Profile', isActive: true },
+		{ name: 'Business information', isActive: true },
 		{ name: 'Security', isActive: false },
 		{ name: 'Notifications', isActive: false },
+		{ name: 'Work hours', isActive: false },
 	]);
-	const [activeTab, setActiveTab] = useState('Profile');
+	const [activeTab, setActiveTab] = useState('Business information');
 
 	return (
 		<div className='bg-white rounded-md '>
@@ -44,9 +46,10 @@ export const SettingsPage: React.FC = () => {
 				</nav>
 			</div>
 
-			{activeTab === 'Profile' && <ProfilePage />}
+			{activeTab === 'Business information' && <ProfilePage />}
 			{activeTab === 'Security' && <SecurityPage />}
 			{activeTab === 'Notifications' && <NotificationPage />}
+			{activeTab === 'Work hours' && <WorkhoursPage />}
 		</div>
 	);
 };
