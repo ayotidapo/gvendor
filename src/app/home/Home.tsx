@@ -1,9 +1,8 @@
 'use client';
 
+import React from 'react';
 import PageWrapper from '@/containers/PageWrapper';
 import Button from '@/components/buttons/Button';
-import React, { useEffect } from 'react';
-import { format } from 'date-fns';
 import { formatCurrency } from '@/helpers';
 import BarChart from '@/components/charts/BarChart';
 import SectionCard from '@/components/cards/SectionCard';
@@ -14,128 +13,20 @@ import {
 	useGetDashboardMetricsCountQuery,
 	useGetPendingOrderQuery,
 	useGetRecentOrdersQuery,
-	useGetSalesQuery,
+	//useGetSalesQuery,
 	useGetTotalProductsQuery,
 	useGetTotalRevenueQuery,
 	useGetTotalTransactionsQuery,
 } from '@/redux/dashboard/dashboard.slice';
-import { useGetInventoryQuery } from '@/redux/inventory/inventory.slice';
-import { Icon } from '@/components/icon/icon';
-import Dropdown from '@/components/input/dropdown';
+// import { useGetInventoryQuery } from '@/redux/inventory/inventory.slice';
 import { Status } from '@/components/cards/StatusTag';
-import { ORDERSTATUS, PAYMENTSTATUS } from '@/utils/constants';
+import { ORDERSTATUS } from '@/utils/constants';
 import { TableComponent } from '@/components/table/Table';
-import { useGetAllOrdersQuery } from '@/redux/orders/orders.slice';
 import Link from 'next/link';
 import DoughnutChart from '@/components/charts/Doughnut';
 import CategoryList from './CategoriesList';
 import PercentageCard from '@/components/cards/PercentageCard';
 
-const orderData = [
-	{
-		id: '#15285047',
-		status: 'new',
-		type: 'success',
-		name: 'Ahmed Johnson',
-		address: 'West Street, Ikoyi, Lagos',
-		dateTime: '14/5/2005 3:01PM',
-	},
-	{
-		id: '#15285047',
-		status: 'new',
-		type: 'success',
-		name: 'Ahmed Johnson',
-		address: 'West Street, Ikoyi, Lagos',
-		dateTime: '14/5/2005 3:01PM',
-	},
-	{
-		id: '#15285047',
-		status: 'new',
-		type: 'success',
-		name: 'Ahmed Johnson',
-		address: 'West Street, Ikoyi, Lagos',
-		dateTime: '14/5/2005 3:01PM',
-	},
-	{
-		id: '#15285047',
-		status: 'new',
-		type: 'success',
-		name: 'Ahmed Johnson',
-		address: 'West Street, Ikoyi, Lagos',
-		dateTime: '14/5/2005 3:01PM',
-	},
-	{
-		id: '#15285047',
-		status: 'new',
-		type: 'success',
-		name: 'Ahmed Johnson',
-		address: 'West Street, Ikoyi, Lagos',
-		dateTime: '14/5/2005 3:01PM',
-	},
-];
-
-const data = [
-	{
-		time: 12,
-		total: 1771001,
-		count: 500,
-	},
-	{
-		time: 1,
-		total: 713500,
-		count: 100,
-	},
-	{
-		time: 2,
-		total: 240501,
-		count: 500,
-	},
-	{
-		time: 3,
-		total: 56500,
-		count: 100,
-	},
-	{
-		time: 4,
-		total: 0,
-		count: 200,
-	},
-	{
-		time: 5,
-		total: 49000,
-		count: 200,
-	},
-	{
-		time: 6,
-		total: 411000,
-		count: 300,
-	},
-	{
-		time: 7,
-		total: 4110,
-		count: 400,
-	},
-	{
-		time: 8,
-		total: 41100,
-		count: 300,
-	},
-	{
-		time: 9,
-		total: 41000,
-		count: 100,
-	},
-	{
-		time: 10,
-		total: 4000,
-		count: 500,
-	},
-	{
-		time: 11,
-		total: 411000,
-		count: 200,
-	},
-];
 
 const categories = [
 	{
@@ -160,7 +51,7 @@ const categories = [
 
 const HomePage: React.FC = () => {
 	const { data: metricsData } = useGetDashboardMetricsCountQuery({ startDate: '2024-09-13', endDate: '2024-09-23', status: 'COMPLETED', duration: 'day' });
-	const { data: inventoryData } = useGetInventoryQuery();
+	// const { data: inventoryData } = useGetInventoryQuery();
 	const { data: recentOrder } = useGetRecentOrdersQuery();
 	const labels =
 		metricsData?.data?.result.map((item: { day: string }) => item.day) || [];
@@ -169,13 +60,13 @@ const HomePage: React.FC = () => {
 		[];
 	const { data: totalProducts } = useGetTotalProductsQuery();
 	const { data: totalRevenue } = useGetTotalRevenueQuery({ startDate: '2024-09-13', endDate: '2024-09-23' });
-	const { data: getSales } = useGetSalesQuery();
+	//const { data: getSales } = useGetSalesQuery();
 	const { data: pendingValue } = useGetPendingOrderQuery({ startDate: '2024-09-13', endDate: '2024-09-23' });
 	const { data: totalTransactions } = useGetTotalTransactionsQuery();
 
-	useEffect(() => {
-		console.log(pendingValue, getSales);
-	}, [pendingValue, getSales]);
+	//useEffect(() => {
+	//	console.log(pendingValue, getSales);
+	//}, [pendingValue, getSales]);
 
 	return (
 		<PageWrapper pageHeader='Home'>
@@ -208,7 +99,7 @@ const HomePage: React.FC = () => {
 					className='
 					grid grid-flow-row
 					grid-cols-1 sm:grid-cols-2 lg:grid-cols-2
-					gap-10 
+					gap-10
 
 		   '
 				>
@@ -279,7 +170,7 @@ const HomePage: React.FC = () => {
 					/>
 				</div>
 
-				<SectionCard
+				{/*<SectionCard
 					header={
 						<Header
 							className='text-center'
@@ -299,7 +190,7 @@ const HomePage: React.FC = () => {
 							)}
 						</div>
 					}
-				/>
+				/>*/}
 			</div>
 			<div className='pt-6'>
 				<div className='flex justify-between items-center'>
@@ -331,6 +222,7 @@ const HomePage: React.FC = () => {
 							recent.quantity,
 
 							<Status
+								key={recent._id}
 								text={recent.status}
 								type={
 									(ORDERSTATUS.find(

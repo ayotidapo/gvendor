@@ -1,4 +1,4 @@
-import { Gilroy, RecoletaMedium } from '@/fonts/font';
+import { Gilroy } from '@/fonts/font';
 
 export const OptHeader = ({
 	header,

@@ -41,9 +41,9 @@ const Account = () => {
 
 	const formattedBankOptions = bankData?.data
 		? bankData?.data?.map((bank: Bank) => ({
-				label: bank.name,
-				value: bank.code,
-			}))
+			label: bank.name,
+			value: bank.code,
+		}))
 		: [];
 
 	useEffect(() => {
@@ -56,7 +56,7 @@ const Account = () => {
 		if (accountData) {
 			const res = await updateAccount(accountData);
 			if (res.data) {
-				router.push('/dashboard');
+				router.push('/');
 			}
 		}
 	};
@@ -68,7 +68,7 @@ const Account = () => {
 				handleUpdateAccount();
 			}}
 		>
-			<div className='pt-6 space-y-4 md:w-[800px]'>
+			<div className='flex flex-col space-y-4'>
 				<Select
 					options={formattedBankOptions}
 					placeholder='Bank'
@@ -85,14 +85,6 @@ const Account = () => {
 				/>
 				<TextInput
 					type={'text'}
-					name='accountName'
-					value={account?.account_name ?? ''}
-					onChange={() => {}}
-					disabled
-					placeholder='Account name'
-				/>
-				<TextInput
-					type={'text'}
 					name='accountNumber'
 					value={accountData?.accountNumber}
 					onChange={e => {
@@ -102,6 +94,14 @@ const Account = () => {
 						}));
 					}}
 					placeholder='Account number'
+				/>
+				<TextInput
+					type={'text'}
+					name='accountName'
+					value={account?.account_name ?? ''}
+					onChange={() => { }}
+					disabled
+					placeholder='Account name'
 				/>
 			</div>
 

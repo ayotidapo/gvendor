@@ -49,7 +49,7 @@ const OrderDetails = () => {
 									<Header header={'Product Details'} />
 								</div>
 								{data.map((item, index) => (
-									<div className='grid grid-cols-3 space-y-2 pt-4 gap-5'>
+									<div key={index} className='grid grid-cols-3 space-y-2 pt-4 gap-5'>
 										<div className='text-sm' key={item.name}>
 											{item.name}
 										</div>
@@ -144,7 +144,7 @@ const OrderDetails = () => {
 							<div className='space-y-4'>
 								<Header header={'Customer Notes'} />
 								<p>
-									If I'm not home, kindly leave the package with my neighbor at
+									If not home, kindly leave the package with my neighbor at
 									Apartment 12B. Also, could you make sure the items are packed
 									securely? Thank you!
 								</p>

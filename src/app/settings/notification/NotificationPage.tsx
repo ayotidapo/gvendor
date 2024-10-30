@@ -21,7 +21,7 @@ const NotificationPage = () => {
 				<Header header={'Notification Settings'} />
 			</div>
 			<div className='pt-3'>
-				Customize how you'd like to stay updated on key activities, orders,
+				Customize how you would like to stay updated on key activities, orders,
 				payments, and updates related to your business.
 			</div>
 			<hr />
