@@ -1,16 +1,15 @@
 import Button from '@/components/buttons/Button';
 import TextInput from '@/components/input/TextInput';
 import { Header } from '@/components/typography/Header';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import clsx from 'clsx';
 import parse from 'html-react-parser';
 import { CheckIcon } from '@heroicons/react/24/outline';
 import * as Yup from 'yup';
 import CheckboxInput from '@/components/common/Checkbox';
-import { useUpdatePasswordMutation } from '@/redux/profile/profile.slice';
+import { useDeleteProfileMutation, useUpdatePasswordMutation } from '@/redux/profile/profile.slice';
 import { Form, Formik } from 'formik';
 import { toast } from 'react-toastify';
-
 
 const changePasswordSchema = Yup.object({
 	currentPassword: Yup.string().required('Current password is required'),
@@ -32,11 +31,18 @@ const reasons = [
 
 const SecurityPage = () => {
 	const [updatePassword, { isLoading }] = useUpdatePasswordMutation();
+	const [deleteProfile] = useDeleteProfileMutation();
 	const [deleteReason, setDeleteReason] = useState('');
+	const [confirmDelete, setConfirmDelete] = useState(false);
 
-	//useEffect(() => {
-	//    console.log(updatePassword);
-	//}, [updatePassword]);
+	const handleDeleteAccount = () => {
+		if (deleteReason) {
+			deleteProfile({ reason: deleteReason });
+			toast.success('Account deleted successfully');
+		} else {
+			toast.error('Please select a reason before deleting your account');
+		}
+	};
 
 	return (
 		<div className='pt-8 space-y-4'>
@@ -147,9 +153,16 @@ const SecurityPage = () => {
 						label={
 							'By selecting this checkbox, you agree to permanently delete your account and all your data'
 						}
+						checked={confirmDelete}
+						onChange={() => setConfirmDelete(!confirmDelete)}
 					/>
 					<div className='mt-6 w-[183px]'>
-						<Button name='delete' label={'Delete account'} />
+						<Button
+							name='delete'
+							label={'Delete account'}
+							onClick={handleDeleteAccount}
+							disabled={!deleteReason || !confirmDelete}
+						/>
 					</div>
 				</div>
 			</div>
