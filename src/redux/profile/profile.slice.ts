@@ -79,12 +79,31 @@ export const profileApiSlice = apiSlice.injectEndpoints({
 				}
 			},
 		}),
+		deleteProfile: builder.mutation<ProfileData, { reason: string }>({
+			query: data => ({
+				url: '/profile/delete',
+				method: 'POST',
+				body: data,
+			}),
+			async onQueryStarted(arg, { queryFulfilled }) {
+				try {
+					await queryFulfilled;
+					toast.success('Profile deleted successfully');
+				} catch (err: unknown) {
+					if (typeof err === 'object' && err !== null && 'error' in err) {
+						const error = err as { error: { data: { error: string } } };
+						toast.error(error.error.data.error);
+					}
+				}
+			},
+		}),
 	}),
 });
 
 export const {
 	useGetProfileQuery,
 	useUpdateProfileMutation,
+	useDeleteProfileMutation,
 	useUpdatePasswordMutation,
 	useCreateProfileMutation,
 } = profileApiSlice;

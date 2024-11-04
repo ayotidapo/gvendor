@@ -40,7 +40,7 @@ const Container: FC<Iprops> = ({ children }) => {
 const navigation = [
 	{ name: 'Home', icon: 'home', current: true, route: '/' },
 	{ name: 'Orders', icon: 'orders', current: false, route: '/orders' },
-	{ name: 'Sales', icon: 'sales', current: false, route: '/sales' },
+	// { name: 'Sales', icon: 'sales', current: false, route: '/sales' },
 	{ name: 'Settlement', icon: 'sales', current: false, route: '/settlement' },
 	{ name: 'Inventory', icon: 'inventory', current: false, route: '/inventory' },
 	{ name: 'Settings', icon: 'settings', current: false, route: '/settings' },

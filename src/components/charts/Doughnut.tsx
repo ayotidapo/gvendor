@@ -43,6 +43,7 @@ const DoughnutChart: React.FC<Props> = ({ data, labels, responsive }) => {
 					},
 				},
 			}}
+			height={100}
 		/>
 	);
 };

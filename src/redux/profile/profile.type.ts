@@ -34,6 +34,8 @@ export interface CreateProfile {
 export interface ProfileData {
 	_id: string;
 	name: string;
+	firstName: string;
+	lastName: string;
 	email: string;
 	description: string;
 	createdAt: string;

@@ -17,8 +17,8 @@ import { useGetInventoryQuery } from '@/redux/inventory/inventory.slice';
 const Inventory: React.FC = () => {
 	const { data: inventoryData } = useGetInventoryQuery();
 
-	const labels = inventoryData?.data?.products.map(item => item.name);
-	const values1 = inventoryData?.data?.products.map(item => item.inStock);
+	const labels = inventoryData?.data?.bestSellers.map(item => item.name);
+	const values = inventoryData?.data?.bestSellers.map(item => item.unitsSold);
 
 	return (
 		<PageWrapper pageHeader='Inventory'>
@@ -53,11 +53,12 @@ const Inventory: React.FC = () => {
 					}
 					content={
 						<BarChart
+							height={100}
 							xGridDisplay={true}
 							yGridDisplay={false}
 							responsive
 							labels={labels ?? []}
-							data={values1 ?? []}
+							data={values ?? []}
 							barThickness={24}
 						/>
 					}

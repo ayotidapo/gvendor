@@ -1,65 +1,20 @@
 'use client';
 
 import React from 'react';
-import CountCard from '@/components/cards/CountCard';
 import { TableComponent } from '@/components/table/Table';
-import { CountCardContainer } from '@/containers/CountCardWrapper';
 import { Status } from '@/components/cards/StatusTag';
 import Dropdown from '@/components/input/dropdown';
 import { Icon } from '@/components/icon/icon';
 import { format } from 'date-fns';
 import { formatCurrency } from '@/helpers';
-import {
-	//PaymentTypes,
-	StatusTypes,
-} from '@/types/types';
-import { useGetAllOrdersQuery } from '@/redux/orders/orders.slice';
-import {
-	ORDERSTATUS,
-	// PAYMENTSTATUS
-} from '@/utils/constants';
-//import {
-//	useGetPendingOrderQuery,
-//	useGetTotalRevenueQuery,
-//} from '@/redux/dashboard/dashboard.slice';
+import { StatusTypes } from '@/types/types';
+import { ORDERSTATUS } from '@/utils/constants';
+import { OrderDets } from '@/redux/orders/orders.type';
+import Link from 'next/link';
 
-const New: React.FC = () => {
-	const { data: orderData } = useGetAllOrdersQuery({});
-	//const { data: totalRevenue } = useGetTotalRevenueQuery({
-	//	startDate: '2024-09-13',
-	//	endDate: '2024-09-23',
-	//});
-	//const { data: pendingValue } = useGetPendingOrderQuery({
-	//	startDate: '2024-09-13',
-	//	endDate: '2024-09-23',
-	//});
-
-	//useEffect(() => {
-	//	console.log(orderData);
-	//}, [orderData]);
-
+const OrderTable = ({ orderData }: { orderData?: OrderDets[] }) => {
 	return (
 		<div>
-			<CountCardContainer
-				className='
-							grid grid-flow-row
-							grid-cols-1 sm:grid-cols-2 lg:grid-cols-3
-							gap-10
-
-				   '
-			>
-				<CountCard
-					count={orderData?.data?.totalSales ?? 0}
-					text={'TOTAL SALES'}
-					isCurrency={true}
-				/>
-				<CountCard
-					count={orderData?.data?.totalOrders ?? 0}
-					text={'TOTAL ORDER'}
-					isCurrency={false}
-				/>
-			</CountCardContainer>
-
 			<TableComponent
 				headers={[
 					'ORDER ID',
@@ -72,10 +27,16 @@ const New: React.FC = () => {
 						key={`header-controls`}
 					></div>,
 				]}
-				rows={(orderData?.data?.orders || []).map(order => ({
+				rows={(orderData || []).map(order => ({
 					id: order._id,
 					content: [
-						order._id,
+						<Link
+							className='text-primary'
+							key={order._id}
+							href={`order-detail/${order._id}`}
+						>
+							{order._id}
+						</Link>,
 						`${formatCurrency(order.price)}`,
 						<div
 							key={order._id}
@@ -120,4 +81,4 @@ const New: React.FC = () => {
 	);
 };
 
-export default New;
+export default OrderTable;
