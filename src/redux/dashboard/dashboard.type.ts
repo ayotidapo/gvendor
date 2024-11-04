@@ -1,12 +1,16 @@
+import { OrderDets } from '../orders/orders.type';
+
 export interface DashboardMetricsCount {
 	success: boolean;
 	message: string;
 	data: {
 		result: {
+			dateTime: string;
 			date: string;
 			day: string;
 			total: number;
 			count: number;
+			hour: string;
 		}[];
 	};
 }
@@ -18,7 +22,7 @@ export interface DashboardSalesValue {
 		totalSaleValue: number;
 		noOfOrders: number;
 		noOfCustomers: number;
-	}
+	};
 }
 
 export interface TotalRevenue {
@@ -27,7 +31,7 @@ export interface TotalRevenue {
 	data: {
 		totalRevenue: number;
 		percentageIncrease: number;
-	}
+	};
 }
 
 export interface CategorySales {
@@ -42,10 +46,10 @@ export interface PendingOrder {
 	data: {
 		getPendingOrderCount: number;
 		percentageIncrease: number;
-	}
+	};
 }
 
-export interface Order{
+export interface Order {
 	_id: string;
 	itemsOrdered: string[];
 	quantity: number;
@@ -57,9 +61,7 @@ export interface Order{
 export interface RecentOrdersResponse {
 	success: boolean;
 	message: string;
-	data: {
-		result: Order[];
-	};
+	data: OrderDets[];
 }
 
 export interface TopSellersResponse {

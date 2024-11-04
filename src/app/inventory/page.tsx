@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import React from 'react';
 import PageWrapper from '@/containers/PageWrapper';
@@ -17,8 +17,8 @@ import { useGetInventoryQuery } from '@/redux/inventory/inventory.slice';
 const Inventory: React.FC = () => {
 	const { data: inventoryData } = useGetInventoryQuery();
 
-	const labels = inventoryData?.data?.products.map(item => item.name);
-	const values1 = inventoryData?.data?.products.map(item => item.inStock);
+	const labels = inventoryData?.data?.bestSellers.map(item => item.name);
+	const values = inventoryData?.data?.bestSellers.map(item => item.unitsSold);
 
 	return (
 		<PageWrapper pageHeader='Inventory'>
@@ -31,9 +31,7 @@ const Inventory: React.FC = () => {
 				</div>
 			</div>
 
-			<CountCardContainer
-				className='grid grid-flow-row grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10'
-			>
+			<CountCardContainer className='grid grid-flow-row grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10'>
 				<CountCard
 					count={inventoryData?.data?.totalUnitsSold ?? 0}
 					text={'TOTAL UNITS SOLD'}
@@ -55,11 +53,12 @@ const Inventory: React.FC = () => {
 					}
 					content={
 						<BarChart
+							height={100}
 							xGridDisplay={true}
 							yGridDisplay={false}
 							responsive
 							labels={labels ?? []}
-							data={values1 ?? []}
+							data={values ?? []}
 							barThickness={24}
 						/>
 					}
@@ -67,13 +66,7 @@ const Inventory: React.FC = () => {
 			</div>
 
 			<TableComponent
-				headers={[
-					'PRODUCT NAME',
-					'CATEGORY',
-					'INSTOCK',
-					'PRICE',
-					' ',
-				]}
+				headers={['PRODUCT NAME', 'CATEGORY', 'INSTOCK', 'PRICE', ' ']}
 				rows={(inventoryData?.data?.products || []).map(product => ({
 					id: product._id,
 					content: [

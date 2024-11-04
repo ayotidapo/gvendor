@@ -30,7 +30,7 @@ const ImageUpload = ({ currentImage = '' }: { currentImage?: string }) => {
 					/>
 				) : (
 					<div className='w-[105px] h-[164px] py-4 flex flex-col items-center justify-center'>
-						<Icon svg={'camera'} height={100} width={100} />
+						<Icon className='mb-4' svg={'camera'} height={73} width={83} />
 						<span className=''>Upload image</span>
 					</div>
 				)}

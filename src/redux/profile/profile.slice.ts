@@ -58,7 +58,10 @@ export const profileApiSlice = apiSlice.injectEndpoints({
 				}
 			},
 		}),
-		updatePassword: builder.mutation<UpdatePasswordData, Partial<UpdatePasswordData>>({
+		updatePassword: builder.mutation<
+			UpdatePasswordData,
+			Partial<UpdatePasswordData>
+		>({
 			query: data => ({
 				url: '/profile/change-password',
 				method: 'PATCH',
@@ -70,8 +73,8 @@ export const profileApiSlice = apiSlice.injectEndpoints({
 					toast.success('Password Changed Successfully');
 				} catch (err: unknown) {
 					if (typeof err === 'object' && err !== null && 'error' in err) {
-						const error = err as { error: { data: { error: string } } }
-						toast.error(error.error.data.error)
+						const error = err as { error: { data: { error: string } } };
+						toast.error(error.error.data.error);
 					}
 				}
 			}

@@ -3,6 +3,7 @@ import {
 	EditOrderResponse,
 	EditReturnStatus,
 	InitiateReturn,
+	OrderDetailResponse,
 	OrderResponse,
 	RefundReturn,
 } from './orders.type';
@@ -21,6 +22,12 @@ export const orderApiSlice = apiSlice.injectEndpoints({
 		getAllOrders: builder.query<OrderResponse, QueryParams>({
 			query: () => ({
 				url: `/order/all`,
+				method: 'GET',
+			}),
+		}),
+		getOrderDetail: builder.mutation<OrderDetailResponse, string>({
+			query: id => ({
+				url: `order/details/${id}`,
 				method: 'GET',
 			}),
 		}),
@@ -62,4 +69,5 @@ export const {
 	useGetInitiateReturnMutation,
 	useGetEditReturnStatusMutation,
 	useGetRefundReturnMutation,
+	useGetOrderDetailMutation,
 } = orderApiSlice;

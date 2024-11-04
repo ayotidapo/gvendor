@@ -26,10 +26,11 @@ export const dashboardApiSlice = apiSlice.injectEndpoints({
 					status,
 					//startDate,
 					//endDate,
-					duration }) => ({
-						url: `order/metrics?status=${status}&duration=${duration}`,
-						method: 'GET',
-					})
+					duration,
+				}) => ({
+					url: `order/metrics?status=${status}&duration=${duration}`,
+					method: 'GET',
+				}),
 			}
 		),
 		getTotalRevenue: builder.query<TotalRevenue, Queryparams>({

@@ -16,7 +16,7 @@ type ButtonProps = {
 	arrow?: boolean;
 	svg?: string;
 	type?: 'button' | 'submit' | 'reset' | undefined;
-	name?: 'primary' | 'inverted' | 'outline' | 'transparent'| 'delete';
+	name?: 'primary' | 'inverted' | 'outline' | 'transparent' | 'delete';
 	loading?: boolean;
 	spinColor?: string;
 	small?: boolean;

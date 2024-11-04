@@ -1,6 +1,7 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { format } from 'date-fns';
 import PageWrapper from '@/containers/PageWrapper';
 import Button from '@/components/buttons/Button';
 import { formatCurrency } from '@/helpers';
@@ -13,12 +14,12 @@ import {
 	useGetDashboardMetricsCountQuery,
 	useGetPendingOrderQuery,
 	useGetRecentOrdersQuery,
-	//useGetSalesQuery,
+	useGetSalesQuery,
 	useGetTotalProductsQuery,
 	useGetTotalRevenueQuery,
 	useGetTotalTransactionsQuery,
 } from '@/redux/dashboard/dashboard.slice';
-// import { useGetInventoryQuery } from '@/redux/inventory/inventory.slice';
+import { useGetInventoryQuery } from '@/redux/inventory/inventory.slice';
 import { Status } from '@/components/cards/StatusTag';
 import { ORDERSTATUS } from '@/utils/constants';
 import { TableComponent } from '@/components/table/Table';
@@ -27,46 +28,54 @@ import DoughnutChart from '@/components/charts/Doughnut';
 import CategoryList from './CategoriesList';
 import PercentageCard from '@/components/cards/PercentageCard';
 
-
-const categories = [
-	{
-		name: 'Food',
-		percentage: 25,
-		color: '#F45D2C',
-		productCount: 1359,
-	},
-	{
-		name: 'Drinks',
-		percentage: 20,
-		color: '#F45D2C',
-		productCount: 135,
-	},
-	{
-		name: 'Dessert',
-		percentage: 15,
-		color: '#F45D2C80',
-		productCount: 359,
-	},
-];
+type salesByCat = {
+	category: string;
+	percentage: number;
+	color: string;
+	noOfProducts: number;
+};
 
 const HomePage: React.FC = () => {
-	const { data: metricsData } = useGetDashboardMetricsCountQuery({ startDate: '2024-09-13', endDate: '2024-09-23', status: 'COMPLETED', duration: 'day' });
-	// const { data: inventoryData } = useGetInventoryQuery();
+	const { data: metricsData } = useGetDashboardMetricsCountQuery({
+		startDate: '2024-09-13',
+		endDate: '2024-09-23',
+		status: 'COMPLETED',
+		duration: 'day',
+	});
+	const { data: inventoryData } = useGetInventoryQuery();
 	const { data: recentOrder } = useGetRecentOrdersQuery();
 	const labels =
-		metricsData?.data?.result.map((item: { day: string }) => item.day) || [];
-	const values1 =
-		metricsData?.data?.result.map((item: { total: number }) => item.total) ||
-		[];
+		metricsData?.data?.result.map(item =>
+			format(new Date(item.dateTime), 'do MMM HH:mm')
+		) || [];
+	const values1 = metricsData?.data?.result.map(item => item.total) || [];
 	const { data: totalProducts } = useGetTotalProductsQuery();
-	const { data: totalRevenue } = useGetTotalRevenueQuery({ startDate: '2024-09-13', endDate: '2024-09-23' });
-	//const { data: getSales } = useGetSalesQuery();
-	const { data: pendingValue } = useGetPendingOrderQuery({ startDate: '2024-09-13', endDate: '2024-09-23' });
+	const { data: totalRevenue } = useGetTotalRevenueQuery({
+		startDate: '2024-09-13',
+		endDate: '2024-09-23',
+	});
+	const { data: salesData } = useGetSalesQuery();
+	const { data: pendingValue } = useGetPendingOrderQuery({
+		startDate: '2024-09-13',
+		endDate: '2024-09-23',
+	});
 	const { data: totalTransactions } = useGetTotalTransactionsQuery();
 
-	//useEffect(() => {
-	//	console.log(pendingValue, getSales);
-	//}, [pendingValue, getSales]);
+	const [salesByCategoryArray, setSalesByCategoryArray] = useState<
+		salesByCat[]
+	>([]);
+
+	useEffect(() => {
+		if (salesData?.data.length) {
+			const salesCat = salesData.data.map((cat: salesByCat) => ({
+				category: cat.category,
+				percentage: cat.percentage,
+				color: `rgba(244, 93, 44, ${cat.percentage / 100})`,
+				noOfProducts: cat.noOfProducts,
+			}));
+			setSalesByCategoryArray(salesCat);
+		}
+	}, [salesData]);
 
 	return (
 		<PageWrapper pageHeader='Home'>
@@ -75,17 +84,18 @@ const HomePage: React.FC = () => {
 					<Button label='Today' name='outline' arrow />
 				</div>
 			</div>
-			<div className='grid grid-row grid-cols-2 gap-5'>
-				<div className='my-8'>
+			<div className='grid grid-row grid-cols-2 gap-5 mb-10'>
+				<div>
 					<SectionCard
 						header={
-							<div>
+							<div className='mb-4'>
 								<Header header={'Total Sales'} />
 							</div>
 						}
 						content={
 							<BarChart
-								xGridDisplay={true}
+								height={200}
+								xGridDisplay={false}
 								yGridDisplay={false}
 								responsive
 								labels={labels ?? []}
@@ -95,44 +105,45 @@ const HomePage: React.FC = () => {
 						}
 					/>
 				</div>
-				<CountCardContainer
-					className='
-					grid grid-flow-row
+				<div>
+					<CountCardContainer
+						className='
+					grid
 					grid-cols-1 sm:grid-cols-2 lg:grid-cols-2
-					gap-10
 
 		   '
-				>
-					<PercentageCard
-						count={totalTransactions?.data?.totalRevenue ?? 0}
-						text={'Total Transactions'}
-						isCurrency={true}
-						percentageChange={totalTransactions?.data?.percentageIncrease ?? 0}
-						percentageText={' increase in the past 28 days'}
-					/>
-					<PercentageCard
-						count={totalProducts?.data?.totalRevenue ?? 0}
-						text={'Total Products'}
-						isCurrency={true}
-						percentageChange={totalProducts?.data?.percentageIncrease ?? 0}
-						percentageText={'increase in the past 28 days'}
-					/>
+					>
+						<PercentageCard
+							count={totalTransactions?.data?.totalRevenue ?? 0}
+							text={'Total Transactions'}
+							isCurrency={true}
+							//percentageChange={totalTransactions?.data?.percentageIncrease ?? 0}
+							//percentageText={' increase in the past 28 days'}
+						/>
 
-					<PercentageCard
-						count={totalRevenue?.data?.totalRevenue ?? 0}
-						text={'Total Revenue'}
-						isCurrency={true}
-						percentageChange={totalRevenue?.data?.percentageIncrease ?? 0}
-						percentageText={'increase in the past 28 days'}
-					/>
-					<PercentageCard
-						count={pendingValue?.data?.getPendingOrderCount ?? 0}
-						text={'Pending Order Count'}
-						isCurrency={false}
-						percentageChange={pendingValue?.data?.percentageIncrease ?? 0}
-						percentageText={'increase in the past 28 days'}
-					/>
-				</CountCardContainer>
+						<PercentageCard
+							count={totalProducts?.data?.totalRevenue ?? 0}
+							text={'Total Products'}
+							isCurrency={true}
+							//percentageChange={totalProducts?.data?.percentageIncrease ?? 0}
+							//percentageText={'increase in the past 28 days'}
+						/>
+						<PercentageCard
+							count={totalRevenue?.data?.totalRevenue ?? 0}
+							text={'Total Revenue'}
+							isCurrency={true}
+							//percentageChange={totalRevenue?.data?.percentageIncrease ?? 0}
+							//percentageText={'increase in the past 28 days'}
+						/>
+						<PercentageCard
+							count={pendingValue?.data?.getPendingOrderCount ?? 0}
+							text={'Pending Order Count'}
+							isCurrency={false}
+							//percentageChange={pendingValue?.data?.percentageIncrease ?? 0}
+							//percentageText={'increase in the past 28 days'}
+						/>
+					</CountCardContainer>
+				</div>
 			</div>
 
 			<div
@@ -143,34 +154,34 @@ const HomePage: React.FC = () => {
 
 		   '
 			>
-				<div className='col-span-2'>
-					<SectionCard
-						header={
-							<div className='space-y-3'>
-								<div className=''>
-									<Header header={'Sales by Category'} />
+				{salesByCategoryArray.length ? (
+					<div className='col-span-2'>
+						<SectionCard
+							header={
+								<div className='space-y-3'>
+									<div className=''>
+										<Header header={'Sales by Category'} />
+									</div>
 								</div>
-							</div>
-						}
-						content={
-							<div className='grid grid-cols-2 gap-4 pt-6'>
-								<div className='flex flex-col justify-center items-start'>
-									<CategoryList categories={categories} />
+							}
+							content={
+								<div className='grid grid-cols-2 gap-4 pt-6'>
+									<div className='flex flex-col justify-center items-start'>
+										<CategoryList categories={salesByCategoryArray} />
+									</div>
+									<div className='pt-6'>
+										<DoughnutChart
+											data={salesByCategoryArray.map(cat => cat.percentage)}
+											responsive={true}
+										/>
+									</div>
 								</div>
-								<div className='pt-6'>
-									<DoughnutChart
-										data={[300, 50, 100]}
-										width={400}
-										height={400}
-										responsive={true}
-									/>
-								</div>
-							</div>
-						}
-					/>
-				</div>
+							}
+						/>
+					</div>
+				) : null}
 
-				{/*<SectionCard
+				<SectionCard
 					header={
 						<Header
 							className='text-center'
@@ -179,18 +190,17 @@ const HomePage: React.FC = () => {
 					}
 					content={
 						<div>
-							{inventoryData?.data?.inventory?.Products?.map(product => (
-									<div className='mt-6 flex justify-between' key={product._id}>
-										<div>{product.name}</div>
-										<div className='text-secondary-black'>
-											{product.unitsSold}
-										</div>
+							{inventoryData?.data?.bestSellers?.map(product => (
+								<div className='mt-6 flex justify-between' key={product._id}>
+									<div>{product.name}</div>
+									<div className='text-secondary-black'>
+										{product.unitsSold}
 									</div>
-								)
-							)}
+								</div>
+							))}
 						</div>
 					}
-				/>*/}
+				/>
 			</div>
 			<div className='pt-6'>
 				<div className='flex justify-between items-center'>
@@ -198,7 +208,7 @@ const HomePage: React.FC = () => {
 						<Header className='pb-4' header={'Recent Orders'} />
 					</div>
 					<div className='text-default-blue'>
-						<Link href={''}>View all</Link>
+						<Link href={'/orders'}>View all</Link>
 					</div>
 				</div>
 				<TableComponent
@@ -214,7 +224,7 @@ const HomePage: React.FC = () => {
 							key={`header-controls`}
 						></div>,
 					]}
-					rows={(recentOrder?.data?.result || []).map(recent => ({
+					rows={(recentOrder?.data || []).map(recent => ({
 						id: recent._id,
 						content: [
 							recent._id,
@@ -227,11 +237,11 @@ const HomePage: React.FC = () => {
 								type={
 									(ORDERSTATUS.find(
 										status =>
-											status?.orderStatus?.toLowerCase() === recent?.status?.toLowerCase()
+											status?.orderStatus?.toLowerCase() ===
+											recent?.status?.toLowerCase()
 									)?.type ?? 'warn') as StatusTypes
 								}
-							/>
-							,
+							/>,
 							recent.date,
 							`${formatCurrency(recent.price)}`,
 						],

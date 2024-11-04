@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import Button from '@/components/buttons/Button';
 import ButtonCard from '@/components/cards/ButtonCard';
@@ -108,7 +108,7 @@ const settlementPage: React.FC = () => {
 								menuButton={
 									<Icon svg='ellipses' height={18} width={18} className='' />
 								}
-								onClickMenuItem={() => { }}
+								onClickMenuItem={() => {}}
 								menuItems={[
 									{
 										name: (

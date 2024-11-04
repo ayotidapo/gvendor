@@ -57,7 +57,7 @@ const BarChart: React.FC<Props> = ({
 							color: '#050301',
 							display: true,
 						},
-						display: false,
+						display: true,
 					},
 					y: {
 						grid: {

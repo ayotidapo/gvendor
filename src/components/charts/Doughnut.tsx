@@ -7,20 +7,12 @@ import { Doughnut } from 'react-chartjs-2';
 interface Props {
 	labels?: (number | string)[];
 	data: number[];
-	width?: number;
-	height?: number;
 	responsive: boolean;
 }
 
 Chart.register(...registerables);
 
-const DoughnutChart: React.FC<Props> = ({
-	data,
-	labels,
-	width = 500,
-	height = 300,
-	responsive,
-}) => {
+const DoughnutChart: React.FC<Props> = ({ data, labels, responsive }) => {
 	return (
 		<Doughnut
 			data={{
@@ -29,16 +21,13 @@ const DoughnutChart: React.FC<Props> = ({
 					{
 						label: 'Dataset',
 						data,
-						backgroundColor: [
-                            '#F45D2C',
-                            '#F45D2C',
-                            '#F45D2C80',
-						],
+						backgroundColor: ['#F45D2C', '#F45D2C', '#F45D2C80'],
 						hoverOffset: 4,
 					},
 				],
 			}}
 			options={{
+				cutout: '90%',
 				responsive,
 				plugins: {
 					legend: {
@@ -46,16 +35,15 @@ const DoughnutChart: React.FC<Props> = ({
 						position: 'top',
 					},
 					tooltip: {
-					 callbacks: {
-							label: (tooltipItem) => {
+						callbacks: {
+							label: tooltipItem => {
 								return `${tooltipItem.label}: ${tooltipItem.raw}`;
 							},
 						},
 					},
 				},
 			}}
-			width={width}
-			height={height}
+			height={100}
 		/>
 	);
 };

@@ -8,8 +8,8 @@ interface PercentageCardProps {
 	text: string;
 	icon?: string;
 	isCurrency: boolean;
-	percentageChange: number;
-	percentageText: string;  
+	percentageChange?: number;
+	percentageText?: string;
 }
 
 const PercentageCard: React.FC<PercentageCardProps> = ({
@@ -23,7 +23,10 @@ const PercentageCard: React.FC<PercentageCardProps> = ({
 	const isIncrease = percentageChange && percentageChange > 0;
 
 	return (
-		<div className='bg-white border border-[#EAEAEA] shadow-sm p-4 rounded-md flex items-center justify-between'>
+		<div
+			style={{ boxShadow: '0px 0px 50px 5px #00000008' }}
+			className='bg-white border-[0.5px] border-[#EAEAEA] p-4 rounded-md flex items-center justify-between'
+		>
 			<div className='space-y-2'>
 				<p className='text-sm text-secondary-black'>{text}</p>
 				<p className='text-2xl font-normal'>

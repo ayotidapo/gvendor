@@ -88,7 +88,7 @@ export const TableComponent: React.FC<{
                         last:pl-3 last:pr-4 last:sm:pr-3
                         text-left text-sm text-black
                         border-b border-divider-gray
-                        bg-primary/5
+                        bg-[#F6F6F6]
                         uppercase font-normal
                         '
 												key={key}

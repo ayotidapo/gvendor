@@ -111,7 +111,8 @@ const ShipmentInfo = ({
 			<p className='text-sm'>
 				{deliveryDate && (
 					<div>
-						This item was delivered on {format(new Date(deliveryDate), 'eeee MMM do')}
+						This item was delivered on{' '}
+						{format(new Date(deliveryDate), 'eeee MMM do')}
 					</div>
 				)}
 				{estimatedDeliveryDate && !deliveryDate && (
