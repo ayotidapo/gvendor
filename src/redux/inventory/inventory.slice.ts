@@ -6,7 +6,7 @@ export const inventoryApiSlice = apiSlice.injectEndpoints({
 	endpoints: builder => ({
 		getInventory: builder.query<InventoryResponse, void>({
 			query: () => ({
-				url: '/inventory/',
+				url: '/inventory',
 				method: 'GET',
 			}),
 		}),

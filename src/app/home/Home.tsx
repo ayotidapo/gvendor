@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
+import { format } from 'date-fns';
 import PageWrapper from '@/containers/PageWrapper';
 import Button from '@/components/buttons/Button';
 import { formatCurrency } from '@/helpers';
@@ -18,7 +19,7 @@ import {
 	useGetTotalRevenueQuery,
 	useGetTotalTransactionsQuery,
 } from '@/redux/dashboard/dashboard.slice';
-// import { useGetInventoryQuery } from '@/redux/inventory/inventory.slice';
+import { useGetInventoryQuery } from '@/redux/inventory/inventory.slice';
 import { Status } from '@/components/cards/StatusTag';
 import { ORDERSTATUS } from '@/utils/constants';
 import { TableComponent } from '@/components/table/Table';
@@ -41,13 +42,13 @@ const HomePage: React.FC = () => {
 		status: 'COMPLETED',
 		duration: 'day',
 	});
-	// const { data: inventoryData } = useGetInventoryQuery();
+	const { data: inventoryData } = useGetInventoryQuery();
 	const { data: recentOrder } = useGetRecentOrdersQuery();
 	const labels =
-		metricsData?.data?.result.map((item: { day: string }) => item.day) || [];
-	const values1 =
-		metricsData?.data?.result.map((item: { total: number }) => item.total) ||
-		[];
+		metricsData?.data?.result.map(item =>
+			format(new Date(item.dateTime), 'do MMM HH:mm')
+		) || [];
+	const values1 = metricsData?.data?.result.map(item => item.total) || [];
 	const { data: totalProducts } = useGetTotalProductsQuery();
 	const { data: totalRevenue } = useGetTotalRevenueQuery({
 		startDate: '2024-09-13',
@@ -83,7 +84,7 @@ const HomePage: React.FC = () => {
 					<Button label='Today' name='outline' arrow />
 				</div>
 			</div>
-			<div className='grid grid-row grid-cols-2 gap-5'>
+			<div className='grid grid-row grid-cols-2 gap-5 mb-10'>
 				<div>
 					<SectionCard
 						header={
@@ -93,7 +94,8 @@ const HomePage: React.FC = () => {
 						}
 						content={
 							<BarChart
-								xGridDisplay={true}
+								height={200}
+								xGridDisplay={false}
 								yGridDisplay={false}
 								responsive
 								labels={labels ?? []}
@@ -179,7 +181,7 @@ const HomePage: React.FC = () => {
 					</div>
 				) : null}
 
-				{/*<SectionCard
+				<SectionCard
 					header={
 						<Header
 							className='text-center'
@@ -188,18 +190,17 @@ const HomePage: React.FC = () => {
 					}
 					content={
 						<div>
-							{inventoryData?.data?.inventory?.Products?.map(product => (
+							{inventoryData?.data?.bestSellers?.map(product => (
 								<div className='mt-6 flex justify-between' key={product._id}>
 									<div>{product.name}</div>
 									<div className='text-secondary-black'>
 										{product.unitsSold}
 									</div>
 								</div>
-							)
-							)}
+							))}
 						</div>
 					}
-				/>*/}
+				/>
 			</div>
 			<div className='pt-6'>
 				<div className='flex justify-between items-center'>

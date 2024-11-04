@@ -65,6 +65,11 @@ export interface OrderResponse {
 	message: string;
 	data: OrdersData;
 }
+export interface OrderDetailResponse {
+	success: boolean;
+	message: string;
+	data: Order;
+}
 
 export interface EditOrderResponse {
 	status: string;

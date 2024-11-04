@@ -5,10 +5,12 @@ export interface DashboardMetricsCount {
 	message: string;
 	data: {
 		result: {
+			dateTime: string;
 			date: string;
 			day: string;
 			total: number;
 			count: number;
+			hour: string;
 		}[];
 	};
 }

@@ -29,19 +29,22 @@ export const rtkQueryResponseFeedbackMiddleware: Middleware =
 
 		if (actionType() === 'mutation') {
 			if (isRejectedWithValue(action)) {
-				if ((action as any)?.payload?.data?.error?.includes('authorization')) {
+				if ((action as any)?.payload?.data?.error?.includes('authorized')) {
 					Cookies.remove('@vendor_auth');
 					dispatch(signOut());
 					toast.error('Session expired, please login', { theme: 'colored' });
+					window.location.href = '/auth/login';
 				}
 			}
 		}
 
 		if (actionType() === 'query') {
 			if (isRejectedWithValue(action)) {
-				if ((action as any)?.payload?.data?.error?.includes('authorization')) {
+				if ((action as any)?.payload?.data?.error?.includes('authorized')) {
 					Cookies.remove('@vendor_auth');
 					dispatch(signOut());
+					toast.error('Session expired, please login', { theme: 'colored' });
+					window.location.href = '/auth/login';
 				}
 			}
 		}

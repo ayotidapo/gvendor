@@ -7,9 +7,9 @@ export const CountCardContainer: React.FC<{
 	return (
 		<div
 			className={`
-            grid grid-flow-row 
+            grid grid-flow-row
             grid-cols-[repeat(auto-fit,_minmax(302px,1fr))]
-            gap-5 my-10
+            gap-5
             ${className}
             `}
 		>
