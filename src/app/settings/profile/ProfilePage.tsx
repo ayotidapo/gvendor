@@ -1,6 +1,6 @@
 'use client';
 
-import React, { } from 'react';
+import React from 'react';
 import { Header } from '@/components/typography/Header';
 import TextInput from '@/components/input/TextInput';
 import Button from '@/components/buttons/Button';
@@ -100,14 +100,12 @@ const ProfilePage = () => {
 			</div>
 			<div className='flex flex-col space-y-10 mt-10'>
 				<SectionCard
-					header={
-						<Header header={'Profile Information'} />
-					}
+					header={<Header header={'Profile Information'} />}
 					content={
 						<>
 							<div>
-								Set up your business as a workspace. Define your industry and business
-								description.
+								Set up your business as a workspace. Define your industry and
+								business description.
 							</div>
 							<Formik
 								initialValues={{
@@ -126,7 +124,8 @@ const ProfilePage = () => {
 									nafdacNumber: profile?.businessDetails.nafdacNumber ?? '',
 									tinNumber: profile?.businessDetails.tinNumber ?? '',
 									sonNumber: profile?.businessDetails.sonNumber ?? '',
-									serviceOffered: profile?.businessDetails.servicesOffered.join() ?? '',
+									serviceOffered:
+										profile?.businessDetails.servicesOffered.join() ?? '',
 									website: profile?.businessDetails.website ?? '',
 									description: profile?.description ?? '',
 								}}
@@ -294,7 +293,6 @@ const ProfilePage = () => {
 									</Form>
 								)}
 							</Formik>
-
 						</>
 					}
 				/>
@@ -317,12 +315,7 @@ const ProfilePage = () => {
 							}}
 							enableReinitialize
 						>
-							{({
-								values,
-								handleBlur,
-								handleChange,
-								errors,
-							}) => (
+							{({ values, handleBlur, handleChange, errors }) => (
 								<Form>
 									<div className='space-y-4 md:w-[800px]'>
 										<div className='text-secondary-black'>Account Provider</div>

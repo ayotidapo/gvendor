@@ -77,9 +77,9 @@ export const profileApiSlice = apiSlice.injectEndpoints({
 						toast.error(error.error.data.error);
 					}
 				}
-			}
+			},
 		}),
-		deleteProfile: builder.mutation<ProfileData, CreateProfile>({
+		deleteProfile: builder.mutation<ProfileData, { reason: string }>({
 			query: data => ({
 				url: '/profile/delete',
 				method: 'POST',

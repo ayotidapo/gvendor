@@ -7,7 +7,7 @@ interface TextProps {
 	name: string;
 	placeholder?: string;
 	extraClass?: string;
-	value?: string| string[];
+	value?: string | string[];
 	errors?: string;
 	id?: string;
 	required?: boolean;
