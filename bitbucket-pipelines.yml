@@ -1,3 +1,119 @@
+# definitions:
+#   services:
+#     docker1:
+#       memory: 7168
+#       type: docker
+# pipelines:
+#   branches:
+#     staging:
+#       - step:
+#           size: 2x # Total memory is 8GB
+#           name: Build and Push to ACR Staging
+#           services:
+#             - docker1
+#           script:
+#             - echo "NEXT_PUBLIC_VENDOR_BACKEND_BASE_URL=${NEXT_PUBLIC_VENDOR_BACKEND_BASE_URL_STAGING}" >> .env
+#             - echo "NEXT_PUBLIC_LOCATION=${NEXT_PUBLIC_LOCATION_STAGING}" >> .env
+#             - cat .env
+#             - export IMAGE_TAG=$BITBUCKET_BUILD_NUMBER
+#             - echo "$ACR_PASSWORD" | docker login -u "$ACR_USERNAME"
+#               --password-stdin "$ACR_REGISTRY"
+#             - docker build -t "$ACR_REGISTRY/$ACR_IMAGE_NAME_STAGING:$IMAGE_TAG" .
+#             - docker push "$ACR_REGISTRY/$ACR_IMAGE_NAME_STAGING:$IMAGE_TAG"
+
+#       - step:
+#           name: Deploy to AKS Staging
+#           script:
+#             - export IMAGE_TAG=$BITBUCKET_BUILD_NUMBER
+#             - export ENV_SECRET=$ENV_SECRET_STAGING
+#             - export ENV_NAME=$ENV_NAME_STAGING
+#             - export ENV_ACR=$ENV_ACR_STAGING
+#             - apt-get update && apt-get install -y bash gettext
+#             - envsubst < deployment.yaml > deployment.yaml.tmp && mv deployment.yaml.tmp deployment.yaml
+#             - cat deployment.yaml  # Optional: for debugging purposes to see the replaced content
+#             - pipe: microsoft/azure-aks-deploy:1.0.2
+#               variables:
+#                 AZURE_APP_ID: $AZURE_APP_ID
+#                 AZURE_PASSWORD: $AZURE_PASSWORD
+#                 AZURE_TENANT_ID: $AZURE_TENANT_ID
+#                 AZURE_AKS_NAME: $AKS_CLUSTER_NAME
+#                 AZURE_RESOURCE_GROUP: $RESOURCE_GROUP
+#                 KUBECTL_COMMAND: 'apply'
+#                 KUBECTL_ARGUMENTS: '-f deployment.yaml'
+#                 DEBUG: 'true'
+#     beta:
+#       - step:
+#           size: 2x # Total memory is 8GB
+#           name: Build and Push to ACR Beta
+#           services:
+#             - docker1
+#           script:
+#             - echo "NEXT_PUBLIC_VENDOR_BACKEND_BASE_URL=${NEXT_PUBLIC_VENDOR_BACKEND_BASE_URL_BETA}" >> .env
+#             - echo "NEXT_PUBLIC_LOCATION=${NEXT_PUBLIC_LOCATION_BETA}" >> .env
+#             - export IMAGE_TAG=$BITBUCKET_BUILD_NUMBER
+#             - echo "$ACR_PASSWORD" | docker login -u "$ACR_USERNAME"
+#               --password-stdin "$ACR_REGISTRY"
+#             - docker build -t "$ACR_REGISTRY/$ACR_IMAGE_NAME_BETA:$IMAGE_TAG" .
+#             - docker push "$ACR_REGISTRY/$ACR_IMAGE_NAME_BETA:$IMAGE_TAG"
+
+#       - step:
+#           name: Deploy to AKS Beta
+#           script:
+#             - export IMAGE_TAG=$BITBUCKET_BUILD_NUMBER
+#             - export ENV_SECRET=$ENV_SECRET_BETA
+#             - export ENV_NAME=$ENV_NAME_BETA
+#             - export ENV_ACR=$ENV_ACR_BETA
+#             - apt-get update && apt-get install -y bash gettext
+#             - envsubst < deployment.yaml > deployment.yaml.tmp && mv deployment.yaml.tmp deployment.yaml
+#             - cat deployment.yaml  # Optional: for debugging purposes to see the replaced content
+#             - pipe: microsoft/azure-aks-deploy:1.0.2
+#               variables:
+#                 AZURE_APP_ID: $AZURE_APP_ID
+#                 AZURE_PASSWORD: $AZURE_PASSWORD
+#                 AZURE_TENANT_ID: $AZURE_TENANT_ID
+#                 AZURE_AKS_NAME: $AKS_CLUSTER_NAME
+#                 AZURE_RESOURCE_GROUP: $RESOURCE_GROUP
+#                 KUBECTL_COMMAND: 'apply'
+#                 KUBECTL_ARGUMENTS: '-f deployment.yaml -n beta'
+#                 DEBUG: 'true'
+#     master:
+#       - step:
+#           size: 2x # Total memory is 8GB
+#           name: Build and Push to ACR Prod
+#           services:
+#             - docker1
+#           script:
+#             - echo "NEXT_PUBLIC_VENDOR_BACKEND_BASE_URL=${NEXT_PUBLIC_VENDOR_BACKEND_BASE_URL_PROD}" >> .env
+#             - echo "NEXT_PUBLIC_LOCATION=${NEXT_PUBLIC_LOCATION_PROD}" >> .env
+#             - export IMAGE_TAG=$BITBUCKET_BUILD_NUMBER
+#             - echo "$ACR_PASSWORD" | docker login -u "$ACR_USERNAME"
+#               --password-stdin "$ACR_REGISTRY"
+#             - docker build -t "$ACR_REGISTRY/$ACR_IMAGE_NAME_PROD:$IMAGE_TAG" .
+#             - docker push "$ACR_REGISTRY/$ACR_IMAGE_NAME_PROD:$IMAGE_TAG"
+
+#       - step:
+#           name: Deploy to AKS Prod
+#           script:
+#             - export IMAGE_TAG=$BITBUCKET_BUILD_NUMBER
+#             - export ENV_SECRET=$ENV_SECRET_PROD
+#             - export ENV_NAME=$ENV_NAME_PROD
+#             - export ENV_ACR=$ENV_ACR_PROD
+#             - apt-get update && apt-get install -y bash gettext
+#             - envsubst < deployment.yaml > deployment.yaml.tmp && mv deployment.yaml.tmp deployment.yaml
+#             - cat deployment.yaml  # Optional: for debugging purposes to see the replaced content
+#             - pipe: microsoft/azure-aks-deploy:1.0.2
+#               variables:
+#                 AZURE_APP_ID: $AZURE_APP_ID
+#                 AZURE_PASSWORD: $AZURE_PASSWORD
+#                 AZURE_TENANT_ID: $AZURE_TENANT_ID
+#                 AZURE_AKS_NAME: $AKS_CLUSTER_NAME
+#                 AZURE_RESOURCE_GROUP: $RESOURCE_GROUP
+#                 KUBECTL_COMMAND: 'apply'
+#                 KUBECTL_ARGUMENTS: '-f deployment.yaml -n prod'
+#                 DEBUG: 'true'
+
+
+
 definitions:
   services:
     docker1:
@@ -5,109 +121,189 @@ definitions:
       type: docker
 pipelines:
   branches:
-    staging:
-      - step:
-          size: 2x # Total memory is 8GB
-          name: Build and Push to ACR Staging
-          services:
-            - docker1
-          script:
-            - echo "NEXT_PUBLIC_VENDOR_BACKEND_BASE_URL=${NEXT_PUBLIC_VENDOR_BACKEND_BASE_URL_STAGING}" >> .env
-            - echo "NEXT_PUBLIC_LOCATION=${NEXT_PUBLIC_LOCATION_STAGING}" >> .env
-            - cat .env
-            - export IMAGE_TAG=$BITBUCKET_BUILD_NUMBER
-            - echo "$ACR_PASSWORD" | docker login -u "$ACR_USERNAME"
-              --password-stdin "$ACR_REGISTRY"
-            - docker build -t "$ACR_REGISTRY/$ACR_IMAGE_NAME_STAGING:$IMAGE_TAG" .
-            - docker push "$ACR_REGISTRY/$ACR_IMAGE_NAME_STAGING:$IMAGE_TAG"
-
-      - step:
-          name: Deploy to AKS Staging
-          script:
-            - export IMAGE_TAG=$BITBUCKET_BUILD_NUMBER
-            - export ENV_SECRET=$ENV_SECRET_STAGING
-            - export ENV_NAME=$ENV_NAME_STAGING
-            - export ENV_ACR=$ENV_ACR_STAGING
-            - apt-get update && apt-get install -y bash gettext
-            - envsubst < deployment.yaml > deployment.yaml.tmp && mv deployment.yaml.tmp deployment.yaml
-            - cat deployment.yaml  # Optional: for debugging purposes to see the replaced content
-            - pipe: microsoft/azure-aks-deploy:1.0.2
-              variables:
-                AZURE_APP_ID: $AZURE_APP_ID
-                AZURE_PASSWORD: $AZURE_PASSWORD
-                AZURE_TENANT_ID: $AZURE_TENANT_ID
-                AZURE_AKS_NAME: $AKS_CLUSTER_NAME
-                AZURE_RESOURCE_GROUP: $RESOURCE_GROUP
-                KUBECTL_COMMAND: 'apply'
-                KUBECTL_ARGUMENTS: '-f deployment.yaml'
-                DEBUG: 'true'
-    beta:
-      - step:
-          size: 2x # Total memory is 8GB
-          name: Build and Push to ACR Beta
-          services:
-            - docker1
-          script:
-            - echo "NEXT_PUBLIC_VENDOR_BACKEND_BASE_URL=${NEXT_PUBLIC_VENDOR_BACKEND_BASE_URL_BETA}" >> .env
-            - echo "NEXT_PUBLIC_LOCATION=${NEXT_PUBLIC_LOCATION_BETA}" >> .env
-            - export IMAGE_TAG=$BITBUCKET_BUILD_NUMBER
-            - echo "$ACR_PASSWORD" | docker login -u "$ACR_USERNAME"
-              --password-stdin "$ACR_REGISTRY"
-            - docker build -t "$ACR_REGISTRY/$ACR_IMAGE_NAME_BETA:$IMAGE_TAG" .
-            - docker push "$ACR_REGISTRY/$ACR_IMAGE_NAME_BETA:$IMAGE_TAG"
-
-      - step:
-          name: Deploy to AKS Beta
-          script:
-            - export IMAGE_TAG=$BITBUCKET_BUILD_NUMBER
-            - export ENV_SECRET=$ENV_SECRET_BETA
-            - export ENV_NAME=$ENV_NAME_BETA
-            - export ENV_ACR=$ENV_ACR_BETA
-            - apt-get update && apt-get install -y bash gettext
-            - envsubst < deployment.yaml > deployment.yaml.tmp && mv deployment.yaml.tmp deployment.yaml
-            - cat deployment.yaml  # Optional: for debugging purposes to see the replaced content
-            - pipe: microsoft/azure-aks-deploy:1.0.2
-              variables:
-                AZURE_APP_ID: $AZURE_APP_ID
-                AZURE_PASSWORD: $AZURE_PASSWORD
-                AZURE_TENANT_ID: $AZURE_TENANT_ID
-                AZURE_AKS_NAME: $AKS_CLUSTER_NAME
-                AZURE_RESOURCE_GROUP: $RESOURCE_GROUP
-                KUBECTL_COMMAND: 'apply'
-                KUBECTL_ARGUMENTS: '-f deployment.yaml -n beta'
-                DEBUG: 'true'
     master:
       - step:
           size: 2x # Total memory is 8GB
-          name: Build and Push to ACR Prod
+          name: Deploy to Production
+          image: 08050481076/joktan4194
           services:
-            - docker1
+          - docker1
+          deployment: Deploy
           script:
+            # ENV
+            - VERSION="${BITBUCKET_BUILD_NUMBER}"
+            - NAME="gtc-vendor-prod"
+            - IMAGE_NAME="gtc-vendor-prod"
+            - REGION="us-east-1"
+            - CLUSTER="gtc-staging"
+            - PORT="3000"
+            - ACM="arn:aws:acm:us-east-1:976193256269:certificate/528552d8-eed6-4ffe-adbc-a66e2a7a4788"
+            - DOMAIN="vendor.goodthing.online"
+            - aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
+            - aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
+            - aws configure set region ${REGION}
+            - aws eks --region ${REGION} update-kubeconfig --name ${CLUSTER} 
+            - aws ecr describe-repositories --region ${REGION} --repository-names ${IMAGE_NAME} || aws ecr create-repository --region ${REGION} --repository-name ${IMAGE_NAME} --image-scanning-configuration scanOnPush=true
+            - aws ecr get-login-password --region ${REGION} | docker login --username AWS --password-stdin 976193256269.dkr.ecr.${REGION}.amazonaws.com
+            # docker
+            # - git submodule update --init --recursive
             - echo "NEXT_PUBLIC_VENDOR_BACKEND_BASE_URL=${NEXT_PUBLIC_VENDOR_BACKEND_BASE_URL_PROD}" >> .env
             - echo "NEXT_PUBLIC_LOCATION=${NEXT_PUBLIC_LOCATION_PROD}" >> .env
-            - export IMAGE_TAG=$BITBUCKET_BUILD_NUMBER
-            - echo "$ACR_PASSWORD" | docker login -u "$ACR_USERNAME"
-              --password-stdin "$ACR_REGISTRY"
-            - docker build -t "$ACR_REGISTRY/$ACR_IMAGE_NAME_PROD:$IMAGE_TAG" .
-            - docker push "$ACR_REGISTRY/$ACR_IMAGE_NAME_PROD:$IMAGE_TAG"
+            - docker build -t ${IMAGE_NAME} .
+            - docker tag ${IMAGE_NAME}:latest 976193256269.dkr.ecr.${REGION}.amazonaws.com/${IMAGE_NAME}:${VERSION}
+            - docker push 976193256269.dkr.ecr.${REGION}.amazonaws.com/${IMAGE_NAME}:${VERSION}
+            - aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID --profile default
+            - aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY --profile default
+            - aws configure set region ${REGION} --profile default
+            # - aws configure set role_arn $VAULT_ROLE_ARN --profile default
+            - aws configure set source_profile default --profile default
+            - aws configure set region ${REGION} --profile default
+            - aws secretsmanager get-secret-value --secret-id ${IMAGE_NAME} --profile default | jq -r ".SecretString" > secrets.yaml
+            - >-
+              helm upgrade --atomic --install --namespace prod \
+                --set image.repository=976193256269.dkr.ecr.${REGION}.amazonaws.com/${IMAGE_NAME} \
+                --set image.tag=${VERSION} \
+                --set fullnameOverride=${NAME} \
+                --wait ${NAME} /config/base \
+                --set imageSecretName=docker-registry \
+                --set service.host=${DOMAIN} \
+                --set service.acm=${ACM} \
+                --set autoscaling.enabled=true \
+                --set service.port=${PORT} \
+                --set ingress.enabled=true \
+                --set alb.enabled=true \
+                --set alb.single=true \
+                --set alb.healthcheck=/ \
+                --set service.type=NodePort \
+                --set service.ingress=alb \
+                --set ingress.path=/* \
+                --set alb.conditionals=false \
+                --set alb.http=true \
+                --set alb.success="200-400" \
+                --set replicaCount=1 \
+                --values secrets.yaml
 
+    beta:
       - step:
-          name: Deploy to AKS Prod
+          size: 2x # Total memory is 8GB
+          name: Deploy to Beta
+          image: 08050481076/joktan4194
+          services:
+          - docker1
+          deployment: Deploy
           script:
-            - export IMAGE_TAG=$BITBUCKET_BUILD_NUMBER
-            - export ENV_SECRET=$ENV_SECRET_PROD
-            - export ENV_NAME=$ENV_NAME_PROD
-            - export ENV_ACR=$ENV_ACR_PROD
-            - apt-get update && apt-get install -y bash gettext
-            - envsubst < deployment.yaml > deployment.yaml.tmp && mv deployment.yaml.tmp deployment.yaml
-            - cat deployment.yaml  # Optional: for debugging purposes to see the replaced content
-            - pipe: microsoft/azure-aks-deploy:1.0.2
-              variables:
-                AZURE_APP_ID: $AZURE_APP_ID
-                AZURE_PASSWORD: $AZURE_PASSWORD
-                AZURE_TENANT_ID: $AZURE_TENANT_ID
-                AZURE_AKS_NAME: $AKS_CLUSTER_NAME
-                AZURE_RESOURCE_GROUP: $RESOURCE_GROUP
-                KUBECTL_COMMAND: 'apply'
-                KUBECTL_ARGUMENTS: '-f deployment.yaml -n prod'
-                DEBUG: 'true'
+            # ENV
+            - VERSION="${BITBUCKET_BUILD_NUMBER}"
+            - NAME="gtc-vendor-beta"
+            - IMAGE_NAME="gtc-vendor-beta"
+            - REGION="us-east-1"
+            - CLUSTER="gtc-staging"
+            - PORT="3000"
+            - ACM="arn:aws:acm:us-east-1:976193256269:certificate/b70c53ca-34f7-4152-8ad3-53d8f623e70d"
+            - DOMAIN="vendor-web.beta.goodthingco.xyz"
+            - aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
+            - aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
+            - aws configure set region ${REGION}
+            - aws eks --region ${REGION} update-kubeconfig --name ${CLUSTER} 
+            - aws ecr describe-repositories --region ${REGION} --repository-names ${IMAGE_NAME} || aws ecr create-repository --region ${REGION} --repository-name ${IMAGE_NAME} --image-scanning-configuration scanOnPush=true
+            - aws ecr get-login-password --region ${REGION} | docker login --username AWS --password-stdin 976193256269.dkr.ecr.${REGION}.amazonaws.com
+            # docker
+            # - git submodule update --init --recursive
+            - echo "NEXT_PUBLIC_VENDOR_BACKEND_BASE_URL=${NEXT_PUBLIC_VENDOR_BACKEND_BASE_URL_BETA}" >> .env
+            - echo "NEXT_PUBLIC_LOCATION=${NEXT_PUBLIC_LOCATION_BETA}" >> .env
+            - docker build -t ${IMAGE_NAME} .
+            - docker tag ${IMAGE_NAME}:latest 976193256269.dkr.ecr.${REGION}.amazonaws.com/${IMAGE_NAME}:${VERSION}
+            - docker push 976193256269.dkr.ecr.${REGION}.amazonaws.com/${IMAGE_NAME}:${VERSION}
+            - aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID --profile default
+            - aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY --profile default
+            - aws configure set region ${REGION} --profile default
+            # - aws configure set role_arn $VAULT_ROLE_ARN --profile default
+            - aws configure set source_profile default --profile default
+            - aws configure set region ${REGION} --profile default
+            - aws secretsmanager get-secret-value --secret-id ${IMAGE_NAME} --profile default | jq -r ".SecretString" > secrets.yaml
+            - >-
+              helm upgrade --atomic --install --namespace beta  \
+                --set image.repository=976193256269.dkr.ecr.${REGION}.amazonaws.com/${IMAGE_NAME} \
+                --set image.tag=${VERSION} \
+                --set fullnameOverride=${NAME} \
+                --wait ${NAME} /config/base \
+                --set imageSecretName=docker-registry \
+                --set service.host=${DOMAIN} \
+                --set service.acm=${ACM} \
+                --set autoscaling.enabled=true \
+                --set service.port=${PORT} \
+                --set ingress.enabled=true \
+                --set alb.enabled=true \
+                --set alb.single=true \
+                --set alb.healthcheck=/ \
+                --set service.type=NodePort \
+                --set service.ingress=alb \
+                --set ingress.path=/* \
+                --set alb.conditionals=false \
+                --set alb.http=true \
+                --set alb.success="200-400" \
+                --set replicaCount=1 \
+                --values secrets.yaml
+
+    staging:
+      - step:
+          size: 2x # Total memory is 8GB
+          name: Deploy to Staging
+          image: 08050481076/joktan4194
+          services:
+          - docker1
+          deployment: Deploy
+          script:
+            # ENV
+            - VERSION="${BITBUCKET_BUILD_NUMBER}"
+            - NAME="gtc-vendor-staging"
+            - IMAGE_NAME="gtc-vendor-staging"
+            - REGION="us-east-1"
+            - CLUSTER="gtc-staging"
+            - PORT="3000"
+            - ACM="arn:aws:acm:us-east-1:976193256269:certificate/29cfc2e2-e4e1-46e2-bc92-d9a90831e01b"
+            - DOMAIN="vendor-web.staging.goodthingco.xyz"
+            - aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
+            - aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
+            - aws configure set region ${REGION}
+            - aws eks --region ${REGION} update-kubeconfig --name ${CLUSTER} 
+            - aws ecr describe-repositories --region ${REGION} --repository-names ${IMAGE_NAME} || aws ecr create-repository --region ${REGION} --repository-name ${IMAGE_NAME} --image-scanning-configuration scanOnPush=true
+            - aws ecr get-login-password --region ${REGION} | docker login --username AWS --password-stdin 976193256269.dkr.ecr.${REGION}.amazonaws.com
+            # docker
+            # - git submodule update --init --recursive
+            - echo "NEXT_PUBLIC_VENDOR_BACKEND_BASE_URL=${NEXT_PUBLIC_VENDOR_BACKEND_BASE_URL_STAGING}" >> .env
+            - echo "NEXT_PUBLIC_LOCATION=${NEXT_PUBLIC_LOCATION_STAGING}" >> .env
+            - docker build -t ${IMAGE_NAME} .
+            - docker tag ${IMAGE_NAME}:latest 976193256269.dkr.ecr.${REGION}.amazonaws.com/${IMAGE_NAME}:${VERSION}
+            - docker push 976193256269.dkr.ecr.${REGION}.amazonaws.com/${IMAGE_NAME}:${VERSION}
+            - aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID --profile default
+            - aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY --profile default
+            - aws configure set region ${REGION} --profile default
+            # - aws configure set role_arn $VAULT_ROLE_ARN --profile default
+            - aws configure set source_profile default --profile default
+            - aws configure set region ${REGION} --profile default
+            - aws secretsmanager get-secret-value --secret-id ${IMAGE_NAME} --profile default | jq -r ".SecretString" > secrets.yaml
+            - cat secrets.yaml
+            - >-
+              helm upgrade --atomic --install --namespace api \
+                --set image.repository=976193256269.dkr.ecr.${REGION}.amazonaws.com/${IMAGE_NAME} \
+                --set image.tag=${VERSION} \
+                --set fullnameOverride=${NAME} \
+                --wait ${NAME} /config/base \
+                --set imageSecretName=docker-registry \
+                --set service.host=${DOMAIN} \
+                --set service.acm=${ACM} \
+                --set autoscaling.enabled=true \
+                --set service.port=${PORT} \
+                --set ingress.enabled=true \
+                --set alb.enabled=true \
+                --set alb.single=true \
+                --set alb.healthcheck=/ \
+                --set service.type=NodePort \
+                --set service.ingress=alb \
+                --set ingress.path=/* \
+                --set alb.conditionals=false \
+                --set alb.http=true \
+                --set alb.success="200-400" \
+                --set replicaCount=1 \
+                --values secrets.yaml
