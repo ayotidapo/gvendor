@@ -2,7 +2,7 @@
 
 import React from 'react';
 import PageWrapper from '@/containers/PageWrapper';
-import Button from '@/components/buttons/Button';
+//import Button from '@/components/buttons/Button';
 import CountCard from '@/components/cards/CountCard';
 import { Header } from '@/components/typography/Header';
 import SectionCard from '@/components/cards/SectionCard';
@@ -22,14 +22,14 @@ const Inventory: React.FC = () => {
 
 	return (
 		<PageWrapper pageHeader='Inventory'>
-			<div className='pb-10 flex space-x-4 justify-end'>
+			{/*<div className='pb-10 flex space-x-4 justify-end'>
 				<div>
 					<Button label='Today' name='outline' arrow />
 				</div>
 				<div>
 					<Button download label='Export CSV' name='outline' />
 				</div>
-			</div>
+			</div>*/}
 
 			<CountCardContainer className='grid grid-flow-row grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10'>
 				<CountCard
@@ -79,7 +79,7 @@ const Inventory: React.FC = () => {
 							menuButton={
 								<Icon svg='ellipses' height={18} width={18} className='' />
 							}
-							onClickMenuItem={() => {}}
+							onClickMenuItem={() => { }}
 							menuItems={[
 								{
 									name: (

@@ -132,7 +132,27 @@ const ProfilePage = () => {
 								validationSchema={profileSchema}
 								onSubmit={values => {
 									if (!isLoading) {
-										updateProfile(values);
+										const restructureValues = {
+											firstName: values.firstName,
+											lastName: values.lastName,
+											email: values.email,
+											phone: values.phone,
+											BusinessDetails: {
+												businessName: values.name,
+												businessAddress: values.address,
+												website: values.website,
+												socialMediaLinks: [],
+												servicesOffered: values.serviceOffered.split(','),
+												businessStructure: '',
+												yearsOfExperince: '',
+												annualTurnOver: 0,
+												cacNumber: values.cacNumber,
+												nafdacNumber: values.nafdacNumber,
+												tinNumber: values.tinNumber,
+												sonNumber: values.sonNumber,
+											},
+										}
+										updateProfile(restructureValues);
 										toast.success('Profile updated successfully');
 									}
 								}}
@@ -226,7 +246,7 @@ const ProfilePage = () => {
 
 											<TextInput
 												type={'text'}
-												name='nadfac'
+												name='nafdacNumber'
 												value={values.nafdacNumber}
 												onChange={handleChange}
 												onBlur={handleBlur}
@@ -235,7 +255,7 @@ const ProfilePage = () => {
 											/>
 											<TextInput
 												type={'text'}
-												name='cac'
+												name='cacNumber'
 												value={values.cacNumber}
 												onChange={handleChange}
 												onBlur={handleBlur}
@@ -244,7 +264,7 @@ const ProfilePage = () => {
 											/>
 											<TextInput
 												type={'text'}
-												name='tin'
+												name='tinNumber'
 												value={values.tinNumber}
 												onChange={handleChange}
 												onBlur={handleBlur}
@@ -253,7 +273,7 @@ const ProfilePage = () => {
 											/>
 											<TextInput
 												type={'text'}
-												name='son'
+												name='sonNumber'
 												value={values.sonNumber}
 												onChange={handleChange}
 												onBlur={handleBlur}
@@ -283,10 +303,10 @@ const ProfilePage = () => {
 										<div className='mt-6 pb-10'>
 											<div className='flex items-center justify-center pt-2 space-x-4'>
 												<div className='md:w-[138px]'>
-													<Button label={'Cancel'} name='outline' />
+													<Button label='Cancel' name='outline' />
 												</div>
 												<div className='md:w-[138px]'>
-													<Button label={'Save'} type='submit' />
+													<Button label='Save' type='submit' />
 												</div>
 											</div>
 										</div>

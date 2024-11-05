@@ -11,7 +11,7 @@ const SectionCard: React.FC<SectionCardProps> = ({ header, content }) => {
 			style={{ boxShadow: '0px 0px 50px 5px #00000008' }}
 			className='bg-white rounded-xl p-6 border border-divider-gray'
 		>
-			<div className='mb-10'>{header}</div>
+			<div className='mb-6'>{header}</div>
 			<div>{content}</div>
 		</div>
 	);
