@@ -1,17 +1,14 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { format } from 'date-fns';
 import PageWrapper from '@/containers/PageWrapper';
-import Button from '@/components/buttons/Button';
+// import Button from '@/components/buttons/Button';
 import { formatCurrency } from '@/helpers';
-import BarChart from '@/components/charts/BarChart';
 import SectionCard from '@/components/cards/SectionCard';
 import { Header } from '@/components/typography/Header';
 import { CountCardContainer } from '@/containers/CountCardWrapper';
 import { StatusTypes } from '@/types/types';
 import {
-	useGetDashboardMetricsCountQuery,
 	useGetPendingOrderQuery,
 	useGetRecentOrdersQuery,
 	useGetSalesQuery,
@@ -27,6 +24,8 @@ import Link from 'next/link';
 import DoughnutChart from '@/components/charts/Doughnut';
 import CategoryList from './CategoriesList';
 import PercentageCard from '@/components/cards/PercentageCard';
+import DurationChart from './DurationChart';
+import { TabNav } from '@/components/tabNav/TabNav';
 
 type salesByCat = {
 	category: string;
@@ -36,24 +35,15 @@ type salesByCat = {
 };
 
 const HomePage: React.FC = () => {
-	const { data: metricsData } = useGetDashboardMetricsCountQuery({
-		startDate: '2024-09-13',
-		endDate: '2024-09-23',
-		status: 'COMPLETED',
-		duration: 'day',
-	});
+
 	const { data: inventoryData } = useGetInventoryQuery();
 	const { data: recentOrder } = useGetRecentOrdersQuery();
-	const labels =
-		metricsData?.data?.result.map(item =>
-			format(new Date(item.dateTime), 'do MMM HH:mm')
-		) || [];
-	const values1 = metricsData?.data?.result.map(item => item.total) || [];
 	const { data: totalProducts } = useGetTotalProductsQuery();
 	const { data: totalRevenue } = useGetTotalRevenueQuery({
 		startDate: '2024-09-13',
 		endDate: '2024-09-23',
 	});
+	const [duration, setDuration] = useState<string>('day');
 	const { data: salesData } = useGetSalesQuery();
 	const { data: pendingValue } = useGetPendingOrderQuery({
 		startDate: '2024-09-13',
@@ -79,29 +69,49 @@ const HomePage: React.FC = () => {
 
 	return (
 		<PageWrapper pageHeader='Home'>
-			<div className='w-full flex justify-end'>
+			{/*<div className='w-full flex justify-end'>
 				<div className='pb-10 w-32 '>
 					<Button label='Today' name='outline' arrow />
 				</div>
-			</div>
+			</div>*/}
 			<div className='grid grid-row grid-cols-2 gap-5 mb-10'>
 				<div>
 					<SectionCard
 						header={
-							<div className='mb-4'>
-								<Header header={'Total Sales'} />
-							</div>
+							<Header header={'Total Sales'} />
 						}
 						content={
-							<BarChart
-								height={200}
-								xGridDisplay={false}
-								yGridDisplay={false}
-								responsive
-								labels={labels ?? []}
-								data={values1 ?? []}
-								barThickness={24}
-							/>
+							<>
+								<div className='mb-6'>
+									<TabNav
+										activeTab={duration}
+										setActiveTab={(selected) => {
+											setDuration(selected)
+										}}
+										tabs={[
+											{
+												name: 'Today',
+												id: 'day',
+											},
+											{
+												name: 'This week',
+												id: 'week',
+											},
+											{
+												name: 'This month',
+												id: 'month',
+											},
+											{
+												name: 'This year',
+												id: 'year',
+											},
+										]}
+										type="switcher"
+										size="small"
+									/>
+								</div>
+								<DurationChart duration={duration} />
+							</>
 						}
 					/>
 				</div>
@@ -117,30 +127,30 @@ const HomePage: React.FC = () => {
 							count={totalTransactions?.data?.totalRevenue ?? 0}
 							text={'Total Transactions'}
 							isCurrency={true}
-							//percentageChange={totalTransactions?.data?.percentageIncrease ?? 0}
-							//percentageText={' increase in the past 28 days'}
+						//percentageChange={totalTransactions?.data?.percentageIncrease ?? 0}
+						//percentageText={' increase in the past 28 days'}
 						/>
 
 						<PercentageCard
 							count={totalProducts?.data?.totalRevenue ?? 0}
 							text={'Total Products'}
 							isCurrency={true}
-							//percentageChange={totalProducts?.data?.percentageIncrease ?? 0}
-							//percentageText={'increase in the past 28 days'}
+						//percentageChange={totalProducts?.data?.percentageIncrease ?? 0}
+						//percentageText={'increase in the past 28 days'}
 						/>
 						<PercentageCard
 							count={totalRevenue?.data?.totalRevenue ?? 0}
 							text={'Total Revenue'}
 							isCurrency={true}
-							//percentageChange={totalRevenue?.data?.percentageIncrease ?? 0}
-							//percentageText={'increase in the past 28 days'}
+						//percentageChange={totalRevenue?.data?.percentageIncrease ?? 0}
+						//percentageText={'increase in the past 28 days'}
 						/>
 						<PercentageCard
 							count={pendingValue?.data?.getPendingOrderCount ?? 0}
 							text={'Pending Order Count'}
 							isCurrency={false}
-							//percentageChange={pendingValue?.data?.percentageIncrease ?? 0}
-							//percentageText={'increase in the past 28 days'}
+						//percentageChange={pendingValue?.data?.percentageIncrease ?? 0}
+						//percentageText={'increase in the past 28 days'}
 						/>
 					</CountCardContainer>
 				</div>

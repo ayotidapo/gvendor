@@ -1,8 +1,7 @@
 import React from 'react';
-import { PaymentTypes, StatusTypes } from '../../types/types';
 
 export const Status: React.FC<{
-	type: StatusTypes | PaymentTypes;
+	type: string;
 	text: string;
 }> = ({ type, text }) => {
 	return (

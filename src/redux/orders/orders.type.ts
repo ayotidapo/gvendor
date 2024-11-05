@@ -31,11 +31,32 @@ export interface Order {
 	buyForSelf: boolean;
 	status: string;
 	metadata: Metadata;
+	orderitems: {
+		productId: string;
+		quantity: number;
+		variants: Variant[];
+		comboItems: ComboItem[];
+		name: string;
+		price: number;
+	}[];
 	createdAt: string;
 	updatedAt: string;
 	delivery: Delivery;
 	personalInformation: PersonalInformation;
 	__v: number;
+}
+
+export interface Variant {
+	variantId: {
+		name: string
+	};
+	value: string;
+}
+
+export interface ComboItem {
+	name: string;
+	quantity: number;
+	price: number;
 }
 
 export interface OrderDets {

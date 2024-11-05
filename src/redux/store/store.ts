@@ -17,7 +17,7 @@ import {
 	PURGE,
 	REGISTER,
 } from 'redux-persist';
-import { toast } from 'react-toastify';
+// import { toast } from 'react-toastify';
 import { apiSlice } from '../apis/api.slice';
 
 export const rtkQueryResponseFeedbackMiddleware: Middleware =
@@ -32,7 +32,7 @@ export const rtkQueryResponseFeedbackMiddleware: Middleware =
 				if ((action as any)?.payload?.data?.error?.includes('authorized')) {
 					Cookies.remove('@vendor_auth');
 					dispatch(signOut());
-					toast.error('Session expired, please login', { theme: 'colored' });
+					// toast.error('Session expired, please login', { theme: 'colored' });
 					window.location.href = '/auth/login';
 				}
 			}
@@ -43,7 +43,7 @@ export const rtkQueryResponseFeedbackMiddleware: Middleware =
 				if ((action as any)?.payload?.data?.error?.includes('authorized')) {
 					Cookies.remove('@vendor_auth');
 					dispatch(signOut());
-					toast.error('Session expired, please login', { theme: 'colored' });
+					// toast.error('Session expired, please login', { theme: 'colored' });
 					window.location.href = '/auth/login';
 				}
 			}

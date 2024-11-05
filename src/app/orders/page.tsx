@@ -2,8 +2,8 @@
 
 import React, { useEffect, useState } from 'react';
 import clsx from 'clsx';
-import Search from '@/components/input/Search';
-import Button from '@/components/buttons/Button';
+//import Search from '@/components/input/Search';
+//import Button from '@/components/buttons/Button';
 import PageWrapper from '@/containers/PageWrapper';
 import CountCard from '@/components/cards/CountCard';
 import { CountCardContainer } from '@/containers/CountCardWrapper';
@@ -58,14 +58,14 @@ const Order: React.FC = () => {
 		<PageWrapper pageHeader='Orders'>
 			<div>
 				<div className='bg-white rounded-md '>
-					<div className='flex flex-col md:flex-row gap-4 items-center justify-between mb-10'>
+					{/*<div className='flex flex-col md:flex-row gap-4 items-center justify-between mb-10'>
 						<div className='w-full md:w-auto md:max-w-[400px]'>
 							<Search placeholder='Search orders' />
 						</div>
 						<div className='w-full md:w-auto'>
 							<Button filter label='Order Status' name='outline' />
 						</div>
-					</div>
+					</div>*/}
 					<CountCardContainer
 						className='
 							grid grid-flow-row

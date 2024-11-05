@@ -2,6 +2,7 @@
 
 import PageWrapper from '@/containers/PageWrapper';
 import ShipmentInfo from './ShipmentInfo';
+import { format } from 'date-fns';
 import { formatCurrency } from '@/helpers';
 import { Header } from '@/components/typography/Header';
 import { Status } from '@/components/cards/StatusTag';
@@ -16,23 +17,28 @@ const OrderDetails = () => {
 	useEffect(() => {
 		getOrderDetail(id as string);
 	}, [id]);
+	const getType = (status: string) => {
+		if (status.toLocaleLowerCase() === 'delivered' || status.toLocaleLowerCase() === 'completed') {
+			return 'success';
+		}
+		return 'warn';
+	}
 	return (
 		<PageWrapper pageHeader=''>
 			<div className='flex item-center justify-center'>
 				<div className='grid grid-cols-2'>
-					<Header header={'Order #15285047'} />
-					<Status type={'success'} text={'Fulfilled'} />
-					<span>Date: 14/08/2023</span>
-					<span> 3:01PM</span>
+					<Header header={`Order #${orderData?.data?.orderNumber}`} />
+					<Status type={getType(orderData?.data?.status ?? 'pending')} text={orderData?.data?.status ?? 'pending'} />
+					{orderData?.data?.createdAt ? <span>Date: {format(new Date(orderData.data.createdAt), 'dd/MM/yyyy HH:mm')}</span> : null}
 				</div>
 			</div>
 			<div className=''>
 				<div className='mt-6 pb-10'>
 					<ShipmentInfo
 						status={orderData?.data?.status ?? ''}
-						deliveyType={'PROCESSING'}
-						deliveryDate='2023-01-09'
-						estimatedDeliveryDate='2024-01-17'
+						deliveyType={orderData?.data?.delivery.type ?? ''}
+					//deliveryDate='2023-01-09'
+					//estimatedDeliveryDate='2024-01-17'
 					/>
 				</div>
 				<hr />
@@ -57,7 +63,76 @@ const OrderDetails = () => {
 									</div>
 								))}*/}
 
-								<div className='text-secondary-black pt-2'>
+								<div>
+									<div>
+										{orderData?.data?.orderitems?.map((item, index) => (
+											<div
+												className='relative flex flex-col lg:flex-row py-6 space-x-10'
+												key={index}
+											>
+												<div className='flex flex-col md:flex-row w-full'>
+													<div className='flex w-full flex-col mt-4 lg:mt-0'>
+														<div className='flex flex-col md:flex-row md:justify-between'>
+															<div>
+																<div
+																	className={`mb-1 text-lg`}
+																>
+																	{item.name}
+																</div>
+																<div
+																	className={`text-lg font-bold`}
+																>
+																	{formatCurrency(item.price)}
+																</div>
+															</div>
+															<div className='text-sm my-3 sm:my-1'>
+																Quantity: {item.quantity}
+															</div>
+														</div>
+														<div>
+															{item.variants && item.variants.length > 0 && (
+																<div className='text-md mt-2'>
+																	{item.variants.map((variant, index) => (
+																		<>
+																			<p className='font-bold text-black'>
+																				{variant.variantId.name}
+																			</p>
+																			<div
+																				className='font-normal text-secondary-black'
+																				key={index}
+																			>
+																				{variant.value}
+																			</div>
+																		</>
+																	))}
+																</div>
+															)}
+															{item.comboItems && item.comboItems.length > 0 && (
+																<div className='flex flex-col text-md mt-2'>
+																	<p className='font-bold'>Extra Options</p>
+																	{item.comboItems.map((comboItem, index) => (
+																		<div
+																			className='font-normal flex justify-between text-secondary-black'
+																			key={index}
+																		>
+																			{comboItem.name} (Qty: {comboItem.quantity})
+																			<span>
+																				{formatCurrency(comboItem.price)}
+																			</span>
+																		</div>
+																	))}
+																</div>
+															)}
+														</div>
+													</div>
+												</div>
+											</div>
+										))}
+									</div>
+
+								</div>
+
+								{/*<div className='text-secondary-black pt-2'>
 									<label>Color: </label>
 									<span>black</span>
 								</div>
@@ -94,7 +169,7 @@ const OrderDetails = () => {
 											</span>
 										</div>
 									</div>
-								</div>
+								</div>*/}
 							</div>
 						</div>
 					</div>

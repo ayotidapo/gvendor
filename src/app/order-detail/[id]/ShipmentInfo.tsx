@@ -1,20 +1,20 @@
 import { Recoleta } from '@/fonts/font';
 import clsx from 'clsx';
-import { format } from 'date-fns';
+// import { format } from 'date-fns';
 import { useState, useEffect } from 'react';
 import { CheckCircle2, Clock3Icon } from 'lucide-react';
 
 const ShipmentInfo = ({
 	status,
 	deliveyType,
-	deliveryDate,
-	estimatedDeliveryDate,
+	// deliveryDate,
+	// estimatedDeliveryDate,
 	showHeader = true,
 }: {
 	status: string;
 	deliveyType: string;
-	deliveryDate?: string;
-	estimatedDeliveryDate?: string;
+	//deliveryDate?: string;
+	//estimatedDeliveryDate?: string;
 	showHeader?: boolean;
 }) => {
 	const deliverySteps = [
@@ -108,7 +108,7 @@ const ShipmentInfo = ({
 					Delivery information
 				</h5>
 			)}
-			<p className='text-sm'>
+			{/*<p className='text-sm'>
 				{deliveryDate && (
 					<div>
 						This item was delivered on{' '}
@@ -121,7 +121,7 @@ const ShipmentInfo = ({
 						{format(new Date(estimatedDeliveryDate), 'eeee MMM do')}
 					</div>
 				)}
-			</p>
+			</p>*/}
 			<div className='w-full mt-4'>
 				<div className='w-full mb-4'>
 					<div
@@ -156,11 +156,10 @@ const ShipmentInfo = ({
 											/>
 										) : (
 											<Clock3Icon
-												className={`h-5 w-5 ${
-													status === step.name
+												className={`h-5 w-5 ${status === step.name
 														? 'text-black'
 														: 'text-default-gray'
-												}`}
+													}`}
 											/>
 										)}
 									</div>
