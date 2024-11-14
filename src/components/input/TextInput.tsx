@@ -1,5 +1,6 @@
 'use client';
 import React, { FC, useState } from 'react';
+
 import { Icon } from '../icon/icon';
 
 interface TextProps {
@@ -55,7 +56,7 @@ const TextInput: FC<TextProps> = ({
 	ring-1 focus:ring-inset focus:ring-dark-gray
 	text-sm sm:text-base sm:leading-6 resize-none ${extraClass}
 	`;
-
+	console.log({ value });
 	return (
 		<div className='relative'>
 			{type === 'textarea' ? (
@@ -63,7 +64,7 @@ const TextInput: FC<TextProps> = ({
 					id={id}
 					name={name}
 					value={value}
-					className={className}
+					className={`${className} ${errors && 'focus:ring-red ring-red'}`}
 					placeholder={placeholder}
 					rows={5}
 					onChange={onChange}
@@ -76,7 +77,7 @@ const TextInput: FC<TextProps> = ({
 					type={showText ? 'text' : (type ?? 'text')}
 					name={name}
 					value={value}
-					className={className}
+					className={`${className} ${errors && 'focus:ring-red ring-red'}`}
 					placeholder={placeholder}
 					onChange={onChange}
 					onBlur={onBlur}
@@ -95,7 +96,7 @@ const TextInput: FC<TextProps> = ({
 				/>
 			)}
 
-			{errors && <div className='text-red-500 text-xs mt-2 pl-2'>{errors}</div>}
+			{errors && <div className={`text-red text-xs mt-2 pl-2 `}>{errors}</div>}
 		</div>
 	);
 };

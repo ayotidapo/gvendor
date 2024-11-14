@@ -27,7 +27,7 @@ const LoginPage = () => {
 	const router = useRouter();
 	const searchParams = useSearchParams();
 
-	const { handleBlur, handleSubmit, handleChange, values, errors } = useFormik({
+	const { handleSubmit, getFieldProps, errors, touched } = useFormik({
 		initialValues: {
 			email: '',
 			password: '',
@@ -62,13 +62,10 @@ const LoginPage = () => {
 					<div>
 						<TextInput
 							id='email'
-							name='email'
-							value={values.email}
-							onChange={handleChange}
-							onBlur={handleBlur}
+							{...getFieldProps('email')}
+							errors={touched.email ? errors.email : ''}
 							type='text'
 							placeholder='Email address'
-							errors={errors?.email}
 							extraClass='!ring-[1.5px]'
 						/>
 					</div>
@@ -76,12 +73,10 @@ const LoginPage = () => {
 					<div className='mt-4'>
 						<TextInput
 							id='password'
-							onChange={handleChange}
-							onBlur={handleBlur}
-							name='password'
+							{...getFieldProps('password')}
+							errors={touched.password ? errors.password : ''}
 							type='password'
 							placeholder='Password'
-							errors={errors?.password}
 							extraClass='!ring-[1.5px]'
 						/>
 					</div>

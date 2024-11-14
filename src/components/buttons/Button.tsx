@@ -61,7 +61,7 @@ const Button: FC<ButtonProps> = ({
 	);
 
 	const buttonClasses = clsx(
-		'w-full rounded-md flex gap-2 justify-center items-center relative px-3 disabled:cursor-not-allowed disabled:opacity-50 transition-all duration-300',
+		'w-full rounded-md flex gap-2 justify-center items-center relative px-3 disabled:cursor-not-allowed disabled:opacity-50 transition-all duration-300 ',
 		{
 			'bg-red text-white': name === 'delete',
 			'bg-black text-white': name === 'primary',
