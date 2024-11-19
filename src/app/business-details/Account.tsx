@@ -1,16 +1,16 @@
 'use client';
 
-import TextInput from '@/components/input/TextInput';
+import TextInput from '@/atoms/input/TextInput';
 import {
 	useUpdateAccountMutation,
 	useGetBankQuery,
 	useGetAccountQuery,
 } from '@/redux/miscellaneous/getbank.slice';
 import { Bank } from '@/redux/miscellaneous/getbank.type';
-import Select from '@/components/select/Select';
+import Select from '@/atoms/select/Select';
 
 import React, { useEffect, useState } from 'react';
-import Button from '@/components/buttons/Button';
+import Button from '@/atoms/buttons/Button';
 import { useRouter } from 'next/navigation';
 
 const Account = () => {

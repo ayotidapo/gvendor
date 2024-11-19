@@ -1,0 +1,15 @@
+.input_wrapper {
+	@apply w-full flex relative items-center;
+}
+
+.input {
+	@apply w-full h-[58px] outline-default-gray  focus:ring-0 focus-visible:ring-0 focus:outline-none focus-visible:outline-none
+    rounded-lg;
+
+	&.hasIcon {
+		@apply pl-12;
+	}
+	&.textarea {
+		@apply h-auto;
+	}
+}

@@ -1,10 +1,10 @@
-import { Header } from '@/components/typography/Header';
-import { OptHeader } from '@/components/typography/OptHeader';
+import { Header } from '@/atoms/typography/Header';
+import { OptHeader } from '@/atoms/typography/OptHeader';
 import { CheckIcon } from '@heroicons/react/24/outline';
 import parse from 'html-react-parser';
 import React, { useState } from 'react';
 import clsx from 'clsx';
-import Button from '@/components/buttons/Button';
+import Button from '@/atoms/buttons/Button';
 
 const orderNotification = [
 	'Notification only',

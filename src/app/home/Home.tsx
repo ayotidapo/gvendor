@@ -2,10 +2,10 @@
 
 import React, { useEffect, useState } from 'react';
 import PageWrapper from '@/containers/PageWrapper';
-// import Button from '@/components/buttons/Button';
+// import Button from '@/atoms/buttons/Button';
 import { formatCurrency } from '@/helpers';
-import SectionCard from '@/components/cards/SectionCard';
-import { Header } from '@/components/typography/Header';
+import SectionCard from '@/atoms/cards/SectionCard';
+import { Header } from '@/atoms/typography/Header';
 import { CountCardContainer } from '@/containers/CountCardWrapper';
 import { StatusTypes } from '@/types/types';
 import {
@@ -17,15 +17,15 @@ import {
 	useGetTotalTransactionsQuery,
 } from '@/redux/dashboard/dashboard.slice';
 import { useGetInventoryQuery } from '@/redux/inventory/inventory.slice';
-import { Status } from '@/components/cards/StatusTag';
+import { Status } from '@/atoms/cards/StatusTag';
 import { ORDERSTATUS } from '@/utils/constants';
-import { TableComponent } from '@/components/table/Table';
+import { TableComponent } from '@/atoms/table/Table';
 import Link from 'next/link';
-import DoughnutChart from '@/components/charts/Doughnut';
+import DoughnutChart from '@/atoms/charts/Doughnut';
 import CategoryList from './CategoriesList';
-import PercentageCard from '@/components/cards/PercentageCard';
+import PercentageCard from '@/atoms/cards/PercentageCard';
 import DurationChart from './DurationChart';
-import { TabNav } from '@/components/tabNav/TabNav';
+import { TabNav } from '@/atoms/tabNav/TabNav';
 
 type salesByCat = {
 	category: string;
@@ -35,7 +35,6 @@ type salesByCat = {
 };
 
 const HomePage: React.FC = () => {
-
 	const { data: inventoryData } = useGetInventoryQuery();
 	const { data: recentOrder } = useGetRecentOrdersQuery();
 	const { data: totalProducts } = useGetTotalProductsQuery();
@@ -77,16 +76,14 @@ const HomePage: React.FC = () => {
 			<div className='grid grid-row grid-cols-2 gap-5 mb-10'>
 				<div>
 					<SectionCard
-						header={
-							<Header header={'Total Sales'} />
-						}
+						header={<Header header={'Total Sales'} />}
 						content={
 							<>
 								<div className='mb-6'>
 									<TabNav
 										activeTab={duration}
-										setActiveTab={(selected) => {
-											setDuration(selected)
+										setActiveTab={selected => {
+											setDuration(selected);
 										}}
 										tabs={[
 											{
@@ -106,8 +103,8 @@ const HomePage: React.FC = () => {
 												id: 'year',
 											},
 										]}
-										type="switcher"
-										size="small"
+										type='switcher'
+										size='small'
 									/>
 								</div>
 								<DurationChart duration={duration} />
@@ -127,30 +124,30 @@ const HomePage: React.FC = () => {
 							count={totalTransactions?.data?.totalRevenue ?? 0}
 							text={'Total Transactions'}
 							isCurrency={true}
-						//percentageChange={totalTransactions?.data?.percentageIncrease ?? 0}
-						//percentageText={' increase in the past 28 days'}
+							//percentageChange={totalTransactions?.data?.percentageIncrease ?? 0}
+							//percentageText={' increase in the past 28 days'}
 						/>
 
 						<PercentageCard
 							count={totalProducts?.data?.totalRevenue ?? 0}
 							text={'Total Products'}
 							isCurrency={true}
-						//percentageChange={totalProducts?.data?.percentageIncrease ?? 0}
-						//percentageText={'increase in the past 28 days'}
+							//percentageChange={totalProducts?.data?.percentageIncrease ?? 0}
+							//percentageText={'increase in the past 28 days'}
 						/>
 						<PercentageCard
 							count={totalRevenue?.data?.totalRevenue ?? 0}
 							text={'Total Revenue'}
 							isCurrency={true}
-						//percentageChange={totalRevenue?.data?.percentageIncrease ?? 0}
-						//percentageText={'increase in the past 28 days'}
+							//percentageChange={totalRevenue?.data?.percentageIncrease ?? 0}
+							//percentageText={'increase in the past 28 days'}
 						/>
 						<PercentageCard
 							count={pendingValue?.data?.getPendingOrderCount ?? 0}
 							text={'Pending Order Count'}
 							isCurrency={false}
-						//percentageChange={pendingValue?.data?.percentageIncrease ?? 0}
-						//percentageText={'increase in the past 28 days'}
+							//percentageChange={pendingValue?.data?.percentageIncrease ?? 0}
+							//percentageText={'increase in the past 28 days'}
 						/>
 					</CountCardContainer>
 				</div>

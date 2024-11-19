@@ -1,11 +1,5 @@
 import localFont from 'next/font/local';
 
-const Recoleta = localFont({
-	src: './Recoleta-Regular.ttf',
-	display: 'swap',
-	variable: '--font-recoleta',
-});
-
 const RecoletaLight = localFont({
 	src: './Recoleta-Light.ttf',
 	display: 'swap',
@@ -14,6 +8,7 @@ const RecoletaLight = localFont({
 
 const RecoletaMedium = localFont({
 	src: './Recoleta-Medium.ttf',
+	weight: '400',
 	display: 'swap',
 	variable: '--font-recoleta-medium',
 });
@@ -39,6 +34,29 @@ const GilroyMedium = localFont({
 	variable: '--font-gilroy-medium',
 });
 
+const Recoleta = localFont({
+	src: [
+		{ path: './Recoleta-Light.ttf', weight: '100' },
+		{ path: './Recoleta-Regular.ttf', weight: '400' },
+		{ path: './Recoleta-Medium.ttf', weight: '500' },
+		{ path: './Recoleta-Bold.ttf', weight: '700' },
+	],
+	display: 'swap',
+	variable: '--recoleta',
+});
+
+const Geist = localFont({
+	src: [
+		{ path: './Geist/Geist-Light.woff2', weight: '100' },
+		{ path: './Geist/Geist-Regular.woff2', weight: '400' },
+		{ path: './Geist/Geist-SemiBold.woff2', weight: '500' },
+		{ path: './Geist/Geist-Bold.woff2', weight: '700' },
+		{ path: './Geist/Geist-Black.woff2', weight: '900' },
+	],
+	display: 'swap',
+	variable: '--geist',
+});
+
 export {
 	Gilroy,
 	GilroyLight,
@@ -46,4 +64,5 @@ export {
 	Recoleta,
 	RecoletaLight,
 	RecoletaMedium,
+	Geist,
 };

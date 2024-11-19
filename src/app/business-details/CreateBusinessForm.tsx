@@ -1,10 +1,10 @@
 import React from 'react';
 // import * as Yup from 'yup';
-import AddressInput from '@/components/common/AddressInput';
-import CheckboxInput from '@/components/common/Checkbox';
-import TextInput from '@/components/input/TextInput';
+import AddressInput from '@/atoms/common/AddressInput';
+import CheckboxInput from '@/atoms/common/Checkbox';
+import TextInput from '@/atoms/input/TextInput';
 import { Formik, Form } from 'formik';
-import Button from '@/components/buttons/Button';
+import Button from '@/atoms/buttons/Button';
 import { ProfileData } from '@/redux/profile/profile.type';
 import { useCreateProfileMutation } from '@/redux/profile/profile.slice';
 

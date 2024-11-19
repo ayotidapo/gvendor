@@ -1,13 +1,12 @@
-import BarChart from '@/components/charts/BarChart';
+import BarChart from '@/atoms/charts/BarChart';
 import { useGetDashboardMetricsCountQuery } from '@/redux/dashboard/dashboard.slice';
 import { format } from 'date-fns';
 
-const DurationChart = ({ duration = 'day' }: { duration: string; }) => {
+const DurationChart = ({ duration = 'day' }: { duration: string }) => {
 	const { data: metricsData } = useGetDashboardMetricsCountQuery({
 		status: 'COMPLETED',
 		duration: duration,
 	});
-
 
 	const labels =
 		metricsData?.data?.result.map(item =>
@@ -25,7 +24,7 @@ const DurationChart = ({ duration = 'day' }: { duration: string; }) => {
 			data={values1 ?? []}
 			barThickness={24}
 		/>
-	)
-}
+	);
+};
 
-export default DurationChart
+export default DurationChart;

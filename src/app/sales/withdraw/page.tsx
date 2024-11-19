@@ -1,9 +1,9 @@
 'use client';
 
-import Button from '@/components/buttons/Button';
-import CountCard from '@/components/cards/CountCard';
-import TextInput from '@/components/input/TextInput';
-import Select from '@/components/select/Select';
+import Button from '@/atoms/buttons/Button';
+import CountCard from '@/atoms/cards/CountCard';
+import TextInput from '@/atoms/input/TextInput';
+import Select from '@/atoms/select/Select';
 import PageWrapper from '@/containers/PageWrapper';
 import React, { useState } from 'react';
 

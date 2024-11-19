@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import Switch from '@/components/switch/Switch';
-import { Header } from '@/components/typography/Header';
+import Switch from '@/atoms/switch/Switch';
+import { Header } from '@/atoms/typography/Header';
 import {
 	useGetProfileQuery,
 	useUpdateProfileMutation,
 } from '@/redux/profile/profile.slice';
-import Button from '@/components/buttons/Button';
+import Button from '@/atoms/buttons/Button';
 
 const OpenHours = () => {
 	const [updateProfile] = useUpdateProfileMutation();

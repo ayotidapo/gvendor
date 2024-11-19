@@ -1,0 +1,17 @@
+.edit_ {
+	@apply mb-5;
+	.input.edit {
+		@apply ring-0 outline-transparent rounded-none border-0 border-b-divider-gray pl-0;
+	}
+	.btn.toggle_edit {
+		@apply w-auto p-0 h-auto text-black bg-transparent;
+	}
+	.btn.req_change {
+		@apply w-[201px] my-4;
+	}
+	&:last-child {
+		hr {
+			@apply hidden;
+		}
+	}
+}

@@ -1,6 +1,6 @@
 'use client';
-import Button from '@/components/buttons/Button';
-import TextInput from '@/components/input/TextInput';
+import Button from '@/atoms/buttons/Button';
+import TextInput from '@/atoms/input/TextInput';
 import { Gilroy, GilroyMedium } from '@/fonts/font';
 import { useResetPasswordMutation } from '@/redux/reducers/auth/authSlice';
 import { useFormik } from 'formik';

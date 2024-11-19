@@ -3,6 +3,15 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+}
+body {
+	@apply antialiased text-baseCol;
+}
+
+.input.search {
+	@apply border-none bg-[#f3f3f3] rounded-full;
+}
 @layer components {
 	.width-padding-class {
 		@apply w-full max-w-max mx-auto px-[16px] md:px-[40px] lg:px-[60px] xl:px-[80px];
@@ -19,4 +28,57 @@
 
 .recoleta {
 	font-family: 'Recoleta', sans-serif;
+}
+
+.metric_cards_wrapper {
+	@apply grid grid-cols-[repeat(auto-fill,minmax(240px,1fr))] gap-6;
+}
+
+.filter_div {
+	@apply flex justify-between items-center gap-5 my-10 mt-[50px];
+	& > .input_wrapper {
+		@apply w-[372px];
+	}
+	.btn {
+		&.filter {
+			@apply bg-transparent border border-[#202020] h-[50px] 
+			 text-black w-auto max-w-[225px]   p-4 active:scale-[0.98];
+		}
+	}
+}
+
+.page-title_div {
+	@apply flex  justify-between  md:flex-row xx:flex-col mb-7;
+
+	.title {
+		@apply font-recoleta text-[36px] text-black font-semibold md:order-1 xx:order-2;
+	}
+	.btn_div {
+		@apply flex w-[290px] justify-between  md:order-2 xx:order-1;
+	}
+	.btn.set_as {
+		@apply w-[213px];
+	}
+	.btn.ellips {
+		@apply w-[58px] bg-transparent border border-[#202020] text-black;
+	}
+}
+
+.table_ {
+	@apply w-full border-separate border-spacing-0 border-0 border-b-[1px] border-t-divider-gray;
+
+	th {
+		@apply text-left  h-[58px] text-[#050301] text-sm;
+	}
+
+	td {
+		@apply border border-b-0 border-t-divider-gray border-x-0 h-[58px];
+	}
+	tr:hover {
+		@apply cursor-pointer bg-gray-100;
+	}
+}
+img {
+	object-fit: contain;
+	object-position: left top;
 }

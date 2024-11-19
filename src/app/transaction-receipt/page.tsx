@@ -1,7 +1,7 @@
-import Button from '@/components/buttons/Button';
-import { Status } from '@/components/cards/StatusTag';
-import { GoodLogo } from '@/components/svg/svg';
-import { Header } from '@/components/typography/Header';
+import Button from '@/atoms/buttons/Button';
+import { Status } from '@/atoms/cards/StatusTag';
+import { GoodLogo } from '@/atoms/svg/svg';
+import { Header } from '@/atoms/typography/Header';
 import PageWrapper from '@/containers/PageWrapper';
 import { formatCurrency } from '@/helpers';
 

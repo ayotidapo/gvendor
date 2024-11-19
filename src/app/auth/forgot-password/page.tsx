@@ -1,8 +1,8 @@
 'use client';
 
 import { useState } from 'react';
-import Button from '@/components/buttons/Button';
-import TextInput from '@/components/input/TextInput';
+import Button from '@/atoms/buttons/Button';
+import TextInput from '@/atoms/input/TextInput';
 import { Gilroy } from '@/fonts/font';
 import { useForgotPasswordMutation } from '@/redux/reducers/auth/authSlice';
 import { useFormik } from 'formik';

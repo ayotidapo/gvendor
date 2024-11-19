@@ -1,12 +1,12 @@
-import Button from '@/components/buttons/Button';
-import TextInput from '@/components/input/TextInput';
-import { Header } from '@/components/typography/Header';
+import Button from '@/atoms/buttons/Button';
+import TextInput from '@/atoms/input/TextInput';
+import { Header } from '@/atoms/typography/Header';
 import React, { useState } from 'react';
 import clsx from 'clsx';
 import parse from 'html-react-parser';
 import { CheckIcon } from '@heroicons/react/24/outline';
 import * as Yup from 'yup';
-import CheckboxInput from '@/components/common/Checkbox';
+import CheckboxInput from '@/atoms/common/Checkbox';
 import {
 	useDeleteProfileMutation,
 	useUpdatePasswordMutation,

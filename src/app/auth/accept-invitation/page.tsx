@@ -1,7 +1,7 @@
 'use client';
 import { useEffect } from 'react';
-import Button from '@/components/buttons/Button';
-import TextInput from '@/components/input/TextInput';
+import Button from '@/atoms/buttons/Button';
+import TextInput from '@/atoms/input/TextInput';
 import { Gilroy } from '@/fonts/font';
 import { useSignupMutation } from '@/redux/reducers/auth/authSlice';
 import { useFormik } from 'formik';
@@ -12,7 +12,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import Wrapper from '../Wrapper';
 import { getErrorMessage } from '@/helpers';
 import { APIErrorResponse, SelectedAddress } from '@/types/types';
-import AddressInput from '@/components/common/AddressInput';
+import AddressInput from '@/atoms/common/AddressInput';
 import { formatPhoneNumber } from '@/utils/helpers';
 
 const SignUpSchema = Yup.object({

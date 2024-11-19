@@ -1,0 +1,13 @@
+.transactions {
+	.metric_cards_wrapper {
+		@apply mt-7;
+	}
+	.page-title_div {
+		.btn.set_as {
+			@apply w-[131px];
+		}
+		.btn_div {
+			@apply w-auto;
+		}
+	}
+}

@@ -3,11 +3,11 @@
 import { FC, ReactNode, useState } from 'react';
 import { ToastContainer } from 'react-toastify';
 import { Providers } from '@/redux/providers/Provider';
-import { Icon } from '@/components/icon/icon';
+import { Icon } from '@/atoms/icon/icon';
 import { usePathname } from 'next/navigation';
 import { Dialog, DialogBackdrop, DialogPanel } from '@headlessui/react';
 import Link from 'next/link';
-import Navbar from '@/components/top-nav/Navbar';
+import Navbar from '@/atoms/top-nav/Navbar';
 
 interface Iprops {
 	children: ReactNode;
@@ -38,11 +38,17 @@ const Container: FC<Iprops> = ({ children }) => {
 };
 
 const navigation = [
-	{ name: 'Home', icon: 'home', current: true, route: '/' },
+	{ name: 'Home', icon: 'home_', current: true, route: '/' },
 	{ name: 'Orders', icon: 'orders', current: false, route: '/orders' },
+	{
+		name: 'Transaction',
+		icon: 'sales',
+		current: false,
+		route: '/transactions',
+	},
+	{ name: 'Inventory', icon: 'inventory', current: false, route: '/inventory' },
 	// { name: 'Sales', icon: 'sales', current: false, route: '/sales' },
 	{ name: 'Settlement', icon: 'sales', current: false, route: '/settlement' },
-	{ name: 'Inventory', icon: 'inventory', current: false, route: '/inventory' },
 	{ name: 'Settings', icon: 'settings', current: false, route: '/settings' },
 ];
 
@@ -81,7 +87,7 @@ const SideBar = ({
 				</div>
 			</Dialog>
 
-			<div className='hidden lg:fixed lg:inset-y-0 lg:z-30 lg:flex lg:w-72 lg:flex-col '>
+			<div className='hidden lg:fixed lg:inset-y-0 lg:z-30 lg:flex lg:w-[280px] lg:flex-col '>
 				<div className='flex grow flex-col gap-y-5 overflow-y-auto border-r border-gray-200 bg-white px-6 pb-4'>
 					<Navigation />
 				</div>
@@ -97,22 +103,26 @@ const Navigation = () => {
 			<ul role='list' className='flex flex-1 flex-col gap-y-10'>
 				<li>
 					<ul role='list' className='-mx-2 space-y-3 px-4 pt-10'>
-						{navigation.map(item => (
-							<li key={item.name}>
-								<Link
-									href={item.route}
-									className={classNames(
-										pathname === item.route
-											? 'bg-primary bg-opacity-5 text-primary font-semibold'
-											: 'text-default-gray hover:bg-primary hover:bg-opacity-5 hover:text-primary',
-										'group flex gap-x-3 rounded-md p-2 text-sm leading-6'
-									)}
-								>
-									<Icon svg={item.icon} height={24} width={24} />
-									{item.name}
-								</Link>
-							</li>
-						))}
+						{navigation.map(item => {
+							const isMatch = pathname === item.route;
+							return (
+								<li key={item.name}>
+									<Link
+										href={item.route}
+										className={classNames(
+											pathname === item.route
+												? 'bg-primary bg-opacity-5 text-primary font-semibold'
+												: 'text-default-gray hover:bg-primary hover:bg-opacity-5 hover:text-primary',
+											'group flex gap-x-3 rounded-md p-2 text-base leading-6 h-[58px] items-center pl-4'
+										)}
+									>
+										<Icon id={item.icon} height={24} width={24} />
+
+										{item.name}
+									</Link>
+								</li>
+							);
+						})}
 					</ul>
 				</li>
 			</ul>

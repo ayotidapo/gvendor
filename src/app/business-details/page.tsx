@@ -6,7 +6,7 @@ import Account from './Account';
 import CreateBusinessForm from './CreateBusinessForm';
 import BGIMG from '../../assets/login-bg.svg';
 import clsx from 'clsx';
-import { AuthHeader } from '@/components/typography/AuthHeader';
+import { AuthHeader } from '@/atoms/typography/AuthHeader';
 import { Gilroy } from '@/fonts/font';
 import Image from 'next/image';
 import { Minus } from 'lucide-react';

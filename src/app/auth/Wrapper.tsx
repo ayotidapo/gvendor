@@ -1,5 +1,5 @@
 import { ReactNode, useEffect } from 'react';
-import { AuthHeader } from '@/components/typography/AuthHeader';
+import { AuthHeader } from '@/atoms/typography/AuthHeader';
 import { Gilroy } from '@/fonts/font';
 import { useAppSelector } from '@/hooks/reduxHooks';
 import { authSelector } from '@/redux/reducers/auth/auth.selector';
@@ -26,7 +26,7 @@ const Wrapper = ({
 	return (
 		<div
 			className={`
-              ${Gilroy.variable} h-screen
+              h-screen
               overflow-hidden lg:flex justify-center items-center
           `}
 		>

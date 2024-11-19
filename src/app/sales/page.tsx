@@ -2,17 +2,17 @@
 
 import React from 'react';
 import PageWrapper from '@/containers/PageWrapper';
-import Search from '@/components/input/Search';
+import Search from '@/atoms/input/Search';
 import { format } from 'date-fns';
-import Button from '@/components/buttons/Button';
-import CountCard from '@/components/cards/CountCard';
-import SectionCard from '@/components/cards/SectionCard';
-import { Header } from '@/components/typography/Header';
-import LineChart from '@/components/charts/LineChart';
-import { TableComponent } from '@/components/table/Table';
+import Button from '@/atoms/buttons/Button';
+import CountCard from '@/atoms/cards/CountCard';
+import SectionCard from '@/atoms/cards/SectionCard';
+import { Header } from '@/atoms/typography/Header';
+import LineChart from '@/atoms/charts/LineChart';
+import { TableComponent } from '@/atoms/table/Table';
 import { CountCardContainer } from '@/containers/CountCardWrapper';
-import Dropdown from '@/components/input/dropdown';
-import { Icon } from '@/components/icon/icon';
+import Dropdown from '@/atoms/input/dropdown';
+import { Icon } from '@/atoms/icon/icon';
 import {
 	useGetAllTransactionsQuery,
 	// useGetCustomerReportQuery,
@@ -92,7 +92,7 @@ const Sales: React.FC = () => {
 								<Dropdown
 									key={`${transactions._id}-controls`}
 									menuButton={
-										<Icon svg='ellipses' height={18} width={18} className='' />
+										<Icon id='ellipsis' height={18} width={18} className='' />
 									}
 									onClickMenuItem={() => {}}
 									menuItems={[

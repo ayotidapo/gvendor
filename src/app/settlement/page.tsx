@@ -1,11 +1,11 @@
 'use client';
 
-import Button from '@/components/buttons/Button';
-import ButtonCard from '@/components/cards/ButtonCard';
-import { Status } from '@/components/cards/StatusTag';
-import { Icon } from '@/components/icon/icon';
-import Dropdown from '@/components/input/dropdown';
-import { TableComponent } from '@/components/table/Table';
+import Button from '@/atoms/buttons/Button';
+import ButtonCard from '@/atoms/cards/ButtonCard';
+import { Status } from '@/atoms/cards/StatusTag';
+import { Icon } from '@/atoms/icon/icon';
+import Dropdown from '@/atoms/input/dropdown';
+import { TableComponent } from '@/atoms/table/Table';
 import PageWrapper from '@/containers/PageWrapper';
 import { StatusTypes } from '@/types/types';
 import { ORDERSTATUS } from '@/utils/constants';
@@ -106,7 +106,7 @@ const settlementPage: React.FC = () => {
 							<Dropdown
 								key={`${order.id}-controls`}
 								menuButton={
-									<Icon svg='ellipses' height={18} width={18} className='' />
+									<Icon id='ellipsis' height={18} width={18} className='' />
 								}
 								onClickMenuItem={() => {}}
 								menuItems={[

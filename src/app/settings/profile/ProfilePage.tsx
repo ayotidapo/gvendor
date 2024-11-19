@@ -1,19 +1,19 @@
 'use client';
 
 import React from 'react';
-import { Header } from '@/components/typography/Header';
-import TextInput from '@/components/input/TextInput';
-import Button from '@/components/buttons/Button';
+import { Header } from '@/atoms/typography/Header';
+import TextInput from '@/atoms/input/TextInput';
+import Button from '@/atoms/buttons/Button';
 import * as Yup from 'yup';
-import ImageUpload from '@/components/image/ImageUpload';
+import ImageUpload from '@/atoms/image/ImageUpload';
 import {
 	useGetProfileQuery,
 	useUpdateProfileMutation,
 } from '@/redux/profile/profile.slice';
 import { Form, Formik } from 'formik';
 import { toast } from 'react-toastify';
-import AddressInput from '@/components/common/AddressInput';
-import SectionCard from '@/components/cards/SectionCard';
+import AddressInput from '@/atoms/common/AddressInput';
+import SectionCard from '@/atoms/cards/SectionCard';
 
 const profileSchema = Yup.object({
 	address: Yup.object().shape({
@@ -151,7 +151,7 @@ const ProfilePage = () => {
 												tinNumber: values.tinNumber,
 												sonNumber: values.sonNumber,
 											},
-										}
+										};
 										updateProfile(restructureValues);
 										toast.success('Profile updated successfully');
 									}

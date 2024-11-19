@@ -1,0 +1,35 @@
+.homepage {
+	.metric_cards_wrapper {
+		@apply grid grid-cols-[repeat(auto-fill,minmax(240px,1fr))] gap-6;
+	}
+
+	.orders_wrapper {
+		@apply grid grid-cols-[repeat(auto-fill,minmax(290px,1fr))] gap-6;
+	}
+}
+
+.order_card {
+	@apply border-2  rounded-2xl min-h-[262px] p-5 flex flex-col hover:scale-[1.05] hover:cursor-pointer;
+	transition: 0.2s transform linear;
+	&.processing {
+		@apply border-[#ea8d00];
+		.tag {
+			@apply text-[#ea8d00] bg-[#f7e9d5];
+		}
+	}
+	&.completed {
+		@apply border-[#1b9066];
+		.tag {
+			@apply text-[#1b9066] bg-[#d1e7df];
+		}
+	}
+	&.new {
+		@apply border-[#b3434d];
+		.tag {
+			@apply text-[#b3434d] bg-[#f7e2e4];
+		}
+	}
+}
+.btn.set_status {
+	@apply h-[42px];
+}
