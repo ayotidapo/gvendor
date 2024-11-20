@@ -27,21 +27,27 @@ const UnderReviewTable = () => {
 					<td>BI21DDC25XD2V</td>
 					<td>#15285047</td>
 					<td>VYGYUFT67</td>
-					<td>₦95,700.00</td>
+					<td>
+						<Tag title='Pending' className='processing' />
+					</td>
 					<td>27/10/2024 2:49PM</td>
 				</tr>
 				<tr onClick={onNavigate}>
 					<td>BI21DDC25XD2V</td>
 					<td>#15285047</td>
 					<td>VYGYUFT67</td>
-					<td>₦95,700.00</td>
+					<td>
+						<Tag title='Declined' className='new' />
+					</td>
 					<td>27/10/2024 2:49PM</td>
 				</tr>
 				<tr onClick={onNavigate}>
 					<td>BI21DDC25XD2V</td>
 					<td>#15285047</td>
 					<td>VYGYUFT67</td>
-					<td>₦95,700.00</td>
+					<td>
+						<Tag title='Approved' className='completed' />
+					</td>
 					<td>27/10/2024 2:49PM</td>
 				</tr>
 			</tbody>
