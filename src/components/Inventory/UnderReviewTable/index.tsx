@@ -9,7 +9,7 @@ const UnderReviewTable = () => {
 	const router = useRouter();
 
 	const onNavigate = () => {
-		router.push(`/transaction/9`);
+		router.push(`/transactions/9`);
 	};
 	return (
 		<table className='table_'>

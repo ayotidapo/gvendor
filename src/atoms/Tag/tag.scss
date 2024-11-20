@@ -1,5 +1,6 @@
 .tag {
-	@apply inline-flex justify-center items-center min-w-[50px] h-[26px] bg-gray-300 text-sm capitalize rounded-2xl px-2;
+	@apply inline-flex justify-center items-center font-normal
+	min-w-[50px] h-[26px] bg-gray-300 text-sm capitalize rounded-2xl px-2;
 	&.processing {
 		@apply text-[#ea8d00] bg-[#f7e9d5];
 	}

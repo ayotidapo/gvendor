@@ -8,7 +8,7 @@ const OrdersTable = () => {
 	const router = useRouter();
 
 	const onNavigate = () => {
-		router.push(`/order/9`);
+		router.push(`/orders/9`);
 	};
 	return (
 		<table className='table_'>

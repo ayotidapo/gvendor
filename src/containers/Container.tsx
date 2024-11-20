@@ -48,7 +48,7 @@ const navigation = [
 	},
 	{ name: 'Inventory', icon: 'inventory', current: false, route: '/inventory' },
 	// { name: 'Sales', icon: 'sales', current: false, route: '/sales' },
-	{ name: 'Settlement', icon: 'sales', current: false, route: '/settlement' },
+	{ name: 'Settlement', icon: 'sales', current: false, route: '/settlements' },
 	{ name: 'Settings', icon: 'settings', current: false, route: '/settings' },
 ];
 

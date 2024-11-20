@@ -16,9 +16,9 @@ const PageWrapper: React.FC<PageWrapperProps> = ({ children, pageHeader }) => {
 	const authData = useAppSelector(authSelector);
 
 	useEffect(() => {
-		// if (!authData.signedIn) {
-		// 	router.push('/auth/login');
-		// }
+		if (!authData.signedIn) {
+			router.push('/auth/login');
+		}
 	}, [authData.signedIn]);
 
 	return (
