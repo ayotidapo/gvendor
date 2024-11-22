@@ -1,0 +1,17 @@
+.settings {
+	.navi {
+		li {
+			@apply mb-7 text-[#7A7978] font-normal cursor-pointer;
+			transition: font-weight 0.1s linear;
+			&:hover {
+				@apply font-medium text-black;
+			}
+		}
+	}
+	.h2 {
+		@apply text-xl mb-7 subpixel-antialiased;
+	}
+}
+.btn.toggle_edit {
+	@apply w-auto p-0 h-auto text-black bg-transparent;
+}

@@ -3,15 +3,6 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-}
-body {
-	@apply antialiased text-baseCol;
-}
-
-.input.search {
-	@apply border-none bg-[#f3f3f3] rounded-full;
-}
 @layer components {
 	.width-padding-class {
 		@apply w-full max-w-max mx-auto px-[16px] md:px-[40px] lg:px-[60px] xl:px-[80px];
@@ -22,6 +13,19 @@ body {
 	}
 }
 
+:root {
+}
+body {
+	@apply antialiased text-baseCol;
+}
+
+* {
+	box-sizing: border-box;
+}
+
+.input.search {
+	@apply border-none bg-[#f3f3f3] rounded-full;
+}
 .hide-scroll-bar::-webkit-scrollbar {
 	display: none;
 }
@@ -78,6 +82,28 @@ body {
 		@apply cursor-pointer bg-gray-100;
 	}
 }
+.edit_ {
+	@apply mb-5;
+	.input {
+		@apply mt-2;
+		&.non_edit {
+			@apply ring-0 outline-transparent rounded-none border-0 border-b-divider-gray pl-0 h-[48px] mt-0;
+			transform: translateY(-6px);
+		}
+	}
+	.btn.toggle_edit {
+		@apply w-auto p-0 h-auto text-black bg-transparent;
+	}
+	.btn.req_change {
+		@apply w-[201px] my-4;
+	}
+	&:last-child {
+		hr {
+			@apply hidden;
+		}
+	}
+}
+
 img {
 	object-fit: contain;
 	object-position: left top;

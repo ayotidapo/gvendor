@@ -47,8 +47,8 @@ const navigation = [
 		route: '/transactions',
 	},
 	{ name: 'Inventory', icon: 'inventory', current: false, route: '/inventory' },
-	// { name: 'Sales', icon: 'sales', current: false, route: '/sales' },
 	{ name: 'Settlement', icon: 'sales', current: false, route: '/settlements' },
+	{ name: 'Analytics', icon: 'inventory', current: false, route: '/analytics' },
 	{ name: 'Settings', icon: 'settings', current: false, route: '/settings' },
 ];
 
@@ -102,7 +102,7 @@ const Navigation = () => {
 		<nav className='flex flex-1 flex-col pt-20'>
 			<ul role='list' className='flex flex-1 flex-col gap-y-10'>
 				<li>
-					<ul role='list' className='-mx-2 space-y-3 px-4 pt-10'>
+					<ul role='list' className='-mx-2  px-4 pt-10'>
 						{navigation.map(item => {
 							const isMatch = pathname === item.route;
 							return (
