@@ -5,11 +5,9 @@ import EditInputBox, { EditGroupInputBox } from '@/molecules/EditInputBox';
 import React, { useState } from 'react';
 
 const BankAcct = () => {
-	const [editable, setEditable] = useState<boolean>(false);
-
 	return (
-		<div className='edit_'>
-			<EditGroupInputBox>
+		<div className=''>
+			<EditGroupInputBox groupTitle='Settlement Bank Account' actionBtn=''>
 				{({ isNonEdit }: any) => {
 					return (
 						<div>

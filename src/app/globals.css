@@ -98,7 +98,8 @@ body {
 		@apply w-[201px] my-4;
 	}
 	&:last-child {
-		hr {
+		@apply mb-2;
+		.hr {
 			@apply hidden;
 		}
 	}
@@ -107,4 +108,8 @@ body {
 img {
 	object-fit: contain;
 	object-position: left top;
+}
+
+.btn.toggle_edit {
+	@apply w-auto p-0 h-auto text-black bg-transparent;
 }

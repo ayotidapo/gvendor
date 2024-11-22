@@ -1,8 +1,10 @@
+'use client';
+
 import React from 'react';
 import './settings.scss';
 import PageWrapper from '@/containers/PageWrapper';
 import EditInputBox from '@/molecules/EditInputBox';
-import BankAcct from './BankAcct';
+import ManageAcct from './views/DeletePrompt';
 
 const Settings = () => {
 	return (
@@ -21,8 +23,8 @@ const Settings = () => {
 							<li>Manage Account</li>
 						</ul>
 					</section>
-					<section className='flex-1 text-black pl-16'>
-						<BankAcct />
+					<section className='flex-1  pl-10'>
+						<ManageAcct />
 					</section>
 				</div>
 			</div>

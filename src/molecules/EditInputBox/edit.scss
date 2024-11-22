@@ -10,19 +10,26 @@
 	.btn.toggle_edit {
 		@apply w-auto p-0 h-auto text-black bg-transparent;
 	}
-	.btn.req_change,
-	.btn.req_all_change {
+	.btn.req_change {
 		@apply w-[201px] my-4;
 	}
 	&:last-child {
-		hr {
+		@apply mb-2;
+		.hr {
 			@apply hidden;
 		}
 	}
-	.group_edit_div {
-		.btn.toggle_edit,
-		.btn.req_change {
-			@apply hidden;
-		}
+}
+
+.multiple_box_div {
+	.btn.toggle_edit,
+	.btn.req_change {
+		@apply hidden;
+	}
+	.btn.master_toggle_edit {
+		@apply w-auto p-0 h-auto text-black bg-transparent;
+	}
+	.btn.req_all_change {
+		@apply w-[201px] my-1.5;
 	}
 }
