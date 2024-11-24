@@ -20,7 +20,7 @@ const LoginSchema = Yup.object({
 	password: Yup.string().required('Please enter your password'),
 });
 
-const GetBack = () => {
+const CreatePaswordPage = () => {
 	// const [login, { isLoading }] = useLoginMutation();
 	// const dispatch = useAppDispatch();
 	const router = useRouter();
@@ -55,15 +55,29 @@ const GetBack = () => {
 	};
 
 	return (
-		<div className='w-[420px]'>
-			<h2 className='auth_h2'>We&apos;ll contact you soon!</h2>
-			<p className='text-center'>
-				Thanks for signing up to sell on Good! We’re currently reviewing your
-				request and will contact you within 1–3 business days once the process
-				is complete.
-			</p>
-		</div>
+		<form onSubmit={handleSubmit} className='w-[420px]'>
+			<h2 className='auth_h2'>Create a password for your account</h2>
+			<div>
+				<Input
+					{...getFieldProps('email')}
+					errors={touched.email ? errors.email : ''}
+					type='text'
+					placeholder='Email address'
+				/>
+
+				<Input
+					{...getFieldProps('password')}
+					errors={touched.password ? errors.password : ''}
+					type='password'
+					placeholder='Password'
+				/>
+			</div>
+
+			<div className='mt-6'>
+				<SimpleBtn>Sign in</SimpleBtn>
+			</div>
+		</form>
 	);
 };
 
-export default GetBack;
+export default CreatePaswordPage;

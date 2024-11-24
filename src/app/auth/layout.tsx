@@ -12,9 +12,9 @@ export default function RootLayout({
 }) {
 	return (
 		<div className='h-[calc(100vh-72px)] flex flex-col overflow-y-auto'>
-			<div className='flex h-full overflow-y-auto pb-[72px]'>
+			<div className='flex h-full overflow-y-auto pb-[72px] '>
 				<section className='flex-1 flex  overflow-y-auto  justify-center items-center '>
-					<div className='w-[420px] max-h-[100%]'>{children}</div>
+					<div className='max-h-[100%]'>{children}</div>
 				</section>
 
 				<div className='flex justify-end  w-[40%] h-[98%] relative'>

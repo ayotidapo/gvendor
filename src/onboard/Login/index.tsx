@@ -55,7 +55,7 @@ const LoginPage = () => {
 	};
 
 	return (
-		<form onSubmit={handleSubmit}>
+		<form onSubmit={handleSubmit} className='w-[420px]'>
 			<h2 className='auth_h2'>Welcome Back</h2>
 			<div>
 				<Input

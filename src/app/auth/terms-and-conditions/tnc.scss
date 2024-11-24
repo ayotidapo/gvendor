@@ -1,0 +1,14 @@
+.tnc {
+	.auth_h2 {
+		@apply mb-2.5;
+	}
+	.t_ {
+		@apply text-xl text-black subpixel-antialiased mb-2;
+	}
+	.tnc_list > li {
+		@apply mb-5;
+	}
+	.cont_ {
+		@apply w-[352px] my-7;
+	}
+}

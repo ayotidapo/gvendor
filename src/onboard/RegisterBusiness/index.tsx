@@ -64,7 +64,7 @@ const LoginPage = () => {
 	console.log(value);
 	return (
 		<>
-			<form onSubmit={handleSubmit}>
+			<form onSubmit={handleSubmit} className='w-[420px]'>
 				<h2 className='auth_h2'>Register your business with Good!</h2>
 				<div>
 					<div className='combine_input wrapper'>
