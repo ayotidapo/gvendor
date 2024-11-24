@@ -12,7 +12,6 @@ import Link from 'next/link';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
 import * as Yup from 'yup';
-import Wrapper from '../Wrapper';
 
 const LoginSchema = Yup.object({
 	email: Yup.string()
@@ -21,7 +20,7 @@ const LoginSchema = Yup.object({
 	password: Yup.string().required('Please enter your password'),
 });
 
-const LoginPage = () => {
+const GetBack = () => {
 	// const [login, { isLoading }] = useLoginMutation();
 	// const dispatch = useAppDispatch();
 	const router = useRouter();
@@ -56,45 +55,15 @@ const LoginPage = () => {
 	};
 
 	return (
-		<form onSubmit={handleSubmit}>
-			<h2 className='auth_h2'>Welcome Back</h2>
-			<div>
-				<Input
-					{...getFieldProps('email')}
-					errors={touched.email ? errors.email : ''}
-					type='text'
-					placeholder='Email address'
-				/>
-
-				<Input
-					{...getFieldProps('password')}
-					errors={touched.password ? errors.password : ''}
-					type='password'
-					placeholder='Password'
-				/>
-			</div>
-
-			<div className={` text-md cursor-pointer `}>
-				<Link
-					href={'/auth/forgot-password'}
-					className='hover:underline transition-all duration-500'
-				>
-					{' '}
-					Forgot your password?
-				</Link>
-			</div>
-
-			<div className='mt-6'>
-				<SimpleBtn>Sign in</SimpleBtn>
-			</div>
-			<p className='text-black pt-5 text-center'>
-				New to good?{' '}
-				<span className='text-[#f45d2c] subpixel-antialiased'>
-					Register your business
-				</span>
+		<div>
+			<h2 className='auth_h2'>We&apos;ll contact you soon!</h2>
+			<p className='text-center'>
+				Thanks for signing up to sell on Good! We’re currently reviewing your
+				request and will contact you within 1–3 business days once the process
+				is complete.
 			</p>
-		</form>
+		</div>
 	);
 };
 
-export default LoginPage;
+export default GetBack;

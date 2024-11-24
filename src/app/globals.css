@@ -117,3 +117,34 @@ img {
 .auth_h2 {
 	@apply text-[40px] mb-7 text-black text-center subpixel-antialiased font-recoleta font-semibold;
 }
+
+::-webkit-scrollbar {
+	width: 2px;
+	height: 4px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+	background: transparent;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+	background: transparent;
+	border: 4px solid transparent;
+	border-radius: 8px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+	background: transparent;
+}
+/* Hide the scrollbar arrow buttons */
+::-webkit-scrollbar-button {
+	height: 0;
+	width: 0;
+}
+
+.combine_input {
+	@apply flex gap-2 items-center;
+}

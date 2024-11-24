@@ -3,15 +3,16 @@
 	&.err {
 		@apply mb-2.5;
 	}
-	&:last-child {
+	/* &:last-child {
 		@apply mb-2;
 		&.err {
 			@apply mb-0;
 		}
-	}
+	} */
 }
 
-.input {
+.input,
+.PhoneInputInput {
 	@apply w-full h-[58px] border border-[#7a7978] focus:border-[#7a7978] focus:border-[1.5px]    focus:ring-0 
     rounded-lg;
 
@@ -28,4 +29,17 @@
 
 .icon_pos {
 	@apply min-w-fit absolute left-4;
+}
+
+/* .PhoneInputInput {
+	@apply border-0;
+} */
+.PhoneInput {
+	@apply border border-[#7a7978]  rounded-lg pl-2  mb-5;
+	&.err {
+		@apply border border-red;
+	}
+	.PhoneInputInput {
+		@apply border-none pl-0;
+	}
 }
