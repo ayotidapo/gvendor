@@ -4,7 +4,7 @@ export const AuthHeader = ({
 	title,
 	className = '',
 }: {
-	title: string;
+	title?: string;
 	className?: string;
 }) => {
 	return (

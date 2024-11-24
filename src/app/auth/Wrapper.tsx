@@ -12,14 +12,14 @@ const Wrapper = ({
 	title,
 }: {
 	children: ReactNode;
-	title: string;
+	title?: string;
 }) => {
 	const router = useRouter();
 	const authData = useAppSelector(authSelector);
 
 	useEffect(() => {
 		if (authData.signedIn) {
-			router.push('/');
+			// router.push('/');
 		}
 	}, [authData.signedIn]);
 

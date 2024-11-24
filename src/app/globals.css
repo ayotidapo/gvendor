@@ -113,3 +113,7 @@ img {
 .btn.toggle_edit {
 	@apply w-auto p-0 h-auto text-black bg-transparent;
 }
+
+.auth_h2 {
+	@apply text-[40px] mb-7 text-black text-center subpixel-antialiased font-recoleta font-semibold;
+}

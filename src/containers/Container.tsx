@@ -20,7 +20,10 @@ const Container: FC<Iprops> = ({ children }) => {
 	return (
 		<Providers>
 			<div className='flex grow h-screen flex-col overflow-y-auto border-r border-gray-200 bg-white'>
-				<Navbar setSidebarOpen={setSidebarOpen} />
+				{!pathname.includes('auth') &&
+					!pathname.includes('business-details') && (
+						<Navbar setSidebarOpen={setSidebarOpen} />
+					)}
 				<div>
 					{!pathname.includes('auth') &&
 						!pathname.includes('business-details') && (

@@ -6,7 +6,7 @@ import { Icon } from '../icon/icon';
 import './input.scss';
 
 export const Input = ({
-	type = 'text',
+	type,
 	title = '',
 	name,
 	value = '',
@@ -47,17 +47,20 @@ export const Input = ({
 	autoFocus?: boolean;
 }) => {
 	const [showPassword, setShowPassword] = useState<boolean>(false);
-
+	const revealPassword = type === 'password' && showPassword;
 	return (
-		<div className='input_wrapper'>
+		<div className={`input_wrapper ${errors ? 'err' : ''}`}>
 			{title && <span className='mb-2 text-sm'>{title}</span>}
 
 			{hasIcon && (
 				<Icon
-					id={iconSvg}
+					id={revealPassword ? iconSvg : 'show'}
 					width={iconDimension}
 					height={iconDimension}
-					className='min-w-fit absolute left-4'
+					className='icon_pos'
+					onClick={() => {
+						setShowPassword(!showPassword);
+					}}
 				/>
 			)}
 			{type === 'textarea' ? (
@@ -69,12 +72,12 @@ export const Input = ({
 					onBlur={onBlur}
 					autoComplete={autoComplete}
 					readOnly={readOnly}
-					className={cx(`input ${className}`, { hasIcon })}
+					className={cx(`input ${className}`, { hasIcon, err: errors })}
 					rows={rows}
 				/>
 			) : (
 				<input
-					type={type === 'password' && showPassword ? 'text' : type}
+					type={revealPassword ? 'text' : type}
 					name={name}
 					value={value}
 					placeholder={placeholder}
@@ -82,36 +85,21 @@ export const Input = ({
 					onBlur={onBlur}
 					autoComplete={autoComplete}
 					readOnly={readOnly}
-					className={cx(`input ${className}`, { hasIcon })}
+					className={cx(`input ${className}`, { hasIcon, err: errors })}
 					{...inputProps}
 				/>
 			)}
 			{extra && extra}
-			{type === 'password' && (
-				<button
-					onClick={() => {
-						setShowPassword(!showPassword);
-					}}
-					type='button'
-				>
-					<Icon
-						id={showPassword ? 'hide' : 'show'}
-						width={24}
-						height={24}
-						className='min-w-fit'
-					/>
-				</button>
-			)}
 
 			{errors && (
-				<span
+				<div
 					className='
           text-sm text-danger
-          block p-2 font-normal
+          block  py-1 font-normal
           '
 				>
 					{errors}
-				</span>
+				</div>
 			)}
 		</div>
 	);

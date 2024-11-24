@@ -1,7 +1,7 @@
 'use client';
 
-import Button from '@/atoms/buttons/Button';
-import TextInput from '@/atoms/input/TextInput';
+import Button, { SimpleBtn } from '@/atoms/buttons/Button';
+import { Input } from '@/atoms/input/Input';
 import { Gilroy, GilroyMedium } from '@/fonts/font';
 import { useAppDispatch } from '@/hooks/reduxHooks';
 import { updateUserWithAuth } from '@/redux/reducers/auth/auth.reducer';
@@ -22,8 +22,8 @@ const LoginSchema = Yup.object({
 });
 
 const LoginPage = () => {
-	const [login, { isLoading }] = useLoginMutation();
-	const dispatch = useAppDispatch();
+	// const [login, { isLoading }] = useLoginMutation();
+	// const dispatch = useAppDispatch();
 	const router = useRouter();
 	const searchParams = useSearchParams();
 
@@ -34,77 +34,66 @@ const LoginPage = () => {
 		},
 		validationSchema: LoginSchema,
 		onSubmit: values => {
-			if (!isLoading) {
-				onLogin(values);
-			}
+			// if (!isLoading) {
+			// 	onLogin(values);
+			// }
 		},
 	});
 
 	const onLogin = async (credentials: Login) => {
-		try {
-			const res: unknown = await login(credentials);
-			const userAuthData = res as AuthResponse;
-			if (userAuthData?.data?.user) {
-				dispatch(updateUserWithAuth(userAuthData));
-				toast.success('Login successful', { theme: 'colored' });
-				const redirect = searchParams.get('redirect');
-				router.push(redirect || '/');
-			}
-		} catch (error) {
-			return error;
-		}
+		//try {
+		//const res: unknown = await login(credentials);
+		//const userAuthData = res as AuthResponse;
+		//if (userAuthData?.data?.user) {
+		//dispatch(updateUserWithAuth(userAuthData));
+		toast.success('Login successful', { theme: 'colored' });
+		const redirect = searchParams.get('redirect');
+		router.push(redirect || '/');
+		//	}
+		// } catch (error) {
+		// 	return error;
+		// }
 	};
 
 	return (
-		<Wrapper title={'Welcome Back'}>
-			<form onSubmit={handleSubmit}>
-				<div className={`${Gilroy.className}`}>
-					<div>
-						<TextInput
-							id='email'
-							{...getFieldProps('email')}
-							errors={touched.email ? errors.email : ''}
-							type='text'
-							placeholder='Email address'
-							extraClass='!ring-[1.5px]'
-						/>
-					</div>
+		<form onSubmit={handleSubmit}>
+			<h2 className='auth_h2'>Welcome Back</h2>
+			<div>
+				<Input
+					{...getFieldProps('email')}
+					errors={touched.email ? errors.email : ''}
+					type='text'
+					placeholder='Email address'
+				/>
 
-					<div className='mt-4'>
-						<TextInput
-							id='password'
-							{...getFieldProps('password')}
-							errors={touched.password ? errors.password : ''}
-							type='password'
-							placeholder='Password'
-							extraClass='!ring-[1.5px]'
-						/>
-					</div>
-				</div>
+				<Input
+					{...getFieldProps('password')}
+					errors={touched.password ? errors.password : ''}
+					type='password'
+					placeholder='Password'
+				/>
+			</div>
 
-				<div
-					className={`mt-2 text-md cursor-pointer ${GilroyMedium.className}`}
+			<div className={` text-md cursor-pointer `}>
+				<Link
+					href={'/auth/forgot-password'}
+					className='hover:underline transition-all duration-500'
 				>
-					<Link
-						href={'/auth/forgot-password'}
-						className='hover:underline transition-all duration-500'
-					>
-						{' '}
-						Forgot your password?
-					</Link>
-				</div>
+					{' '}
+					Forgot your password?
+				</Link>
+			</div>
 
-				<div className='mt-6'>
-					<Button
-						loading={isLoading}
-						spinColor='#ffffff'
-						type='submit'
-						label='Sign in'
-						additionalClass='!py-4'
-					/>
-				</div>
-			</form>
-		</Wrapper>
+			<div className='mt-6'>
+				<SimpleBtn>Sign in</SimpleBtn>
+			</div>
+			<p className='text-black pt-5 text-center'>
+				New to good?{' '}
+				<span className='text-[#f45d2c] subpixel-antialiased'>
+					Register your business
+				</span>
+			</p>
+		</form>
 	);
 };
 

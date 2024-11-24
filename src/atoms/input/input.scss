@@ -1,9 +1,18 @@
 .input_wrapper {
-	@apply w-full flex relative items-center;
+	@apply relative w-full flex  items-center flex-wrap mb-5;
+	&.err {
+		@apply mb-2.5;
+	}
+	&:last-child {
+		@apply mb-2;
+		&.err {
+			@apply mb-0;
+		}
+	}
 }
 
 .input {
-	@apply w-full h-[58px] outline-default-gray  focus:ring-0 focus-visible:ring-0 focus:outline-none focus-visible:outline-none
+	@apply w-full h-[58px] border border-[#7a7978] focus:border-[#7a7978] focus:border-[1.5px]    focus:ring-0 
     rounded-lg;
 
 	&.hasIcon {
@@ -12,4 +21,11 @@
 	&.textarea {
 		@apply h-auto;
 	}
+	&.err {
+		@apply border border-red;
+	}
+}
+
+.icon_pos {
+	@apply min-w-fit absolute left-4;
 }
