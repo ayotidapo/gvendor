@@ -105,7 +105,7 @@ const TnC = () => {
 				including our commission structure, delivery support, and opportunities
 				for showcasing your items.
 			</p>
-			<p className='flex mt-5'>
+			<p className='flex mt-7'>
 				<Checkbox className='square' /> I acknowledge that I have read and
 				understood the information above.
 			</p>
