@@ -1,0 +1,16 @@
+.sidebar {
+	@apply w-[280px] border border-transparent border-r-divider-gray p-6;
+	li {
+		@apply h-[58px] rounded-lg overflow-hidden;
+	}
+	.link {
+		@apply flex  items-center w-full h-full gap-4 pl-4;
+		&:hover,
+		&.active {
+			@apply bg-[rgba(244,93,44,0.05)] text-[#f45d5c];
+		}
+		&.active {
+			@apply font-semibold;
+		}
+	}
+}

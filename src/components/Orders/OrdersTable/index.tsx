@@ -1,3 +1,5 @@
+'use client';
+
 import Tag from '@/atoms/Tag';
 import React from 'react';
 import './order-table.scss';

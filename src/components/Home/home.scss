@@ -6,6 +6,9 @@
 	.orders_wrapper {
 		@apply grid grid-cols-[repeat(auto-fill,minmax(290px,1fr))] gap-6;
 	}
+	.input_wrapper {
+		@apply mb-0;
+	}
 }
 
 .order_card {

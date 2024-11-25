@@ -2,12 +2,12 @@ import Button from '@/atoms/buttons/Button';
 import { Status } from '@/atoms/cards/StatusTag';
 import { GoodLogo } from '@/atoms/svg/svg';
 import { Header } from '@/atoms/typography/Header';
-import PageWrapper from '@/containers/PageWrapper';
+
 import { formatCurrency } from '@/helpers';
 
 const TransactionReceipt = () => {
 	return (
-		<PageWrapper pageHeader=''>
+		<>
 			<div className='pb-10'>
 				<div className='flex items-center space-x-20 justify-start pb-6 gap-10'>
 					<GoodLogo fill={'#F45D2C'} />
@@ -82,7 +82,7 @@ const TransactionReceipt = () => {
 					</div>
 				</div>
 			</div>
-		</PageWrapper>
+		</>
 	);
 };
 

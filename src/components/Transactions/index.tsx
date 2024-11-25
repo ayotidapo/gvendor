@@ -1,5 +1,5 @@
 import React from 'react';
-import PageWrapper from '@/containers/PageWrapper';
+
 import './transaction.scss';
 import { SimpleBtn } from '@/atoms/buttons/Button';
 import MetricCard from '@/molecules/MetricCard';
@@ -8,26 +8,24 @@ import TransactionsTable from './TransactionsTable';
 
 const TransactionPage = () => {
 	return (
-		<PageWrapper>
-			<div className='transactions'>
-				<div className='page-title_div'>
-					<h2 className='title'>Transactions</h2>
-					<div className='btn_div'>
-						<SimpleBtn className='set_as'>Export</SimpleBtn>
-					</div>
+		<div className='transactions'>
+			<div className='page-title_div'>
+				<h2 className='title'>Transactions</h2>
+				<div className='btn_div'>
+					<SimpleBtn className='set_as'>Export</SimpleBtn>
 				</div>
-
-				<div className='metric_cards_wrapper'>
-					<MetricCard title='Total Sales' value='₦149,720,000.00' />
-				</div>
-				<div className='w-[372px] my-12'>
-					<Input name='search' className='search' iconSvg='search' hasIcon />
-				</div>
-				<section>
-					<TransactionsTable />
-				</section>
 			</div>
-		</PageWrapper>
+
+			<div className='metric_cards_wrapper'>
+				<MetricCard title='Total Sales' value='₦149,720,000.00' />
+			</div>
+			<div className='w-[372px] my-12'>
+				<Input name='search' className='search' iconSvg='search' hasIcon />
+			</div>
+			<section>
+				<TransactionsTable />
+			</section>
+		</div>
 	);
 };
 

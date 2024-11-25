@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import Image from 'next/image';
 import React from 'react';
-import Container from '@/containers/Container';
+
 import { Geist, Gilroy } from '@/fonts/font';
 import { Recoleta } from '@/fonts/font';
 import 'react-toastify/dist/ReactToastify.css';
@@ -28,10 +28,8 @@ export default function RootLayout({
 					</div>
 					<div className='flex-1 '>c</div>
 				</div>
-				
-				<main className='pt-16'>
-					<div>{children}</div>
-				</main>
+
+				<main className='pt-16'>{children}</main>
 			</body>
 		</html>
 	);

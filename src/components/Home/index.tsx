@@ -1,6 +1,6 @@
 import React from 'react';
 import './home.scss';
-import PageWrapper from '@/containers/PageWrapper';
+
 import { Icon } from '@/atoms/icon/icon';
 import { Input } from '@/atoms/input/Input';
 import { SimpleBtn } from '@/atoms/buttons/Button';
@@ -10,7 +10,7 @@ import Link from 'next/link';
 
 const HomePage: React.FC = () => {
 	return (
-		<PageWrapper>
+		<>
 			<div className='homepage'>
 				<div className='page-title_div '>
 					<h2 className='title'>Home</h2>
@@ -109,7 +109,7 @@ const HomePage: React.FC = () => {
 					<Icon id='caret-right' width={15} height={15} className='ml-1' />
 				</Link>
 			</div>
-		</PageWrapper>
+		</>
 	);
 };
 

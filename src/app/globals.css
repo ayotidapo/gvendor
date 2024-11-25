@@ -26,6 +26,7 @@ body {
 .input.search {
 	@apply border-none bg-[#f3f3f3] rounded-full;
 }
+
 .hide-scroll-bar::-webkit-scrollbar {
 	display: none;
 }
