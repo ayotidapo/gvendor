@@ -72,7 +72,7 @@ export const Input = ({
 					onBlur={onBlur}
 					autoComplete={autoComplete}
 					readOnly={readOnly}
-					className={cx(`input ${className}`, { hasIcon, err: errors })}
+					className={cx(`input ${className}`, { err: errors })}
 					rows={rows}
 				/>
 			) : (

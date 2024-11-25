@@ -5,4 +5,7 @@
 	&:disabled {
 		@apply opacity-25 hover:cursor-not-allowed active:scale-100;
 	}
+	&.normal {
+		@apply w-[352px];
+	}
 }

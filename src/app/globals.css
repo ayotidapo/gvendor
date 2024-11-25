@@ -148,3 +148,7 @@ img {
 .combine_input {
 	@apply flex gap-2 items-center;
 }
+
+.h3 {
+	@apply subpixel-antialiased text-black;
+}

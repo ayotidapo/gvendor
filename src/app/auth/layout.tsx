@@ -26,10 +26,7 @@ export default function RootLayout({
 					/>
 				</div>
 			</div>
-			<footer
-				className='flex border-[0.5px] border-transparent bg-white z-10 font-thin text-sm border-t-divider-gray h-[72px]
-			 fixed w-full bottom-0 text-[#7a7978] px-20 items-center'
-			>
+			<footer className='onboard_footer'>
 				<span>&copy; 2024 The Good Thing Company. All Rights Reserved.</span>
 				<span className='ml-10'>
 					Why Good? | Are you an exceptional creator? | Get help

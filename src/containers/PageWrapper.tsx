@@ -12,14 +12,14 @@ interface PageWrapperProps {
 }
 
 const PageWrapper: React.FC<PageWrapperProps> = ({ children, pageHeader }) => {
-	const router = useRouter();
-	const authData = useAppSelector(authSelector);
+	//const router = useRouter();
+	//const authData = useAppSelector(authSelector);
 
-	useEffect(() => {
-		if (!authData.signedIn) {
-			router.push('/auth/login');
-		}
-	}, [authData.signedIn]);
+	// useEffect(() => {
+	// 	if (!authData.signedIn) {
+	// 		router.push('/auth/login');
+	// 	}
+	// }, [authData.signedIn]);
 
 	return (
 		<div className='m-auto lg:ml-72 mt-20 p-8 '>

@@ -1,5 +1,5 @@
 import React from 'react';
-
+import cx from 'classnames';
 interface Option {
 	label: string;
 	value: string | number;
@@ -12,25 +12,25 @@ interface SelectProps {
 	placeholder?: string;
 	disabled?: boolean;
 	error?: string;
+	className?: string;
 }
 
 const Select: React.FC<SelectProps> = ({
 	options,
 	value,
 	onChange,
-	placeholder = 'Select an option',
-	disabled = false,
+	placeholder,
+	disabled,
+	className,
 	error,
 }) => {
 	return (
-		<div className='w-full'>
+		<div className='input_wrapper'>
 			<select
 				value={value}
 				onChange={e => onChange(e.target.value)}
 				disabled={disabled}
-				className={`w-full p-2 h-[56px] border rounded-md focus:outline-none ${
-					error ? 'border-red-500' : 'border-black'
-				} ${disabled ? 'bg-gray-100 cursor-not-allowed' : ''}`}
+				className={cx(`input ${className}`, { err: error })}
 			>
 				<option value='' disabled>
 					{placeholder}

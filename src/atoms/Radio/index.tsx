@@ -6,7 +6,7 @@ interface Props {
 	title?: string;
 }
 const Radio: React.FC<Props> = props => {
-	const { className, title } = props;
+	const { className = '', title } = props;
 	return (
 		<label className={`radio ${className}`}>
 			<input type='radio' />
