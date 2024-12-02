@@ -60,14 +60,14 @@ const LoginPage = () => {
 			<div>
 				<Input
 					{...getFieldProps('email')}
-					errors={touched.email ? errors.email : ''}
+					error={touched.email ? errors.email : ''}
 					type='text'
 					placeholder='Email address'
 				/>
 
 				<Input
 					{...getFieldProps('password')}
-					errors={touched.password ? errors.password : ''}
+					error={touched.password ? errors.password : ''}
 					type='password'
 					placeholder='Password'
 				/>

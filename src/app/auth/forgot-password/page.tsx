@@ -74,7 +74,7 @@ const ForgotPassword = () => {
 								onBlur={handleBlur}
 								type='text'
 								placeholder='Email address'
-								errors={errors?.email}
+								error={errors?.email}
 								extraClass='!ring-[1.5px]'
 							/>
 						</div>

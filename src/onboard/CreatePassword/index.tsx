@@ -2,74 +2,64 @@
 
 import Button, { SimpleBtn } from '@/atoms/buttons/Button';
 import { Input } from '@/atoms/input/Input';
-import { Gilroy, GilroyMedium } from '@/fonts/font';
-import { useAppDispatch } from '@/hooks/reduxHooks';
-import { updateUserWithAuth } from '@/redux/reducers/auth/auth.reducer';
-import { useLoginMutation } from '@/redux/reducers/auth/authSlice';
-import { AuthResponse, Login } from '@/types/types';
+import { createPasswordApi } from '@/redux/apis/vendor';
+
 import { useFormik } from 'formik';
-import Link from 'next/link';
-import { useSearchParams, useRouter } from 'next/navigation';
+
+import { useRouter, useSearchParams } from 'next/navigation';
 import { toast } from 'react-toastify';
 import * as Yup from 'yup';
 
-const LoginSchema = Yup.object({
-	email: Yup.string()
-		.email('Invalid email address')
-		.required('A valid email is required'),
-	password: Yup.string().required('Please enter your password'),
+const CreatePasswordSchema = Yup.object({
+	password: Yup.string()
+		.min(5, 'atleast 6 character is required')
+		.required('password is required'),
+	confirm_password: Yup.string()
+		.oneOf([Yup.ref('password')], 'Passwords must match')
+		.required('password is required'),
 });
 
 const CreatePaswordPage = () => {
-	// const [login, { isLoading }] = useLoginMutation();
-	// const dispatch = useAppDispatch();
 	const router = useRouter();
-	const searchParams = useSearchParams();
-
+	const searchQ = useSearchParams();
+	const vendorId = searchQ.get('vendorId');
 	const { handleSubmit, getFieldProps, errors, touched } = useFormik({
 		initialValues: {
-			email: '',
 			password: '',
+			confirm_password: '',
 		},
-		validationSchema: LoginSchema,
-		onSubmit: values => {
-			// if (!isLoading) {
-			// 	onLogin(values);
-			// }
+		validationSchema: CreatePasswordSchema,
+		onSubmit: async values => {
+			try {
+				const { password } = values;
+				await createPasswordApi({ password, vendorId });
+				router.replace(`/auth/terms-and-conditions`);
+			} catch (e: any) {
+				toast.error(`${e?.message} || Something went wrong`);
+			}
 		},
 	});
 
-	const onLogin = async (credentials: Login) => {
-		//try {
-		//const res: unknown = await login(credentials);
-		//const userAuthData = res as AuthResponse;
-		//if (userAuthData?.data?.user) {
-		//dispatch(updateUserWithAuth(userAuthData));
+	const onLogin = async () => {
 		toast.success('Login successful', { theme: 'colored' });
-		const redirect = searchParams.get('redirect');
-		router.push(redirect || '/');
-		//	}
-		// } catch (error) {
-		// 	return error;
-		// }
 	};
-
+	console.log({ errors, touched });
 	return (
 		<form onSubmit={handleSubmit} className='w-[420px]'>
 			<h2 className='auth_h2'>Create a password for your account</h2>
 			<div>
 				<Input
-					{...getFieldProps('email')}
-					errors={touched.email ? errors.email : ''}
-					type='text'
-					placeholder='Email address'
+					{...getFieldProps('password')}
+					error={touched.password ? errors.password : ''}
+					type='password'
+					placeholder='Enter your password'
 				/>
 
 				<Input
-					{...getFieldProps('password')}
-					errors={touched.password ? errors.password : ''}
+					{...getFieldProps('confirm_password')}
+					error={touched.confirm_password ? errors.confirm_password : ''}
 					type='password'
-					placeholder='Password'
+					placeholder='Re-type your password'
 				/>
 			</div>
 

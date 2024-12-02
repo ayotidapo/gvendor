@@ -125,6 +125,7 @@ interface Props {
 	type?: 'submit' | 'button' | 'reset';
 	onClick?: () => void;
 	className?: string;
+	disabled?: boolean;
 }
 
 export const SimpleBtn: React.FC<Props> = props => {

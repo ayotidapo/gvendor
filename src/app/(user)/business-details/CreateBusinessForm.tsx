@@ -185,7 +185,7 @@ const CreateBusinessForm = ({
 								onChange={handleChange}
 								onBlur={handleBlur}
 								placeholder='Business Name'
-								errors={touched.name ? errors?.name : ''}
+								error={touched.name ? errors?.name : ''}
 							/>
 							<AddressInput
 								value={values.address.address}
@@ -206,7 +206,7 @@ const CreateBusinessForm = ({
 								onChange={handleChange}
 								onBlur={handleBlur}
 								placeholder='Name of primary contact'
-								errors={
+								error={
 									touched.nameOfPrimaryContact
 										? errors?.nameOfPrimaryContact
 										: ''
@@ -220,7 +220,7 @@ const CreateBusinessForm = ({
 								onChange={handleChange}
 								onBlur={handleBlur}
 								placeholder='Position of primary contact'
-								errors={
+								error={
 									touched.positionOfPrimaryContact
 										? errors?.positionOfPrimaryContact
 										: ''
@@ -233,7 +233,7 @@ const CreateBusinessForm = ({
 								onChange={handleChange}
 								onBlur={handleBlur}
 								placeholder='Email address'
-								errors={errors?.email}
+								error={errors?.email}
 							/>
 							<TextInput
 								type={'text'}
@@ -242,7 +242,7 @@ const CreateBusinessForm = ({
 								onChange={handleChange}
 								onBlur={handleBlur}
 								placeholder='Phone number'
-								errors={errors?.phone}
+								error={errors?.phone}
 							/>
 							<TextInput
 								type={'text'}
@@ -251,7 +251,7 @@ const CreateBusinessForm = ({
 								onChange={handleChange}
 								onBlur={handleBlur}
 								placeholder='Website url'
-								errors={errors?.website}
+								error={errors?.website}
 							/>
 							<TextInput
 								type={'text'}
@@ -317,7 +317,7 @@ const CreateBusinessForm = ({
 								onChange={handleChange}
 								onBlur={handleBlur}
 								placeholder='How long have you been in this type of business?'
-								errors={errors?.yearsOfExperince}
+								error={errors?.yearsOfExperince}
 							/>
 							<div>
 								<label
@@ -354,7 +354,7 @@ const CreateBusinessForm = ({
 									onChange={handleChange}
 									onBlur={handleBlur}
 									placeholder='Annual turnover of your company (in Naira)'
-									errors={errors?.annualTurnOver}
+									error={errors?.annualTurnOver}
 								/>
 								<p className='mt-2'>
 									This information will be treated with utmost confidentiality
@@ -413,7 +413,7 @@ const CreateBusinessForm = ({
 									onChange={handleChange}
 									onBlur={handleBlur}
 									placeholder='If yes, please enter your CAC number'
-									errors={errors?.cacNumber}
+									error={errors?.cacNumber}
 								/>
 							</div>
 
@@ -457,7 +457,7 @@ const CreateBusinessForm = ({
 									onChange={handleChange}
 									onBlur={handleBlur}
 									placeholder='If yes, please fill your NAFDAC number'
-									errors={errors?.nafdacNumber}
+									error={errors?.nafdacNumber}
 								/>
 							</div>
 
@@ -502,7 +502,7 @@ const CreateBusinessForm = ({
 									onChange={handleChange}
 									onBlur={handleBlur}
 									placeholder='If yes, please fill your TIN'
-									errors={errors?.tinNumber}
+									error={errors?.tinNumber}
 								/>
 							</div>
 
@@ -546,7 +546,7 @@ const CreateBusinessForm = ({
 									onChange={handleChange}
 									onBlur={handleBlur}
 									placeholder='If yes, please fill your SON'
-									errors={errors?.sonNumber}
+									error={errors?.sonNumber}
 								/>
 							</div>
 

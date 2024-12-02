@@ -16,9 +16,9 @@ export const Input = ({
 	hasIcon,
 	iconSvg = '',
 	iconDimension = 20,
-	inputClass = '',
+
 	className = '',
-	errors = '',
+	error = '',
 	autoComplete = 'off',
 	readOnly = false,
 	rows = 3,
@@ -37,9 +37,9 @@ export const Input = ({
 	hasIcon?: boolean;
 	iconSvg?: string;
 	iconDimension?: number;
-	inputClass?: string;
+
 	className?: string;
-	errors?: string;
+	error?: string;
 	rows?: number;
 	autoComplete?: 'off' | 'on';
 	readOnly?: boolean;
@@ -49,7 +49,7 @@ export const Input = ({
 	const [showPassword, setShowPassword] = useState<boolean>(false);
 	const revealPassword = type === 'password' && showPassword;
 	return (
-		<div className={`input_wrapper ${errors ? 'err' : ''}`}>
+		<div className={`input_wrapper ${error ? 'error' : ''}`}>
 			{title && <span className='mb-2 text-sm'>{title}</span>}
 
 			{hasIcon && (
@@ -72,7 +72,7 @@ export const Input = ({
 					onBlur={onBlur}
 					autoComplete={autoComplete}
 					readOnly={readOnly}
-					className={cx(`input ${className}`, { err: errors })}
+					className={cx(`input ${className}`, { error })}
 					rows={rows}
 				/>
 			) : (
@@ -85,20 +85,20 @@ export const Input = ({
 					onBlur={onBlur}
 					autoComplete={autoComplete}
 					readOnly={readOnly}
-					className={cx(`input ${className}`, { hasIcon, err: errors })}
+					className={cx(`input ${className}`, { hasIcon, error })}
 					{...inputProps}
 				/>
 			)}
 			{extra && extra}
 
-			{errors && (
+			{error && (
 				<div
 					className='
           text-sm text-danger
           block  py-1 font-normal
           '
 				>
-					{errors}
+					{error}
 				</div>
 			)}
 		</div>

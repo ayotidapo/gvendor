@@ -1,8 +1,6 @@
 import React from 'react';
+import Acknowledge from './_Acknowledge';
 import './tnc.scss';
-import Checkbox from '@/atoms/Checkbox';
-import { SimpleBtn } from '@/atoms/buttons/Button';
-
 const TnC = () => {
 	return (
 		<div className='tnc mx-auto w-[75%] pt-5'>
@@ -99,17 +97,7 @@ const TnC = () => {
 					</li>
 				</ul>
 			</article>
-			<p>
-				By checking the box below, you confirm that you have carefully read and
-				understood all the information provided about how Good operates,
-				including our commission structure, delivery support, and opportunities
-				for showcasing your items.
-			</p>
-			<p className='flex mt-7'>
-				<Checkbox className='square' /> I acknowledge that I have read and
-				understood the information above.
-			</p>
-			<SimpleBtn className='cont_'>Continue</SimpleBtn>
+			<Acknowledge />
 		</div>
 	);
 };

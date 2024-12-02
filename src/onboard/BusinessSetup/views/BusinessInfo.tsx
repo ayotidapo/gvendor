@@ -11,7 +11,7 @@ const BusinessInfo = () => {
 			<Input
 				value=''
 				onChange={() => null}
-				errors=''
+				error=''
 				name=''
 				type='text'
 				placeholder='Email address'
@@ -19,7 +19,7 @@ const BusinessInfo = () => {
 			<Input
 				value=''
 				onChange={() => null}
-				errors=''
+				error=''
 				name=''
 				type='text'
 				placeholder='Email address'
@@ -28,7 +28,7 @@ const BusinessInfo = () => {
 				<Input
 					value=''
 					onChange={() => null}
-					errors=''
+					error=''
 					name=''
 					type='text'
 					placeholder='Email address'
@@ -36,7 +36,7 @@ const BusinessInfo = () => {
 				<Input
 					value=''
 					onChange={() => null}
-					errors=''
+					error=''
 					name=''
 					type='text'
 					placeholder='Email address'
@@ -45,7 +45,7 @@ const BusinessInfo = () => {
 			<Input
 				value=''
 				onChange={() => null}
-				errors=''
+				error=''
 				name=''
 				type='text'
 				placeholder='Email address'
@@ -53,7 +53,7 @@ const BusinessInfo = () => {
 			<Input
 				value=''
 				onChange={() => null}
-				errors=''
+				error=''
 				name=''
 				type='textarea'
 				placeholder='Email address'
@@ -62,7 +62,7 @@ const BusinessInfo = () => {
 			<Input
 				value=''
 				onChange={() => null}
-				errors=''
+				error=''
 				name=''
 				type='text'
 				placeholder='Email address'

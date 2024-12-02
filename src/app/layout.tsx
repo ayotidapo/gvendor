@@ -1,11 +1,12 @@
 import type { Metadata } from 'next';
 import Image from 'next/image';
 import React from 'react';
-
+import Provider from '../redux/storeProvider';
 import { Geist, Gilroy } from '@/fonts/font';
 import { Recoleta } from '@/fonts/font';
 import 'react-toastify/dist/ReactToastify.css';
 import './globals.css';
+import { ToastContainer, Zoom } from 'react-toastify';
 
 export const metadata: Metadata = {
 	title: 'Good Vendor',
@@ -22,14 +23,30 @@ export default function RootLayout({
 			<body
 				className={`${Gilroy.variable} ${Geist.variable} ${Recoleta.variable} font-geist`}
 			>
-				<div className='h-[64px] border-[0.5px] border-b-divider-gray justify-center flex items-center px-10 fixed w-full z-10 bg-white'>
-					<div>
-						<Image src='/assets/logo.png' width={100} height={32} alt='logo' />
+				<Provider>
+					<ToastContainer
+						autoClose={3500}
+						transition={Zoom}
+						position='top-center'
+						className='toast-container'
+						toastClassName='dark-toast'
+						pauseOnFocusLoss
+						limit={3}
+					/>
+					<div className='h-[64px] border-[0.5px] border-b-divider-gray justify-center flex items-center px-10 fixed w-full z-10 bg-white'>
+						<div>
+							<Image
+								src='/assets/logo.png'
+								width={100}
+								height={32}
+								alt='logo'
+							/>
+						</div>
+						<div className='flex-1 '>c</div>
 					</div>
-					<div className='flex-1 '>c</div>
-				</div>
 
-				<main className='pt-16'>{children}</main>
+					<main className='pt-16'>{children}</main>
+				</Provider>
 			</body>
 		</html>
 	);

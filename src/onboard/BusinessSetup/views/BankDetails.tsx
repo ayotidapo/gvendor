@@ -11,7 +11,7 @@ const BankDetails = () => {
 			<Input
 				value=''
 				onChange={() => null}
-				errors=''
+				error=''
 				name=''
 				type='text'
 				placeholder='Email address'
@@ -19,7 +19,7 @@ const BankDetails = () => {
 			<Input
 				value=''
 				onChange={() => null}
-				errors=''
+				error=''
 				name=''
 				type='text'
 				placeholder='Email address'
@@ -28,7 +28,7 @@ const BankDetails = () => {
 			<Input
 				value=''
 				onChange={() => null}
-				errors=''
+				error=''
 				name=''
 				type='text'
 				placeholder='Email address'

@@ -101,7 +101,7 @@ const SignUp = () => {
 							onBlur={handleBlur}
 							type='text'
 							placeholder='First Name'
-							errors={errors?.firstName}
+							error={errors?.firstName}
 							extraClass='!ring-[1.5px]'
 						/>
 					</div>
@@ -114,7 +114,7 @@ const SignUp = () => {
 							onBlur={handleBlur}
 							type='text'
 							placeholder='Last Name'
-							errors={errors?.lastName}
+							error={errors?.lastName}
 							extraClass='!ring-[1.5px]'
 						/>
 					</div>
@@ -138,7 +138,7 @@ const SignUp = () => {
 					onBlur={handleBlur}
 					type='text'
 					placeholder='Phone Number'
-					errors={errors?.phone}
+					error={errors?.phone}
 					extraClass='!ring-[1.5px]'
 				/>
 				<TextInput
@@ -149,7 +149,7 @@ const SignUp = () => {
 					onBlur={handleBlur}
 					type='text'
 					placeholder='Email address'
-					errors={errors?.email}
+					error={errors?.email}
 					extraClass='!ring-[1.5px]'
 				/>
 
@@ -161,7 +161,7 @@ const SignUp = () => {
 					onBlur={handleBlur}
 					type='password'
 					placeholder='Password'
-					errors={errors?.password}
+					error={errors?.password}
 					extraClass='!ring-[1.5px]'
 				/>
 

@@ -25,8 +25,8 @@ textarea.input {
 	&.textarea {
 		@apply h-auto;
 	}
-	&.err {
-		@apply border border-red;
+	&.error {
+		@apply border border-red text-baseCol;
 	}
 }
 
@@ -39,10 +39,19 @@ textarea.input {
 } */
 .PhoneInput {
 	@apply border border-[#7a7978]  rounded-lg pl-2  mb-5;
-	&.err {
-		@apply border border-red;
-	}
+
 	.PhoneInputInput {
 		@apply border-none pl-0;
 	}
+}
+.error_ {
+	//error for react-phone-number
+	@apply mb-2;
+	& > .PhoneInput {
+		@apply border border-red mb-0;
+	}
+}
+
+.error {
+	@apply text-red text-sm;
 }

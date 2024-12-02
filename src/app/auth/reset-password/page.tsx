@@ -74,7 +74,7 @@ const ResetPassword = () => {
 							onBlur={handleBlur}
 							type='email'
 							placeholder='Enter email'
-							errors={errors?.email}
+							error={errors?.email}
 							extraClass='!ring-[1.5px]'
 						/>
 					</div>
@@ -90,7 +90,7 @@ const ResetPassword = () => {
 							onBlur={handleBlur}
 							type='text'
 							placeholder='Input code'
-							errors={errors?.code}
+							error={errors?.code}
 							extraClass='!ring-[1.5px]'
 						/>
 					</div>
@@ -106,7 +106,7 @@ const ResetPassword = () => {
 							onBlur={handleBlur}
 							type='password'
 							placeholder='Password'
-							errors={errors?.password}
+							error={errors?.password}
 							extraClass='!ring-[1.5px]'
 						/>
 					</div>

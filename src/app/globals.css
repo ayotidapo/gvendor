@@ -147,9 +147,26 @@ img {
 }
 
 .combine_input {
-	@apply flex gap-2 items-center;
+	@apply flex gap-2 items-start;
 }
 
 .h3 {
 	@apply subpixel-antialiased text-black;
+}
+.error {
+	@apply text-red text-sm;
+}
+
+.not_found {
+	display: flex;
+	height: calc(100vh - 62px);
+	background-color: #fcfcfc;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	font-family: var(--font-2);
+	.btn {
+		background-color: #f45d2c;
+		@apply w-[352px];
+	}
 }
