@@ -170,3 +170,14 @@ img {
 		@apply w-[352px];
 	}
 }
+
+.time_input_wrapper {
+	@apply h-[58px] w-full rounded-lg overflow-hidden;
+	.react-time-picker__wrapper {
+		@apply rounded-lg px-2.5;
+	}
+	input[type='number'],
+	select {
+		@apply border-0 rounded-lg overflow-hidden focus:ring-0 w-12;
+	}
+}

@@ -17,6 +17,7 @@ interface Props {
 	as?: 'textarea' | 'select';
 	options?: IOption[];
 	className?: string;
+	rows?: number;
 }
 const Input: React.FC<Props> = props => {
 	const [showPassword, setShowPassword] = useState<boolean>(false);
@@ -51,6 +52,7 @@ const Input: React.FC<Props> = props => {
 						</option>
 					))}
 				</Field>
+				<ErrorMessage name={name} component='div' className='error' />
 			</div>
 		);
 	}
@@ -69,6 +71,7 @@ const Input: React.FC<Props> = props => {
 				name={name}
 				className={cx(`input ${className}`, { iconSvg, error: hasError })}
 				placeholder={placeholder}
+				as={as}
 				{...rest}
 			/>
 			<ErrorMessage name={name} component='div' className='error' />
@@ -94,9 +97,9 @@ const InputPhone: React.FC<IPProps> = ({
 	onBlur,
 	...props
 }) => {
-	console.log(field, 'po');
+	console.log(field, 'po', onChange);
 	return (
-		<div className={error ? 'error_' : ''}>
+		<div className={`w-full ${error ? 'error_' : ''}`}>
 			<PhoneInput
 				defaultCountry='NG'
 				value={field.value}

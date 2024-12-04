@@ -7,8 +7,8 @@ interface Option {
 
 interface SelectProps {
 	options: Option[];
-	value: string | number;
-	onChange: (value: string | number) => void;
+	value?: string | number;
+	onChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
 	placeholder?: string;
 	disabled?: boolean;
 	error?: string;
@@ -28,7 +28,7 @@ const Select: React.FC<SelectProps> = ({
 		<div className='input_wrapper'>
 			<select
 				value={value}
-				onChange={e => onChange(e.target.value)}
+				onChange={onChange}
 				disabled={disabled}
 				className={cx(`input ${className}`, { err: error })}
 			>

@@ -78,7 +78,9 @@ const Register: React.FC<Props> = props => {
 				onSubmit={(values, { setErrors }) => {
 					if (!address?.address) {
 						setErrors({ businessAddress: 'Address is required' });
+						return;
 					}
+
 					const payload = {
 						...values,
 						businessAddress: { ...address },

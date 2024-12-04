@@ -1,16 +1,18 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import './biz_setup.scss';
 import { useFormik } from 'formik';
 
 import BusinessInfo from './views/BusinessInfo';
 import BankDetails from './views/BankDetails';
 import UploadItem from './views/UploadItem';
+import TimePicker from 'react-time-picker';
 import AllSet from './views/AllSet';
 import OnboardFooter from '@/molecules/OnboardFooter';
 
 const BusinessSetup = () => {
+	const [step, setStep] = useState(1);
 	const { handleSubmit, getFieldProps, errors, touched } = useFormik({
 		initialValues: {
 			email: '',
@@ -39,11 +41,11 @@ const BusinessSetup = () => {
 						<span className='label'>Upload items you&apos;d like to sell</span>
 					</span>
 				</div>
-				<form className='form_wrapper'>
-					{/* <BusinessInfo /> */}
-					{/* <BankDetails /> */}
-					<UploadItem />
-				</form>
+				<div className='form_wrapper'>
+					{step === 1 && <BusinessInfo />}
+					{step === 2 && <BankDetails />}
+					{step === 3 && <UploadItem />}
+				</div>
 			</div>
 			<OnboardFooter />
 		</>

@@ -30,6 +30,15 @@ export const createPasswordApi = async (body: Record<string, any>) => {
 
 	return response;
 };
+
+export const createBizApi = async (body: Record<string, any>) => {
+	const response = await Fetch(`/vendor/business-record`, {
+		body,
+		method: 'post',
+	});
+
+	return response;
+};
 // Async thunk to handle the API call
 const getInvitedVendor = createAsyncThunk(
 	'vendor/getInvited', // action type
@@ -42,3 +51,5 @@ const registerVendor = createAsyncThunk(
 );
 
 export { getInvitedVendor, registerVendor };
+
+//

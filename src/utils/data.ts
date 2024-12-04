@@ -30,4 +30,24 @@ const businessStructureOptions = [
 	{ value: 'corporation', label: 'Corporation' },
 ];
 
+export const weekDays = [
+	{ label: 'Choose day', value: '' },
+	{ label: 'Monday', value: 'monday' },
+	{ label: 'Tuesday', value: 'tuesday' },
+	{ label: 'Wednesday', value: 'wednesday' },
+	{ label: 'Thursday', value: 'thursday' },
+	{ label: 'Friday', value: 'friday' },
+	{ label: 'Saturday', value: 'saturday' },
+	{ label: 'Sunday', value: 'sunday' },
+];
+
+export const days = [
+	'sunday',
+	'monday',
+	'tuesday',
+	'wednesday',
+	'thursday',
+	'friday',
+	'saturday',
+];
 export { servicesOfferedOptions, businessStructureOptions };

@@ -1,10 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit';
-import courses from './reducers/courses';
+import business from './reducers/business';
 import vendor from './reducers/vendor';
 export const makeStore = () => {
 	return configureStore({
 		reducer: {
-			courses,
+			business,
 			vendor,
 		},
 	});

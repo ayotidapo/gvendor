@@ -38,7 +38,7 @@ textarea.input {
 	@apply border-0;
 } */
 .PhoneInput {
-	@apply border border-[#7a7978]  rounded-lg pl-2  mb-5;
+	@apply border border-[#7a7978]  rounded-lg pl-2  mb-5 w-full;
 
 	.PhoneInputInput {
 		@apply border-none pl-0;
