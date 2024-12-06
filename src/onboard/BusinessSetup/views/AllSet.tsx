@@ -1,7 +1,9 @@
 import { SimpleBtn } from '@/atoms/buttons/Button';
+import { useRouter } from 'next/navigation';
 import React from 'react';
 
 const AllSet = () => {
+	const router = useRouter();
 	return (
 		<div className='h-[calc(100vh-64px)] flex justify-center items-center'>
 			<div className='w-[800px] flex flex-col justify-center items-center'>
@@ -12,7 +14,9 @@ const AllSet = () => {
 					dashboard. Once approved, your items will be available for sale on
 					Good.
 				</p>
-				<SimpleBtn className='got_it '>Got it</SimpleBtn>
+				<SimpleBtn className='got_it' onClick={() => router.replace(`/orders`)}>
+					Got it
+				</SimpleBtn>
 			</div>
 		</div>
 	);

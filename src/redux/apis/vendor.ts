@@ -10,7 +10,7 @@ export const getInvitedVendorApi = async (id: string) => {
 
 export const registerVendorApi = async (body: IVendor) => {
 	const { reference, ...payload } = body;
-	const qS = reference ? `?reference?${reference}` : '';
+	const qS = reference ? `?reference=${reference}` : '';
 	console.log({ reference }, `/auth/register${qS}`);
 	const response = await Fetch(`/auth/register${qS}`, {
 		body: payload,
@@ -45,10 +45,7 @@ const getInvitedVendor = createAsyncThunk(
 	getInvitedVendorApi
 );
 
-const registerVendor = createAsyncThunk(
-	'vendor/register', // action type
-	registerVendorApi
-);
+const registerVendor = createAsyncThunk('vendor/register', registerVendorApi);
 
 export { getInvitedVendor, registerVendor };
 

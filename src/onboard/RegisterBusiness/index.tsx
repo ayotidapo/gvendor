@@ -21,11 +21,15 @@ const validationSchema = Yup.object({
 	email: Yup.string()
 		.email('Enter valid email address')
 		.required('Email is Required'),
-	servicesOffered: Yup.string().required('Select service offered'),
+	servicesOffered: Yup.string().required('select service(s) offered'),
+	// servicesOffered: Yup.array()
+	// 	.of(Yup.string())
+	// 	.min(1, 'select service(s) offered'), // Ensures the array has at least one element
+
 	phone: Yup.string()
 		.required('Phone number is required')
-		.min(11, ' Enter valid phone number')
-		.max(15, ' Enter valid phone number'),
+		.length(14, ' Enter valid phone number'),
+
 	website: Yup.string().required('Enter a valid link'),
 });
 
@@ -47,7 +51,7 @@ const Register: React.FC<Props> = props => {
 	const onSelectLocation = (selectLocation: ObjectData) => {
 		SetAddress(selectLocation);
 	};
-	console.log(vendorUser, 444444);
+
 	useEffect(() => {
 		dispatch(setVendor({ businessName, email }));
 	}, []);
@@ -84,7 +88,9 @@ const Register: React.FC<Props> = props => {
 					const payload = {
 						...values,
 						businessAddress: { ...address },
+						phone: values?.phone.replace('+', ''),
 						reference,
+						servicesOffered: [values?.servicesOffered],
 					};
 					console.log(payload);
 					dispatch(registerVendor(payload));

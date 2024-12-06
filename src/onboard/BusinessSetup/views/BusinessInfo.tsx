@@ -1,27 +1,26 @@
 import Radio from '@/atoms/Radio';
-import Select from '@/atoms/Select';
 import { SimpleBtn } from '@/atoms/buttons/Button';
-import Input, { PhoneField } from '@/atoms/Input';
+import Input from '@/atoms/Input';
 import React, { useState } from 'react';
 import * as Yup from 'yup';
-import { days, servicesOfferedOptions, weekDays } from '@/utils/data';
-import 'react-time-picker/dist/TimePicker.css';
-import 'react-clock/dist/Clock.css';
+import { days, servicesOfferedOptions } from '@/utils/data';
 import { ErrorMessage, Form, Formik } from 'formik';
 import DialogRadio from './DialogRadio';
 import LocationInput from '@/molecules/LocationInput';
 import { IAddress, ObjectData } from '@/utils/interface';
 import { useDispatch } from '@/redux/hooks';
-import { createBiz } from '@/redux/apis/business';
+import { updateBiz } from '@/redux/apis/business';
 import WorkingDays from './WorkingDays';
+import { useSelector } from '@/redux/hooks';
+import { PhoneField } from '@/atoms/PhoneInput';
 
 type Value = string | null;
 
 const validationSchema = Yup.object({
 	businessName: Yup.string().required('Business name is Required'),
 	businessAddress: Yup.string(),
-	businessDescription: Yup.string(),
-	email: Yup.string()
+	businessDescription: Yup.string().required('Tell us about your business'),
+	businessEmail: Yup.string()
 		.email('Enter valid email address')
 		.required('Email is Required'),
 	servicesOffered: Yup.string().required('Select business type'),
@@ -42,8 +41,8 @@ const validationSchema = Yup.object({
 		otherwise: schema => schema.required('Enter your TIN number'),
 	}),
 
-	sonNumber: Yup.string().required('select an option'),
-	nafdacNumber: Yup.string().required('select an option'),
+	isSonNumber: Yup.string().required('select an option'),
+	isNafdacNumber: Yup.string().required('select an option'),
 	availableHours: Yup.array().of(
 		Yup.object().shape({
 			open: Yup.string(),
@@ -60,8 +59,13 @@ const validationSchema = Yup.object({
 		})
 	),
 });
-const BusinessInfo = () => {
+
+interface Props {
+	setStep: (step: number) => void;
+}
+const BusinessInfo: React.FC<Props> = props => {
 	const dispatch = useDispatch();
+	const { isSuccess } = useSelector(state => state?.business);
 	const [value, setValue] = useState<Record<string, Value>>({
 		openingTime: '',
 		closingTime: '',
@@ -76,6 +80,10 @@ const BusinessInfo = () => {
 		setValue({ ...value, [name]: val });
 	};
 
+	if (isSuccess) {
+		props.setStep(1);
+	}
+
 	return (
 		<>
 			<h3 className='h3 text-xl mb-4'>Business details</h3>
@@ -84,15 +92,15 @@ const BusinessInfo = () => {
 				initialValues={{
 					businessName: '',
 					businessAddress: '',
-					email: '',
+					businessEmail: '',
 					businessPhonenumber: '',
 					servicesOffered: '',
 					businessDescription: '',
 					website: '',
 					cacNumber: '',
 					tinNumber: '',
-					sonNumber: '',
-					nafdacNumber: '',
+					isSonNumber: '',
+					isNafdacNumber: '',
 					isCacNumber: '',
 					isTinNumber: '',
 					availableHours: [
@@ -104,6 +112,16 @@ const BusinessInfo = () => {
 					],
 				}}
 				onSubmit={(values, { setErrors }) => {
+					const {
+						isCacNumber,
+						isTinNumber,
+						isNafdacNumber: is_NafdacNumber,
+						isSonNumber: is_SonNumber,
+						...restValues
+					} = values;
+
+					const isNafdacNumber = is_NafdacNumber === 'y' ? true : false;
+					const isSonNumber = is_SonNumber === 'y' ? true : false;
 					if (!address?.address) {
 						setErrors({ businessAddress: 'Address is required' });
 						return;
@@ -117,12 +135,15 @@ const BusinessInfo = () => {
 					);
 					console.log(mappedHours, 'yup');
 					const payload = {
-						...values,
+						...restValues,
 						businessAddress: { ...address },
 						availableHours: mappedHours,
+						servicesOffered: [values?.servicesOffered],
+						isNafdacNumber,
+						isSonNumber,
 					};
 					console.log(payload);
-					dispatch(createBiz(payload));
+					dispatch(updateBiz(payload));
 				}}
 				validationSchema={validationSchema}
 			>
@@ -137,7 +158,10 @@ const BusinessInfo = () => {
 								error={errors?.businessAddress}
 							/>
 							<div className='combine_input'>
-								<Input name='email' placeholder='Enter business email' />
+								<Input
+									name='businessEmail'
+									placeholder='Enter business email'
+								/>
 								<PhoneField
 									name='businessPhonenumber'
 									onChange={(val: any) => {
@@ -188,27 +212,27 @@ const BusinessInfo = () => {
 								Nigeria (SON)?
 							</h3>
 							<ErrorMessage
-								name='sonNumber'
+								name='isSonNumber'
 								component='div'
 								className='error'
 							/>
 							<label className='block my-3.5'>
-								<Radio name='sonNumber' value='y' formik /> Yes
+								<Radio name='isSonNumber' value='y' formik /> Yes
 							</label>
 							<label className='block my-3.5'>
-								<Radio name='sonNumber' value='n' formik /> No
+								<Radio name='isSonNumber' value='n' formik /> No
 							</label>
 							<h3 className='h3'>Do your items have NAFDAC numbers?</h3>
 							<ErrorMessage
-								name='nafdacNumber'
+								name='isNafdacNumber'
 								component='div'
 								className='error'
 							/>
 							<label className='block my-3.5'>
-								<Radio name='nafdacNumber' value='y' formik /> Yes
+								<Radio name='isNafdacNumber' value='y' formik /> Yes
 							</label>
 							<label className='block my-3.5'>
-								<Radio name='nafdacNumber' value='n' formik /> No
+								<Radio name='isNafdacNumber' value='n' formik /> No
 							</label>
 							<SimpleBtn className='normal'>Save & Continue</SimpleBtn>
 						</Form>

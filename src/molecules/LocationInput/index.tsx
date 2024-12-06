@@ -49,8 +49,8 @@ const LocationInput: React.FC<Props> = ({ onSelectLocation, error }) => {
 						address: place?.formatted_address || '',
 						latitude: place?.geometry?.location?.lat() || 0,
 						longitude: place?.geometry?.location?.lng() || 0,
-						sourceGooglePlaceID: place?.place_id || '',
-						...extraInfo,
+						// sourceGooglePlaceID: place?.place_id || '',
+						// ...extraInfo,
 					};
 
 					onSelectLocation(selectedAddress);

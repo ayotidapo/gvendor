@@ -1,6 +1,6 @@
 'use client';
 import { ErrorMessage, Field, FieldProps, useField } from 'formik';
-import PhoneInput from 'react-phone-number-input';
+
 import React, { useState } from 'react';
 import cx from 'classnames';
 import './input.scss';
@@ -10,7 +10,7 @@ import 'react-phone-number-input/style.css';
 
 interface Props {
 	name: string;
-	onChange?: () => null;
+	onChange?: (e: any) => void;
 	type?: string;
 	iconSvg?: string;
 	placeholder?: string;
@@ -80,58 +80,3 @@ const Input: React.FC<Props> = props => {
 };
 
 export default Input;
-
-interface IPProps extends FieldProps {
-	onChange: () => void;
-	onBlur: (e: React.FocusEvent<HTMLElement, Element>) => void;
-	placeholder?: string;
-	className?: string;
-	error?: string;
-}
-
-const InputPhone: React.FC<IPProps> = ({
-	field,
-	form,
-	error,
-	onChange,
-	onBlur,
-	...props
-}) => {
-	console.log(field, 'po', onChange);
-	return (
-		<div className={`w-full ${error ? 'error_' : ''}`}>
-			<PhoneInput
-				defaultCountry='NG'
-				value={field.value}
-				name={field.name}
-				onChange={onChange}
-				onBlur={onBlur}
-				international
-				{...props}
-			/>
-			<ErrorMessage name={field.name} component='div' className='error' />
-		</div>
-	);
-};
-
-type PFProps = FieldProps['field'] & {
-	className?: string;
-	defaultCountry?: string;
-	onChange: (val: any) => void;
-	onBlur: (e: React.FocusEvent<HTMLElement, Element>) => void;
-	placeholder?: string;
-	error?: string;
-};
-
-const PhoneField: React.FC<PFProps> = ({ onChange, value, ...rest }) => {
-	return (
-		<Field
-			component={InputPhone}
-			onChange={(val: any) => onChange(val)}
-			value={value}
-			{...rest}
-		/>
-	);
-};
-
-export { PhoneField };

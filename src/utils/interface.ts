@@ -17,7 +17,7 @@ export interface IVendor {
 	email: string;
 	phone: string;
 	businessName: string;
-	servicesOffered: string;
+	servicesOffered: string[];
 	website: string;
 	businessAddress: IAddress;
 	[key: string]: any;

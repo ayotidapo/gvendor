@@ -3,6 +3,8 @@
 import Button, { SimpleBtn } from '@/atoms/buttons/Button';
 import { Input } from '@/atoms/input/Input';
 import { createPasswordApi } from '@/redux/apis/vendor';
+import { useDispatch, useSelector } from '@/redux/hooks';
+import { updateVendor } from '@/redux/reducers/vendor';
 
 import { useFormik } from 'formik';
 
@@ -20,6 +22,9 @@ const CreatePasswordSchema = Yup.object({
 });
 
 const CreatePaswordPage = () => {
+	const dispatch = useDispatch();
+	const sta = useSelector(state => state.vendor);
+	console.log(sta);
 	const router = useRouter();
 	const searchQ = useSearchParams();
 	const vendorId = searchQ.get('vendorId');
@@ -32,7 +37,10 @@ const CreatePaswordPage = () => {
 		onSubmit: async values => {
 			try {
 				const { password } = values;
-				await createPasswordApi({ password, vendorId });
+				const response = await createPasswordApi({ password, vendorId });
+				const { vendor = {}, token = '' } = response?.data;
+				dispatch(updateVendor({ ...vendor, token }));
+				localStorage.t_ = token;
 				router.replace(`/auth/terms-and-conditions`);
 			} catch (e: any) {
 				toast.error(`${e?.message} || Something went wrong`);

@@ -1,19 +1,29 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import Fetch from '@/utils/fetch';
 
-export const createBizApi = async (body: Record<string, any>) => {
+export const updateBizApi = async (body: Record<string, any>) => {
 	const response = await Fetch(`/vendor/business-record`, {
 		body,
-		method: 'post',
+		method: 'put',
 	});
 
 	return response;
 };
-// Async thunk to handle the API call
 
-const createBiz = createAsyncThunk(
-	'vendor/createBiz', // action type
-	createBizApi
+export const updateBankAccountApi = async (body: Record<string, any>) => {
+	const response = await Fetch(`/profile/account`, {
+		body,
+		method: 'patch',
+	});
+
+	return response;
+};
+
+const updateBiz = createAsyncThunk('vendor/createBiz', updateBizApi);
+
+const updateAccount = createAsyncThunk(
+	'vendor/bankAccount',
+	updateBankAccountApi
 );
 
-export { createBiz };
+export { updateBiz, updateAccount };

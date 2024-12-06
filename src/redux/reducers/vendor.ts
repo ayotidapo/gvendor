@@ -19,7 +19,7 @@ const initialState: IState = {
 	email: '',
 	phone: '',
 	businessName: '',
-	servicesOffered: '',
+	servicesOffered: [''],
 	website: '',
 	businessAddress: {},
 	error: '',
@@ -36,6 +36,9 @@ export const vendorSlice = createSlice({
 			console.log({ waoh: action.payload });
 			Object.assign(state, action.payload);
 		},
+		updateVendor(state: IState, action) {
+			Object.assign(state, { ...state, ...action.payload });
+		},
 	},
 
 	extraReducers: builder => {
@@ -48,8 +51,8 @@ export const vendorSlice = createSlice({
 				state.isSuccess = true;
 				state.isError = false;
 				state.loading = false;
-				console.log(action.payload?.data?.data, 'der');
-				Object.assign(state, action.payload?.data?.data);
+				console.log(action.payload?.data, 'der');
+				Object.assign(state, action.payload?.data);
 			})
 			.addCase(registerVendor.rejected, (state, action) => {
 				state.isSuccess = false;
@@ -60,5 +63,5 @@ export const vendorSlice = createSlice({
 	},
 });
 
-export const { setVendor } = vendorSlice.actions;
+export const { setVendor, updateVendor } = vendorSlice.actions;
 export default vendorSlice.reducer;

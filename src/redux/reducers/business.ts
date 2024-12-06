@@ -1,6 +1,7 @@
 import { IAddress, IVendor } from '@/utils/interface';
 import { createSlice } from '@reduxjs/toolkit';
-import { createBiz } from '../apis/business';
+import { updateBiz } from '../apis/business';
+import { toast } from 'react-toastify';
 
 export interface IUser {}
 
@@ -45,28 +46,29 @@ export const businessSlice = createSlice({
 
 	reducers: {
 		setBusiness(state: IBusiness, action) {
-			console.log({ waoh: action.payload });
 			Object.assign(state, action.payload);
 		},
 	},
 
 	extraReducers: builder => {
 		builder
-			.addCase(createBiz.pending, state => {
+			.addCase(updateBiz.pending, state => {
 				state.loading = true;
 			})
-			.addCase(createBiz.fulfilled, (state, action) => {
+			.addCase(updateBiz.fulfilled, (state, action) => {
 				state.isSuccess = true;
 				state.isError = false;
 				state.loading = false;
-				console.log(action.payload?.data?.data, 'der');
 				Object.assign(state, action.payload?.data?.data);
 			})
-			.addCase(createBiz.rejected, (state, action) => {
+			.addCase(updateBiz.rejected, (state, action) => {
+				if (action.error?.message)
+					toast.error(`Error occured: ${action.error?.message}`);
+
 				state.isSuccess = false;
 				state.isError = true;
 				state.loading = false;
-				state.error = action.error.message;
+				state.error = action.error?.message;
 			});
 	},
 });

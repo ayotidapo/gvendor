@@ -1,11 +1,12 @@
 import { ObjectData } from '@/utils/interface';
-import Input, { PhoneField } from '@/atoms/Input';
+import Input from '@/atoms/Input';
 import React, { useState } from 'react';
 import LocationInput from '@/molecules/LocationInput';
 import { useFormikContext } from 'formik';
 import { SimpleBtn } from '@/atoms/buttons/Button';
 import Link from 'next/link';
 import { servicesOfferedOptions } from '@/utils/data';
+import { PhoneField } from '@/atoms/PhoneInput';
 
 interface Props {
 	onSelectLocation: (selectLocation: ObjectData) => void;

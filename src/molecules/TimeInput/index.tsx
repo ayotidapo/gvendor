@@ -1,6 +1,8 @@
 import { ErrorMessage, Field, FieldProps } from 'formik';
 import React from 'react';
 import TimePicker from 'react-time-picker';
+import 'react-time-picker/dist/TimePicker.css';
+import 'react-clock/dist/Clock.css';
 
 interface Props {
 	onChange: (value: string | null) => void;
