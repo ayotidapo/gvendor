@@ -18,6 +18,7 @@ interface Props {
 	options?: IOption[];
 	className?: string;
 	rows?: number;
+	readOnly?: boolean;
 }
 const Input: React.FC<Props> = props => {
 	const [showPassword, setShowPassword] = useState<boolean>(false);

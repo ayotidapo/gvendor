@@ -1,10 +1,10 @@
 'use client';
 
 import Button, { SimpleBtn } from '@/atoms/buttons/Button';
-import { Input } from '@/atoms/input/Input';
+import { Input } from '@/atoms/Input/Input';
 import { createPasswordApi } from '@/redux/apis/vendor';
 import { useDispatch, useSelector } from '@/redux/hooks';
-import { updateVendor } from '@/redux/reducers/vendor';
+import { setVendor } from '@/redux/reducers/vendor';
 
 import { useFormik } from 'formik';
 
@@ -39,7 +39,7 @@ const CreatePaswordPage = () => {
 				const { password } = values;
 				const response = await createPasswordApi({ password, vendorId });
 				const { vendor = {}, token = '' } = response?.data;
-				dispatch(updateVendor({ ...vendor, token }));
+				dispatch(setVendor({ ...vendor, token }));
 				localStorage.t_ = token;
 				router.replace(`/auth/terms-and-conditions`);
 			} catch (e: any) {

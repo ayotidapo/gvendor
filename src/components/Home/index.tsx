@@ -1,14 +1,19 @@
+'use client';
+
 import React from 'react';
 import './home.scss';
 
 import { Icon } from '@/atoms/icon/icon';
-import { Input } from '@/atoms/input/Input';
+import { Input } from '@/atoms/Input/Input';
 import { SimpleBtn } from '@/atoms/buttons/Button';
 import MetricCard from '@/molecules/MetricCard';
 import Tag from '@/atoms/Tag';
 import Link from 'next/link';
+import { useSelector } from '@/redux/hooks';
 
 const HomePage: React.FC = () => {
+	const vendorUser = useSelector(state => state?.vendor);
+	console.log({ vendorUser });
 	return (
 		<>
 			<div className='homepage'>

@@ -7,46 +7,47 @@ import { Recoleta } from '@/fonts/font';
 import 'react-toastify/dist/ReactToastify.css';
 import './globals.css';
 import { ToastContainer, Zoom } from 'react-toastify';
+import { SimpleBtn } from '@/atoms/buttons/Button';
+import { Icon } from '@/atoms/icon/icon';
+import { getServerSession } from 'next-auth';
+import nextAuthOptions from '@/utils/nextAuthOptions';
+import Navbar from './_Navbar';
+import SessionProvider from '@/providers/SessionProvider';
+import { sessionUser } from '@/utils/interface';
 
 export const metadata: Metadata = {
 	title: 'Good Vendor',
 	description: 'Sell, Manage and Grow',
 };
 
-export default function RootLayout({
+export default async function RootLayout({
 	children,
 }: {
 	children: React.ReactNode;
 }) {
+	const session = await getServerSession(nextAuthOptions);
+	const vendorId = (session?.user as sessionUser)?.id;
 	return (
 		<html lang='en'>
 			<body
 				className={`${Gilroy.variable} ${Geist.variable} ${Recoleta.variable} font-geist`}
 			>
-				<Provider>
-					<ToastContainer
-						autoClose={3500}
-						transition={Zoom}
-						position='top-center'
-						className='toast-container'
-						toastClassName='dark-toast'
-						pauseOnFocusLoss
-						limit={3}
-					/>
-					<div className='h-[64px] border-[0.5px] border-b-divider-gray justify-center flex items-center px-10 fixed w-full z-10 bg-white'>
-						<div>
-							<Image
-								src='/assets/logo.png'
-								width={100}
-								height={32}
-								alt='logo'
-							/>
-						</div>
-						<div className='flex-1 '>c</div>
-					</div>
+				<SessionProvider>
+					<Provider>
+						<ToastContainer
+							autoClose={3500}
+							transition={Zoom}
+							position='top-center'
+							className='toast-container'
+							toastClassName='dark-toast'
+							pauseOnFocusLoss
+							limit={3}
+						/>
+						<Navbar vendorId={vendorId} />
 
-					<main className='pt-16'>{children}</main>
-				</Provider>
+						<main className='pt-16'>{children}</main>
+					</Provider>
+				</SessionProvider>
 			</body>
 		</html>
 	);

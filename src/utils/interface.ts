@@ -27,3 +27,8 @@ export interface ServerProps {
 	searchParams: Record<string, any>;
 	params: Record<string, any>;
 }
+
+export interface sessionUser {
+	goodToken?: string | undefined;
+	id: string | number | null | undefined;
+}

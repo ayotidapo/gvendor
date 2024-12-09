@@ -181,3 +181,9 @@ img {
 		@apply border-0 rounded-lg overflow-hidden focus:ring-0 w-12;
 	}
 }
+.btn.nav__bar_btn {
+	@apply w-[148px] bg-[#f6f6f6] text-black  font-recoleta font-medium h-11  items-center;
+}
+.ellipsis {
+	@apply whitespace-nowrap inline-block overflow-hidden text-ellipsis w-[75px];
+}

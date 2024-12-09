@@ -79,7 +79,7 @@ const Register: React.FC<Props> = props => {
 					businessAddress: '',
 				}}
 				validationSchema={validationSchema}
-				onSubmit={(values, { setErrors }) => {
+				onSubmit={async (values, { setErrors }) => {
 					if (!address?.address) {
 						setErrors({ businessAddress: 'Address is required' });
 						return;

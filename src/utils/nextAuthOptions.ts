@@ -12,9 +12,7 @@ const options: NextAuthOptions = {
 				...session,
 				user: {
 					...session.user,
-					efikoToken: uid?.efikoToken,
-					userId: token?.sub,
-					role: uid?.role,
+					...uid,
 				},
 			};
 
@@ -33,11 +31,10 @@ const options: NextAuthOptions = {
 		CredentialsProvider({
 			credentials: {},
 			async authorize(credentials, req) {
-				const { isLoggedIn, id, email, efikoToken, role } =
-					credentials as Record<string, any>;
+				const { goodToken, vendorId } = credentials as Record<string, any>;
 
-				if (isLoggedIn) {
-					return { id, email, efikoToken, role };
+				if (goodToken) {
+					return { id: vendorId, goodToken };
 				} else {
 					return null;
 					// You can also Reject this callback with an Error thus the user will be sent to the error page with the error message as a query parameter
@@ -45,9 +42,12 @@ const options: NextAuthOptions = {
 			},
 		}),
 	],
-	// pages: {
-	//   signOut: '/student/4',
-	// },
+	jwt: {
+		maxAge: 60 * 60 * 24,
+	},
+	pages: {
+		signOut: '/auth/login',
+	},
 };
 
 export default options;

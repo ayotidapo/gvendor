@@ -1,7 +1,7 @@
 import React from 'react';
 import RegisterBusiness from '@/onboard/RegisterBusiness';
 import { ServerProps } from '@/utils/interface';
-import { jwtDecode } from 'jwt-decode';
+import jwt from 'jsonwebtoken';
 import { notFound } from 'next/navigation';
 
 interface IVendor {
@@ -18,7 +18,7 @@ const RegisterBusinessPage: React.FC<ServerProps> = async props => {
 
 	if (token) {
 		try {
-			vendor = jwtDecode(token) as IVendor;
+			vendor = jwt.decode(token) as IVendor;
 		} catch {
 			notFound();
 		}

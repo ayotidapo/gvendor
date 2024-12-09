@@ -1,6 +1,6 @@
 import { IVendor } from '@/utils/interface';
 import { createSlice } from '@reduxjs/toolkit';
-import { registerVendor } from '../apis/vendor';
+import { getVendor, registerVendor } from '../apis/vendor';
 
 export interface IUser {}
 
@@ -21,7 +21,7 @@ const initialState: IState = {
 	businessName: '',
 	servicesOffered: [''],
 	website: '',
-	businessAddress: {},
+	businessAddress: { address: '', longitude: '', latitude: '' },
 	error: '',
 	loading: false,
 };
@@ -36,9 +36,6 @@ export const vendorSlice = createSlice({
 			console.log({ waoh: action.payload });
 			Object.assign(state, action.payload);
 		},
-		updateVendor(state: IState, action) {
-			Object.assign(state, { ...state, ...action.payload });
-		},
 	},
 
 	extraReducers: builder => {
@@ -51,10 +48,26 @@ export const vendorSlice = createSlice({
 				state.isSuccess = true;
 				state.isError = false;
 				state.loading = false;
-				console.log(action.payload?.data, 'der');
 				Object.assign(state, action.payload?.data);
 			})
 			.addCase(registerVendor.rejected, (state, action) => {
+				state.isSuccess = false;
+				state.isError = true;
+				state.loading = false;
+				state.error = action.error.message;
+			})
+			.addCase(getVendor.pending, state => {
+				state.isSuccess = false;
+				state.isError = true;
+				state.loading = false;
+			})
+			.addCase(getVendor.fulfilled, (state, action) => {
+				state.isSuccess = false;
+				state.isError = true;
+				state.loading = false;
+				Object.assign(state, action.payload?.data);
+			})
+			.addCase(getVendor.rejected, (state, action) => {
 				state.isSuccess = false;
 				state.isError = true;
 				state.loading = false;
@@ -63,5 +76,5 @@ export const vendorSlice = createSlice({
 	},
 });
 
-export const { setVendor, updateVendor } = vendorSlice.actions;
+export const { setVendor } = vendorSlice.actions;
 export default vendorSlice.reducer;

@@ -59,7 +59,7 @@ export const businessSlice = createSlice({
 				state.isSuccess = true;
 				state.isError = false;
 				state.loading = false;
-				Object.assign(state, action.payload?.data?.data);
+				Object.assign(state, action.payload?.data);
 			})
 			.addCase(updateBiz.rejected, (state, action) => {
 				if (action.error?.message)

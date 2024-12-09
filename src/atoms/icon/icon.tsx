@@ -18,12 +18,12 @@ export const Icon = ({
 		<svg
 			id={id}
 			onClick={onClick}
-			className={className}
+			className={`inline-block ${className}`}
 			width={width}
 			height={height}
 			{...props}
 		>
-			<use href={`/assets/icons_sprite.svg#${id}`}></use>
+			<use xlinkHref={`/assets/icons_sprite.svg#${id}`}></use>
 		</svg>
 	);
 };

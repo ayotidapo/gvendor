@@ -1,0 +1,19 @@
+.dropdown {
+	@apply inline-block relative cursor-pointer;
+
+	.dropdown__content {
+		@apply absolute  top-12 -left-20 invisible opacity-0 shadow-lg p-1 z-50 bg-white;
+
+		transition: all 0.35s linear;
+	}
+
+	&:focus-within > .dropdown__content {
+		@apply visible opacity-100 rounded-lg;
+	}
+}
+
+/* 
+&:focus-within > .dropdown__content,
+	&:focus > .dropdown__content {
+		@apply visible opacity-100 rounded-lg;
+	} */

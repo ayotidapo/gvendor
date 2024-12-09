@@ -5,8 +5,9 @@ import { Input } from '@/atoms/input/Input';
 import { useFormik } from 'formik';
 import { updateBankAccountApi } from '@/redux/apis/business';
 import { toast } from 'react-toastify';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import AllSet from './AllSet';
+import { signInUser } from '@/redux/apis/setAuth';
 
 const validationSchema = Yup.object({
 	accountNumber: Yup.string()
@@ -23,7 +24,8 @@ interface Props {
 const BankDetails: React.FC<Props> = props => {
 	const router = useRouter();
 	const [isLoading, setIsLoading] = useState(false);
-
+	const searchQ = useSearchParams();
+	const token = searchQ.get('token') as string;
 	const { handleSubmit, getFieldProps, errors, touched } = useFormik({
 		initialValues: {
 			accountNumber: '',
@@ -34,7 +36,10 @@ const BankDetails: React.FC<Props> = props => {
 			try {
 				setIsLoading(true);
 				await updateBankAccountApi(values);
+				// if Invited user: do this
 				props.setSuccess(true);
+				await signInUser({ goodToken: token });
+				//else: do this
 				//props.setStep(2);
 			} catch (e: any) {
 				toast.error(`Error:${e?.message}`);

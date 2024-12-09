@@ -26,7 +26,7 @@ const validationSchema = Yup.object({
 	servicesOffered: Yup.string().required('Select business type'),
 	businessPhonenumber: Yup.string()
 		.required('Phone number is required')
-		.min(11, ' Enter valid phone number')
+		.min(14, ' Enter valid phone number')
 		.max(15, ' Enter valid phone number'),
 	website: Yup.string().required('Enter a valid link'),
 	cacNumber: Yup.string().when('isCacNumber', {
@@ -66,6 +66,7 @@ interface Props {
 const BusinessInfo: React.FC<Props> = props => {
 	const dispatch = useDispatch();
 	const { isSuccess } = useSelector(state => state?.business);
+	const { businessName, businessAddress } = useSelector(state => state?.vendor);
 	const [value, setValue] = useState<Record<string, Value>>({
 		openingTime: '',
 		closingTime: '',
@@ -90,8 +91,8 @@ const BusinessInfo: React.FC<Props> = props => {
 
 			<Formik
 				initialValues={{
-					businessName: '',
-					businessAddress: '',
+					businessName,
+					businessAddress: businessAddress?.address,
 					businessEmail: '',
 					businessPhonenumber: '',
 					servicesOffered: '',
@@ -117,6 +118,7 @@ const BusinessInfo: React.FC<Props> = props => {
 						isTinNumber,
 						isNafdacNumber: is_NafdacNumber,
 						isSonNumber: is_SonNumber,
+						businessEmail,
 						...restValues
 					} = values;
 
@@ -126,13 +128,14 @@ const BusinessInfo: React.FC<Props> = props => {
 						setErrors({ businessAddress: 'Address is required' });
 						return;
 					}
-					const mappedHours = values?.availableHours?.reduce(
-						(acc, cur, i) => ({
+					const mappedHours = values?.availableHours?.reduce((acc, cur, i) => {
+						if (!cur?.openingTime) delete (cur as any)?.openingTime;
+						if (!cur?.closingTime) delete (cur as any)?.closingTime;
+						return {
 							...acc,
 							[days[i]]: { ...cur, open: !!cur.open },
-						}),
-						{}
-					);
+						};
+					}, {});
 					console.log(mappedHours, 'yup');
 					const payload = {
 						...restValues,
@@ -141,6 +144,7 @@ const BusinessInfo: React.FC<Props> = props => {
 						servicesOffered: [values?.servicesOffered],
 						isNafdacNumber,
 						isSonNumber,
+						businessPhonenumber: values?.businessPhonenumber?.replace('+', ''),
 					};
 					console.log(payload);
 					dispatch(updateBiz(payload));
@@ -151,7 +155,11 @@ const BusinessInfo: React.FC<Props> = props => {
 					console.log({ values, errors, touched });
 					return (
 						<Form>
-							<Input name='businessName' placeholder='Enter business name' />
+							<Input
+								name='businessName'
+								placeholder='Enter business name'
+								// readOnly
+							/>
 
 							<LocationInput
 								onSelectLocation={onSelectLocation}

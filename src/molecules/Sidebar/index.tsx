@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import React from 'react';
+import React, { useEffect } from 'react';
 import items from './items';
 import cx from 'classnames';
 import './sidebar.scss';
@@ -10,11 +10,12 @@ import { usePathname } from 'next/navigation';
 
 const Navbar = () => {
 	const path = usePathname();
+
 	return (
 		<nav className='sidebar'>
 			<ul>
 				{items.map(item => (
-					<li>
+					<li key={item?.name}>
 						<Link
 							href={item.route}
 							className={cx('link', { active: item.match.test(path) })}

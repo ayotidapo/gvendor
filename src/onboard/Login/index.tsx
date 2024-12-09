@@ -1,15 +1,16 @@
 'use client';
 
-import Button, { SimpleBtn } from '@/atoms/buttons/Button';
+import { SimpleBtn } from '@/atoms/buttons/Button';
 import { Input } from '@/atoms/input/Input';
-import { Gilroy, GilroyMedium } from '@/fonts/font';
-import { useAppDispatch } from '@/hooks/reduxHooks';
-import { updateUserWithAuth } from '@/redux/reducers/auth/auth.reducer';
-import { useLoginMutation } from '@/redux/reducers/auth/authSlice';
-import { AuthResponse, Login } from '@/types/types';
+import { signInUser } from '@/redux/apis/setAuth';
+import { loginApi } from '@/redux/apis/vendor';
+import { setVendor } from '@/redux/reducers/vendor';
+import { Login } from '@/types/types';
 import { useFormik } from 'formik';
 import Link from 'next/link';
 import { useSearchParams, useRouter } from 'next/navigation';
+import { useState } from 'react';
+import { useSelector, useDispatch } from '@/redux/hooks';
 import { toast } from 'react-toastify';
 import * as Yup from 'yup';
 
@@ -20,11 +21,24 @@ const LoginSchema = Yup.object({
 	password: Yup.string().required('Please enter your password'),
 });
 
-const LoginPage = () => {
-	// const [login, { isLoading }] = useLoginMutation();
-	// const dispatch = useAppDispatch();
+const LoginPage: React.FC = ({}) => {
+	const [submitting, setSubmitting] = useState(false);
+	const dispatch = useDispatch();
 	const router = useRouter();
-	const searchParams = useSearchParams();
+
+	const onLogin = async (values: Record<string, any>) => {
+		try {
+			setSubmitting(true);
+			const response = await loginApi(values);
+			const { user = {}, token = '' } = response?.data;
+			dispatch(setVendor({ ...user }));
+			localStorage.t_ = response?.data?.token;
+			await signInUser({ goodToken: token, vendorId: user?._id });
+		} catch (e: any) {
+		} finally {
+			setSubmitting(false);
+		}
+	};
 
 	const { handleSubmit, getFieldProps, errors, touched } = useFormik({
 		initialValues: {
@@ -33,26 +47,9 @@ const LoginPage = () => {
 		},
 		validationSchema: LoginSchema,
 		onSubmit: values => {
-			// if (!isLoading) {
-			// 	onLogin(values);
-			// }
+			onLogin(values);
 		},
 	});
-
-	const onLogin = async (credentials: Login) => {
-		//try {
-		//const res: unknown = await login(credentials);
-		//const userAuthData = res as AuthResponse;
-		//if (userAuthData?.data?.user) {
-		//dispatch(updateUserWithAuth(userAuthData));
-		toast.success('Login successful', { theme: 'colored' });
-		const redirect = searchParams.get('redirect');
-		router.push(redirect || '/');
-		//	}
-		// } catch (error) {
-		// 	return error;
-		// }
-	};
 
 	return (
 		<form onSubmit={handleSubmit} className='w-[420px]'>
@@ -84,7 +81,7 @@ const LoginPage = () => {
 			</div>
 
 			<div className='mt-6'>
-				<SimpleBtn>Sign in</SimpleBtn>
+				<SimpleBtn disabled={submitting}>Sign in</SimpleBtn>
 			</div>
 			<p className='text-black pt-5 text-center'>
 				New to good?{' '}

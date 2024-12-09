@@ -39,14 +39,35 @@ export const createBizApi = async (body: Record<string, any>) => {
 
 	return response;
 };
+
+export const getVendorApi = async () => {
+	const response = await Fetch(`/vendor`);
+
+	return response;
+};
+
+export const loginApi = async (body: Record<string, any>) => {
+	const response = await Fetch(`/auth/login`, {
+		body,
+		method: 'post',
+	});
+
+	return response;
+};
 // Async thunk to handle the API call
 const getInvitedVendor = createAsyncThunk(
 	'vendor/getInvited', // action type
 	getInvitedVendorApi
 );
 
-const registerVendor = createAsyncThunk('vendor/register', registerVendorApi);
+const getVendor = createAsyncThunk(
+	'vendor/getVendor', // action type
+	getVendorApi
+);
 
-export { getInvitedVendor, registerVendor };
+const registerVendor = createAsyncThunk('vendor/register', registerVendorApi);
+const login = createAsyncThunk('vendor/login', loginApi);
+
+export { getInvitedVendor, getVendor, registerVendor, login };
 
 //

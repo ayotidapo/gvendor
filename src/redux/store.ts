@@ -1,4 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
+import logger from 'redux-logger';
 import business from './reducers/business';
 import vendor from './reducers/vendor';
 export const makeStore = () => {
@@ -7,6 +8,7 @@ export const makeStore = () => {
 			business,
 			vendor,
 		},
+		middleware: getDefaultMiddleware => getDefaultMiddleware().concat(logger),
 	});
 };
 
