@@ -11,9 +11,9 @@ export const updateBizApi = async (body: Record<string, any>) => {
 };
 
 export const updateBankAccountApi = async (body: Record<string, any>) => {
-	const response = await Fetch(`/profile/account`, {
+	const response = await Fetch(`/vendor/account`, {
 		body,
-		method: 'patch',
+		method: 'put',
 	});
 
 	return response;

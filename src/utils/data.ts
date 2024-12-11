@@ -50,4 +50,10 @@ export const days = [
 	'friday',
 	'saturday',
 ];
-export { servicesOfferedOptions, businessStructureOptions };
+
+const orderStatus: Record<string, any> = {
+	PENDING: 'new',
+	PROCESSING: 'processing',
+	COMPLETED: 'completed',
+};
+export { servicesOfferedOptions, businessStructureOptions, orderStatus };

@@ -7,8 +7,8 @@ interface Props {
 export const signInUser = async (payload: Props) => {
 	try {
 		const response = await signIn('credentials', {
-			...payload,
 			redirect: true,
+			...payload,
 		});
 
 		return response; // Can be null or error depending on the flow

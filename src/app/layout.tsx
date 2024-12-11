@@ -13,7 +13,8 @@ import { getServerSession } from 'next-auth';
 import nextAuthOptions from '@/utils/nextAuthOptions';
 import Navbar from './_Navbar';
 import SessionProvider from '@/providers/SessionProvider';
-import { sessionUser } from '@/utils/interface';
+
+import LayoutWrapper from './_LayoutWrapper';
 
 export const metadata: Metadata = {
 	title: 'Good Vendor',
@@ -25,8 +26,6 @@ export default async function RootLayout({
 }: {
 	children: React.ReactNode;
 }) {
-	const session = await getServerSession(nextAuthOptions);
-	const vendorId = (session?.user as sessionUser)?.id;
 	return (
 		<html lang='en'>
 			<body
@@ -41,11 +40,10 @@ export default async function RootLayout({
 							className='toast-container'
 							toastClassName='dark-toast'
 							pauseOnFocusLoss
-							limit={3}
+							limit={1}
 						/>
-						<Navbar vendorId={vendorId} />
 
-						<main className='pt-16'>{children}</main>
+						<LayoutWrapper>{children}</LayoutWrapper>
 					</Provider>
 				</SessionProvider>
 			</body>

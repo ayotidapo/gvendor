@@ -9,9 +9,10 @@ import { useSelector } from '@/redux/hooks';
 import { IAddress, ObjectData } from '@/utils/interface';
 
 import RegisterBizForm from './RegisterBizForm';
-import { useRouter } from 'next/navigation';
+import { notFound, useRouter, useSearchParams } from 'next/navigation';
 import { registerVendor } from '@/redux/apis/vendor';
 import { setVendor } from '@/redux/reducers/vendor';
+import { toast } from 'react-toastify';
 
 const validationSchema = Yup.object({
 	firstName: Yup.string().required('First name is Required'),
@@ -44,14 +45,15 @@ interface Props {
 const Register: React.FC<Props> = props => {
 	const dispatch = useDispatch();
 	const vendorUser = useSelector(state => state?.vendor);
-	const { error, isSuccess, loading } = vendorUser;
+
+	const { isError, error, isSuccess, loading } = vendorUser;
 	const router = useRouter();
 	const [address, SetAddress] = useState<IAddress>({});
 	const { businessName, email, reference } = props?.vendor || {};
 	const onSelectLocation = (selectLocation: ObjectData) => {
 		SetAddress(selectLocation);
 	};
-
+	console.log({ businessName, email, reference });
 	useEffect(() => {
 		dispatch(setVendor({ businessName, email }));
 	}, []);
@@ -63,6 +65,11 @@ const Register: React.FC<Props> = props => {
 	if (isSuccess && reference) {
 		const qS = vendorUser?._id ? `?vendorId=${vendorUser?._id}` : '';
 		router.replace(`/auth/create-password${qS}`);
+	}
+
+	if (isError) {
+		toast.error(`Error: ${error}`);
+		notFound();
 	}
 
 	return (

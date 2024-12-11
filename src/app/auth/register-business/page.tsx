@@ -13,16 +13,19 @@ interface IVendor {
 
 const RegisterBusinessPage: React.FC<ServerProps> = async props => {
 	const { searchParams } = props;
-	const token = searchParams?.token;
+	const { ck_token = '', token = '' } = searchParams;
+	const anyToken = token || ck_token;
 	let vendor;
 
-	if (token) {
+	if (anyToken) {
 		try {
-			vendor = jwt.decode(token) as IVendor;
+			vendor = jwt.decode(anyToken) as IVendor;
 		} catch {
 			notFound();
 		}
 	}
+
+	console.log({ vendor });
 
 	return <RegisterBusiness vendor={vendor} />;
 };

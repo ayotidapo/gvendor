@@ -4,7 +4,7 @@
 	}
 
 	.orders_wrapper {
-		@apply grid grid-cols-[repeat(auto-fill,minmax(290px,1fr))] gap-6;
+		@apply grid grid-cols-[repeat(auto-fill,minmax(290px,1fr))] gap-6 min-h-[200px];
 	}
 	.input_wrapper {
 		@apply mb-0;
@@ -12,8 +12,8 @@
 }
 
 .order_card {
-	@apply border-2  rounded-2xl min-h-[262px] p-5 flex flex-col hover:scale-[1.05] hover:cursor-pointer;
-	transition: 0.2s transform linear;
+	@apply border-2  rounded-2xl min-h-[262px] p-5 flex flex-col /*hover:scale-[1.05]*/ hover:cursor-pointer;
+	//transition: 0.2s transform linear;
 	&.processing {
 		@apply border-[#ea8d00];
 		.tag {

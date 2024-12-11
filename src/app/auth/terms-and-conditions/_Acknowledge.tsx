@@ -2,12 +2,15 @@
 
 import { SimpleBtn } from '@/atoms/buttons/Button';
 import Checkbox from '@/atoms/Checkbox';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import React, { useState } from 'react';
 
 const _Acknowledge = () => {
 	const router = useRouter();
 	const [enable, setEnable] = useState(true);
+	const searchQ = useSearchParams();
+
+	const token = searchQ.get('c_token') as string;
 	return (
 		<>
 			<p className='flex mt-7'>
@@ -22,7 +25,7 @@ const _Acknowledge = () => {
 			<SimpleBtn
 				className='cont_'
 				disabled={enable}
-				onClick={() => router.replace(`/business-setup`)}
+				onClick={() => router.replace(`/business-setup?ck_token=${token}`)}
 			>
 				Continue
 			</SimpleBtn>

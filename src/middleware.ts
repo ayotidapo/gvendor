@@ -7,6 +7,7 @@ export async function middleware(request: NextRequest) {
 	const rPath = request.nextUrl.pathname;
 
 	const token = cookieStore.get('next-auth.session-token')?.value;
+	//need to verify it tho
 	if (exceptionRoutes.includes(rPath)) return NextResponse.next();
 	else if (token && rPath.startsWith('/auth')) {
 		return NextResponse.redirect(new URL('/', request.url));

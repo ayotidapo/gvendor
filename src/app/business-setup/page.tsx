@@ -1,12 +1,12 @@
 import React from 'react';
 import BusinessSetupPage from '@/onboard/BusinessSetup';
 import { ServerProps } from '@/utils/interface';
-import { notFound, redirect } from 'next/navigation';
+import { notFound } from 'next/navigation';
 
 const BusinessSetup: React.FC<ServerProps> = async props => {
 	const { searchParams } = props;
-	const token = searchParams?.token;
-	if (!token) redirect(`/login`);
+	const ck_token = searchParams?.ck_token;
+	if (!ck_token) notFound();
 
 	return <BusinessSetupPage />;
 };

@@ -1,7 +1,7 @@
 'use client';
 
 import { SimpleBtn } from '@/atoms/buttons/Button';
-import { Input } from '@/atoms/input/Input';
+import { Input } from '@/atoms/Input/Input';
 import { signInUser } from '@/redux/apis/setAuth';
 import { loginApi } from '@/redux/apis/vendor';
 import { setVendor } from '@/redux/reducers/vendor';
@@ -32,6 +32,7 @@ const LoginPage: React.FC = ({}) => {
 			const response = await loginApi(values);
 			const { user = {}, token = '' } = response?.data;
 			dispatch(setVendor({ ...user }));
+			console.log({ o: response?.data, response });
 			localStorage.t_ = response?.data?.token;
 			await signInUser({ goodToken: token, vendorId: user?._id });
 		} catch (e: any) {

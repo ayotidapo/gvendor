@@ -2,9 +2,9 @@
 	@apply inline-block relative cursor-pointer;
 
 	.dropdown__content {
-		@apply absolute  top-12 -left-20 invisible opacity-0 shadow-lg p-1 z-50 bg-white;
+		@apply absolute  top-12 -left-20 invisible /*opacity-0*/ shadow-lg p-1 z-[1000] bg-white hover:opacity-100;
 
-		transition: all 0.35s linear;
+		transition: all 0.05s linear;
 	}
 
 	&:focus-within > .dropdown__content {

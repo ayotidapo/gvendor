@@ -32,3 +32,10 @@ export interface sessionUser {
 	goodToken?: string | undefined;
 	id: string | number | null | undefined;
 }
+
+export interface IFilter {
+	Page: string;
+	Status?: string;
+	limit?: string;
+	Search?: string;
+}

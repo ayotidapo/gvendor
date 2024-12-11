@@ -40,7 +40,7 @@ const initialState: IBusiness = {
 };
 
 export const businessSlice = createSlice({
-	name: 'user',
+	name: 'business',
 
 	initialState,
 
@@ -54,6 +54,8 @@ export const businessSlice = createSlice({
 		builder
 			.addCase(updateBiz.pending, state => {
 				state.loading = true;
+				state.isError = false;
+				state.isSuccess = false;
 			})
 			.addCase(updateBiz.fulfilled, (state, action) => {
 				state.isSuccess = true;

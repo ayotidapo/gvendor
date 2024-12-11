@@ -1,31 +1,24 @@
 'use client';
 
-import React, { useState } from 'react';
-import './biz_setup.scss';
-import { useFormik } from 'formik';
+import React, { useEffect, useState } from 'react';
 import cx from 'classnames';
 import BusinessInfo from './views/BusinessInfo';
 import BankDetails from './views/BankDetails';
 import UploadItem from './views/UploadItem';
-import TimePicker from 'react-time-picker';
 import AllSet from './views/AllSet';
 import OnboardFooter from '@/molecules/OnboardFooter';
+import { ObjectData } from '@/utils/interface';
+import Fetch from '@/utils/fetch';
+import './biz_setup.scss';
 
-const BusinessSetup = () => {
-	const [step, setStep] = useState(0);
+const BusinessSetup: React.FC = () => {
+	const [step, setStep] = useState(1);
 	const [success, setSuccess] = useState(false);
-	const { handleSubmit, getFieldProps, errors, touched } = useFormik({
-		initialValues: {
-			email: '',
-			password: '',
-		},
+	const [banks, setBanks] = useState([]);
 
-		onSubmit: values => {
-			// if (!isLoading) {
-			// 	onLogin(values);
-			// }
-		},
-	});
+	useEffect(() => {
+		getBanks();
+	}, []);
 
 	const onNextStep = (step: number) => {
 		setStep(step);
@@ -33,6 +26,17 @@ const BusinessSetup = () => {
 
 	const onSetSuccess = (staus: boolean) => {
 		setSuccess(staus);
+	};
+
+	const getBanks = async () => {
+		try {
+			const response = await Fetch(`/vendor/banks`);
+			const banks = response?.data?.data?.map((bank: ObjectData) => ({
+				label: bank?.name,
+				value: bank?.code,
+			}));
+			setBanks(banks || []);
+		} catch {}
 	};
 
 	if (success)
@@ -61,7 +65,11 @@ const BusinessSetup = () => {
 				<div className='form_wrapper'>
 					{step === 0 && <BusinessInfo setStep={onNextStep} />}
 					{step === 1 && (
-						<BankDetails setStep={onNextStep} setSuccess={onSetSuccess} />
+						<BankDetails
+							setStep={onNextStep}
+							setSuccess={onSetSuccess}
+							banks={banks}
+						/>
 					)}
 					{step === 2 && <UploadItem />}
 				</div>

@@ -6,7 +6,7 @@ import { Icon } from '../icon/icon';
 import './input.scss';
 
 export const Input = ({
-	type,
+	type = 'text',
 	title = '',
 	name,
 	value = '',

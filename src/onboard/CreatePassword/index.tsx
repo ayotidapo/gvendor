@@ -28,6 +28,8 @@ const CreatePaswordPage = () => {
 	const router = useRouter();
 	const searchQ = useSearchParams();
 	const vendorId = searchQ.get('vendorId');
+
+	const token = searchQ.get('token') as string;
 	const { handleSubmit, getFieldProps, errors, touched } = useFormik({
 		initialValues: {
 			password: '',
@@ -41,7 +43,7 @@ const CreatePaswordPage = () => {
 				const { vendor = {}, token = '' } = response?.data;
 				dispatch(setVendor({ ...vendor, token }));
 				localStorage.t_ = token;
-				router.replace(`/auth/terms-and-conditions`);
+				router.replace(`/auth/terms-and-conditions?ck_token=${token}`);
 			} catch (e: any) {
 				toast.error(`${e?.message} || Something went wrong`);
 			}

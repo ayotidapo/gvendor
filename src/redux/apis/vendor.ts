@@ -40,8 +40,8 @@ export const createBizApi = async (body: Record<string, any>) => {
 	return response;
 };
 
-export const getVendorApi = async () => {
-	const response = await Fetch(`/vendor`);
+export const getVendorApi = async (token = '') => {
+	const response = await Fetch(`/vendor`, {}, token);
 
 	return response;
 };

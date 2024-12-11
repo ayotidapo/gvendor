@@ -5,10 +5,16 @@ import React from 'react';
 import './order-table.scss';
 import { useRouter } from 'next/navigation';
 import { Icon } from '@/atoms/icon/icon';
+import { IOrder } from '@/redux/reducers/orders';
+import { format } from 'date-fns';
+import { orderStatus } from '@/utils/data';
 
-const OrdersTable = () => {
+interface Props {
+	orders: IOrder[];
+}
+const OrdersTable: React.FC<Props> = ({ orders }) => {
 	const router = useRouter();
-
+	console.log({ orders });
 	const onNavigate = () => {
 		router.push(`/orders/9`);
 	};
@@ -25,38 +31,23 @@ const OrdersTable = () => {
 				</tr>
 			</thead>
 			<tbody>
-				<tr onClick={onNavigate}>
-					<td>_</td>
-					<td>#15285058</td>
-					<td>₦48,500.00</td>
-					<td>27/10/2024 3:01PM</td>
-					<td>
-						<Tag title='New' className='new' />
-					</td>
-					<td onClick={e => e.stopPropagation()}>
-						<Icon id='ellipsis' />
-					</td>
-				</tr>
-				<tr>
-					<td>_</td>
-					<td>#15285058</td>
-					<td>₦48,500.00</td>
-					<td>27/10/2024 3:01PM</td>
-					<td>
-						<Tag title='New' className='new' />
-					</td>
-					<td></td>
-				</tr>
-				<tr>
-					<td>_</td>
-					<td>#15285058</td>
-					<td>₦48,500.00</td>
-					<td>27/10/2024 3:01PM</td>
-					<td>
-						<Tag title='New' className='new' />
-					</td>
-					<td></td>
-				</tr>
+				{orders?.map((order, i) => (
+					<tr onClick={onNavigate} key={i}>
+						<td>_</td>
+						<td>#15285058</td>
+						<td>₦{order?.price?.toLocaleString()}</td>
+						<td>{format(order?.date, 'dd/MM/yyyy hh:mm aa')}</td>
+						<td>
+							<Tag
+								title={orderStatus[order?.status]}
+								className={`${orderStatus[order?.status]} capitalize`}
+							/>
+						</td>
+						<td onClick={e => e.stopPropagation()}>
+							<Icon id='ellipsis' />
+						</td>
+					</tr>
+				))}
 			</tbody>
 		</table>
 	);

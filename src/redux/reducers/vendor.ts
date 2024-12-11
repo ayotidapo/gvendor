@@ -43,6 +43,7 @@ export const vendorSlice = createSlice({
 			.addCase(registerVendor.pending, state => {
 				state.status = 'pending';
 				state.loading = true;
+				state.isSuccess = false;
 			})
 			.addCase(registerVendor.fulfilled, (state, action) => {
 				state.isSuccess = true;
@@ -58,12 +59,12 @@ export const vendorSlice = createSlice({
 			})
 			.addCase(getVendor.pending, state => {
 				state.isSuccess = false;
-				state.isError = true;
-				state.loading = false;
+				state.isError = false;
+				state.loading = true;
 			})
 			.addCase(getVendor.fulfilled, (state, action) => {
-				state.isSuccess = false;
-				state.isError = true;
+				state.isSuccess = true;
+				state.isError = false;
 				state.loading = false;
 				Object.assign(state, action.payload?.data);
 			})

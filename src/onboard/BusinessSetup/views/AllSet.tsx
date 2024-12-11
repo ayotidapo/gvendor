@@ -1,3 +1,4 @@
+'use client';
 import { SimpleBtn } from '@/atoms/buttons/Button';
 import { useRouter } from 'next/navigation';
 import React from 'react';
