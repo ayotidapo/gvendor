@@ -15,6 +15,7 @@ import { IFilter } from '@/utils/interface';
 import StatusFilter from '@/molecules/StatusFilter';
 import useApiSearchQuery from '@/customHooks/useApiSearchQuery';
 import SearchFilter from '@/molecules/SearchFilter';
+import LoadingPage from '@/molecules/LoadingPage';
 
 const Orders = () => {
 	const {
@@ -47,19 +48,20 @@ const Orders = () => {
 		dispatch(getOrders(qString));
 	}, [page, status, search]);
 
+	const len = orders?.length;
 	return (
 		<div className='orders'>
 			<div className='page-title_div '>
 				<h2 className='title'>Orders</h2>
 			</div>
 			<section className='metric_cards_wrapper'>
-				<MetricCard title='Total Orders' value={`${totalOrders} Orders`} />
+				<MetricCard title='Total Orders' value={`${totalOrders || 0} Orders`} />
 				<MetricCard
 					title='Average Order value'
 					value={
 						<>
 							<span className='font-medium'>&#8358;</span>
-							{averageOrderValue?.toLocaleString()}
+							{averageOrderValue?.toLocaleString() || 0}
 						</>
 					}
 				/>
@@ -68,9 +70,13 @@ const Orders = () => {
 				<SearchFilter onTextChange={onTextChange} />
 				<StatusFilter onSetStatus={onSetStatus} status={status} />
 			</div>
-			<section>
-				<OrdersTable orders={orders} />
-			</section>
+			{loading && <LoadingPage className='py-5 ' />}
+			{len < 1 && !loading && <h2 className='empty__state'>No Orders found</h2>}
+			{len > 0 && !loading && (
+				<section>
+					<OrdersTable orders={orders} />
+				</section>
+			)}
 		</div>
 	);
 };

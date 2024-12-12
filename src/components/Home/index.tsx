@@ -100,15 +100,15 @@ const HomePage: React.FC = () => {
 					/>
 					<MetricCard
 						title='Total Orders '
-						value={`${totalOrders.toLocaleString()} Orders`}
+						value={`${totalOrders.toLocaleString() || 0} Orders`}
 					/>
 					<MetricCard
 						title='New Orders '
-						value={`${metrics?.totalNewOrders || ''} orders`}
+						value={`${metrics?.totalNewOrders || 0} orders`}
 					/>
 					<MetricCard
 						title='Processing Orders '
-						value={`${metrics?.totalProcessingOrders || ''} orders`}
+						value={`${metrics?.totalProcessingOrders || 0} orders`}
 					/>
 				</section>
 				<div className='filter_div'>
@@ -119,7 +119,9 @@ const HomePage: React.FC = () => {
 					<StatusFilter onSetStatus={onSetStatus} status={status} />
 				</div>
 				{loading && <LoadingPage className='py-5 ' />}
-
+				{len < 1 && !loading && (
+					<h2 className='empty__state'>No Orders found</h2>
+				)}
 				{len > 0 && !loading && (
 					<section className='orders_wrapper'>
 						{orders.map((order: IOrder, i) => (

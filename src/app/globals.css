@@ -187,3 +187,7 @@ img {
 .ellipsis {
 	@apply whitespace-nowrap inline-block overflow-hidden text-ellipsis w-[75px];
 }
+
+.empty__state {
+	@apply h-[250px] flex justify-center items-center text-[#f45d5c] font-medium text-2xl border border-[#fbcece] rounded-md;
+}
