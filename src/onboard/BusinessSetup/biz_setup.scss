@@ -1,0 +1,32 @@
+.business_page {
+	@apply flex justify-center items-center flex-col mb-10 mt-5;
+	.form_wrapper {
+		@apply w-[650px] mb-10;
+	}
+	.tracker_div {
+		@apply grid grid-cols-[repeat(auto-fit,minmax(240px,1fr))] gap-6  self-stretch w-[80%] mx-auto mb-16 mt-2;
+		& > span {
+			@apply h-2 bg-[#eaeaea] rounded-lg;
+
+			&.done {
+				@apply bg-[#F45D2C] text-[#F45D2C];
+			}
+		}
+		.label {
+			@apply mt-2.5 block text-sm;
+		}
+	}
+	.normal {
+		@apply mx-auto block mt-7 mb-10;
+	}
+}
+.btn.got_it {
+	@apply bg-[#F45D2C] w-[352px] my-10;
+}
+
+.opening_days {
+	@apply flex items-center my-5;
+	& > .combine_input {
+		@apply flex-1;
+	}
+}

@@ -1,32 +1,10 @@
-import { ReactNode, useEffect } from 'react';
-import { AuthHeader } from '@/components/typography/AuthHeader';
-import { Gilroy } from '@/fonts/font';
-import { useAppSelector } from '@/hooks/reduxHooks';
-import { authSelector } from '@/redux/reducers/auth/auth.selector';
-import Image from 'next/image';
-import { useRouter } from 'next/navigation';
-import BGIMG from '@/assets/login-bg.svg';
-
-const Wrapper = ({
-	children,
-	title,
-}: {
-	children: ReactNode;
-	title: string;
-}) => {
-	const router = useRouter();
-	const authData = useAppSelector(authSelector);
-
-	useEffect(() => {
-		if (authData.signedIn) {
-			router.push('/');
-		}
-	}, [authData.signedIn]);
+const Wrapper = ({}) => {
+	
 
 	return (
 		<div
 			className={`
-              ${Gilroy.variable} h-screen
+              h-screen
               overflow-hidden lg:flex justify-center items-center
           `}
 		>

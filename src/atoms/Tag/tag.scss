@@ -1,0 +1,13 @@
+.tag {
+	@apply inline-flex justify-center items-center font-normal
+	min-w-[50px] h-[26px] bg-gray-300 text-sm capitalize rounded-2xl px-2;
+	&.processing {
+		@apply text-[#ea8d00] bg-[#f7e9d5];
+	}
+	&.completed {
+		@apply text-[#1b9066] bg-[#d1e7df];
+	}
+	&.new {
+		@apply text-[#b3434d] bg-[#f7e2e4];
+	}
+}

@@ -171,7 +171,7 @@ pipelines:
                 --set autoscaling.enabled=true \
                 --set service.port=${PORT} \
                 --set ingress.enabled=true \
-                --set alb.enabled=true \
+                --set alb.enabled=true \git
                 --set alb.single=true \
                 --set alb.healthcheck=/ \
                 --set service.type=NodePort \

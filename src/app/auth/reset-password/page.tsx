@@ -1,6 +1,6 @@
 'use client';
-import Button from '@/components/buttons/Button';
-import TextInput from '@/components/input/TextInput';
+import Button from '@/atoms/buttons/Button';
+import TextInput from '@/atoms/input/TextInput';
 import { Gilroy, GilroyMedium } from '@/fonts/font';
 import { useResetPasswordMutation } from '@/redux/reducers/auth/authSlice';
 import { useFormik } from 'formik';
@@ -74,7 +74,7 @@ const ResetPassword = () => {
 							onBlur={handleBlur}
 							type='email'
 							placeholder='Enter email'
-							errors={errors?.email}
+							error={errors?.email}
 							extraClass='!ring-[1.5px]'
 						/>
 					</div>
@@ -90,7 +90,7 @@ const ResetPassword = () => {
 							onBlur={handleBlur}
 							type='text'
 							placeholder='Input code'
-							errors={errors?.code}
+							error={errors?.code}
 							extraClass='!ring-[1.5px]'
 						/>
 					</div>
@@ -106,7 +106,7 @@ const ResetPassword = () => {
 							onBlur={handleBlur}
 							type='password'
 							placeholder='Password'
-							errors={errors?.password}
+							error={errors?.password}
 							extraClass='!ring-[1.5px]'
 						/>
 					</div>
