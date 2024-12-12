@@ -13,7 +13,6 @@ export const signInUser = async (payload: Props) => {
 
 		return response; // Can be null or error depending on the flow
 	} catch (error) {
-		console.error('Error during sign-in:', error);
 		throw error;
 	}
 };

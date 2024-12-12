@@ -5,7 +5,7 @@ import cx from 'classnames';
 import './edit.scss';
 import { SimpleBtn } from '@/atoms/buttons/Button';
 import { Icon } from '@/atoms/icon/icon';
-import { Input } from '@/atoms/input/Input';
+import { Input } from '@/atoms/Input/Input';
 
 interface Props {
 	type?: 'text' | 'password' | 'textarea' | 'date';

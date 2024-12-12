@@ -3,7 +3,7 @@ import React from 'react';
 import Image from 'next/image';
 import { SimpleBtn } from '@/atoms/buttons/Button';
 import { Icon } from '@/atoms/icon/icon';
-import { signOut, useSession } from 'next-auth/react';
+import { signOut } from 'next-auth/react';
 import DropDown from '@/atoms/DropDown';
 import { useSelector } from '@/redux/hooks';
 
@@ -18,7 +18,6 @@ const Trigger: React.FC<{ firstName: string }> = ({ firstName }) => (
 );
 const _Navbar: React.FC = () => {
 	const { firstName = '', _id } = useSelector(state => state?.vendor);
-	console.log({ firstName });
 
 	return (
 		<div className='h-[64px] border-[0.5px] border-b-divider-gray justify-center flex items-center px-10 fixed w-full z-10 bg-white'>

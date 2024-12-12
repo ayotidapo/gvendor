@@ -44,7 +44,7 @@ const Orders = () => {
 	};
 
 	useEffect(() => {
-		let qString = constructApiQuery();
+		const qString = constructApiQuery();
 
 		dispatch(getOrders(qString));
 	}, [page, status, search]);

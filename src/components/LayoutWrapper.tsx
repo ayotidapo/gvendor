@@ -1,10 +1,10 @@
 'use client';
 import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from '@/redux/hooks';
+import { useDispatch } from '@/redux/hooks';
 import { getVendor } from '@/redux/apis/vendor';
 
-import { notFound, redirect, useSearchParams } from 'next/navigation';
-import Navbar from './_Navbar';
+import { redirect, useSearchParams } from 'next/navigation';
+import Navbar from './Navbar';
 import LoadingPage from '@/molecules/LoadingPage';
 
 const LayoutWrapper: React.FC<{
@@ -23,11 +23,11 @@ const LayoutWrapper: React.FC<{
 				localStorage.t_ = ck_token;
 				const action = await dispatch(getVendor());
 				if (getVendor.fulfilled.match(action)) {
-					console.log('Success:', action.payload);
+					// console.log('Success:', action.payload);
 				} else if (getVendor.rejected.match(action)) {
-					console.error('Error:', action.error.message);
+					//console.error('Error:', action.error.message);
 				}
-			} catch (e) {
+			} catch {
 				redirect(`/auth/login`);
 			} finally {
 				setLoading(false);

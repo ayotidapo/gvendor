@@ -25,7 +25,7 @@ const RegisterBusinessPage: React.FC<ServerProps> = async props => {
 		}
 	}
 
-	console.log({ vendor });
+	//console.log({ vendor });
 
 	return <RegisterBusiness vendor={vendor} />;
 };

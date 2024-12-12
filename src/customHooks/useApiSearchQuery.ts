@@ -1,3 +1,4 @@
+'use client';
 import { useSearchParams } from 'next/navigation';
 
 const useApiSearchQuery = (limit = 10) => {
@@ -15,7 +16,6 @@ const useApiSearchQuery = (limit = 10) => {
 		);
 
 		let qString = new URLSearchParams(filteredParams).toString();
-		console.log(qString, 'ppepepepepeppep')
 
 		const skip = (Number(page) - 1) * limit;
 

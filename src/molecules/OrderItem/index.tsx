@@ -2,9 +2,7 @@ import React from 'react';
 import Image from 'next/image';
 import './order-item.scss';
 
-interface Props {}
-
-const OrderItem: React.FC<Props> = () => {
+const OrderItem: React.FC = () => {
 	return (
 		<article className='order_item'>
 			<div className='relative w-[140px] h-[140px]'>

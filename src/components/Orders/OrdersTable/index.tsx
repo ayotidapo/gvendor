@@ -14,7 +14,7 @@ interface Props {
 }
 const OrdersTable: React.FC<Props> = ({ orders }) => {
 	const router = useRouter();
-	console.log({ orders });
+
 	const onNavigate = () => {
 		router.push(`/orders/9`);
 	};

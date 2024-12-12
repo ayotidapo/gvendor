@@ -43,7 +43,7 @@ const InventoryPage = () => {
 	};
 
 	useEffect(() => {
-		let qString = constructApiQuery();
+		const qString = constructApiQuery();
 
 		dispatch(getInventories(qString));
 	}, [page, status, search]);

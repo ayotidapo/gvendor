@@ -5,13 +5,13 @@ import { Input } from '@/atoms/Input/Input';
 import { signInUser } from '@/redux/apis/setAuth';
 import { loginApi } from '@/redux/apis/vendor';
 import { setVendor } from '@/redux/reducers/vendor';
-import { Login } from '@/types/types';
+
 import { useFormik } from 'formik';
 import Link from 'next/link';
-import { useSearchParams, useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
-import { useSelector, useDispatch } from '@/redux/hooks';
-import { toast } from 'react-toastify';
+import { useDispatch } from '@/redux/hooks';
+
 import * as Yup from 'yup';
 
 const LoginSchema = Yup.object({
@@ -32,10 +32,11 @@ const LoginPage: React.FC = ({}) => {
 			const response = await loginApi(values);
 			const { user = {}, token = '' } = response?.data;
 			dispatch(setVendor({ ...user }));
-			console.log({ o: response?.data, response });
+
 			localStorage.t_ = response?.data?.token;
 			await signInUser({ goodToken: token, vendorId: user?._id });
 		} catch (e: any) {
+			//console.log(e)
 		} finally {
 			setSubmitting(false);
 		}

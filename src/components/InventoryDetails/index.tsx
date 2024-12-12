@@ -3,11 +3,11 @@
 import { SimpleBtn } from '@/atoms/buttons/Button';
 import { Icon } from '@/atoms/icon/icon';
 
-import React, { useState } from 'react';
+import React from 'react';
 import './inventory-details.scss';
 import Tag from '@/atoms/Tag';
 import Image from 'next/image';
-import { Input } from '@/atoms/input/Input';
+
 import EditInputBox from '@/molecules/EditInputBox';
 import UnderReviewTable from '../Inventory/UnderReviewTable';
 

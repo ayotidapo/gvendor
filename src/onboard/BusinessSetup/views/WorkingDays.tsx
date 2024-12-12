@@ -1,7 +1,7 @@
 import Toggle from '@/atoms/Toggle';
 import TimeInput from '@/molecules/TimeInput';
-import { ErrorMessage, useFormikContext } from 'formik';
-import React, { useEffect, useState } from 'react';
+import { useFormikContext } from 'formik';
+import React, { useState } from 'react';
 
 interface Props {
 	day: string;
@@ -24,7 +24,6 @@ const WorkingDays: React.FC<Props> = props => {
 	// 		setFieldTouched(`availableHours[${i}].closingTime`, true);
 	// 	}
 	// }, [errors]);
-	console.log({ errors, touched, values, dirty });
 
 	const onSetValue = (field: string, value: Value) => {
 		setFieldValue(field, value);

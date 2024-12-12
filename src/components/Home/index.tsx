@@ -71,7 +71,7 @@ const HomePage: React.FC = () => {
 	}, []);
 
 	useEffect(() => {
-		let qString = constructApiQuery();
+		const qString = constructApiQuery();
 		dispatch(getOrders(qString));
 	}, [page, status, search]);
 
@@ -124,7 +124,10 @@ const HomePage: React.FC = () => {
 				{len > 0 && !loading && (
 					<section className='orders_wrapper'>
 						{orders.map((order: IOrder, i) => (
-							<article className={`order_card ${orderStatus[order?.status]}`}>
+							<article
+								className={`order_card ${orderStatus[order?.status]}`}
+								key={i}
+							>
 								<div className='flex justify-between text-black subpixel-antialiased'>
 									Orders #15285057
 								</div>

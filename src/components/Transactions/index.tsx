@@ -9,7 +9,7 @@ import SearchFilter from '@/molecules/SearchFilter';
 import { usePathname, useRouter } from 'next/navigation';
 import useApiSearchQuery from '@/customHooks/useApiSearchQuery';
 import { useDispatch } from '@/redux/hooks';
-import { getTransactions } from '@/redux/apis/inventories';
+import { getInventories } from '@/redux/apis/inventories';
 
 const TransactionPage = () => {
 	const path = usePathname();
@@ -22,9 +22,9 @@ const TransactionPage = () => {
 	};
 
 	useEffect(() => {
-		let qString = constructApiQuery();
+		const qString = constructApiQuery();
 
-		dispatch(getTransactions(qString));
+		dispatch(getInventories(qString));
 	}, [page, status, search]);
 	return (
 		<div className='transactions'>

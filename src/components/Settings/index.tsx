@@ -3,7 +3,6 @@
 import React from 'react';
 import './settings.scss';
 
-import EditInputBox from '@/molecules/EditInputBox';
 import ManageAcct from './views/DeletePrompt';
 
 const Settings = () => {

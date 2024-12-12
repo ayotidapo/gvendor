@@ -1,6 +1,4 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getServerSession } from 'next-auth';
-import NextAuthOptions from '@/utils/nextAuthOptions'; // Path to your NextAuth options
 
 export async function middleware(request: NextRequest) {
 	// Get session

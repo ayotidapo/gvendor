@@ -2,9 +2,7 @@
 import React, { useEffect } from 'react';
 import './settlement.scss';
 import MetricCard from '@/molecules/MetricCard';
-import { Input } from '@/atoms/Input/Input';
-import { SimpleBtn } from '@/atoms/buttons/Button';
-import { Icon } from '@/atoms/icon/icon';
+
 import SettlementTable from './SettlementTable';
 import { useRouter } from 'next/navigation';
 import { useDispatch, useSelector } from '@/redux/hooks';
@@ -40,7 +38,7 @@ const SettlementPage = () => {
 	};
 
 	useEffect(() => {
-		let qString = constructApiQuery();
+		const qString = constructApiQuery();
 
 		//dispatch(getSettlements(qString));
 	}, [page, status, search]);
