@@ -1,11 +1,14 @@
 import { Input } from '@/atoms/Input/Input';
 import React, { ChangeEvent, useEffect, useState } from 'react';
+import './seachfilter.scss';
+import { usePathname } from 'next/navigation';
 
 interface Props {
 	onTextChange: (value: string) => void;
 }
 
 const SearchFilter: React.FC<Props> = ({ onTextChange }) => {
+	const path = usePathname();
 	const [searchText, setSearchText] = useState('');
 
 	useEffect(() => {
@@ -16,7 +19,7 @@ const SearchFilter: React.FC<Props> = ({ onTextChange }) => {
 	}, [searchText]);
 
 	return (
-		<div className='relative'>
+		<div className='search__filter'>
 			<Input
 				name='search'
 				value={searchText}

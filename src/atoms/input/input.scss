@@ -16,7 +16,7 @@ textarea.input {
 }
 .input,
 .PhoneInputInput {
-	@apply w-full h-[58px] border border-[#7a7978] focus:border-[#7a7978] focus:border-[1.5px]    focus:ring-0 
+	@apply w-full h-[58px] border border-[#7a7978] focus:border-[#7a7978] focus:border-[1.5px] focus:ring-0 
     rounded-lg;
 
 	&.hasIcon {

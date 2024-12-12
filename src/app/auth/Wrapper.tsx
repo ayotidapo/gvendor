@@ -1,19 +1,4 @@
-import { ReactNode, useEffect } from 'react';
-import { AuthHeader } from '@/atoms/typography/AuthHeader';
-import { Gilroy } from '@/fonts/font';
-import { useAppSelector } from '@/hooks/reduxHooks';
-import { authSelector } from '@/redux/reducers/auth/auth.selector';
-import Image from 'next/image';
-import { useRouter } from 'next/navigation';
-import BGIMG from '@/assets/login-bg.svg';
-
-const Wrapper = ({
-	children,
-	title,
-}: {
-	children: ReactNode;
-	title?: string;
-}) => {
+const Wrapper = ({}) => {
 	const router = useRouter();
 	const authData = useAppSelector(authSelector);
 

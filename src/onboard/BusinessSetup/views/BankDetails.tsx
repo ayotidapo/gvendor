@@ -36,7 +36,7 @@ const BankDetails: React.FC<Props> = props => {
 	const [loading, setLoading] = useState(false);
 
 	const searchQ = useSearchParams();
-	const token = searchQ.get('token') as string;
+	const token = searchQ.get('ck_token') as string;
 
 	const {
 		setFieldTouched,
@@ -60,7 +60,11 @@ const BankDetails: React.FC<Props> = props => {
 				await updateBankAccountApi(values);
 				// if Invited user: do this
 				props.setSuccess(true);
-				await signInUser({ goodToken: token, vendorId: vendor?._id });
+				await signInUser({
+					goodToken: token,
+					vendorId: vendor?._id,
+					redirect: false,
+				});
 				//props.setStep(2);
 				//router.replace(`/`);
 				//else: do this

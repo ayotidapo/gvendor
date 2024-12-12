@@ -10,7 +10,7 @@ const _Acknowledge = () => {
 	const [enable, setEnable] = useState(true);
 	const searchQ = useSearchParams();
 
-	const token = searchQ.get('c_token') as string;
+	const token = searchQ.get('ck_token') as string;
 	return (
 		<>
 			<p className='flex mt-7'>

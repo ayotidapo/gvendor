@@ -15,7 +15,7 @@ const AllSet = () => {
 					dashboard. Once approved, your items will be available for sale on
 					Good.
 				</p>
-				<SimpleBtn className='got_it' onClick={() => router.replace(`/orders`)}>
+				<SimpleBtn className='got_it' onClick={() => router.replace(`/`)}>
 					Got it
 				</SimpleBtn>
 			</div>

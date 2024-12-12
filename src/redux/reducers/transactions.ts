@@ -1,10 +1,9 @@
 import { IAddress, IVendor } from '@/utils/interface';
 import { createSlice } from '@reduxjs/toolkit';
-import { updateBiz } from '../apis/business';
 import { toast } from 'react-toastify';
-import { getOrders } from '../apis/orders';
+import { getTransactions } from '../apis/transactions';
 
-export interface IOrder {
+export interface ITransaction {
 	_id: string;
 	itemsOrdered: string[];
 	quantity: number;
@@ -15,48 +14,48 @@ export interface IOrder {
 	customerLastName: string;
 }
 
-interface IOrders {
+interface ITransactions {
 	totalSales: number;
 	totalOrders: number;
 	averageOrderValue: number;
-	orders: IOrder[];
+	transactions: ITransactions[];
 	isSuccess?: boolean;
 	isError?: boolean;
 	error?: string | undefined;
 	loading?: boolean;
 }
-const initialState: IOrders = {
+const initialState: ITransactions = {
 	totalSales: 0,
 	totalOrders: 0,
 	averageOrderValue: 0,
-	orders: [],
+	transactions: [],
 };
 
-export const ordersSlice = createSlice({
-	name: 'orders',
+export const transactionsSlice = createSlice({
+	name: 'transactions',
 
 	initialState,
 
 	reducers: {
-		setOrders(state: IOrders, action) {
+		setOrders(state: ITransactions, action) {
 			Object.assign(state, action.payload);
 		},
 	},
 
 	extraReducers: builder => {
 		builder
-			.addCase(getOrders.pending, state => {
+			.addCase(getTransactions.pending, state => {
 				state.loading = true;
 				state.isSuccess = false;
 				state.isError = false;
 			})
-			.addCase(getOrders.fulfilled, (state, action) => {
+			.addCase(getTransactions.fulfilled, (state, action) => {
 				state.isSuccess = true;
 				state.isError = false;
 				state.loading = false;
 				Object.assign(state, action.payload?.data);
 			})
-			.addCase(getOrders.rejected, (state, action) => {
+			.addCase(getTransactions.rejected, (state, action) => {
 				if (action.error?.message)
 					toast.error(`Error occured: ${action.error?.message}`);
 
@@ -68,5 +67,5 @@ export const ordersSlice = createSlice({
 	},
 });
 
-export const { setOrders } = ordersSlice.actions;
-export default ordersSlice.reducer;
+export const { setOrders } = transactionsSlice.actions;
+export default transactionsSlice.reducer;

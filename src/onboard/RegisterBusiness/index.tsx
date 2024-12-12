@@ -54,6 +54,7 @@ const Register: React.FC<Props> = props => {
 		SetAddress(selectLocation);
 	};
 	console.log({ businessName, email, reference });
+
 	useEffect(() => {
 		dispatch(setVendor({ businessName, email }));
 	}, []);

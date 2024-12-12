@@ -12,7 +12,7 @@ import Fetch from '@/utils/fetch';
 import './biz_setup.scss';
 
 const BusinessSetup: React.FC = () => {
-	const [step, setStep] = useState(1);
+	const [step, setStep] = useState(0);
 	const [success, setSuccess] = useState(false);
 	const [banks, setBanks] = useState([]);
 

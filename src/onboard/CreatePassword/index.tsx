@@ -29,7 +29,6 @@ const CreatePaswordPage = () => {
 	const searchQ = useSearchParams();
 	const vendorId = searchQ.get('vendorId');
 
-	const token = searchQ.get('token') as string;
 	const { handleSubmit, getFieldProps, errors, touched } = useFormik({
 		initialValues: {
 			password: '',

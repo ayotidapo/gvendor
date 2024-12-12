@@ -71,8 +71,12 @@ const HomePage: React.FC = () => {
 	}, []);
 
 	useEffect(() => {
-		let qString = constructApiQuery();
+		if (page === 1 && !status && !search) {
+			dispatch(getOrders(''));
+			return;
+		}
 
+		let qString = constructApiQuery();
 		dispatch(getOrders(qString));
 	}, [page, status, search]);
 
