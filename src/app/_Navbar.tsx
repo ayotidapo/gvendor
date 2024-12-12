@@ -12,7 +12,7 @@ const Trigger: React.FC<{ firstName: string }> = ({ firstName }) => (
 		<span className='w-5 h-5 rounded-full bg-black text-white inline-flex items-center justify-center subpixel-antialiased font-geist mr-2 uppercase'>
 			{firstName?.charAt(0)}
 		</span>
-		<span className='ellipsis text-left'>{firstName}</span>
+		<span className='ellipsis text-left capitalize'>{firstName}</span>
 		<Icon id='caret-down' width={12} height={10} className='ml-2' />
 	</SimpleBtn>
 );

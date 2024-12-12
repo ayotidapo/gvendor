@@ -1,12 +1,5 @@
 const Wrapper = ({}) => {
-	const router = useRouter();
-	const authData = useAppSelector(authSelector);
-
-	useEffect(() => {
-		if (authData.signedIn) {
-			// router.push('/');
-		}
-	}, [authData.signedIn]);
+	
 
 	return (
 		<div
