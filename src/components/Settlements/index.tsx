@@ -1,12 +1,51 @@
-import React from 'react';
+'use client';
+import React, { useEffect } from 'react';
 import './settlement.scss';
 import MetricCard from '@/molecules/MetricCard';
-import { Input } from '@/atoms/input/Input';
+import { Input } from '@/atoms/Input/Input';
 import { SimpleBtn } from '@/atoms/buttons/Button';
 import { Icon } from '@/atoms/icon/icon';
 import SettlementTable from './SettlementTable';
+import { useRouter } from 'next/navigation';
+import { useDispatch, useSelector } from '@/redux/hooks';
+import useApiSearchQuery from '@/customHooks/useApiSearchQuery';
+import { usePathname } from 'next/navigation';
+import SearchFilter from '@/molecules/SearchFilter';
+import StatusFilter from '@/molecules/StatusFilter';
+import { settlementStatus } from '@/utils/data';
 
 const SettlementPage = () => {
+	// const {
+	// 	orders,
+	// 	isError,
+	// 	isSuccess,
+	// 	loading,
+	// 	averageOrderValue = '...',
+	// 	totalOrders = '...',
+	// 	totalSales = '...',
+	// } = useSelector(state => state?.settlements);
+	const router = useRouter();
+	const { constructApiQuery, page, status, search } = useApiSearchQuery(12);
+
+	const dispatch = useDispatch();
+
+	const path = usePathname();
+
+	const onSetStatus = (status: string) => {
+		router.push(`${path}?status=${status}`);
+	};
+
+	const onTextChange = (searchValue: string) => {
+		router.push(`${path}?status=${status}&page=${page}&search=${searchValue}`);
+	};
+
+	useEffect(() => {
+		let qString = constructApiQuery();
+
+		//dispatch(getSettlements(qString));
+	}, [page, status, search]);
+
+	//const len = orders?.length;
 	return (
 		<div className='settlements'>
 			<div className='page-title_div '>
@@ -16,17 +55,12 @@ const SettlementPage = () => {
 				<MetricCard title='Total Earnings' value='₦149,720,000.00' />
 			</section>
 			<div className='filter_div'>
-				<Input
-					name=''
-					hasIcon
-					iconSvg='search'
-					className='search'
-					placeholder='Search'
+				<SearchFilter onTextChange={onTextChange} />
+				<StatusFilter
+					onSetStatus={onSetStatus}
+					status={status}
+					states={settlementStatus}
 				/>
-				<SimpleBtn className='filter'>
-					<Icon id='sortp' className='mr-2' />
-					<span>Sort by: Successful</span>
-				</SimpleBtn>
 			</div>
 			<section>
 				<SettlementTable />

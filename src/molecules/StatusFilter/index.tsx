@@ -6,8 +6,9 @@ import React from 'react';
 interface Props {
 	onSetStatus: (status: string) => void;
 	status: string;
+	states: { name: string; value: string }[];
 }
-const StatusFilter: React.FC<Props> = ({ onSetStatus, status }) => {
+const StatusFilter: React.FC<Props> = ({ onSetStatus, status, states }) => {
 	return (
 		<SimpleBtn className='filter'>
 			<Icon id='sortp' className='mr-2' />
@@ -19,16 +20,11 @@ const StatusFilter: React.FC<Props> = ({ onSetStatus, status }) => {
 				}
 			>
 				<div className='w-[220px] flex flex-col p-4 gap-4 text-left'>
-					<span onClick={() => onSetStatus('')}>All</span>
-					<span role='button' onClick={() => onSetStatus('NEW')}>
-						New
-					</span>
-					<span role='button' onClick={() => onSetStatus('ONGOING')}>
-						Processing
-					</span>
-					<span role='button' onClick={() => onSetStatus('FULFILLED')}>
-						Completed
-					</span>
+					{states.map(({ name, value }, i) => (
+						<span role='button' onClick={() => onSetStatus(value)} key={i}>
+							{name}
+						</span>
+					))}
 				</div>
 			</DropDown>
 		</SimpleBtn>

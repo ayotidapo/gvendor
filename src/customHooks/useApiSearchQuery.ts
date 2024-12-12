@@ -15,10 +15,13 @@ const useApiSearchQuery = (limit = 10) => {
 		);
 
 		let qString = new URLSearchParams(filteredParams).toString();
+		console.log(qString, 'ppepepepepeppep')
 
 		const skip = (Number(page) - 1) * limit;
 
-		qString = page ? `?skip=${skip}&limit=${limit}&${qString}` : `?${qString}`;
+		// qString = page ? `?skip=${skip}&limit=${limit}&${qString}` : `?${qString}`; UNCOMMENT when pagination works for all
+
+		qString = `?${qString}`; // to be deleted
 
 		return qString;
 	};

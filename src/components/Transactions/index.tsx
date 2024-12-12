@@ -9,7 +9,7 @@ import SearchFilter from '@/molecules/SearchFilter';
 import { usePathname, useRouter } from 'next/navigation';
 import useApiSearchQuery from '@/customHooks/useApiSearchQuery';
 import { useDispatch } from '@/redux/hooks';
-import { getTransactions } from '@/redux/apis/transactions';
+import { getTransactions } from '@/redux/apis/inventories';
 
 const TransactionPage = () => {
 	const path = usePathname();

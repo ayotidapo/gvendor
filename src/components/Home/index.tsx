@@ -12,7 +12,7 @@ import Link from 'next/link';
 import { useDispatch, useSelector } from '@/redux/hooks';
 import { usePathname, useRouter } from 'next/navigation';
 import { getOrders } from '@/redux/apis/orders';
-import { orderStatus } from '@/utils/data';
+import { orderStages, orderStatus } from '@/utils/data';
 
 import Fetch from '@/utils/fetch';
 import { ObjectData } from '@/utils/interface';
@@ -71,11 +71,6 @@ const HomePage: React.FC = () => {
 	}, []);
 
 	useEffect(() => {
-		if (page === 1 && !status && !search) {
-			dispatch(getOrders(''));
-			return;
-		}
-
 		let qString = constructApiQuery();
 		dispatch(getOrders(qString));
 	}, [page, status, search]);
@@ -116,11 +111,15 @@ const HomePage: React.FC = () => {
 						Recent Orders
 					</span>
 					<SearchFilter onTextChange={onTextChange} />
-					<StatusFilter onSetStatus={onSetStatus} status={status} />
+					<StatusFilter
+						onSetStatus={onSetStatus}
+						status={status}
+						states={orderStages}
+					/>
 				</div>
 				{loading && <LoadingPage className='py-5 ' />}
 				{len < 1 && !loading && (
-					<h2 className='empty__state'>No Orders found</h2>
+					<h2 className='empty__state'>No Order found</h2>
 				)}
 				{len > 0 && !loading && (
 					<section className='orders_wrapper'>
