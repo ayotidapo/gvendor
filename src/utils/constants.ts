@@ -41,3 +41,7 @@ export const PAYMENTSTATUS = [
 		type: 'danger',
 	},
 ];
+
+export const regex: Record<string, RegExp> = {
+	onlyDigits: /^[^\w\d]*\d*[^\w\d]*$/,
+};

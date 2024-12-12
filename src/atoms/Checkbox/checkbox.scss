@@ -1,0 +1,34 @@
+.checkbox {
+	@apply cursor-pointer;
+
+	&.square {
+	.checkbox_mirror {
+		@apply rounded-none;
+	}
+}
+}
+.checkbox_mirror {
+	@apply inline-flex w-5 h-5 rounded-full border-[1.5px] border-[#7a7978] justify-center items-center text-white;
+	&::after {
+		@apply h-[18px] w-[16px];
+		content: url('/assets/check.svg');
+	}
+}
+
+
+
+.title {
+	@apply ml-2;
+}
+input[type='checkbox'] {
+	@apply hidden;
+
+	&:checked {
+		& + .checkbox_mirror {
+			@apply bg-[#F45D2C] border-transparent;
+		}
+		& ~ .title {
+			@apply inline-flex;
+		}
+	}
+}

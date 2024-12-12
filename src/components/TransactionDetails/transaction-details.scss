@@ -1,0 +1,20 @@
+.transactiondetails {
+	.dl_section {
+		@apply w-[70%];
+	}
+	.dt_dd {
+		@apply flex justify-between flex-wrap;
+		&::after {
+			@apply my-3.5;
+			content: '';
+			display: block;
+			width: 100%;
+			border: 0.2px solid #eaeaea;
+		}
+		&:last-child {
+			&::after {
+				@apply border-0;
+			}
+		}
+	}
+}

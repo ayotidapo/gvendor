@@ -1,0 +1,8 @@
+.inventory_details {
+	.page-title_div {
+		@apply mb-0;
+		& > .btn_div {
+			@apply w-auto;
+		}
+	}
+}

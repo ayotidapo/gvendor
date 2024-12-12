@@ -1,0 +1,11 @@
+.btn {
+	@apply inline-flex justify-center items-center bg-black h-[58px] rounded-lg w-full text-white active:scale-95 hover:opacity-85 px-2;
+	transition: all 0.2s linear;
+
+	&:disabled {
+		@apply opacity-25 hover:cursor-not-allowed active:scale-100;
+	}
+	&.normal {
+		@apply w-[352px];
+	}
+}
