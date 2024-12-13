@@ -18,7 +18,6 @@ const InputPhone: React.FC<IPProps> = ({
 	onBlur,
 	...props
 }) => {
-	console.log(field, 'po', onChange);
 	return (
 		<div className={`ph_div ${error ? 'error_' : ''}`}>
 			<PhoneInput

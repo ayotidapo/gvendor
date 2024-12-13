@@ -7,12 +7,12 @@ const items = [
 		route: '/orders',
 		match: /^\/orders/,
 	},
-	{
-		name: 'Transaction',
-		icon: 'sales',
-		route: '/transactions',
-		match: /^\/transactions/,
-	},
+	// {
+	// 	name: 'Transaction',
+	// 	icon: 'sales',
+	// 	route: '/transactions',
+	// 	match: /^\/transactions/,
+	// },
 	{
 		name: 'Inventory',
 		icon: 'inventory',

@@ -73,7 +73,7 @@ body {
 	@apply w-full border-separate border-spacing-0 border-0 border-b-[1px] border-t-divider-gray;
 
 	th {
-		@apply text-left  h-[58px] text-[#050301] text-sm;
+		@apply text-left  h-[58px] text-[#050301] text-sm font-medium;
 	}
 
 	td {

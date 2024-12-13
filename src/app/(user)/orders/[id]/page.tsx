@@ -1,31 +1,25 @@
-'use client';
-
-import { format } from 'date-fns';
-import { formatCurrency } from '@/helpers';
-import { Header } from '@/atoms/typography/Header';
-import { Status } from '@/atoms/cards/StatusTag';
-import { useParams } from 'next/navigation';
-import { useEffect } from 'react';
-import { useGetOrderDetailMutation } from '@/redux/orders/orders.slice';
 import OrderDetailsPage from '@/components/OrderDetails';
+import { ServerProps, sessionUser } from '@/utils/interface';
+import { getOrdersDetailsApi } from '@/redux/apis/orderdetails';
+import Fetch from '@/utils/fetch';
+import { getServerSession } from 'next-auth';
+import options from '@/utils/nextAuthOptions';
+import { IOrderDetails } from '@/redux/reducers/order_details';
 
-const OrderDetails = () => {
-	const { id } = useParams();
-	//const [getOrderDetail, { data: orderData }] = useGetOrderDetailMutation();
+const OrderDetails: React.FC<ServerProps> = async ({ params }) => {
+	const orderId = params?.id;
 
-	useEffect(() => {
-		// getOrderDetail(id as string);
-	}, [id]);
-	const getType = (status: string) => {
-		if (
-			status.toLocaleLowerCase() === 'delivered' ||
-			status.toLocaleLowerCase() === 'completed'
-		) {
-			return 'success';
-		}
-		return 'warn';
-	};
-	return <OrderDetailsPage />;
+	const session = await getServerSession(options);
+	const user = session?.user as sessionUser;
+
+	const response = await Fetch(
+		`/order/details/${orderId}`,
+		{},
+		user?.goodToken
+	);
+	const details = response?.data;
+
+	return <OrderDetailsPage details={details} />;
 };
 
 export default OrderDetails;

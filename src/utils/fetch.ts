@@ -19,7 +19,7 @@ const Fetch = async (
 		else fullPath = `${process.env.NEXT_PUBLIC_API_BASE_URL}${path}`;
 
 		let authorizationToken = '';
-		console.log(fullPath, 'DAPO');
+
 		if (typeof global.window !== 'undefined') {
 			const token = localStorage?.t_;
 			authorizationToken = `Bearer ${token}`;
@@ -39,6 +39,7 @@ const Fetch = async (
 
 		if (!response.ok) {
 			if (response.status === 401 && typeof global.window !== 'undefined') {
+				//console.log('e')
 			}
 
 			const responseErr = await response.json();
@@ -51,7 +52,7 @@ const Fetch = async (
 
 		return result;
 	} catch (e: any) {
-		console.log(e.message, e.status, 9000, e);
+		// console.log(e.message, e.status, 9000, e);
 		throw { message: e.message, status: e.status };
 	}
 };

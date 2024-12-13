@@ -2,8 +2,6 @@ import { IVendor } from '@/utils/interface';
 import { createSlice } from '@reduxjs/toolkit';
 import { getVendor, registerVendor } from '../apis/vendor';
 
-export interface IUser {}
-
 interface IState extends IVendor {
 	_id: string;
 	isSuccess?: boolean;
@@ -33,7 +31,6 @@ export const vendorSlice = createSlice({
 
 	reducers: {
 		setVendor(state: IState, action) {
-			console.log({ waoh: action.payload });
 			Object.assign(state, action.payload);
 		},
 	},

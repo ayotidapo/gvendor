@@ -11,7 +11,7 @@ interface Props {
 const Modal: React.FC<Props> = props => {
 	const { children, open, onClose } = props;
 	const [isOpen, setIsOpen] = useState(open);
-	console.log(isOpen);
+
 	useEffect(() => {
 		setIsOpen(isOpen);
 		onClose?.();

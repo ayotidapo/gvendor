@@ -1,7 +1,6 @@
 import React from 'react';
 
 import './dropdown.scss';
-import { Icon } from '../icon/icon';
 
 interface Props {
 	className?: string;

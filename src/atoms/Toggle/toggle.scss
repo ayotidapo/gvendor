@@ -10,7 +10,7 @@
 	& > .check {
 		@apply hidden;
 
-		&:disabled,
+		&:disabled &:disabled:hover,
 		&:checked + .toggle {
 			@apply bg-[#f45d2c];
 			& > .indicator {

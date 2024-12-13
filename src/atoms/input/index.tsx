@@ -1,5 +1,5 @@
 'use client';
-import { ErrorMessage, Field, FieldProps, useField } from 'formik';
+import { ErrorMessage, Field, useField } from 'formik';
 
 import React, { useState } from 'react';
 import cx from 'classnames';

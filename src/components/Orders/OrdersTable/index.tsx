@@ -14,9 +14,9 @@ interface Props {
 }
 const OrdersTable: React.FC<Props> = ({ orders }) => {
 	const router = useRouter();
-	console.log({ orders });
-	const onNavigate = () => {
-		router.push(`/orders/9`);
+
+	const onNavigate = (orderId: string) => {
+		router.push(`/orders/${orderId}`);
 	};
 	return (
 		<table className='table_'>
@@ -32,14 +32,14 @@ const OrdersTable: React.FC<Props> = ({ orders }) => {
 			</thead>
 			<tbody>
 				{orders?.map((order, i) => (
-					<tr onClick={onNavigate} key={i}>
+					<tr onClick={() => onNavigate(order?._id)} key={i}>
 						<td>_</td>
 						<td>#15285058</td>
 						<td>₦{order?.price?.toLocaleString()}</td>
 						<td>{format(order?.date, 'dd/MM/yyyy hh:mm aa')}</td>
 						<td>
 							<Tag
-								title={orderStatus[order?.status]}
+								title={order?.status?.toLowerCase()}
 								className={`${orderStatus[order?.status]} capitalize`}
 							/>
 						</td>

@@ -1,6 +1,5 @@
-import { IAddress, IVendor } from '@/utils/interface';
 import { createSlice } from '@reduxjs/toolkit';
-import { updateBiz } from '../apis/business';
+
 import { toast } from 'react-toastify';
 import { getOrders } from '../apis/orders';
 

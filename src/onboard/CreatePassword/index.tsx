@@ -24,7 +24,7 @@ const CreatePasswordSchema = Yup.object({
 const CreatePaswordPage = () => {
 	const dispatch = useDispatch();
 	const sta = useSelector(state => state.vendor);
-	console.log(sta);
+
 	const router = useRouter();
 	const searchQ = useSearchParams();
 	const vendorId = searchQ.get('vendorId');
@@ -52,7 +52,7 @@ const CreatePaswordPage = () => {
 	const onLogin = async () => {
 		toast.success('Login successful', { theme: 'colored' });
 	};
-	console.log({ errors, touched });
+
 	return (
 		<form onSubmit={handleSubmit} className='w-[420px]'>
 			<h2 className='auth_h2'>Create a password for your account</h2>

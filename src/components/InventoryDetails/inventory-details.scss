@@ -5,4 +5,7 @@
 			@apply w-auto;
 		}
 	}
+	.x_dropdown > .dropdown__content {
+		@apply -left-[170px] top-[70px];
+	}
 }

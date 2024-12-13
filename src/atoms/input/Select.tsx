@@ -31,7 +31,7 @@ const Select: React.FC<Props> = props => {
 				{...rest}
 			>
 				<option value=''>{placeholder}</option>
-				{props.options?.map(option => (
+				{options?.map(option => (
 					<option key={option.value} value={option.value}>
 						{option.label}
 					</option>
