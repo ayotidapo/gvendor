@@ -34,7 +34,7 @@ module.exports = {
 		'@typescript-eslint/no-unsafe-function-type': 'warn',
 		'jsx-a11y/href-no-hash': 'off',
 		'linebreak-style': 0,
-		'no-console': 'error',
+		'no-console': 'warn',
 		'no-useless-catch': 'warn',
 		'no-case-declarations': 0,
 		'react/prop-types': 0,
