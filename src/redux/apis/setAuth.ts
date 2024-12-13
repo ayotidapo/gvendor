@@ -7,7 +7,7 @@ interface Props {
 export const signInUser = async (payload: Props) => {
 	try {
 		const response = await signIn('credentials', {
-			redirect: true,
+			//redirect: true,
 			...payload,
 		});
 
