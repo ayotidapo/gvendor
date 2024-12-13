@@ -15,15 +15,9 @@ const TransactionPage = () => {
 	const path = usePathname();
 	const router = useRouter();
 	const dispatch = useDispatch();
-	const { constructApiQuery, page, status, search } = useApiSearchQuery(12);
-
-	const qString = useMemo(() => {
-		return constructApiQuery();
-	}, [page, status, search]);
+	const { qString, page, status, search } = useApiSearchQuery(12);
 
 	useEffect(() => {
-		const qString = constructApiQuery();
-
 		dispatch(getInventories(qString));
 	}, [qString]);
 

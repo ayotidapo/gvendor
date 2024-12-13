@@ -1,19 +1,20 @@
 import { Input } from '@/atoms/Input/Input';
-import React, { ChangeEvent, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './seachfilter.scss';
-import { usePathname } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 
 interface Props {
 	onTextChange: (value: string) => void;
 }
 
 const SearchFilter: React.FC<Props> = ({ onTextChange }) => {
-	const path = usePathname();
-	const [searchText, setSearchText] = useState('');
+	const sQ = useSearchParams();
+	const search = sQ.get('search');
+	const [searchText, setSearchText] = useState<string | null>(search || null);
 
 	useEffect(() => {
-		if (!searchText) return;
-		const handler = window.setTimeout(() => onTextChange(searchText), 2000);
+		if (searchText === null) return;
+		const handler = window.setTimeout(() => onTextChange(searchText), 1000);
 		return () => {
 			window.clearTimeout(handler);
 		};
@@ -23,7 +24,7 @@ const SearchFilter: React.FC<Props> = ({ onTextChange }) => {
 		<div className='search__filter'>
 			<Input
 				name='search'
-				value={searchText}
+				value={searchText as string}
 				hasIcon
 				iconSvg='search'
 				className='search'

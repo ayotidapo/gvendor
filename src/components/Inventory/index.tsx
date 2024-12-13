@@ -32,24 +32,18 @@ const InventoryPage = () => {
 	const dispatch = useDispatch();
 	const path = usePathname();
 
-	const { constructApiQuery, page, status, search } = useApiSearchQuery(12);
-
-	const qString = useMemo(() => {
-		return constructApiQuery();
-	}, [page, status, search]);
+	const { qString, page, status, search } = useApiSearchQuery(12);
 
 	useEffect(() => {
-		const qString = constructApiQuery();
-
 		dispatch(getInventories(qString));
 	}, [qString]);
 
 	const onSetStatus = (status: string) => {
-		router.push(`${path}?status=${status}`);
+		router.push(`${path}?status=${status}&page=1&search=${search}`);
 	};
 
 	const onTextChange = (searchValue: string) => {
-		router.push(`${path}?status=${status}&page=${page}&search=${searchValue}`);
+		router.push(`${path}?status=${status}&page=1&search=${searchValue}`);
 	};
 
 	const len = products?.length;

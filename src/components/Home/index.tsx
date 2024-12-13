@@ -37,18 +37,13 @@ const HomePage: React.FC = () => {
 	const [metrics, setMetrics] = useState<ObjectData>({});
 
 	const path = usePathname();
-	const { constructApiQuery, page, status, search } = useApiSearchQuery(5);
+	const { qString, /*page,*/ status, search } = useApiSearchQuery(5); //will need page later when pagnation is done
 
 	useEffect(() => {
 		onGetAllMetrics();
 	}, []);
 
-	const qString = useMemo(() => {
-		return constructApiQuery();
-	}, [page, status, search]);
-
 	useEffect(() => {
-		const qString = constructApiQuery();
 		dispatch(getOrders(qString));
 	}, [qString]);
 
