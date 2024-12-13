@@ -3,8 +3,6 @@ import { createSlice } from '@reduxjs/toolkit';
 import { updateBiz } from '../apis/business';
 import { toast } from 'react-toastify';
 
-export interface IUser {}
-
 interface IBusiness {
 	businessName: string;
 	businessAddress: IAddress;

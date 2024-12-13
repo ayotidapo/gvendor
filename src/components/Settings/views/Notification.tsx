@@ -30,13 +30,13 @@ const Notification = () => {
 			</div>
 			<section>
 				<div className='my-5 cursor-pointer'>
-					<Radio className='stngs' title='Notification only' />
+					<Radio name='' className='stngs' title='Notification only' />
 				</div>
 				<div className='my-5'>
-					<Radio className='stngs' title='Email and notification' />
+					<Radio name='' className='stngs' title='Email and notification' />
 				</div>
 				<div className='my-5'>
-					<Radio className='stngs' title='Off' />
+					<Radio name='' className='stngs' title='Off' />
 				</div>
 			</section>
 			{!isNonEdit && <SimpleBtn className='req_change'>Save</SimpleBtn>}

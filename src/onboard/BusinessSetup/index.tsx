@@ -36,7 +36,9 @@ const BusinessSetup: React.FC = () => {
 				value: bank?.code,
 			}));
 			setBanks(banks || []);
-		} catch {}
+		} catch {
+			//console.log('e')
+		}
 	};
 
 	if (success)

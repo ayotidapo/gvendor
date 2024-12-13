@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import { Icon } from '@/atoms/icon/icon';
+
 import OnboardFooter from '@/molecules/OnboardFooter';
 export const metadata = {
 	title: 'Next.js',

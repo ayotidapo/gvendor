@@ -1,4 +1,6 @@
+'use client';
 import { useSearchParams } from 'next/navigation';
+import { useMemo } from 'react';
 
 const useApiSearchQuery = (limit = 10) => {
 	const sQ = useSearchParams();
@@ -16,14 +18,20 @@ const useApiSearchQuery = (limit = 10) => {
 
 		let qString = new URLSearchParams(filteredParams).toString();
 
-		const skip = (Number(page) - 1) * limit;
+		//const skip = (Number(page) - 1) * limit;
 
-		qString = page ? `?skip=${skip}&limit=${limit}&${qString}` : `?${qString}`;
+		// qString = page ? `?skip=${skip}&limit=${limit}&${qString}` : `?${qString}`; UNCOMMENT when pagination works for all
+
+		qString = `?${qString}`; // to be deleted
 
 		return qString;
 	};
 
-	return { constructApiQuery, page, status, search };
+	const qString = useMemo(() => {
+		return constructApiQuery();
+	}, [page, status, search]);
+
+	return { qString, page, status, search };
 };
 
 export default useApiSearchQuery;

@@ -3,7 +3,9 @@ import logger from 'redux-logger';
 import business from './reducers/business';
 import vendor from './reducers/vendor';
 import orders from './reducers/orders';
-import transactions from './reducers/transactions';
+import inventories from './reducers/inventories';
+import settlements from './reducers/settlements';
+import orderDetails from './reducers/order_details';
 
 export const makeStore = () => {
 	return configureStore({
@@ -11,7 +13,9 @@ export const makeStore = () => {
 			business,
 			vendor,
 			orders,
-			transactions,
+			inventories,
+			settlements,
+			orderDetails,
 		},
 		middleware: getDefaultMiddleware => getDefaultMiddleware().concat(logger),
 	});

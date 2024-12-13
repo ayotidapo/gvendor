@@ -1,12 +1,6 @@
 'use client';
 
-import Button, { SimpleBtn } from '@/atoms/buttons/Button';
-import { Input } from '@/atoms/input/Input';
-import { Gilroy, GilroyMedium } from '@/fonts/font';
-import { useAppDispatch } from '@/hooks/reduxHooks';
-import { updateUserWithAuth } from '@/redux/reducers/auth/auth.reducer';
-import { useLoginMutation } from '@/redux/reducers/auth/authSlice';
-import { AuthResponse, Login } from '@/types/types';
+import { Login } from '@/types/types';
 import { useFormik } from 'formik';
 import Link from 'next/link';
 import { useSearchParams, useRouter } from 'next/navigation';

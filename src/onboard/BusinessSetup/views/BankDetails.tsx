@@ -7,7 +7,6 @@ import { useFormik } from 'formik';
 import { updateBankAccountApi } from '@/redux/apis/business';
 import { toast } from 'react-toastify';
 import { useRouter, useSearchParams } from 'next/navigation';
-import AllSet from './AllSet';
 import { signInUser } from '@/redux/apis/setAuth';
 import { useSelector } from '@/redux/hooks';
 import Select from '@/atoms/Input/Select';
@@ -30,7 +29,6 @@ interface Props {
 	banks: IOption[];
 }
 const BankDetails: React.FC<Props> = props => {
-	const router = useRouter();
 	const vendor = useSelector(state => state.vendor);
 	const [isLoading, setIsLoading] = useState(false);
 	const [loading, setLoading] = useState(false);
@@ -82,12 +80,11 @@ const BankDetails: React.FC<Props> = props => {
 
 	useEffect(() => {
 		if (!bankCode || accountNumber.length < 10) {
-			console.log(bankCode, 8);
 			setFieldValue('accountName', '');
 			setFieldValue('bankCode', '');
 			return;
 		}
-		console.log(bankCode, 9);
+
 		getBankDetails();
 	}, [bankCode, accountNumber]);
 
@@ -106,8 +103,6 @@ const BankDetails: React.FC<Props> = props => {
 			setLoading(false);
 		}
 	};
-
-	console.log({ errors, touched });
 
 	return (
 		<form onSubmit={handleSubmit}>

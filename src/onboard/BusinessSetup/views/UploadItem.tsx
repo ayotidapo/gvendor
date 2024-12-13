@@ -1,7 +1,7 @@
 import Radio from '@/atoms/Radio';
 import Select from '@/atoms/Select';
 import { SimpleBtn } from '@/atoms/buttons/Button';
-import { Input } from '@/atoms/input/Input';
+import { Input } from '@/atoms/Input/Input';
 import InputFile from '@/molecules/InputFile';
 import React from 'react';
 

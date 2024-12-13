@@ -2,7 +2,7 @@ import Input from '@/atoms/Input';
 import Radio from '@/atoms/Radio';
 import { ErrorMessage, useFormikContext } from 'formik';
 
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 
 interface IProps {
 	fName: string;
@@ -10,9 +10,9 @@ interface IProps {
 	rName: string;
 }
 const DialogRadio: React.FC<IProps> = props => {
-	const { values, setFieldError } = useFormikContext<Record<string, any>>();
+	const { values } = useFormikContext<Record<string, any>>();
 	const { rName, fName } = props;
-	console.log({ fName });
+
 	const validate = (value: string) => {
 		let error;
 

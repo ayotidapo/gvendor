@@ -9,7 +9,7 @@ import { useSelector } from '@/redux/hooks';
 import { IAddress, ObjectData } from '@/utils/interface';
 
 import RegisterBizForm from './RegisterBizForm';
-import { notFound, useRouter, useSearchParams } from 'next/navigation';
+import { notFound, useRouter } from 'next/navigation';
 import { registerVendor } from '@/redux/apis/vendor';
 import { setVendor } from '@/redux/reducers/vendor';
 import { toast } from 'react-toastify';
@@ -53,7 +53,6 @@ const Register: React.FC<Props> = props => {
 	const onSelectLocation = (selectLocation: ObjectData) => {
 		SetAddress(selectLocation);
 	};
-	console.log({ businessName, email, reference });
 
 	useEffect(() => {
 		dispatch(setVendor({ businessName, email }));
@@ -100,7 +99,7 @@ const Register: React.FC<Props> = props => {
 						reference,
 						servicesOffered: [values?.servicesOffered],
 					};
-					console.log(payload);
+
 					dispatch(registerVendor(payload));
 				}}
 			>

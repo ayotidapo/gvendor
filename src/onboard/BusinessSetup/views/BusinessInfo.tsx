@@ -136,7 +136,7 @@ const BusinessInfo: React.FC<Props> = props => {
 							[days[i]]: { ...cur, open: !!cur.open },
 						};
 					}, {});
-					console.log(mappedHours, 'yup');
+
 					const payload = {
 						...restValues,
 						businessAddress: { ...address },
@@ -146,13 +146,12 @@ const BusinessInfo: React.FC<Props> = props => {
 						isSonNumber,
 						businessPhonenumber: values?.businessPhonenumber?.replace('+', ''),
 					};
-					console.log(payload);
+
 					dispatch(updateBiz(payload));
 				}}
 				validationSchema={validationSchema}
 			>
 				{({ values, errors, touched, setFieldValue, handleBlur }) => {
-					console.log({ values, errors, touched });
 					return (
 						<Form>
 							<Input

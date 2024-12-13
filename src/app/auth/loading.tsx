@@ -1,8 +1,8 @@
-import CircularSpinner from '@/atoms/loaders/CircularSpinner';
+import LoadingPage from '@/molecules/LoadingPage';
 import React from 'react';
 
 const Loading = () => {
-	return <>Loa ding...</>;
+	return <LoadingPage />;
 };
 
 export default Loading;

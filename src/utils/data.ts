@@ -55,5 +55,81 @@ const orderStatus: Record<string, any> = {
 	PENDING: 'new',
 	PROCESSING: 'processing',
 	COMPLETED: 'completed',
+
+	NEW: 'new',
+	ONGOING: 'processing',
+	FULFILLED: 'completed',
 };
-export { servicesOfferedOptions, businessStructureOptions, orderStatus };
+
+const orderStages = [
+	{
+		name: 'All',
+		value: '',
+	},
+	{
+		name: 'New',
+		value: 'NEW',
+	},
+	{
+		name: 'Processing',
+		value: 'ONGOING',
+	},
+	{
+		name: 'Completed',
+		value: 'FULFILLED',
+	},
+];
+
+const setStages = [
+	{
+		name: 'Set as new',
+		value: 'NEW',
+	},
+	{
+		name: 'Set as processing',
+		value: 'ONGOING',
+	},
+	{
+		name: 'Set as completed',
+		value: 'FULFILLED',
+	},
+];
+
+const inventoryStatus = [
+	{
+		name: 'All',
+		value: '',
+	},
+	{
+		name: 'Active',
+		value: 'ACTIVE',
+	},
+	{
+		name: 'Inactive',
+		value: 'INACTIVE',
+	},
+];
+
+const settlementStatus = [
+	{
+		name: 'All',
+		value: '',
+	},
+	{
+		name: 'Successful',
+		value: 'SUCCESSFUL',
+	},
+	{
+		name: 'Pending',
+		value: 'PENDING',
+	},
+];
+export {
+	servicesOfferedOptions,
+	businessStructureOptions,
+	orderStatus,
+	orderStages,
+	inventoryStatus,
+	settlementStatus,
+	setStages,
+};

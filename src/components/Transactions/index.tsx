@@ -1,5 +1,5 @@
 'use client';
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 
 import './transaction.scss';
 import { SimpleBtn } from '@/atoms/buttons/Button';
@@ -9,23 +9,22 @@ import SearchFilter from '@/molecules/SearchFilter';
 import { usePathname, useRouter } from 'next/navigation';
 import useApiSearchQuery from '@/customHooks/useApiSearchQuery';
 import { useDispatch } from '@/redux/hooks';
-import { getTransactions } from '@/redux/apis/transactions';
+import { getInventories } from '@/redux/apis/inventories';
 
 const TransactionPage = () => {
 	const path = usePathname();
 	const router = useRouter();
 	const dispatch = useDispatch();
-	const { constructApiQuery, page, status, search } = useApiSearchQuery(12);
+	const { qString, page, status, search } = useApiSearchQuery(12);
+
+	useEffect(() => {
+		dispatch(getInventories(qString));
+	}, [qString]);
 
 	const onTextChange = (searchValue: string) => {
 		router.push(`${path}?status=${status}&page=${page}&search=${searchValue}`);
 	};
 
-	useEffect(() => {
-		let qString = constructApiQuery();
-
-		dispatch(getTransactions(qString));
-	}, [page, status, search]);
 	return (
 		<div className='transactions'>
 			<div className='page-title_div'>

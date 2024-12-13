@@ -22,42 +22,42 @@ const DeletePrompt = () => {
 					<span>
 						I&apos;ve closed my business and no longer need the account.
 					</span>
-					<Checkbox />
+					<Checkbox name='' value='' onChange={() => {}} />
 				</div>
 				<div className='reason'>
 					<span>
 						I&apos;ve decided to switch to a different selling platform.
 					</span>
-					<Checkbox />
+					<Checkbox name='' value='' onChange={() => {}} />
 				</div>
 				<div className='reason'>
 					<span>
 						i&apos;m shifting to products that don&apos;t align with Good&apos;s
 						offerings.
 					</span>
-					<Checkbox />
+					<Checkbox name='' value='' onChange={() => {}} />
 				</div>
 				<div className='reason'>
 					<span>I&apos;m not seeing enough sales activity on Good.</span>
-					<Checkbox />
+					<Checkbox name='' value='' onChange={() => {}} />
 				</div>
 				<div className='reason'>
 					<span>I find the fees or policies unsuitable for my business.</span>
-					<Checkbox />
+					<Checkbox name='' value='' onChange={() => {}} />
 				</div>
 				<div className='reason'>
 					<span>
 						I need a platform that integrates better with my inventory system.
 					</span>
-					<Checkbox />
+					<Checkbox name='' value='' onChange={() => {}} />
 				</div>
 				<div className='reason'>
 					<span>I prefer not to disclose a reason.</span>
-					<Checkbox />
+					<Checkbox name='' value='' onChange={() => {}} />
 				</div>
 			</section>
 			<div className='flex '>
-				<Checkbox className='agree' />
+				<Checkbox className='agree' name='' value='' onChange={() => {}} />
 				<span className=' -translate-y-1'>
 					By selecting this checkbox, you agree to permanently delete your
 					account and all your data
