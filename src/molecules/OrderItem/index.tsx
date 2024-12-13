@@ -33,7 +33,7 @@ const OrderItem: React.FC<Props> = ({ item }) => {
 				<div className='dl'>
 					<span className='dt'>Extra options:</span>
 					{item.comboItems?.map((combo, i) => (
-						<div className='flex justify-between'>
+						<div className='flex justify-between' key={i}>
 							<span>Chicken pie (Qty: {combo.quantity})</span>{' '}
 							<div>₦{combo?.price?.toLocaleString()}</div>
 						</div>

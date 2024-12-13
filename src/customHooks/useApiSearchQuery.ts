@@ -17,7 +17,7 @@ const useApiSearchQuery = (limit = 10) => {
 		);
 
 		let qString = new URLSearchParams(filteredParams).toString();
-		console.log(qString, 'DARRWRWR', filteredParams);
+
 		//const skip = (Number(page) - 1) * limit;
 
 		// qString = page ? `?skip=${skip}&limit=${limit}&${qString}` : `?${qString}`; UNCOMMENT when pagination works for all

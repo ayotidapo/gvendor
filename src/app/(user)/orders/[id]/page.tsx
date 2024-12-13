@@ -8,7 +8,7 @@ import { IOrderDetails } from '@/redux/reducers/order_details';
 
 const OrderDetails: React.FC<ServerProps> = async ({ params }) => {
 	const orderId = params?.id;
-	console.log(orderId, `/order/details/${orderId}`);
+
 	const session = await getServerSession(options);
 	const user = session?.user as sessionUser;
 
