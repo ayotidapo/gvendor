@@ -10,10 +10,10 @@ interface Props {
 const SearchFilter: React.FC<Props> = ({ onTextChange }) => {
 	const sQ = useSearchParams();
 	const search = sQ.get('search');
-	const [searchText, setSearchText] = useState<string | null>(search || null);
+	const [searchText, setSearchText] = useState<string>(search || '');
 
 	useEffect(() => {
-		if (searchText === null) return;
+		if (searchText === '') return;
 		const handler = window.setTimeout(() => onTextChange(searchText), 1000);
 		return () => {
 			window.clearTimeout(handler);
@@ -34,7 +34,7 @@ const SearchFilter: React.FC<Props> = ({ onTextChange }) => {
 			{searchText && (
 				<span
 					className='absolute right-5 top-2.5 text-2xl inline-block cursor-pointer'
-					onClick={() => setSearchText('')}
+					onClick={() => setSearchText(' ')}
 				>
 					&times;
 				</span>
