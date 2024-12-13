@@ -279,6 +279,7 @@ pipelines:
             - echo "NEXTAUTH_URL=${NEXTAUTH_URL_STAGING}" >> .env
             - echo "NEXTAUTH_SECRET=${NEXTAUTH_SECRET_STAGING}" >> .env
             - echo "NEXT_PUBLIC_GOOGLE_PLACE_API=${NEXT_PUBLIC_GOOGLE_PLACE_API_STAGING}" >> .env
+            - ls -a
             - docker build -t ${IMAGE_NAME} .
             - docker tag ${IMAGE_NAME}:latest 976193256269.dkr.ecr.${REGION}.amazonaws.com/${IMAGE_NAME}:${VERSION}
             - docker push 976193256269.dkr.ecr.${REGION}.amazonaws.com/${IMAGE_NAME}:${VERSION}
