@@ -1,5 +1,5 @@
 'use client';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 
 import './inventory.scss';
 import { SimpleBtn } from '@/atoms/buttons/Button';
@@ -28,11 +28,21 @@ const InventoryPage = () => {
 
 	const [show, setShow] = useState(false);
 	const router = useRouter();
-	const { constructApiQuery, page, status, search } = useApiSearchQuery(12);
 
 	const dispatch = useDispatch();
-
 	const path = usePathname();
+
+	const { constructApiQuery, page, status, search } = useApiSearchQuery(12);
+
+	const qString = useMemo(() => {
+		return constructApiQuery();
+	}, [page, status, search]);
+
+	useEffect(() => {
+		const qString = constructApiQuery();
+
+		dispatch(getInventories(qString));
+	}, [qString]);
 
 	const onSetStatus = (status: string) => {
 		router.push(`${path}?status=${status}`);
@@ -41,12 +51,6 @@ const InventoryPage = () => {
 	const onTextChange = (searchValue: string) => {
 		router.push(`${path}?status=${status}&page=${page}&search=${searchValue}`);
 	};
-
-	useEffect(() => {
-		const qString = constructApiQuery();
-
-		dispatch(getInventories(qString));
-	}, [page, status, search]);
 
 	const len = products?.length;
 	return (

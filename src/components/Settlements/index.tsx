@@ -1,5 +1,5 @@
 'use client';
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import './settlement.scss';
 import MetricCard from '@/molecules/MetricCard';
 
@@ -23,11 +23,21 @@ const SettlementPage = () => {
 	// 	totalSales = '...',
 	// } = useSelector(state => state?.settlements);
 	const router = useRouter();
-	const { constructApiQuery, page, status, search } = useApiSearchQuery(12);
 
 	const dispatch = useDispatch();
-
 	const path = usePathname();
+
+	const { constructApiQuery, page, status, search } = useApiSearchQuery(12);
+
+	const qString = useMemo(() => {
+		return constructApiQuery();
+	}, [page, status, search]);
+
+	useEffect(() => {
+		const qString = constructApiQuery();
+
+		//dispatch(getSettlements(qString));
+	}, [qString]);
 
 	const onSetStatus = (status: string) => {
 		router.push(`${path}?status=${status}`);
@@ -36,12 +46,6 @@ const SettlementPage = () => {
 	const onTextChange = (searchValue: string) => {
 		router.push(`${path}?status=${status}&page=${page}&search=${searchValue}`);
 	};
-
-	useEffect(() => {
-		const qString = constructApiQuery();
-
-		//dispatch(getSettlements(qString));
-	}, [page, status, search]);
 
 	//const len = orders?.length;
 	return (

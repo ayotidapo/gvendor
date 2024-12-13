@@ -12,6 +12,7 @@ const SearchFilter: React.FC<Props> = ({ onTextChange }) => {
 	const [searchText, setSearchText] = useState('');
 
 	useEffect(() => {
+		if (!searchText) return;
 		const handler = window.setTimeout(() => onTextChange(searchText), 2000);
 		return () => {
 			window.clearTimeout(handler);

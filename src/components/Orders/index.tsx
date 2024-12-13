@@ -4,7 +4,7 @@ import { Icon } from '@/atoms/icon/icon';
 import { Input } from '@/atoms/Input/Input';
 
 import MetricCard from '@/molecules/MetricCard';
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import './orders.scss';
 import OrdersTable from './OrdersTable';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
@@ -28,12 +28,22 @@ const Orders = () => {
 		totalOrders = '...',
 		totalSales = '...',
 	} = useSelector(state => state?.orders);
+
 	const router = useRouter();
+	const dispatch = useDispatch();
+	const path = usePathname();
+
 	const { constructApiQuery, page, status, search } = useApiSearchQuery(12);
 
-	const dispatch = useDispatch();
+	const qString = useMemo(() => {
+		return constructApiQuery();
+	}, [page, status, search]);
 
-	const path = usePathname();
+	useEffect(() => {
+		const qString = constructApiQuery();
+
+		dispatch(getOrders(qString));
+	}, [qString]);
 
 	const onSetStatus = (status: string) => {
 		router.push(`${path}?status=${status}`);
@@ -42,12 +52,6 @@ const Orders = () => {
 	const onTextChange = (searchValue: string) => {
 		router.push(`${path}?status=${status}&page=${page}&search=${searchValue}`);
 	};
-
-	useEffect(() => {
-		const qString = constructApiQuery();
-
-		dispatch(getOrders(qString));
-	}, [page, status, search]);
 
 	const len = orders?.length;
 	return (

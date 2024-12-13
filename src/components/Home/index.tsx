@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import './home.scss';
 
 import { Icon } from '@/atoms/icon/icon';
@@ -36,10 +36,21 @@ const HomePage: React.FC = () => {
 	const router = useRouter();
 	const [metrics, setMetrics] = useState<ObjectData>({});
 
-	const [searchText, setSearchText] = useState('');
-
 	const path = usePathname();
 	const { constructApiQuery, page, status, search } = useApiSearchQuery(5);
+
+	useEffect(() => {
+		onGetAllMetrics();
+	}, []);
+
+	const qString = useMemo(() => {
+		return constructApiQuery();
+	}, [page, status, search]);
+
+	useEffect(() => {
+		const qString = constructApiQuery();
+		dispatch(getOrders(qString));
+	}, [qString]);
 
 	const onGetAllMetrics = () => {
 		Fetch(`/order/all?status=NEW`).then(r => {
@@ -59,21 +70,12 @@ const HomePage: React.FC = () => {
 	};
 
 	const onTextChange = (searchValue: string) => {
-		router.push(`${path}?status=${status}&page=${page}&search=${searchValue}`);
+		router.push(`${path}?status=${status}&page=1&search=${searchValue}`);
 	};
 
 	const onSetStatus = (status: string) => {
-		router.push(`${path}?status=${status}`);
+		router.push(`${path}?status=${status}&page=1&search=${search}`);
 	};
-
-	useEffect(() => {
-		onGetAllMetrics();
-	}, []);
-
-	useEffect(() => {
-		const qString = constructApiQuery();
-		dispatch(getOrders(qString));
-	}, [page, status, search]);
 
 	const len = orders?.length;
 

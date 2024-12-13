@@ -1,5 +1,5 @@
 'use client';
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 
 import './transaction.scss';
 import { SimpleBtn } from '@/atoms/buttons/Button';
@@ -17,15 +17,20 @@ const TransactionPage = () => {
 	const dispatch = useDispatch();
 	const { constructApiQuery, page, status, search } = useApiSearchQuery(12);
 
-	const onTextChange = (searchValue: string) => {
-		router.push(`${path}?status=${status}&page=${page}&search=${searchValue}`);
-	};
+	const qString = useMemo(() => {
+		return constructApiQuery();
+	}, [page, status, search]);
 
 	useEffect(() => {
 		const qString = constructApiQuery();
 
 		dispatch(getInventories(qString));
-	}, [page, status, search]);
+	}, [qString]);
+
+	const onTextChange = (searchValue: string) => {
+		router.push(`${path}?status=${status}&page=${page}&search=${searchValue}`);
+	};
+
 	return (
 		<div className='transactions'>
 			<div className='page-title_div'>
