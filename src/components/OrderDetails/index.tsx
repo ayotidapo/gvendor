@@ -30,7 +30,12 @@ const OrderDetailsPage: React.FC<Props> = ({ details }) => {
 				<div className='page-title_div'>
 					<h2 className='title'>Orders #{o_details?.orderNumber}</h2>
 					<div className='btn_div'>
-						<SimpleBtn className='set_as'>Set as processing</SimpleBtn>
+						<SimpleBtn
+							className='set_as'
+							disabled={o_details.status === 'PROCESSING'}
+						>
+							Set as processing
+						</SimpleBtn>
 						<DropDown
 							className='x_dropdown'
 							component={
