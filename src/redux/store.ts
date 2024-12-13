@@ -5,6 +5,7 @@ import vendor from './reducers/vendor';
 import orders from './reducers/orders';
 import inventories from './reducers/inventories';
 import settlements from './reducers/settlements';
+import orderDetails from './reducers/order_details';
 
 export const makeStore = () => {
 	return configureStore({
@@ -14,6 +15,7 @@ export const makeStore = () => {
 			orders,
 			inventories,
 			settlements,
+			orderDetails,
 		},
 		middleware: getDefaultMiddleware => getDefaultMiddleware().concat(logger),
 	});

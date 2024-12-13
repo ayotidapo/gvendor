@@ -10,6 +10,8 @@ import Image from 'next/image';
 
 import EditInputBox from '@/molecules/EditInputBox';
 import UnderReviewTable from '../Inventory/UnderReviewTable';
+import DropDown from '@/atoms/DropDown';
+import { setStages } from '@/utils/data';
 
 const InventoryDetailsPage = () => {
 	return (
@@ -18,9 +20,23 @@ const InventoryDetailsPage = () => {
 				<div className='page-title_div'>
 					<h2 className='title'>Jollof Rice and 6 Chicken Wings</h2>
 					<div className='btn_div'>
-						<SimpleBtn className='ellips'>
-							<Icon id='ellipsis' width={20} height={20} />
-						</SimpleBtn>
+						<DropDown
+							className='x_dropdown'
+							component={
+								<SimpleBtn className='ellips'>
+									<Icon id='ellipsis' width={20} height={20} />
+								</SimpleBtn>
+							}
+						>
+							<div className='w-[220px] flex flex-col p-4 gap-4 text-left'>
+								<span role='button' onClick={() => {}}>
+									Remove from sale
+								</span>
+								<span role='button' onClick={() => {}}>
+									delete
+								</span>
+							</div>
+						</DropDown>
 					</div>
 				</div>
 

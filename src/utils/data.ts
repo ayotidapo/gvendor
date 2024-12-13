@@ -55,6 +55,10 @@ const orderStatus: Record<string, any> = {
 	PENDING: 'new',
 	PROCESSING: 'processing',
 	COMPLETED: 'completed',
+
+	NEW: 'new',
+	ONGOING: 'processing',
+	FULFILLED: 'completed',
 };
 
 const orderStages = [
@@ -72,6 +76,21 @@ const orderStages = [
 	},
 	{
 		name: 'Completed',
+		value: 'FULFILLED',
+	},
+];
+
+const setStages = [
+	{
+		name: 'Set as new',
+		value: 'NEW',
+	},
+	{
+		name: 'Set as processing',
+		value: 'ONGOING',
+	},
+	{
+		name: 'Set as completed',
 		value: 'FULFILLED',
 	},
 ];
@@ -112,4 +131,5 @@ export {
 	orderStages,
 	inventoryStatus,
 	settlementStatus,
+	setStages,
 };
