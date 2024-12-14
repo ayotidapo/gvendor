@@ -109,6 +109,7 @@ body {
 img {
 	object-fit: contain;
 	object-position: left top;
+	@apply bg-[#fffcf9];
 }
 
 .btn.toggle_edit {

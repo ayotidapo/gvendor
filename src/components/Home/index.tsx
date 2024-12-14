@@ -77,6 +77,7 @@ const HomePage: React.FC = () => {
 	return (
 		<>
 			<div className='homepage'>
+			
 				<div className='page-title_div '>
 					<h2 className='title'>Home</h2>
 				</div>
