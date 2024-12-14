@@ -13,8 +13,10 @@ const OrderItem: React.FC<Props> = ({ item }) => {
 	return (
 		<article className='order_item'>
 			<div className='relative w-[140px] h-[140px]'>
-				<Image src='/assets/image68.png' alt='order-img' fill />
+				{/* <Image src='/assets/image68.png' alt='order-img' fill /> */}
+				<img src='/assets/image68.png' alt='' />
 			</div>
+
 			<div className='flex-1 px-5'>
 				<div className='flex justify-between xx:flex-col md:flex-row'>
 					<span className='dt'>{item.name}</span>

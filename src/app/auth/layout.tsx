@@ -24,12 +24,17 @@ export default async function RootLayout({
 					<div className='max-h-[100%]'>{children}</div>
 				</section>
 
-				<div className='flex justify-end  w-[40%] h-[98%] relative'>
-					<Image
+				<div className='flex justify-end  w-[40%] h-[98%] relative bg-img'>
+					{/* <Image
 						src='/assets/onboard-img.png'
 						layout='fill'
 						alt='bg image'
 						objectFit='cover'
+					/> */}
+					<img
+						src='/assets/onboard-img.png'
+						alt='bg image'
+						className='h-full w-full object-cover '
 					/>
 				</div>
 			</div>

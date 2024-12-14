@@ -30,7 +30,8 @@ const InventoryTable: React.FC<{ products: IProduct[] }> = ({ products }) => {
 					<tr onClick={onNavigate} key={i}>
 						<td className='flex items-center'>
 							<div className='relative  h-10 w-10 mr-2'>
-								<Image src='/assets/image68.png' alt='' fill />
+								{/* <Image src='/assets/image68.png' alt='' fill /> */}
+								<img src='/assets/image68.png' alt='' />
 							</div>
 							<span>{product.name}</span>
 						</td>
@@ -39,7 +40,7 @@ const InventoryTable: React.FC<{ products: IProduct[] }> = ({ products }) => {
 						<td>
 							<Tag title='Active' className='completed' />
 						</td>
-						<td>{format(new Date(),'dd/MM/yyyy hh:mm aa')}</td>
+						<td>{format(new Date(), 'dd/MM/yyyy hh:mm aa')}</td>
 					</tr>
 				))}
 			</tbody>
