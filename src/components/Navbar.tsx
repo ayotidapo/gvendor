@@ -24,13 +24,7 @@ const _Navbar: React.FC = () => {
 		<div className='h-[64px] border-[0.5px] border-b-divider-gray justify-center flex items-center px-10 fixed w-full z-10 bg-white'>
 			<div>
 				{/* <Image src='/assets/logo.png' width={100} height={32} alt='logo' /> */}
-				<Image
-					src={Logo}
-					alt='bg image'
-					width={100}
-					height={32}
-					className='h-[32px] w-[100.82px] '
-				/>
+				<Image src={Logo} alt='bg image' width={100} height={32} />
 			</div>
 			{_id && firstName && (
 				<div className='ml-auto'>
