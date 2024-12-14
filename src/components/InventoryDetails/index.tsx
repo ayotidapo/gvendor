@@ -56,28 +56,19 @@ const InventoryDetailsPage = () => {
 				</h2>
 				<div className=' grid grid-cols-[repeat(auto-fill,minmax(140px,1fr))] gap-2.5 gap-y-6'>
 					<div className='relative h-[140px] w-[140px]  rounded-lg overflow-hidden'>
-						<Image
+						{/* <Image
 							src='/assets/image68.png'
 							fill
 							alt=''
 							className=' object-cover'
-						/>
+						/> */}
+						<img src='/assets/image68.png' alt='' />
 					</div>
 					<div className='relative h-[140px] w-[140px]  rounded-lg overflow-hidden'>
-						<Image
-							src='/assets/image68.png'
-							fill
-							alt=''
-							className=' object-cover'
-						/>
+						<img src='/assets/image68.png' alt='' />
 					</div>
 					<div className='relative h-[140px] w-[140px] rounded-lg overflow-hidden'>
-						<Image
-							src='/assets/image68.png'
-							fill
-							alt=''
-							className=' object-cover'
-						/>
+						<img src='/assets/image68.png' alt='' />
 					</div>
 				</div>
 				<h2 className='text-xl text-black mt-10 mb-6 subpixel-antialiased'>
