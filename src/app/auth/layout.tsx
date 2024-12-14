@@ -32,7 +32,7 @@ export default async function RootLayout({
 						objectFit='cover'
 					/> */}
 					<img
-						src='/assets/onboard-img.png'
+						src='/onboardImg.png'
 						alt='bg image'
 						className='h-full w-full object-cover '
 					/>

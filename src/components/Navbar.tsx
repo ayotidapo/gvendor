@@ -1,12 +1,13 @@
 'use client';
 import React from 'react';
-import Image from 'next/image';
+import Logo from '../../public/assets/logo.png';
 import { SimpleBtn } from '@/atoms/buttons/Button';
 import { Icon } from '@/atoms/icon/icon';
 import { signOut } from 'next-auth/react';
 import DropDown from '@/atoms/DropDown';
 import { useSelector } from '@/redux/hooks';
 
+import Image from 'next/image';
 const Trigger: React.FC<{ firstName: string }> = ({ firstName }) => (
 	<SimpleBtn className='nav__bar_btn'>
 		<span className='w-5 h-5 rounded-full bg-black text-white inline-flex items-center justify-center subpixel-antialiased font-geist mr-2 uppercase'>
@@ -23,11 +24,7 @@ const _Navbar: React.FC = () => {
 		<div className='h-[64px] border-[0.5px] border-b-divider-gray justify-center flex items-center px-10 fixed w-full z-10 bg-white'>
 			<div>
 				{/* <Image src='/assets/logo.png' width={100} height={32} alt='logo' /> */}
-				<img
-					src='/assets/logo.png'
-					alt='bg image'
-					className='h-[32px] w-[100.82px] '
-				/>
+				<Image src={Logo} alt='bg image' width={100} height={32} />
 			</div>
 			{_id && firstName && (
 				<div className='ml-auto'>
