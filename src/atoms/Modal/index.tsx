@@ -4,26 +4,24 @@ import './modal.scss';
 
 interface Props {
 	children: React.ReactNode;
-	open?: boolean;
-	onClose?: () => void;
+	open: boolean;
+	onClose: () => void;
+	bodyClose?: boolean;
 }
 
 const Modal: React.FC<Props> = props => {
-	const { children, open, onClose } = props;
-	const [isOpen, setIsOpen] = useState(open);
+	console.log({ props });
+	const { children, open, onClose, bodyClose } = props;
 
-	useEffect(() => {
-		setIsOpen(isOpen);
-		onClose?.();
-	}, [isOpen]);
+	const onBodyClose = () => {
+		if (!bodyClose) return;
+		props.onClose();
+	};
 
 	return (
-		<div className={cx(`modal`, { open: isOpen })}>
-			<section
-				className={cx(`modal_content `, { open })}
-				onClick={() => setIsOpen(false)}
-			>
-				<div className='close_icon'>&times;</div>
+		<div className={cx(`modal`, { open })}>
+			<section className={cx(`modal_content `, { open })} onClick={onBodyClose}>
+				{false && <div className='close_icon'>&times;</div>}
 
 				<div>{children}</div>
 			</section>
