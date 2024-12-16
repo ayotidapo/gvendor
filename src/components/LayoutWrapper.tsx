@@ -6,6 +6,7 @@ import { getVendor } from '@/redux/apis/vendor';
 import { redirect, useSearchParams } from 'next/navigation';
 import Navbar from './Navbar';
 import LoadingPage from '@/molecules/LoadingPage';
+import { signOut } from 'next-auth/react';
 
 const LayoutWrapper: React.FC<{
 	children: React.ReactNode;
@@ -28,6 +29,7 @@ const LayoutWrapper: React.FC<{
 					//console.error('Error:', action.error.message);
 				}
 			} catch {
+				await signOut();
 				redirect(`/auth/login`);
 			} finally {
 				setLoading(false);

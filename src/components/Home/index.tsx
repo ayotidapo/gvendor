@@ -77,7 +77,6 @@ const HomePage: React.FC = () => {
 	return (
 		<>
 			<div className='homepage'>
-			
 				<div className='page-title_div '>
 					<h2 className='title'>Home</h2>
 				</div>
@@ -135,8 +134,9 @@ const HomePage: React.FC = () => {
 								<hr className='my-5' />
 								<div className='flex justify-between text-sm mt-auto mb-5'>
 									<span>Order status</span>
+
 									<Tag
-										title={orderStatus[order?.status]}
+										title={order?.status?.toLowerCase()}
 										className='capitalize'
 									/>
 								</div>
