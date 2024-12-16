@@ -16,7 +16,7 @@ export default async function RootLayout({
 	children: React.ReactNode;
 }) {
 	const session = await getServerSession(options);
-	if (session) redirect(`/`);
+	if (session?.user) redirect(`/`);
 	return (
 		<div className='h-[calc(100vh-72px)] flex flex-col overflow-y-auto'>
 			<div className='flex h-full overflow-y-auto pb-[72px] '>
