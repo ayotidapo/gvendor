@@ -103,7 +103,7 @@ const Register: React.FC<Props> = props => {
 					dispatch(registerVendor(payload));
 				}}
 			>
-				<Form className='w-[420px]'>
+				<Form className='auth__form'>
 					<h2 className='auth_h2'>Register your business with Good!</h2>
 					<RegisterBizForm
 						onSelectLocation={onSelectLocation}

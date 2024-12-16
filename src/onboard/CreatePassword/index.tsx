@@ -54,7 +54,7 @@ const CreatePaswordPage = () => {
 	};
 
 	return (
-		<form onSubmit={handleSubmit} className='w-[420px]'>
+		<form onSubmit={handleSubmit} className='auth__form'>
 			<h2 className='auth_h2'>Create a password for your account</h2>
 			<div>
 				<Input

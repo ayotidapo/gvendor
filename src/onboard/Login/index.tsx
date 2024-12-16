@@ -54,7 +54,7 @@ const LoginPage: React.FC = ({}) => {
 	});
 
 	return (
-		<form onSubmit={handleSubmit} className='w-[420px]'>
+		<form onSubmit={handleSubmit} className='auth__form'>
 			<h2 className='auth_h2'>Welcome Back</h2>
 			<div>
 				<Input
