@@ -79,7 +79,7 @@ const InventoryPage = () => {
 	return (
 		<div className='inventory'>
 			<Modal open={showModal} onClose={() => setShowModal(false)}>
-				<div className='xs:w-[420px] xx:w-full p-4 bg-white rounded-lg pb-10'>
+				<div className='auth__form p-4 bg-white rounded-lg pb-10'>
 					<span className='x__close' onClick={() => setShowModal(false)}>
 						&times;
 					</span>
