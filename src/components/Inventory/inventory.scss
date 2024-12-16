@@ -25,3 +25,10 @@
 		@apply opacity-100 max-h-[580px] visible;
 	}
 }
+
+.file__label {
+	@apply border-2 border-dashed flex min-h-[126px] rounded-md justify-center items-center flex-col mb-5 cursor-pointer;
+}
+.x__close {
+	@apply w-6 h-6 rounded-full bg-black inline-flex text-white items-center justify-center text-xl cursor-pointer mb-4;
+}
