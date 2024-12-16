@@ -25,17 +25,17 @@ export default async function RootLayout({
 				</section>
 
 				<div className='flex justify-end  w-[40%] h-[98%] relative bg-img'>
-					{/* <Image
+					<Image
 						src='/assets/onboard-img.png'
 						layout='fill'
 						alt='bg image'
 						objectFit='cover'
-					/> */}
-					<img
+					/>
+					{/* <img
 						src='/onboardImg.png'
 						alt='bg image'
 						className='h-full w-full object-cover '
-					/>
+					/> */}
 				</div>
 			</div>
 			<OnboardFooter />
