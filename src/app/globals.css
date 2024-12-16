@@ -148,7 +148,7 @@ img {
 }
 
 .combine_input {
-	@apply flex gap-2 items-start;
+	@apply flex gap-2 items-start xs:flex-row xx:flex-col;
 }
 
 .h3 {
@@ -166,9 +166,10 @@ img {
 	align-items: center;
 	flex-direction: column;
 	font-family: var(--font-2);
+	padding: 10px;
 	.btn {
 		background-color: #f45d2c;
-		@apply w-[352px];
+		@apply w-[352px] xx:w-full;
 	}
 }
 
@@ -191,4 +192,8 @@ img {
 
 .empty__state {
 	@apply h-[250px] flex justify-center items-center text-[#f45d5c] font-medium text-2xl border border-[#fbcece] rounded-md;
+}
+
+.auth__form {
+	@apply xs:w-[420px] xx:w-full xx:px-2.5 xs:px-0;
 }
