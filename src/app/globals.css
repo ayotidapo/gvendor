@@ -169,7 +169,6 @@ img {
 	padding: 10px;
 	.btn {
 		background-color: #f45d2c;
-		@apply w-[352px] xx:w-full;
 	}
 }
 
