@@ -45,7 +45,7 @@ export const ordersSlice = createSlice({
 	extraReducers: builder => {
 		builder
 			.addCase(getOrders.pending, state => {
-				state.loading = true;
+				state.loading = !state.isSuccess && !state.isError;
 				state.isSuccess = false;
 				state.isError = false;
 			})
@@ -53,6 +53,7 @@ export const ordersSlice = createSlice({
 				state.isSuccess = true;
 				state.isError = false;
 				state.loading = false;
+
 				Object.assign(state, action.payload?.data);
 			})
 			.addCase(getOrders.rejected, (state, action) => {

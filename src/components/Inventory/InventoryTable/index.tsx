@@ -19,8 +19,8 @@ const InventoryTable: React.FC<{ products: IProduct[] }> = ({ products }) => {
 			<thead>
 				<tr className='th_row'>
 					<th>ITEM NAME</th>
-					<th>PRICE</th>
-					<th>QUANTITY IN STOCK</th>
+					<th className='w-24'>PRICE</th>
+					<th className='w-48'>QUANTITY IN STOCK</th>
 					<th>STATUS</th>
 					<th>ACTIONS</th>
 				</tr>
@@ -30,8 +30,13 @@ const InventoryTable: React.FC<{ products: IProduct[] }> = ({ products }) => {
 					<tr onClick={onNavigate} key={i}>
 						<td className='flex items-center'>
 							<div className='relative  h-10 w-10 mr-2'>
-								{/* <Image src='/assets/image68.png' alt='' fill /> */}
-								<img src='/assets/image68.png' alt='' />
+								<Image
+									src={product.images?.[0] || '/assets/no-img.jpg'}
+									alt='img-product'
+									fill
+									className=' object-cover'
+								/>
+								{/* <img src={product.images?.[0]} alt='' className=''/> */}
 							</div>
 							<span>{product.name}</span>
 						</td>

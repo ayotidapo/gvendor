@@ -6,6 +6,7 @@ import { getInventories } from '../apis/inventories';
 export interface IProduct {
 	_id: string;
 	name: string;
+	images: string[];
 	category: string;
 	inStock: number;
 	status: string;
@@ -53,7 +54,7 @@ export const inventoriesSlice = createSlice({
 	extraReducers: builder => {
 		builder
 			.addCase(getInventories.pending, state => {
-				state.loading = true;
+				state.loading = !state.isSuccess && !state.isError;
 				state.isSuccess = false;
 				state.isError = false;
 			})

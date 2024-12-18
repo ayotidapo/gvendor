@@ -1,3 +1,5 @@
+import { signOut } from 'next-auth/react';
+
 const isValidUrl = (url: string): boolean => {
 	try {
 		new URL(url);
@@ -39,10 +41,11 @@ const Fetch = async (
 
 		if (!response.ok) {
 			if (response.status === 401 && typeof global.window !== 'undefined') {
-				//console.log('e')
+				signOut();
 			}
 
 			const responseErr = await response.json();
+
 			const errMessage =
 				responseErr.message || response.statusText || responseErr.error;
 			throw { status: response.status, message: errMessage };

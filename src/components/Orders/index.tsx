@@ -17,6 +17,7 @@ import useApiSearchQuery from '@/customHooks/useApiSearchQuery';
 import SearchFilter from '@/molecules/SearchFilter';
 import LoadingPage from '@/molecules/LoadingPage';
 import { orderStages } from '@/utils/data';
+import Pagination from '@/molecules/Pagination';
 
 const Orders = () => {
 	const {
@@ -24,16 +25,17 @@ const Orders = () => {
 		isError,
 		isSuccess,
 		loading,
-		averageOrderValue = '...',
-		totalOrders = '...',
-		totalSales = '...',
+		averageOrderValue = 0,
+		totalOrders = 0,
+		totalSales = 0,
 	} = useSelector(state => state?.orders);
 
 	const router = useRouter();
 	const dispatch = useDispatch();
 	const path = usePathname();
 
-	const { qString, page, status, search } = useApiSearchQuery(12);
+	const limit = 12;
+	const { qString, page, status, search } = useApiSearchQuery(limit);
 
 	useEffect(() => {
 		dispatch(getOrders(qString));
@@ -48,6 +50,14 @@ const Orders = () => {
 	};
 
 	const len = orders?.length;
+
+	const onPageChange = (page: { selected: number }) => {
+		const { selected } = page;
+		router.push(
+			`${path}?status=${status}&page=${selected + 1}&search=${search}`
+		);
+	};
+	const totalItems = totalOrders;
 	return (
 		<div className='orders'>
 			<div className='page-title_div '>
@@ -78,6 +88,13 @@ const Orders = () => {
 			{len > 0 && !loading && (
 				<section>
 					<OrdersTable orders={orders} />
+					<Pagination
+						onPageChange={onPageChange}
+						page={Number(page)}
+						limit={limit}
+						totalItems={totalOrders}
+						curItemsLen={orders?.length}
+					/>
 				</section>
 			)}
 		</div>
