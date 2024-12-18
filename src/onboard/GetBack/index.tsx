@@ -49,7 +49,7 @@ const GetBack = () => {
 	};
 
 	return (
-		<div className='w-[420px]'>
+		<div className='auth__form'>
 			<h2 className='auth_h2'>We&apos;ll contact you soon!</h2>
 			<p className='text-center'>
 				Thanks for signing up to sell on Good! We’re currently reviewing your

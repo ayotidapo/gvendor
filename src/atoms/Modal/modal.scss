@@ -1,20 +1,20 @@
 .modal {
-	@apply fixed z-20 left-0 top-0 bg-[rgba(0,0,0,0.85)] w-full h-screen flex justify-center items-center opacity-0 invisible;
+	@apply fixed z-20 left-0 top-0 bg-[rgba(0,0,0,0.85)] w-full h-screen flex justify-center items-center opacity-0 invisible pt-[64px] overflow-auto;
 	transition:
 		opacity 0.3s linear,
 		visibility 0.3s linear;
 	.modal_content {
-		@apply -translate-y-20 relative;
+		@apply -translate-y-20 relative rounded-xl;
 	}
 	&.open {
 		@apply opacity-100 visible;
 		& > .modal_content {
-			@apply max-w-[80%] max-h-[80%] overflow-auto -translate-y-10;
+			@apply max-w-[80%] max-h-full -translate-y-10;
 			transition: transform 0.4s linear;
 		}
 	}
 }
 
 .close_icon {
-	@apply flex justify-end text-[28px] text-white cursor-pointer;
+	@apply flex justify-end text-[28px] text-white cursor-pointer mt-[45px];
 }
