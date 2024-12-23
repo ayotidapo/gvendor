@@ -63,7 +63,7 @@ const Register: React.FC<Props> = props => {
 	}
 
 	if (isSuccess && reference) {
-		const qS = vendorUser?._id ? `?vendorId=${vendorUser?._id}` : '';
+		const qS = vendorUser?._id ? `?vendor_id=${vendorUser?._id}` : '';
 		router.replace(`/auth/create-password${qS}`);
 	}
 
