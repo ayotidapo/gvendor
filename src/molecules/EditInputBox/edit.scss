@@ -1,5 +1,8 @@
 .edit_ {
 	@apply mb-5;
+	.input_wrapper {
+		@apply mb-0;
+	}
 	.input {
 		@apply mt-2;
 		&.non_edit {
