@@ -14,7 +14,7 @@ const FourOhFour = () => {
 			<p className='mb-5 text-center text-[#7c7c7c] '>
 				The page you are looking for is not available{' '}
 			</p>
-			<SimpleBtn className='res' onClick={() => router.replace('/')}>
+			<SimpleBtn className='notfound' onClick={() => router.replace('/')}>
 				Go back
 			</SimpleBtn>
 		</div>

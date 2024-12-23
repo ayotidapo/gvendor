@@ -170,7 +170,6 @@ img {
 	padding: 10px;
 	.btn {
 		background-color: #f45d2c;
-		@apply xs:w-[352px] xx:w-full;
 	}
 }
 
@@ -201,4 +200,8 @@ img {
 
 .table__wrapper {
 	@apply min-h-[200px]  w-[calc(100vw-380px)] px-2;
+}
+
+.btn.notfound {
+	width: 300px;
 }
