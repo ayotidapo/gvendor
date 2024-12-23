@@ -1,0 +1,11 @@
+.inventory_details {
+	.page-title_div {
+		@apply mb-0;
+		& > .btn_div {
+			@apply w-auto;
+		}
+	}
+	.x_dropdown > .dropdown__content {
+		@apply -left-[170px] top-[70px];
+	}
+}

@@ -13,10 +13,190 @@
 	}
 }
 
+:root {
+}
+body {
+	@apply antialiased text-baseCol;
+}
+
+* {
+	box-sizing: border-box;
+}
+
+.input.search {
+	@apply border-none bg-[#f3f3f3] rounded-full;
+}
+
 .hide-scroll-bar::-webkit-scrollbar {
 	display: none;
 }
 
 .recoleta {
 	font-family: 'Recoleta', sans-serif;
+}
+
+.metric_cards_wrapper {
+	@apply grid grid-cols-[repeat(auto-fill,minmax(240px,1fr))] gap-6;
+}
+
+.filter_div {
+	@apply flex justify-between items-center gap-5 my-10 mt-[50px];
+	& > .input_wrapper {
+		@apply w-[372px];
+	}
+	.btn {
+		&.filter {
+			@apply bg-transparent border border-[#202020] h-[50px] 
+			 text-black w-auto max-w-[225px]   p-4 active:scale-[0.98];
+		}
+	}
+}
+
+.page-title_div {
+	@apply flex  justify-between  md:flex-row xx:flex-col mb-7;
+
+	.title {
+		@apply font-recoleta text-[36px] text-black font-semibold md:order-1 xx:order-2;
+	}
+	.btn_div {
+		@apply flex w-[290px] justify-between  md:order-2 xx:order-1;
+	}
+	.btn.set_as {
+		@apply w-[213px];
+	}
+	.btn.ellips {
+		@apply w-[58px] bg-transparent border border-[#202020] text-black;
+	}
+}
+
+.table_ {
+	@apply w-full border-separate border-spacing-0 border-0 border-b-[1px] border-t-divider-gray;
+
+	th {
+		@apply text-left  h-[58px] text-[#050301] text-sm font-medium;
+	}
+
+	td {
+		@apply border border-b-0 border-t-divider-gray border-x-0 h-[58px];
+	}
+	tr:hover {
+		@apply cursor-pointer bg-gray-100;
+	}
+}
+.edit_ {
+	@apply mb-5;
+	.input {
+		@apply mt-2;
+		&.non_edit {
+			@apply ring-0 outline-transparent rounded-none border-0 border-b-divider-gray pl-0 h-[48px] mt-0;
+			transform: translateY(-6px);
+		}
+	}
+	.btn.toggle_edit {
+		@apply w-auto p-0 h-auto text-black bg-transparent;
+	}
+	.btn.req_change {
+		@apply w-[201px] my-4;
+	}
+	&:last-child {
+		@apply mb-2;
+		.hr {
+			@apply hidden;
+		}
+	}
+}
+
+img {
+	object-fit: contain;
+	object-position: left top;
+	@apply bg-[#fffcf9];
+}
+
+.btn.toggle_edit {
+	@apply w-auto p-0 h-auto text-black bg-transparent;
+}
+
+.auth_h2 {
+	@apply text-[40px] mb-7 text-black text-center subpixel-antialiased font-recoleta font-semibold;
+}
+
+::-webkit-scrollbar {
+	width: 2px;
+	height: 4px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+	background: transparent;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+	background: transparent;
+	border: 4px solid transparent;
+	border-radius: 8px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+	background: transparent;
+}
+/* Hide the scrollbar arrow buttons */
+::-webkit-scrollbar-button {
+	height: 0;
+	width: 0;
+}
+
+.combine_input {
+	@apply flex gap-2 items-start xs:flex-row xx:flex-col;
+}
+
+.h3 {
+	@apply subpixel-antialiased text-black;
+}
+.error {
+	@apply text-red text-sm;
+}
+
+.not_found {
+	display: flex;
+	height: calc(100vh - 62px);
+	background-color: #fcfcfc;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	font-family: var(--font-2);
+	padding: 10px;
+	.btn {
+		background-color: #f45d2c;
+	}
+}
+
+.time_input_wrapper {
+	@apply h-[58px] w-full rounded-lg overflow-hidden;
+	.react-time-picker__wrapper {
+		@apply rounded-lg px-2.5;
+	}
+	input[type='number'],
+	select {
+		@apply border-0 rounded-lg overflow-hidden focus:ring-0 w-12;
+	}
+}
+.btn.nav__bar_btn {
+	@apply w-[148px] bg-[#f6f6f6] text-black  font-recoleta font-medium h-11  items-center;
+}
+.ellipsis {
+	@apply whitespace-nowrap inline-block overflow-hidden text-ellipsis w-[75px];
+}
+
+.empty__state {
+	@apply h-[250px] flex justify-center items-center text-[#f45d5c] font-medium text-2xl border border-[#fbcece] rounded-md;
+}
+
+.auth__form {
+	@apply xs:w-[420px] xx:w-full xx:px-2.5 xs:px-0;
+}
+
+.btn.notfound {
+	width: 300px;
 }

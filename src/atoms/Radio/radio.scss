@@ -1,0 +1,29 @@
+.radio {
+	@apply cursor-pointer;
+	.radio_mirror {
+		@apply inline-flex w-5 h-5 rounded-full border-[1.5px] border-[#7a7978] justify-center items-center;
+		&::after {
+			@apply h-3 w-3 bg-transparent rounded-full;
+			content: '';
+		}
+	}
+
+	input[type='radio'] {
+		@apply hidden;
+
+		&:checked {
+			& + .radio_mirror {
+				@apply border-[#F45D2C];
+				&::after {
+					@apply bg-[#F45D2C];
+				}
+			}
+			& ~ .title {
+				@apply inline-flex;
+			}
+		}
+	}
+	.title {
+		@apply ml-2;
+	}
+}

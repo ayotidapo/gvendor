@@ -1,0 +1,57 @@
+.input_wrapper {
+	@apply relative w-full flex  items-center flex-wrap mb-5;
+	&.err {
+		@apply mb-2.5;
+	}
+	/* &:last-child {
+		@apply mb-2;
+		&.err {
+			@apply mb-0;
+		}
+	} */
+}
+
+textarea.input {
+	@apply h-auto;
+}
+.input,
+.PhoneInputInput {
+	@apply w-full h-[58px] border border-[#7a7978] focus:border-[#7a7978] focus:border-[1.5px] focus:ring-0 
+    rounded-lg;
+
+	&.hasIcon {
+		@apply pl-12;
+	}
+	&.textarea {
+		@apply h-auto;
+	}
+	&.error {
+		@apply border border-red text-baseCol;
+	}
+}
+
+.icon_pos {
+	@apply min-w-fit absolute left-4;
+}
+
+/* .PhoneInputInput {
+	@apply border-0;
+} */
+.PhoneInput {
+	@apply border border-[#7a7978]  rounded-lg pl-2  mb-5 w-full;
+
+	.PhoneInputInput {
+		@apply border-none pl-0;
+	}
+}
+.error_ {
+	//error for react-phone-number
+	@apply mb-2;
+	& > .PhoneInput {
+		@apply border border-red mb-0;
+	}
+}
+
+.error {
+	@apply text-red text-sm;
+}

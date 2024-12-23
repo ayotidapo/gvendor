@@ -1,0 +1,23 @@
+.analytics {
+	.period_filter {
+		@apply flex justify-end  text-sm my-4 mb-8;
+		& > .btn {
+			@apply bg-transparent w-auto h-[42px] text-[#555555];
+			&.active {
+				@apply border border-[#F45D2C] text-[#F45D2C] bg-[rgba(244,93,44,0.05)];
+			}
+		}
+	}
+	.tabs_div {
+		@apply flex border-b-[0.5px] border-divider-gray mt-8;
+		.btn {
+			@apply bg-transparent w-auto h-[42px] text-[#555555];
+			&.active {
+				@apply border-2 border-transparent rounded-none border-b-black text-black;
+			}
+		}
+	}
+	.graph_div {
+		@apply min-h-[344px] border border-divider-gray rounded-2xl mt-10;
+	}
+}

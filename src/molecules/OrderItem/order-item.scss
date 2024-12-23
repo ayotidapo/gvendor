@@ -1,0 +1,15 @@
+.order_item {
+	@apply flex  md:w-[80%] xx:w-full flex-wrap mb-6;
+	.dt {
+		@apply subpixel-antialiased text-[#050301];
+	}
+	.dl {
+		@apply my-2.5;
+		& > span {
+			@apply block;
+		}
+	}
+	&:last-of-type > hr {
+		@apply hidden;
+	}
+}

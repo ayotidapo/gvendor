@@ -11,6 +11,9 @@ module.exports = {
 	theme: {
 		extend: {
 			colors: {
+				img: '#FFFCF9',
+				gold1: 'var(--gold1)',
+				baseCol: '#555555',
 				primary: '#F45D2C',
 				orange: '#F45D2C',
 				black: '#050301',
@@ -30,6 +33,14 @@ module.exports = {
 				'divider-gray': '#EAEAEA',
 				'gray-bg': '#F3F3F3',
 				'light-gray-bg': '#FAFAFA',
+			},
+			fontFamily: {
+				geist: [`var(--geist)`],
+				recoleta: [`var(--recoleta)`],
+			},
+			screens: {
+				xs: '500px',
+				xx: '320px',
 			},
 		},
 	},

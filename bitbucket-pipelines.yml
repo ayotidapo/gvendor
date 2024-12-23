@@ -147,8 +147,10 @@ pipelines:
             - aws ecr get-login-password --region ${REGION} | docker login --username AWS --password-stdin 976193256269.dkr.ecr.${REGION}.amazonaws.com
             # docker
             # - git submodule update --init --recursive
-            - echo "NEXT_PUBLIC_VENDOR_BACKEND_BASE_URL=${NEXT_PUBLIC_VENDOR_BACKEND_BASE_URL_PROD}" >> .env
-            - echo "NEXT_PUBLIC_LOCATION=${NEXT_PUBLIC_LOCATION_PROD}" >> .env
+            - echo "NEXT_PUBLIC_API_BASE_URL=${NEXT_PUBLIC_API_BASE_URL_PROD}" >> .env
+            - echo "NEXTAUTH_URL=${NEXTAUTH_URL_PROD}" >> .env
+            - echo "NEXTAUTH_SECRET=${NEXTAUTH_SECRET_PROD}" >> .env
+            - echo "NEXT_PUBLIC_GOOGLE_PLACE_API=${NEXT_PUBLIC_GOOGLE_PLACE_API_PROD}" >> .env
             - docker build -t ${IMAGE_NAME} .
             - docker tag ${IMAGE_NAME}:latest 976193256269.dkr.ecr.${REGION}.amazonaws.com/${IMAGE_NAME}:${VERSION}
             - docker push 976193256269.dkr.ecr.${REGION}.amazonaws.com/${IMAGE_NAME}:${VERSION}
@@ -209,8 +211,10 @@ pipelines:
             - aws ecr get-login-password --region ${REGION} | docker login --username AWS --password-stdin 976193256269.dkr.ecr.${REGION}.amazonaws.com
             # docker
             # - git submodule update --init --recursive
-            - echo "NEXT_PUBLIC_VENDOR_BACKEND_BASE_URL=${NEXT_PUBLIC_VENDOR_BACKEND_BASE_URL_BETA}" >> .env
-            - echo "NEXT_PUBLIC_LOCATION=${NEXT_PUBLIC_LOCATION_BETA}" >> .env
+            - echo "NEXT_PUBLIC_API_BASE_URL=${NEXT_PUBLIC_API_BASE_URL_BETA}" >> .env
+            - echo "NEXTAUTH_URL=${NEXTAUTH_URL_BETA}" >> .env
+            - echo "NEXTAUTH_SECRET=${NEXTAUTH_SECRET_BETA}" >> .env
+            - echo "NEXT_PUBLIC_GOOGLE_PLACE_API=${NEXT_PUBLIC_GOOGLE_PLACE_API_BETA}" >> .env
             - docker build -t ${IMAGE_NAME} .
             - docker tag ${IMAGE_NAME}:latest 976193256269.dkr.ecr.${REGION}.amazonaws.com/${IMAGE_NAME}:${VERSION}
             - docker push 976193256269.dkr.ecr.${REGION}.amazonaws.com/${IMAGE_NAME}:${VERSION}
@@ -271,8 +275,12 @@ pipelines:
             - aws ecr get-login-password --region ${REGION} | docker login --username AWS --password-stdin 976193256269.dkr.ecr.${REGION}.amazonaws.com
             # docker
             # - git submodule update --init --recursive
-            - echo "NEXT_PUBLIC_VENDOR_BACKEND_BASE_URL=${NEXT_PUBLIC_VENDOR_BACKEND_BASE_URL_STAGING}" >> .env
-            - echo "NEXT_PUBLIC_LOCATION=${NEXT_PUBLIC_LOCATION_STAGING}" >> .env
+            - echo "NEXT_PUBLIC_API_BASE_URL=${NEXT_PUBLIC_API_BASE_URL_STAGING}" >> .env
+            - echo "NEXTAUTH_URL=${NEXTAUTH_URL_STAGING}" >> .env
+            - echo "NEXTAUTH_SECRET=${NEXTAUTH_SECRET_STAGING}" >> .env
+            - echo "NEXT_PUBLIC_GOOGLE_PLACE_API=${NEXT_PUBLIC_GOOGLE_PLACE_API_STAGING}" >> .env
+            - ls -a
+            - cat .env
             - docker build -t ${IMAGE_NAME} .
             - docker tag ${IMAGE_NAME}:latest 976193256269.dkr.ecr.${REGION}.amazonaws.com/${IMAGE_NAME}:${VERSION}
             - docker push 976193256269.dkr.ecr.${REGION}.amazonaws.com/${IMAGE_NAME}:${VERSION}

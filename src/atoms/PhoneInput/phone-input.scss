@@ -1,0 +1,7 @@
+.ph_div {
+	@apply w-full;
+	.PhoneInputCountry {
+		pointer-events: none; /* Disable interactions */
+		/* opacity: 0.5; Optional: Make it visually look disabled */
+	}
+}

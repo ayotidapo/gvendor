@@ -1,0 +1,4 @@
+.onboard_footer {
+	@apply flex  xs:flex-row  xx:flex-col border-[0.5px] border-transparent bg-white z-10 font-thin xs:text-sm  xx:text-[10px]  border-t-divider-gray md:h-[72px] xx:h-auto
+			 fixed w-full bottom-0 text-[#7a7978] lg:px-20 xx:px-5  items-center;
+}
