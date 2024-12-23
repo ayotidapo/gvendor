@@ -196,3 +196,7 @@ img {
 .auth__form {
 	@apply xs:w-[420px] xx:w-full xx:px-2.5 xs:px-0;
 }
+
+.btn.notfound {
+	width: 300px;
+}
