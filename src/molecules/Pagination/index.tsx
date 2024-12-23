@@ -21,7 +21,7 @@ const Pagination: React.FC<Props> = props => {
 				initialPage={props.page - 1}
 				pageRangeDisplayed={1}
 				pageCount={pageCount}
-				activeClassName='bg-[#f45d5c] text-white'
+				activeClassName='bg-black text-white'
 				nextLabel='>'
 				previousLabel='<'
 				disabledClassName='cursor-not-allowed opacity-0'
