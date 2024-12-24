@@ -25,7 +25,7 @@ const InventoryDetailsPage: React.FC<Props> = ({ details }) => {
 			<section className='flex flex-col'>
 				<div className='page-title_div'>
 					<h2 className='title'>{details?.name}</h2>
-					<div className='btn_div'>
+					<div className='btn_div opacity-[0.02]'>
 						<DropDown
 							className='x_dropdown'
 							component={
@@ -79,7 +79,7 @@ const InventoryDetailsPage: React.FC<Props> = ({ details }) => {
 							<Image
 								src={img}
 								fill
-								alt={`img-${i}`}
+								alt={`img-${i + 1}`}
 								className=' object-cover'
 							/>
 						</div>
@@ -99,12 +99,16 @@ const InventoryDetailsPage: React.FC<Props> = ({ details }) => {
 				<EditInputBox title='Price' value={details?.price?.toLocaleString()} />
 				<EditInputBox title='Item Category' value={details?.category?.name} />
 			</section>
-			<h2 className='text-xl text-black my-8 mb-6 subpixel-antialiased'>
-				Variants
-			</h2>
-			<section>
-				<UnderReviewTable />
-			</section>
+			{details?.variants?.length > 0 && (
+				<>
+					<h2 className='text-xl text-black my-8 mb-6 subpixel-antialiased'>
+						Variants
+					</h2>
+					<section>
+						<UnderReviewTable variants={details?.variants} />
+					</section>
+				</>
+			)}
 		</div>
 	);
 };

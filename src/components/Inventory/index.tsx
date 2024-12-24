@@ -179,7 +179,7 @@ const InventoryPage = () => {
 						</SimpleBtn>
 					)}
 					<section className={`under_review  mb-5 ${show ? 'show' : ''}`}>
-						<UnderReviewTable />
+						<UnderReviewTable variants={[]} />
 					</section>
 					<section>
 						<InventoryTable products={products} />

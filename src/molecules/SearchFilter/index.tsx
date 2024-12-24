@@ -10,10 +10,10 @@ interface Props {
 const SearchFilter: React.FC<Props> = ({ onTextChange }) => {
 	const sQ = useSearchParams();
 	const search = sQ.get('search');
-	const [searchText, setSearchText] = useState<string>(search || '');
+	const [searchText, setSearchText] = useState<string>(search || ' ');
 
 	useEffect(() => {
-		if (searchText === '') return;
+		if (searchText === ' ') return;
 		const handler = window.setTimeout(() => onTextChange(searchText), 1000);
 		return () => {
 			window.clearTimeout(handler);
