@@ -30,7 +30,7 @@ const SettlementTable: React.FC<Props> = props => {
 				</tr>
 			</thead>
 			<tbody>
-				{settlement.map((stlmnt: ObjectData, i: number) => (
+				{settlements.map((stlmnt: ObjectData, i: number) => (
 					<tr onClick={() => onNavigate(stlmnt?._id)} key={i}>
 						<td>BI21DDC25XD2V</td>
 						<td>#15285047</td>
