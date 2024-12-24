@@ -5,12 +5,18 @@ import React from 'react';
 import { useRouter } from 'next/navigation';
 import { Icon } from '@/atoms/icon/icon';
 import './settlement.scss';
+import { ObjectData } from '@/utils/interface';
 
-const SettlementTable = () => {
+interface Props {
+	settlements: ObjectData[];
+}
+
+const SettlementTable: React.FC<Props> = props => {
+	const { settlements } = props;
 	const router = useRouter();
 
-	const onNavigate = () => {
-		router.push(`/settlements/9`);
+	const onNavigate = (id: string) => {
+		router.push(`/settlements/${id}`);
 	};
 	return (
 		<table className='table_'>
@@ -24,33 +30,17 @@ const SettlementTable = () => {
 				</tr>
 			</thead>
 			<tbody>
-				<tr onClick={onNavigate}>
-					<td>BI21DDC25XD2V</td>
-					<td>#15285047</td>
-					<td>₦95,700.00</td>
-					<td>
-						<Tag title='Successful' className='completed' />
-					</td>
-					<td>27/10/2024 2:49PM</td>
-				</tr>
-				<tr onClick={onNavigate}>
-					<td>BI21DDC25XD2V</td>
-					<td>#15285047</td>
-					<td>₦95,700.00</td>
-					<td>
-						<Tag title='Pending' className='processing' />
-					</td>
-					<td>27/10/2024 2:49PM</td>
-				</tr>
-				<tr onClick={onNavigate}>
-					<td>BI21DDC25XD2V</td>
-					<td>#15285047</td>
-					<td>₦95,700.00</td>
-					<td>
-						<Tag title='Successful' className='completed' />
-					</td>
-					<td>27/10/2024 2:49PM</td>
-				</tr>
+				{settlement.map((stlmnt: ObjectData, i: number) => (
+					<tr onClick={() => onNavigate(stlmnt?._id)} key={i}>
+						<td>BI21DDC25XD2V</td>
+						<td>#15285047</td>
+						<td>₦95,700.00</td>
+						<td>
+							<Tag title='Successful' className='completed' />
+						</td>
+						<td>{/* {format(order?.date, 'dd/MM/yyyy hh:mm aa')}*/}</td>
+					</tr>
+				))}
 			</tbody>
 		</table>
 	);
