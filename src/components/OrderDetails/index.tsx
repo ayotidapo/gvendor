@@ -81,7 +81,7 @@ const OrderDetailsPage: React.FC<Props> = ({ details }) => {
 				<OrderItem totalAmount={o_details?.totalAmount} item={item} key={i} />
 			))}
 			<div className='mt-20'>
-				<SettlementTable />
+				<SettlementTable settlements={[]} />
 			</div>
 		</div>
 	);

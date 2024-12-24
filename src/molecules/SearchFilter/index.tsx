@@ -24,14 +24,14 @@ const SearchFilter: React.FC<Props> = ({ onTextChange }) => {
 		<div className='search__filter'>
 			<Input
 				name='search'
-				value={searchText as string}
+				value={searchText?.trim() as string}
 				hasIcon
 				iconSvg='search'
 				className='search'
 				placeholder='Search'
 				onChange={e => setSearchText(e.target.value)}
 			/>
-			{searchText && (
+			{searchText?.trim() && (
 				<span
 					className='absolute right-5 top-2.5 text-2xl inline-block cursor-pointer'
 					onClick={() => setSearchText(' ')}

@@ -2,40 +2,19 @@ import { createSlice } from '@reduxjs/toolkit';
 import { toast } from 'react-toastify';
 import { getInventories } from '../apis/inventories';
 
-export interface ISettlement {
-	_id: string;
-	name: string;
-	category: string;
-	inStock: number;
-	status: string;
-	date: string;
-	price: number;
-}
-
-export interface IBestSeller {
-	_id: string;
-	name: string;
-	category: any;
-	unitsSold: number;
-	price: number;
-	amountSold: number;
-}
-
 interface ISettlements {
-	totalUnitsSold: number;
-	productsInStock: number;
-	bestSellers: IBestSeller[];
-	products: ISettlement[];
+	docs: any[];
+	total: number;
+	totalPages: number;
 	isSuccess?: boolean;
 	isError?: boolean;
 	error?: string | undefined;
 	loading?: boolean;
 }
 const initialState: ISettlements = {
-	totalUnitsSold: 0,
-	productsInStock: 0,
-	bestSellers: [],
-	products: [],
+	docs: [],
+	total: 0,
+	totalPages: 0,
 };
 
 export const settlementsSlice = createSlice({
