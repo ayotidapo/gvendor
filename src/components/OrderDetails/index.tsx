@@ -32,25 +32,28 @@ const OrderDetailsPage: React.FC<Props> = ({ details }) => {
 					<div className='btn_div'>
 						<SimpleBtn
 							className='set_as'
-							disabled={o_details.status === 'PROCESSING'}
+							//disabled={o_details.status === 'PROCESSING'}
+							disabled
 						>
 							Set as processing
 						</SimpleBtn>
 						<DropDown
 							className='x_dropdown'
 							component={
-								<SimpleBtn className='ellips'>
+								<SimpleBtn className='ellips' disabled>
 									<Icon id='ellipsis' width={20} height={20} />
 								</SimpleBtn>
 							}
 						>
-							<div className='w-[220px] flex flex-col p-4 gap-4 text-left'>
-								{setStages.map(({ name, value }, i) => (
-									<span role='button' onClick={() => {}} key={i}>
-										{name}
-									</span>
-								))}
-							</div>
+							{false && (
+								<div className='w-[220px] flex flex-col p-4 gap-4 text-left'>
+									{setStages.map(({ name, value }, i) => (
+										<span role='button' onClick={() => {}} key={i}>
+											{name}
+										</span>
+									))}
+								</div>
+							)}
 						</DropDown>
 					</div>
 				</div>
