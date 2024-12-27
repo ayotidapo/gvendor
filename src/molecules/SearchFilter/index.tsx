@@ -34,7 +34,7 @@ const SearchFilter: React.FC<Props> = ({ onTextChange }) => {
 			{searchText?.trim() && (
 				<span
 					className='absolute right-5 top-2.5 text-2xl inline-block cursor-pointer'
-					onClick={() => setSearchText(' ')}
+					onClick={() => setSearchText('')}
 				>
 					&times;
 				</span>
