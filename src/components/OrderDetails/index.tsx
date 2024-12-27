@@ -68,7 +68,7 @@ const OrderDetailsPage: React.FC<Props> = ({ details }) => {
 						className={`${orderStatus[o_details.status]} capitalize`}
 					/>
 				</span>
-				{o_details.status === 'COMPLETED' && (
+				{o_details.status === 'COMPLETED' && false && (
 					<span className='text-sm mt-2'>
 						This order is complete, and a driver has been requested for
 						delivery. If the status needs to be updated due to an error, press

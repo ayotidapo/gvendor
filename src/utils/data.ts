@@ -102,11 +102,11 @@ const inventoryStatus = [
 	},
 	{
 		name: 'Active',
-		value: 'ACTIVE',
+		value: 'active',
 	},
 	{
 		name: 'Inactive',
-		value: 'INACTIVE',
+		value: 'inactive',
 	},
 ];
 
