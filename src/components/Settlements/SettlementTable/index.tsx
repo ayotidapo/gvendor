@@ -6,6 +6,8 @@ import { useRouter } from 'next/navigation';
 import { Icon } from '@/atoms/icon/icon';
 import './settlement.scss';
 import { ObjectData } from '@/utils/interface';
+import { format } from 'date-fns';
+import { orderStatus } from '@/utils/data';
 
 interface Props {
 	settlements: ObjectData[];
@@ -13,36 +15,51 @@ interface Props {
 
 const SettlementTable: React.FC<Props> = props => {
 	const { settlements } = props;
+
 	const router = useRouter();
 
 	const onNavigate = (id: string) => {
 		router.push(`/settlements/${id}`);
 	};
 	return (
-		<table className='table_'>
-			<thead>
-				<tr className='th_row'>
-					<th>TRANSACTION ID</th>
-					<th>ORDER ID</th>
-					<th>AMOUNT SETTLED</th>
-					<th>TRANSACTION STATUS</th>
-					<th>DATE & TIME</th>
-				</tr>
-			</thead>
-			<tbody>
-				{settlements.map((stlmnt: ObjectData, i: number) => (
-					<tr onClick={() => onNavigate(stlmnt?._id)} key={i}>
-						<td>BI21DDC25XD2V</td>
-						<td>#15285047</td>
-						<td>₦95,700.00</td>
-						<td>
-							<Tag title='Successful' className='completed' />
-						</td>
-						<td>{/* {format(order?.date, 'dd/MM/yyyy hh:mm aa')}*/}</td>
+		<>
+			<table className='table_'>
+				<thead>
+					<tr className='th_row'>
+						<th>TRANSACTION ID</th>
+						<th>ORDER ID</th>
+						<th>AMOUNT SETTLED</th>
+						<th>TRANSACTION STATUS</th>
+						<th>DATE & TIME</th>
 					</tr>
-				))}
-			</tbody>
-		</table>
+				</thead>
+				<tbody>
+					{settlements.map((stlmnt: ObjectData, i: number) => (
+						<tr onClick={() => onNavigate(stlmnt?._id)} key={i}>
+							<td>#{stlmnt?.transactionId || 'N/A'}</td>
+							<td>#{stlmnt?.orderId || 'N/A'}</td>
+							<td>₦{stlmnt?.amount?.toLocaleString()}</td>
+							<td>
+								<Tag
+									title={stlmnt?.status?.toLowerCase()}
+									className={orderStatus[stlmnt?.status]}
+								/>
+							</td>
+							<td>{format(stlmnt?.createdAt, 'dd/MM/yyyy hh:mm aa')}</td>
+						</tr>
+					))}
+				</tbody>
+			</table>
+			{totalDataCount && pageLimit && totalDataCount / pageLimit > 1 ? (
+				<Pagination
+					currentPage={currentPage ?? 0}
+					totalCount={totalDataCount ?? 0}
+					itemsPerPage={pageLimit ?? NUMBER_OF_ITEMS_PER_PAGE}
+					pageRangeDisplayed={pageRangeDisplayed}
+					onPageChange={onPageChange}
+				/>
+			) : undefined}
+		</>
 	);
 };
 

@@ -76,6 +76,8 @@ const InventoryPage = () => {
 		setChosenFiles(newFiles);
 	};
 
+	console.log(len, 900);
+
 	return (
 		<div className='inventory'>
 			<Modal open={showModal} onClose={() => setShowModal(false)}>

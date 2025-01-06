@@ -54,7 +54,7 @@ export const inventoriesSlice = createSlice({
 	extraReducers: builder => {
 		builder
 			.addCase(getInventories.pending, state => {
-				state.loading = true;
+				state.loading = !state.isSuccess && !state.isError;
 				state.isSuccess = false;
 				state.isError = false;
 			})
