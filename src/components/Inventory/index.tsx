@@ -57,7 +57,7 @@ const InventoryPage = () => {
 		1,
 		{}
 	);
-	const limit = 12;
+	const limit = 20;
 	// console.log({ uploading, completed, onRemoveFile, files, resObj });
 
 	const { qString, page, status, search } = useApiSearchQuery(limit);

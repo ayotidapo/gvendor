@@ -34,7 +34,7 @@ const Orders = () => {
 	const dispatch = useDispatch();
 	const path = usePathname();
 
-	const limit = 12;
+	const limit = 20;
 	const { qString, page, status, search } = useApiSearchQuery(limit);
 
 	useEffect(() => {

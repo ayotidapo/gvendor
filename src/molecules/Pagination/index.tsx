@@ -6,13 +6,14 @@ interface Props {
 	onPageChange: (page: { selected: number }) => void;
 	curItemsLen: number;
 	page: number;
-	limit: number;
+	limit?: number;
 	totalItems: number;
 }
 const Pagination: React.FC<Props> = props => {
 	const { page, limit = 10, totalItems, curItemsLen } = props;
 	const pageCount = Math.ceil(totalItems / limit);
 	const isCurItemComplete = curItemsLen === limit;
+	console.log((page - 1) * curItemsLen + 1, 'ppppp', page);
 	return (
 		<div className='pagination__div '>
 			<ReactPaginate
@@ -28,7 +29,7 @@ const Pagination: React.FC<Props> = props => {
 				nextLinkClassName=''
 			/>
 			<div className='text-center font-geist text-sm my-2.5 mb-5'>
-				{`${(page - 1) * curItemsLen + 1} - ${isCurItemComplete ? page * curItemsLen : totalItems} of ${totalItems} items`}
+				{`${isCurItemComplete ? (page - 1) * curItemsLen + 1 : totalItems - curItemsLen + 1} - ${isCurItemComplete ? page * curItemsLen : totalItems} of ${totalItems} items`}
 			</div>
 		</div>
 	);
