@@ -27,9 +27,9 @@ export default async function RootLayout({
 				<div className='flex justify-end  md:w-[40%] xs:w-0 h-[98%] relative bg-img '>
 					<Image
 						src='/assets/onboard-img.png'
-						layout='fill'
+						fill
 						alt='bg image'
-						objectFit='cover'
+						className=' object-cover'
 					/>
 					{/* <img
 						src='/onboardImg.png'

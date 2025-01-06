@@ -5,6 +5,7 @@ import { getOrders } from '../apis/orders';
 
 export interface IOrder {
 	_id: string;
+	orderId: string;
 	itemsOrdered: string[];
 	quantity: number;
 	status: string;
@@ -45,7 +46,7 @@ export const ordersSlice = createSlice({
 	extraReducers: builder => {
 		builder
 			.addCase(getOrders.pending, state => {
-				state.loading = true;
+				state.loading = !state.isSuccess && !state.isError;
 				state.isSuccess = false;
 				state.isError = false;
 			})

@@ -11,17 +11,13 @@ import { usePathname } from 'next/navigation';
 import SearchFilter from '@/molecules/SearchFilter';
 import StatusFilter from '@/molecules/StatusFilter';
 import { settlementStatus } from '@/utils/data';
+import { getSettlements } from '@/redux/apis/settlements';
+import LoadingPage from '@/molecules/LoadingPage';
 
 const SettlementPage = () => {
-	// const {
-	// 	orders,
-	// 	isError,
-	// 	isSuccess,
-	// 	loading,
-	// 	averageOrderValue = '...',
-	// 	totalOrders = '...',
-	// 	totalSales = '...',
-	// } = useSelector(state => state?.settlements);
+	const { docs, isError, isSuccess, total, loading } = useSelector(
+		state => state?.settlements
+	);
 	const router = useRouter();
 
 	const dispatch = useDispatch();
@@ -30,7 +26,7 @@ const SettlementPage = () => {
 	const { qString, page, status, search } = useApiSearchQuery(12);
 
 	useEffect(() => {
-		//dispatch(getSettlements(qString));
+		dispatch(getSettlements(qString));
 	}, [qString]);
 
 	const onSetStatus = (status: string) => {
@@ -41,14 +37,17 @@ const SettlementPage = () => {
 		router.push(`${path}?status=${status}&page=1&search=${searchValue}`);
 	};
 
-	//const len = orders?.length;
+	const len = docs?.length;
 	return (
 		<div className='settlements'>
 			<div className='page-title_div '>
 				<h2 className='title'>Settlements</h2>
 			</div>
 			<section className='metric_cards_wrapper'>
-				<MetricCard title='Total Earnings' value='₦149,720,000.00' />
+				<MetricCard
+					title='Total Earnings'
+					value={`₦${total?.toLocaleString()}`}
+				/>
 			</section>
 			<div className='filter_div'>
 				<SearchFilter onTextChange={onTextChange} />
@@ -58,9 +57,15 @@ const SettlementPage = () => {
 					states={settlementStatus}
 				/>
 			</div>
-			<section>
-				<SettlementTable />
-			</section>
+			{loading && <LoadingPage className='py-5 ' />}
+			{len < 1 && !loading && (
+				<h2 className='empty__state'>No Settlement found</h2>
+			)}
+			{len > 0 && !loading && (
+				<section>
+					<SettlementTable settlements={docs} />
+				</section>
+			)}
 		</div>
 	);
 };

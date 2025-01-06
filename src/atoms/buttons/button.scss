@@ -1,5 +1,5 @@
 .btn {
-	@apply xx:w-full inline-flex justify-center items-center bg-black h-[58px] rounded-lg w-full text-white active:scale-95 hover:opacity-85 px-2;
+	@apply inline-flex justify-center items-center bg-black h-[58px] rounded-lg w-full text-white active:scale-95 hover:opacity-85 px-2;
 	transition: all 0.2s linear;
 
 	&:disabled {

@@ -11,8 +11,8 @@ import { format } from 'date-fns';
 const InventoryTable: React.FC<{ products: IProduct[] }> = ({ products }) => {
 	const router = useRouter();
 
-	const onNavigate = () => {
-		router.push(`/inventory/9`);
+	const onNavigate = (id: string) => {
+		router.push(`/inventory/${id}`);
 	};
 	return (
 		<table className='table_'>
@@ -27,11 +27,15 @@ const InventoryTable: React.FC<{ products: IProduct[] }> = ({ products }) => {
 			</thead>
 			<tbody>
 				{products.map((product, i) => (
-					<tr onClick={onNavigate} key={i}>
+					<tr onClick={() => onNavigate(product?._id)} key={i}>
 						<td className='flex items-center'>
 							<div className='relative  h-10 w-10 mr-2'>
-								{/* <Image src='/assets/image68.png' alt='' fill /> */}
-								<img src='/assets/image68.png' alt='' />
+								<Image
+									src={product?.images?.[0] || '/assets/no-img.jpg'}
+									alt=''
+									fill
+									className='object-cover'
+								/>
 							</div>
 							<span>{product.name}</span>
 						</td>

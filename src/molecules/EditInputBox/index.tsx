@@ -9,13 +9,14 @@ import { Input } from '@/atoms/Input/Input';
 
 interface Props {
 	type?: 'text' | 'password' | 'textarea' | 'date';
+	value?: string;
 	rows?: number;
 	textarea?: boolean;
 	title?: string;
 	nonEditable?: boolean;
 }
 const EditInputBox: React.FC<Props> = props => {
-	const { type, rows, textarea, title, nonEditable } = props;
+	const { type, rows, textarea, title, nonEditable, value } = props;
 	const non_Editable = nonEditable === undefined ? true : nonEditable;
 
 	const [isNonEdit, setIsNonEdit] = useState<boolean | undefined>(
@@ -34,27 +35,29 @@ const EditInputBox: React.FC<Props> = props => {
 					</span>
 				)}
 
-				<>
-					<SimpleBtn
-						className='toggle_edit'
-						onClick={() => setIsNonEdit(isNonEdit => !isNonEdit)}
-					>
-						{isNonEdit ? (
-							<span className='cursor-pointer ml-1 flex'>
-								Edit
-								<Icon id='edit' width={20} height={20} />
-							</span>
-						) : (
-							<>Cancel</>
-						)}
-					</SimpleBtn>
-				</>
+				{false && (
+					<>
+						<SimpleBtn
+							className='toggle_edit'
+							onClick={() => setIsNonEdit(isNonEdit => !isNonEdit)}
+						>
+							{isNonEdit ? (
+								<span className='cursor-pointer ml-1 flex'>
+									Edit
+									<Icon id='edit' width={20} height={20} />
+								</span>
+							) : (
+								<>Cancel</>
+							)}
+						</SimpleBtn>
+					</>
+				)}
 			</div>
 			<Input
-				name='search'
+				name='details'
 				type={type}
+				value={value}
 				rows={isNonEdit ? 1 : rows}
-				value='Jollof Rice and 6 Chicken Wings'
 				className={cx({ non_edit: isNonEdit, textarea })}
 				autoFocus={!isNonEdit}
 				readOnly={isNonEdit}
