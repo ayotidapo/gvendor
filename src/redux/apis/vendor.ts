@@ -21,9 +21,9 @@ export const registerVendorApi = async (body: IVendor) => {
 };
 
 export const createPasswordApi = async (body: Record<string, any>) => {
-	const { password, vendorId } = body;
+	const { password, token } = body;
 
-	const response = await Fetch(`/auth/set-password/${vendorId}`, {
+	const response = await Fetch(`/auth/set-password/${token}`, {
 		body: { password },
 		method: 'post',
 	});

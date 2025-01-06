@@ -59,6 +59,7 @@ const orderStatus: Record<string, any> = {
 	NEW: 'new',
 	ONGOING: 'processing',
 	FULFILLED: 'completed',
+	SUCCESSFUL: 'completed',
 };
 
 const orderStages = [
@@ -102,11 +103,11 @@ const inventoryStatus = [
 	},
 	{
 		name: 'Active',
-		value: 'ACTIVE',
+		value: 'active',
 	},
 	{
 		name: 'Inactive',
-		value: 'INACTIVE',
+		value: 'inactive',
 	},
 ];
 

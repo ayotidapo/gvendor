@@ -1,47 +1,51 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { toast } from 'react-toastify';
-import { getSettlements } from '../apis/settlements';
 
-interface ISettlements {
-	docs: any[];
-	total: number;
-	totalPages: number;
+import { toast } from 'react-toastify';
+import { getOrders } from '../apis/orders';
+import { ObjectData } from '@/utils/interface';
+
+export interface IInventoryDetails {
+	_id: string;
+	totalUnitsSold: number;
+	name: string;
 	isSuccess?: boolean;
 	isError?: boolean;
 	error?: string | undefined;
 	loading?: boolean;
+	[key: string]: any;
 }
-const initialState: ISettlements = {
-	docs: [],
-	total: 0,
-	totalPages: 0,
+
+const initialState: IInventoryDetails = {
+	_id: '',
+	name: '',
+	totalUnitsSold: 0,
 };
 
-export const settlementsSlice = createSlice({
-	name: 'settlements',
+export const InventoryDetailsSlice = createSlice({
+	name: 'inventory_details',
 
 	initialState,
 
 	reducers: {
-		setSettlements(state: ISettlements, action) {
+		setInventoryDetails(state: IInventoryDetails, action) {
 			Object.assign(state, action.payload);
 		},
 	},
 
 	extraReducers: builder => {
 		builder
-			.addCase(getSettlements.pending, state => {
+			.addCase(getOrders.pending, state => {
 				state.loading = true;
 				state.isSuccess = false;
 				state.isError = false;
 			})
-			.addCase(getSettlements.fulfilled, (state, action) => {
+			.addCase(getOrders.fulfilled, (state, action) => {
 				state.isSuccess = true;
 				state.isError = false;
 				state.loading = false;
 				Object.assign(state, action.payload?.data);
 			})
-			.addCase(getSettlements.rejected, (state, action) => {
+			.addCase(getOrders.rejected, (state, action) => {
 				if (action.error?.message)
 					toast.error(`Error occured: ${action.error?.message}`);
 
@@ -53,5 +57,5 @@ export const settlementsSlice = createSlice({
 	},
 });
 
-export const { setSettlements } = settlementsSlice.actions;
-export default settlementsSlice.reducer;
+export const { setInventoryDetails } = InventoryDetailsSlice.actions;
+export default InventoryDetailsSlice.reducer;

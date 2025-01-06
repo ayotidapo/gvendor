@@ -66,7 +66,7 @@ const Orders = () => {
 			<section className='metric_cards_wrapper'>
 				<MetricCard title='Total Orders' value={`${totalOrders || 0} Orders`} />
 				<MetricCard
-					title='Average Order value'
+					title='Total Order value'
 					value={
 						<>
 							<span className='font-medium'>&#8358;</span>

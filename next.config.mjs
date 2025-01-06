@@ -12,6 +12,7 @@ const nextConfig = {
 			'goodliststagingstac.blob.core.windows.net',
 			'gtc-goodonline-images.s3.amazonaws.com',
 			'cdn.dorik.com',
+			'someee.com',
 		],
 	},
 };

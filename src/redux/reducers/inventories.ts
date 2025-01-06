@@ -12,6 +12,7 @@ export interface IProduct {
 	status: string;
 	date: string;
 	price: number;
+	images: string[];
 }
 
 export interface IBestSeller {

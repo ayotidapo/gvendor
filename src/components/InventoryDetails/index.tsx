@@ -12,14 +12,20 @@ import EditInputBox from '@/molecules/EditInputBox';
 import UnderReviewTable from '../Inventory/UnderReviewTable';
 import DropDown from '@/atoms/DropDown';
 import { setStages } from '@/utils/data';
+import { IInventoryDetails } from '@/redux/reducers/inventory_details';
+import { ObjectData } from '@/utils/interface';
 
-const InventoryDetailsPage = () => {
+interface Props {
+	details: IInventoryDetails;
+}
+
+const InventoryDetailsPage: React.FC<Props> = ({ details }) => {
 	return (
 		<div className='inventory_details'>
 			<section className='flex flex-col'>
 				<div className='page-title_div'>
-					<h2 className='title'>Jollof Rice and 6 Chicken Wings</h2>
-					<div className='btn_div'>
+					<h2 className='title'>{details?.name}</h2>
+					<div className='btn_div opacity-[0.02]'>
 						<DropDown
 							className='x_dropdown'
 							component={
@@ -40,13 +46,19 @@ const InventoryDetailsPage = () => {
 					</div>
 				</div>
 
-				<span className='text-xl my-1.5'>₦78,600.00</span>
+				<span className='text-xl my-1.5'>
+					₦{details?.price?.toLocaleString()}
+				</span>
 				<span className='my-1'>
-					<span className='text-black'>92</span> items in stock{' '}
+					<span className='text-black'>{details?.inStockQuantity}</span> items
+					in stock <span className='mx-1.5 mr-2'>•</span>
+					<span className='text-black'>{details?.totalUnitsSold}</span> units
+					sold
 					<span className='mx-1.5 mr-2'>•</span>
-					<span className='text-black'>1029</span> units sold
-					<span className='mx-1.5 mr-2'>•</span>
-					<Tag title='Active' className='completed' />
+					<Tag
+						title={details?.isActive ? 'active' : 'inactive'}
+						className={details?.isActive ? 'completed' : 'new'}
+					/>
 				</span>
 			</section>
 
@@ -55,41 +67,48 @@ const InventoryDetailsPage = () => {
 					Items Images
 				</h2>
 				<div className=' grid grid-cols-[repeat(auto-fill,minmax(140px,1fr))] gap-2.5 gap-y-6'>
-					<div className='relative h-[140px] w-[140px]  rounded-lg overflow-hidden'>
-						{/* <Image
-							src='/assets/image68.png'
-							fill
-							alt=''
-							className=' object-cover'
-						/> */}
+					{/* <div className='relative h-[140px] w-[140px]  rounded-lg overflow-hidden'>
+						
 						<img src='/assets/image68.png' alt='' />
-					</div>
-					<div className='relative h-[140px] w-[140px]  rounded-lg overflow-hidden'>
-						<img src='/assets/image68.png' alt='' />
-					</div>
-					<div className='relative h-[140px] w-[140px] rounded-lg overflow-hidden'>
-						<img src='/assets/image68.png' alt='' />
-					</div>
+					</div> */}
+					{details?.images?.map((img: string, i: number) => (
+						<div
+							className='relative h-[140px] w-[140px]  rounded-lg overflow-hidden'
+							key={i}
+						>
+							<Image
+								src={img}
+								fill
+								alt={`img-${i + 1}`}
+								className=' object-cover'
+							/>
+						</div>
+					))}
 				</div>
 				<h2 className='text-xl text-black mt-10 mb-6 subpixel-antialiased'>
 					Items Details
 				</h2>
-				<EditInputBox title='Item name' />
+				<EditInputBox title='Item name' value={details?.name} />
 				<EditInputBox
 					title='Item description'
 					type='textarea'
 					rows={5}
 					textarea
+					value={details?.description}
 				/>
-				<EditInputBox title='Price' />
-				<EditInputBox title='Item Category' />
+				<EditInputBox title='Price' value={details?.price?.toLocaleString()} />
+				<EditInputBox title='Item Category' value={details?.category?.name} />
 			</section>
-			<h2 className='text-xl text-black my-8 mb-6 subpixel-antialiased'>
-				Variants
-			</h2>
-			<section>
-				<UnderReviewTable />
-			</section>
+			{details?.variants?.length > 0 && (
+				<>
+					<h2 className='text-xl text-black my-8 mb-6 subpixel-antialiased'>
+						Variants
+					</h2>
+					<section>
+						<UnderReviewTable variants={details?.variants} />
+					</section>
+				</>
+			)}
 		</div>
 	);
 };

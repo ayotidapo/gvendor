@@ -12,6 +12,7 @@ export interface IAddress {
 }
 
 export interface IVendor {
+	_id?: string;
 	firstName: string;
 	lastName: string;
 	email: string;
