@@ -6,7 +6,6 @@ import { getInventories } from '../apis/inventories';
 export interface IProduct {
 	_id: string;
 	name: string;
-	images: string[];
 	category: string;
 	inStock: number;
 	status: string;
