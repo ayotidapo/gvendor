@@ -2,6 +2,7 @@
 
 import Button, { SimpleBtn } from '@/atoms/buttons/Button';
 import { Input } from '@/atoms/Input/Input';
+import { signInUser } from '@/redux/apis/setAuth';
 import { createPasswordApi } from '@/redux/apis/vendor';
 import { useDispatch, useSelector } from '@/redux/hooks';
 import { setVendor } from '@/redux/reducers/vendor';
@@ -28,6 +29,7 @@ const CreatePaswordPage = () => {
 	const router = useRouter();
 	const searchQ = useSearchParams();
 	const ver_token = searchQ.get('token');
+	const invitedVendorId = searchQ.get('vendorId');
 
 	const { handleSubmit, getFieldProps, errors, touched } = useFormik({
 		initialValues: {
@@ -45,6 +47,15 @@ const CreatePaswordPage = () => {
 				const { vendor = {}, token = '' } = response?.data;
 				dispatch(setVendor({ ...vendor, token }));
 				localStorage.t_ = token;
+
+				if (invitedVendorId) {
+					await signInUser({
+						goodToken: token,
+						vendorId: vendor?._id,
+					});
+					return;
+				}
+
 				router.replace(`/auth/terms-and-conditions?ck_token=${token}`);
 			} catch (e: any) {
 				toast.error(`${e?.message} || Something went wrong`);
