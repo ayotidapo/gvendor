@@ -27,7 +27,7 @@ const CreatePaswordPage = () => {
 
 	const router = useRouter();
 	const searchQ = useSearchParams();
-	const vendorId = searchQ.get('vendorId');
+	const ver_token = searchQ.get('token');
 
 	const { handleSubmit, getFieldProps, errors, touched } = useFormik({
 		initialValues: {
@@ -38,7 +38,10 @@ const CreatePaswordPage = () => {
 		onSubmit: async values => {
 			try {
 				const { password } = values;
-				const response = await createPasswordApi({ password, vendorId });
+				const response = await createPasswordApi({
+					password,
+					token: ver_token,
+				});
 				const { vendor = {}, token = '' } = response?.data;
 				dispatch(setVendor({ ...vendor, token }));
 				localStorage.t_ = token;
