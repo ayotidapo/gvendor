@@ -50,15 +50,6 @@ const SettlementTable: React.FC<Props> = props => {
 					))}
 				</tbody>
 			</table>
-			{totalDataCount && pageLimit && totalDataCount / pageLimit > 1 ? (
-				<Pagination
-					currentPage={currentPage ?? 0}
-					totalCount={totalDataCount ?? 0}
-					itemsPerPage={pageLimit ?? NUMBER_OF_ITEMS_PER_PAGE}
-					pageRangeDisplayed={pageRangeDisplayed}
-					onPageChange={onPageChange}
-				/>
-			) : undefined}
 		</>
 	);
 };
