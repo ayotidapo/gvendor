@@ -41,6 +41,7 @@ interface Props {
 		email: string;
 		[key: string]: any;
 	};
+	token?: string;
 }
 const Register: React.FC<Props> = props => {
 	const dispatch = useDispatch();
@@ -63,8 +64,8 @@ const Register: React.FC<Props> = props => {
 	}
 
 	if (isSuccess && reference) {
-		const qS = vendorUser?._id ? `?vendor_id=${vendorUser?._id}` : '';
-		router.replace(`/auth/create-password${qS}`);
+		const qS = props?.token ? `&token=${props.token}` : '';
+		router.replace(`/auth/create-password?vendorId=${vendorUser?._id}${qS}`);
 	}
 
 	if (isError) {

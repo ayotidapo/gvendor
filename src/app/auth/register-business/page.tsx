@@ -27,7 +27,7 @@ const RegisterBusinessPage: React.FC<ServerProps> = async props => {
 
 	//console.log({ vendor });
 
-	return <RegisterBusiness vendor={vendor} />;
+	return <RegisterBusiness vendor={vendor} token={anyToken} />;
 };
 
 export default RegisterBusinessPage;

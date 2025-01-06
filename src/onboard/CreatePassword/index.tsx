@@ -6,12 +6,13 @@ import { signInUser } from '@/redux/apis/setAuth';
 import { createPasswordApi } from '@/redux/apis/vendor';
 import { useDispatch, useSelector } from '@/redux/hooks';
 import { setVendor } from '@/redux/reducers/vendor';
-
+import jwt from 'jsonwebtoken';
 import { useFormik } from 'formik';
 
 import { useRouter, useSearchParams } from 'next/navigation';
 import { toast } from 'react-toastify';
 import * as Yup from 'yup';
+import { IVendor } from '@/utils/interface';
 
 const CreatePasswordSchema = Yup.object({
 	password: Yup.string()
@@ -28,8 +29,8 @@ const CreatePaswordPage = () => {
 
 	const router = useRouter();
 	const searchQ = useSearchParams();
-	const ver_token = searchQ.get('token');
-	const invitedVendorId = searchQ.get('vendorId');
+	const verifiedToken = searchQ.get('token');
+	const vendorId = searchQ.get('vendorId') as string;
 
 	const { handleSubmit, getFieldProps, errors, touched } = useFormik({
 		initialValues: {
@@ -42,16 +43,16 @@ const CreatePaswordPage = () => {
 				const { password } = values;
 				const response = await createPasswordApi({
 					password,
-					token: ver_token,
+					token: verifiedToken,
 				});
 				const { vendor = {}, token = '' } = response?.data;
 				dispatch(setVendor({ ...vendor, token }));
 				localStorage.t_ = token;
 
-				if (invitedVendorId) {
+				if (verifiedToken) {
 					await signInUser({
 						goodToken: token,
-						vendorId: vendor?._id,
+						vendorId,
 					});
 					return;
 				}
