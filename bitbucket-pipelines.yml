@@ -112,8 +112,6 @@
 #                 KUBECTL_ARGUMENTS: '-f deployment.yaml -n prod'
 #                 DEBUG: 'true'
 
-
-
 definitions:
   services:
     docker1:
@@ -127,7 +125,7 @@ pipelines:
           name: Deploy to Production
           image: 08050481076/joktan4194
           services:
-          - docker1
+            - docker1
           deployment: Deploy
           script:
             # ENV
@@ -142,28 +140,43 @@ pipelines:
             - aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
             - aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
             - aws configure set region ${REGION}
-            - aws eks --region ${REGION} update-kubeconfig --name ${CLUSTER} 
-            - aws ecr describe-repositories --region ${REGION} --repository-names ${IMAGE_NAME} || aws ecr create-repository --region ${REGION} --repository-name ${IMAGE_NAME} --image-scanning-configuration scanOnPush=true
-            - aws ecr get-login-password --region ${REGION} | docker login --username AWS --password-stdin 976193256269.dkr.ecr.${REGION}.amazonaws.com
+            - aws eks --region ${REGION} update-kubeconfig --name ${CLUSTER}
+            - aws ecr describe-repositories --region ${REGION}
+              --repository-names ${IMAGE_NAME} || aws ecr create-repository
+              --region ${REGION} --repository-name ${IMAGE_NAME}
+              --image-scanning-configuration scanOnPush=true
+            - aws ecr get-login-password --region ${REGION} | docker login
+              --username AWS --password-stdin
+              976193256269.dkr.ecr.${REGION}.amazonaws.com
             # docker
             # - git submodule update --init --recursive
-            - echo "NEXT_PUBLIC_API_BASE_URL=${NEXT_PUBLIC_API_BASE_URL_PROD}" >> .env
+            - echo "NEXT_PUBLIC_API_BASE_URL=${NEXT_PUBLIC_API_BASE_URL_PROD}"
+              >> .env
             - echo "NEXTAUTH_URL=${NEXTAUTH_URL_PROD}" >> .env
             - echo "NEXTAUTH_SECRET=${NEXTAUTH_SECRET_PROD}" >> .env
-            - echo "NEXT_PUBLIC_GOOGLE_PLACE_API=${NEXT_PUBLIC_GOOGLE_PLACE_API_PROD}" >> .env
+            - echo
+              "NEXT_PUBLIC_GOOGLE_PLACE_API=${NEXT_PUBLIC_GOOGLE_PLACE_API_PROD}"
+              >> .env
             - docker build -t ${IMAGE_NAME} .
-            - docker tag ${IMAGE_NAME}:latest 976193256269.dkr.ecr.${REGION}.amazonaws.com/${IMAGE_NAME}:${VERSION}
-            - docker push 976193256269.dkr.ecr.${REGION}.amazonaws.com/${IMAGE_NAME}:${VERSION}
-            - aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID --profile default
-            - aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY --profile default
+            - docker tag ${IMAGE_NAME}:latest
+              976193256269.dkr.ecr.${REGION}.amazonaws.com/${IMAGE_NAME}:${VERSION}
+            - docker push
+              976193256269.dkr.ecr.${REGION}.amazonaws.com/${IMAGE_NAME}:${VERSION}
+            - aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID --profile
+              default
+            - aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
+              --profile default
             - aws configure set region ${REGION} --profile default
             # - aws configure set role_arn $VAULT_ROLE_ARN --profile default
             - aws configure set source_profile default --profile default
             - aws configure set region ${REGION} --profile default
-            - aws secretsmanager get-secret-value --secret-id ${IMAGE_NAME} --profile default | jq -r ".SecretString" > secrets.yaml
+            - aws secretsmanager get-secret-value --secret-id ${IMAGE_NAME}
+              --profile default | jq -r ".SecretString" > secrets.yaml
             - >-
               helm upgrade --atomic --install --namespace prod \
-                --set image.repository=976193256269.dkr.ecr.${REGION}.amazonaws.com/${IMAGE_NAME} \
+                --set
+              image.repository=976193256269.dkr.ecr.${REGION}.amazonaws.com/${IMAGE_NAME}
+              \
                 --set image.tag=${VERSION} \
                 --set fullnameOverride=${NAME} \
                 --wait ${NAME} /config/base \
@@ -191,7 +204,7 @@ pipelines:
           name: Deploy to Beta
           image: 08050481076/joktan4194
           services:
-          - docker1
+            - docker1
           deployment: Deploy
           script:
             # ENV
@@ -206,28 +219,43 @@ pipelines:
             - aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
             - aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
             - aws configure set region ${REGION}
-            - aws eks --region ${REGION} update-kubeconfig --name ${CLUSTER} 
-            - aws ecr describe-repositories --region ${REGION} --repository-names ${IMAGE_NAME} || aws ecr create-repository --region ${REGION} --repository-name ${IMAGE_NAME} --image-scanning-configuration scanOnPush=true
-            - aws ecr get-login-password --region ${REGION} | docker login --username AWS --password-stdin 976193256269.dkr.ecr.${REGION}.amazonaws.com
+            - aws eks --region ${REGION} update-kubeconfig --name ${CLUSTER}
+            - aws ecr describe-repositories --region ${REGION}
+              --repository-names ${IMAGE_NAME} || aws ecr create-repository
+              --region ${REGION} --repository-name ${IMAGE_NAME}
+              --image-scanning-configuration scanOnPush=true
+            - aws ecr get-login-password --region ${REGION} | docker login
+              --username AWS --password-stdin
+              976193256269.dkr.ecr.${REGION}.amazonaws.com
             # docker
             # - git submodule update --init --recursive
-            - echo "NEXT_PUBLIC_API_BASE_URL=${NEXT_PUBLIC_API_BASE_URL_BETA}" >> .env
+            - echo "NEXT_PUBLIC_API_BASE_URL=${NEXT_PUBLIC_API_BASE_URL_BETA}"
+              >> .env
             - echo "NEXTAUTH_URL=${NEXTAUTH_URL_BETA}" >> .env
             - echo "NEXTAUTH_SECRET=${NEXTAUTH_SECRET_BETA}" >> .env
-            - echo "NEXT_PUBLIC_GOOGLE_PLACE_API=${NEXT_PUBLIC_GOOGLE_PLACE_API_BETA}" >> .env
+            - echo
+              "NEXT_PUBLIC_GOOGLE_PLACE_API=${NEXT_PUBLIC_GOOGLE_PLACE_API_BETA}"
+              >> .env
             - docker build -t ${IMAGE_NAME} .
-            - docker tag ${IMAGE_NAME}:latest 976193256269.dkr.ecr.${REGION}.amazonaws.com/${IMAGE_NAME}:${VERSION}
-            - docker push 976193256269.dkr.ecr.${REGION}.amazonaws.com/${IMAGE_NAME}:${VERSION}
-            - aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID --profile default
-            - aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY --profile default
+            - docker tag ${IMAGE_NAME}:latest
+              976193256269.dkr.ecr.${REGION}.amazonaws.com/${IMAGE_NAME}:${VERSION}
+            - docker push
+              976193256269.dkr.ecr.${REGION}.amazonaws.com/${IMAGE_NAME}:${VERSION}
+            - aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID --profile
+              default
+            - aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
+              --profile default
             - aws configure set region ${REGION} --profile default
             # - aws configure set role_arn $VAULT_ROLE_ARN --profile default
             - aws configure set source_profile default --profile default
             - aws configure set region ${REGION} --profile default
-            - aws secretsmanager get-secret-value --secret-id ${IMAGE_NAME} --profile default | jq -r ".SecretString" > secrets.yaml
+            - aws secretsmanager get-secret-value --secret-id ${IMAGE_NAME}
+              --profile default | jq -r ".SecretString" > secrets.yaml
             - >-
               helm upgrade --atomic --install --namespace beta  \
-                --set image.repository=976193256269.dkr.ecr.${REGION}.amazonaws.com/${IMAGE_NAME} \
+                --set
+              image.repository=976193256269.dkr.ecr.${REGION}.amazonaws.com/${IMAGE_NAME}
+              \
                 --set image.tag=${VERSION} \
                 --set fullnameOverride=${NAME} \
                 --wait ${NAME} /config/base \
@@ -255,7 +283,7 @@ pipelines:
           name: Deploy to Staging
           image: 08050481076/joktan4194
           services:
-          - docker1
+            - docker1
           deployment: Deploy
           script:
             # ENV
@@ -270,31 +298,47 @@ pipelines:
             - aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
             - aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
             - aws configure set region ${REGION}
-            - aws eks --region ${REGION} update-kubeconfig --name ${CLUSTER} 
-            - aws ecr describe-repositories --region ${REGION} --repository-names ${IMAGE_NAME} || aws ecr create-repository --region ${REGION} --repository-name ${IMAGE_NAME} --image-scanning-configuration scanOnPush=true
-            - aws ecr get-login-password --region ${REGION} | docker login --username AWS --password-stdin 976193256269.dkr.ecr.${REGION}.amazonaws.com
+            - aws eks --region ${REGION} update-kubeconfig --name ${CLUSTER}
+            - aws ecr describe-repositories --region ${REGION}
+              --repository-names ${IMAGE_NAME} || aws ecr create-repository
+              --region ${REGION} --repository-name ${IMAGE_NAME}
+              --image-scanning-configuration scanOnPush=true
+            - aws ecr get-login-password --region ${REGION} | docker login
+              --username AWS --password-stdin
+              976193256269.dkr.ecr.${REGION}.amazonaws.com
             # docker
             # - git submodule update --init --recursive
-            - echo "NEXT_PUBLIC_API_BASE_URL=${NEXT_PUBLIC_API_BASE_URL_STAGING}" >> .env
+            - echo
+              "NEXT_PUBLIC_API_BASE_URL=${NEXT_PUBLIC_API_BASE_URL_STAGING}" >>
+              .env
             - echo "NEXTAUTH_URL=${NEXTAUTH_URL_STAGING}" >> .env
             - echo "NEXTAUTH_SECRET=${NEXTAUTH_SECRET_STAGING}" >> .env
-            - echo "NEXT_PUBLIC_GOOGLE_PLACE_API=${NEXT_PUBLIC_GOOGLE_PLACE_API_STAGING}" >> .env
+            - echo
+              "NEXT_PUBLIC_GOOGLE_PLACE_API=${NEXT_PUBLIC_GOOGLE_PLACE_API_STAGING}"
+              >> .env
             - ls -a
             - cat .env
             - docker build -t ${IMAGE_NAME} .
-            - docker tag ${IMAGE_NAME}:latest 976193256269.dkr.ecr.${REGION}.amazonaws.com/${IMAGE_NAME}:${VERSION}
-            - docker push 976193256269.dkr.ecr.${REGION}.amazonaws.com/${IMAGE_NAME}:${VERSION}
-            - aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID --profile default
-            - aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY --profile default
+            - docker tag ${IMAGE_NAME}:latest
+              976193256269.dkr.ecr.${REGION}.amazonaws.com/${IMAGE_NAME}:${VERSION}
+            - docker push
+              976193256269.dkr.ecr.${REGION}.amazonaws.com/${IMAGE_NAME}:${VERSION}
+            - aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID --profile
+              default
+            - aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
+              --profile default
             - aws configure set region ${REGION} --profile default
             # - aws configure set role_arn $VAULT_ROLE_ARN --profile default
             - aws configure set source_profile default --profile default
             - aws configure set region ${REGION} --profile default
-            - aws secretsmanager get-secret-value --secret-id ${IMAGE_NAME} --profile default | jq -r ".SecretString" > secrets.yaml
+            - aws secretsmanager get-secret-value --secret-id ${IMAGE_NAME}
+              --profile default | jq -r ".SecretString" > secrets.yaml
             - cat secrets.yaml
             - >-
               helm upgrade --atomic --install --namespace api \
-                --set image.repository=976193256269.dkr.ecr.${REGION}.amazonaws.com/${IMAGE_NAME} \
+                --set
+              image.repository=976193256269.dkr.ecr.${REGION}.amazonaws.com/${IMAGE_NAME}
+              \
                 --set image.tag=${VERSION} \
                 --set fullnameOverride=${NAME} \
                 --wait ${NAME} /config/base \

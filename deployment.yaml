@@ -7,8 +7,8 @@ spec:
   strategy:
     type: RollingUpdate
     rollingUpdate:
-      maxUnavailable: 0  # Ensure at least one pod is always running
-      maxSurge: 1  # Allow maximum 1 extra pod during updates
+      maxUnavailable: 0 # Ensure at least one pod is always running
+      maxSurge: 1 # Allow maximum 1 extra pod during updates
   selector:
     matchLabels:
       app: goodlist-vendor-frontend-${ENV_NAME}
@@ -81,11 +81,11 @@ spec:
         nodeAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
             nodeSelectorTerms:
-            - matchExpressions:
-              - key: agentpool
-                operator: In
-                values:
-                - userpool
+              - matchExpressions:
+                  - key: agentpool
+                    operator: In
+                    values:
+                      - userpool
 # ---
 # apiVersion: autoscaling/v2
 # kind: HorizontalPodAutoscaler
@@ -115,12 +115,12 @@ spec:
 apiVersion: policy/v1
 kind: PodDisruptionBudget
 metadata:
-  name: goodlist-vendor-frontend-${ENV_NAME}-pdb  # You can customize this name
+  name: goodlist-vendor-frontend-${ENV_NAME}-pdb # You can customize this name
 spec:
-  minAvailable: 1  # Minimum number of pods to be available at all times
+  minAvailable: 1 # Minimum number of pods to be available at all times
   selector:
     matchLabels:
-      app: goodlist-vendor-frontend-${ENV_NAME}  # Label that identifies the pods to protect
+      app: goodlist-vendor-frontend-${ENV_NAME} # Label that identifies the pods to protect
   # Alternatively, you can use a selector based on other criteria
   # maxUnavailable: 1  # Optional: Maximum number of pods that can be unavailable during disruption (absolute number or percentage)
 ---
@@ -172,7 +172,6 @@ spec:
                 name: goodlist-vendor-frontend-${ENV_NAME}
                 port:
                   number: 3000
-
 #Get envs from azure vault
 # ---
 # apiVersion: secrets-store.csi.x-k8s.io/v1
@@ -209,30 +208,30 @@ spec:
 #         array:
 #           - |
 #             objectName: REACT-APP-BACKEND-BASE-URL-BETA
-#             objectType: secret              
-#             objectVersion: ""               
+#             objectType: secret
+#             objectVersion: ""
 #           - |
 #             objectName: REACT-APP-AUTH-COOKIE-KEY
 #             objectType: secret
 #             objectVersion: ""
 #           - |
 #             objectName: NEXT-PUBLIC-ALGOLIA-APP-ID
-#             objectType: secret              
-#             objectVersion: ""               
+#             objectType: secret
+#             objectVersion: ""
 #           - |
 #             objectName: NEXT-PUBLIC-ALGOLIA-API-KEY
 #             objectType: secret
 #             objectVersion: ""
 #           - |
 #             objectName: NEXTAUTH-SECRET
-#             objectType: secret              
-#             objectVersion: ""               
+#             objectType: secret
+#             objectVersion: ""
 #           - |
 #             objectName: CLIENT-ID
 #             objectType: secret
 #             objectVersion: ""
 #           - |
 #             objectName: CLIENT-SECRET
-#             objectType: secret              
-#             objectVersion: ""               
+#             objectType: secret
+#             objectVersion: ""
 #       tenantId: 6777c474-4033-4c37-a92b-caa3c6b3ee92                # The tenant ID of the key vault
