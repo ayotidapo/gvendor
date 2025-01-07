@@ -59,7 +59,6 @@ const InventoryPage = () => {
 		uriConfig: {},
 	});
 
-
 	const { qString, page, status, search } = useApiSearchQuery(limit);
 
 	useEffect(() => {
