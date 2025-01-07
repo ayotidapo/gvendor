@@ -2,10 +2,10 @@
 	@apply cursor-pointer;
 
 	&.square {
-	.checkbox_mirror {
-		@apply rounded-none;
+		.checkbox_mirror {
+			@apply rounded-none;
+		}
 	}
-}
 }
 .checkbox_mirror {
 	@apply inline-flex w-5 h-5 rounded-full border-[1.5px] border-[#7a7978] justify-center items-center text-white;
@@ -14,8 +14,6 @@
 		content: url('/assets/check.svg');
 	}
 }
-
-
 
 .title {
 	@apply ml-2;
