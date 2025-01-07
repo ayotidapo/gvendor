@@ -38,10 +38,6 @@ const Fetch = async (
 		});
 
 		if (!response.ok) {
-			if (response.status === 401 && typeof global.window !== 'undefined') {
-				//console.log('e')
-			}
-
 			const responseErr = await response.json();
 			const errMessage =
 				responseErr.message || response.statusText || responseErr.error;
@@ -52,6 +48,9 @@ const Fetch = async (
 
 		return result;
 	} catch (e: any) {
+		// if (e.status === 401 ) {
+		// 	//console.log('e')
+		// }
 		// console.log(e.message, e.status, 9000, e);
 		throw { message: e.message, status: e.status };
 	}
