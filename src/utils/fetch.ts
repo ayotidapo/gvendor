@@ -55,6 +55,9 @@ const Fetch = async (
 
 		return result;
 	} catch (e: any) {
+		// if (e.status === 401 ) {
+		// 	//console.log('e')
+		// }
 		// console.log(e.message, e.status, 9000, e);
 		throw { message: e.message, status: e.status };
 	}

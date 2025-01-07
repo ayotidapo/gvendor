@@ -9,7 +9,7 @@ import GetUserLayout from '@/components/GetUserLayout';
 const UserLayout: React.FC<{ children: React.ReactNode }> = async props => {
 	const session = await getServerSession(nextAuthOptions);
 	if (!session?.user) redirect(`/auth/login`);
-	console.log({ session });
+
 	const { goodToken } = (session?.user as sessionUser) || {};
 	let vendor;
 

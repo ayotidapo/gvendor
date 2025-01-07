@@ -77,9 +77,9 @@ const BusinessInfo: React.FC<Props> = props => {
 		SetAddress(selectLocation);
 	};
 
-	const onSetTime = (name: string, val: Value) => {
-		setValue({ ...value, [name]: val });
-	};
+	// const onSetTime = (name: string, val: Value) => {
+	// 	setValue({ ...value, [name]: val });
+	// };
 
 	if (isSuccess) {
 		props.setStep(1);
