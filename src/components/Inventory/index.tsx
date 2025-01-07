@@ -33,8 +33,6 @@ const AddItemSchema = Yup.object({
 const InventoryPage = () => {
 	const {
 		products,
-		isError,
-		isSuccess,
 		loading,
 		totalUnitsSold = 0,
 		productsInStock = 0,
