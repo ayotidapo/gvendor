@@ -46,12 +46,15 @@ const InventoryPage = () => {
 	const path = usePathname();
 	const [chosenFiles, setChosenFiles] = React.useState([]);
 	const { uploading, completed, onRemoveFile, files, resObj } = useRcfUploader(
-		'https://vendor-api.staging.goodthingco.xyz/api/v1/image/upload',
-		'gg',
-		chosenFiles,
-		1,
-		{}
+		{uri:'https://vendor-api.staging.goodthingco.xyz/api/v1/image/upload',
+		inputFieldName:'gg',
+		selectedFiles:chosenFiles,
+		maxNumOfFiles:1,
+		uriConfig:{}
+	}
 	);
+
+	
 
 	console.log({ uploading, completed, onRemoveFile, files, resObj });
 

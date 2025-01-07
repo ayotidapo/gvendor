@@ -51,7 +51,7 @@
 		"chart.js": "^4.4.4",
 		"classnames": "^2.5.1",
 		"date-fns": "^3.6.0",
-		"files-uploader-rc": "^3.3.7",
+		"files-uploader-rc": "^3.3.8",
 		"formik": "^2.4.6",
 		"html-react-parser": "^5.1.13",
 		"js-cookie": "^3.0.5",
