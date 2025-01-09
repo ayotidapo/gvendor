@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 
-import React from 'react';
+import React, { Suspense } from 'react';
 import Provider from '../redux/storeProvider';
 import { Geist, Gilroy } from '@/fonts/font';
 import { Recoleta } from '@/fonts/font';
@@ -37,8 +37,9 @@ export default async function RootLayout({
 							pauseOnFocusLoss
 							limit={1}
 						/>
-
-						<LayoutWrapper>{children}</LayoutWrapper>
+						<Suspense>
+							<LayoutWrapper>{children}</LayoutWrapper>
+						</Suspense>
 					</Provider>
 				</SessionProvider>
 			</body>

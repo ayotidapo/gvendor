@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import RegisterBusiness from '@/onboard/RegisterBusiness';
 import { ServerProps } from '@/utils/interface';
 import jwt from 'jsonwebtoken';
