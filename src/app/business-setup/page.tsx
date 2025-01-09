@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import BusinessSetupPage from '@/onboard/BusinessSetup';
 import { ServerProps } from '@/utils/interface';
 import { notFound } from 'next/navigation';
