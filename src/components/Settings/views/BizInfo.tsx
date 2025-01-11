@@ -160,7 +160,7 @@ const BizInfo = () => {
 					</EditInputBox>
 					<EditInputBox
 						name='*'
-						title='SON Identification Number'
+						title='NAFDAC Number'
 						displayValue={
 							businessDetails?.nafdacNumber
 								? businessDetails?.nafdacNumber
