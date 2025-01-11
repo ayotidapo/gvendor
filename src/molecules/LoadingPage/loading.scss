@@ -1,21 +1,21 @@
 .loading_ {
-  @apply flex h-screen w-full items-center justify-center bg-gray-50;
-  .spinner {
-    @apply h-20 w-20 border-2;
-  }
+	@apply flex h-screen w-full items-center justify-center bg-gray-50;
+	.spinner {
+		@apply h-20 w-20 border-2;
+	}
 }
 
 .spinner {
-  @apply inline-block min-h-6 min-w-6 rounded-full border border-white   border-t-gold1;
-  animation: pay-animation 1s infinite;
-  animation-timing-function: linear;
+	@apply inline-block min-h-6 min-w-6 rounded-full border border-white   border-t-gold1;
+	animation: pay-animation 1s infinite;
+	animation-timing-function: linear;
 }
 
 @keyframes pay-animation {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
+	0% {
+		transform: rotate(0deg);
+	}
+	100% {
+		transform: rotate(360deg);
+	}
 }

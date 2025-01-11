@@ -1,12 +1,12 @@
 import type { Metadata } from 'next';
 
-import React from 'react';
+import React, { Suspense } from 'react';
 import Provider from '../redux/storeProvider';
 import { Geist, Gilroy } from '@/fonts/font';
 import { Recoleta } from '@/fonts/font';
 import { ToastContainer, Zoom } from 'react-toastify';
 import SessionProvider from '@/providers/SessionProvider';
-
+import 'react-phone-number-input/style.css';
 import 'react-toastify/dist/ReactToastify.css';
 import './globals.css';
 import LayoutWrapper from '@/components/LayoutWrapper';
@@ -37,8 +37,9 @@ export default async function RootLayout({
 							pauseOnFocusLoss
 							limit={1}
 						/>
-
-						<LayoutWrapper>{children}</LayoutWrapper>
+						<Suspense>
+							<LayoutWrapper>{children}</LayoutWrapper>
+						</Suspense>
 					</Provider>
 				</SessionProvider>
 			</body>

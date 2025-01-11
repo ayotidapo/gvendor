@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { toast } from 'react-toastify';
-import { getInventories } from '../apis/inventories';
+import { getSettlements } from '../apis/settlements';
 
 interface ISettlements {
 	docs: any[];
@@ -30,18 +30,18 @@ export const settlementsSlice = createSlice({
 
 	extraReducers: builder => {
 		builder
-			.addCase(getInventories.pending, state => {
+			.addCase(getSettlements.pending, state => {
 				state.loading = true;
 				state.isSuccess = false;
 				state.isError = false;
 			})
-			.addCase(getInventories.fulfilled, (state, action) => {
+			.addCase(getSettlements.fulfilled, (state, action) => {
 				state.isSuccess = true;
 				state.isError = false;
 				state.loading = false;
 				Object.assign(state, action.payload?.data);
 			})
-			.addCase(getInventories.rejected, (state, action) => {
+			.addCase(getSettlements.rejected, (state, action) => {
 				if (action.error?.message)
 					toast.error(`Error occured: ${action.error?.message}`);
 

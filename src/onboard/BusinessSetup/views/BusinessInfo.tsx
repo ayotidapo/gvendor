@@ -16,7 +16,7 @@ import { PhoneField } from '@/atoms/PhoneInput';
 
 type Value = string | null;
 
-const validationSchema = Yup.object({
+export const validationSchema = Yup.object({
 	businessName: Yup.string().required('Business name is Required'),
 	businessAddress: Yup.string(),
 	businessDescription: Yup.string().required('Tell us about your business'),
@@ -77,9 +77,9 @@ const BusinessInfo: React.FC<Props> = props => {
 		SetAddress(selectLocation);
 	};
 
-	const onSetTime = (name: string, val: Value) => {
-		setValue({ ...value, [name]: val });
-	};
+	// const onSetTime = (name: string, val: Value) => {
+	// 	setValue({ ...value, [name]: val });
+	// };
 
 	if (isSuccess) {
 		props.setStep(1);
@@ -175,13 +175,13 @@ const BusinessInfo: React.FC<Props> = props => {
 										setFieldValue('businessPhonenumber', val);
 									}}
 									className='ooooo'
-									value={values?.businessPhonenumber}
+									//value={values?.businessPhonenumber}
 									onBlur={handleBlur}
-									error={
-										(errors.businessPhonenumber && touched.businessPhonenumber
-											? errors.businessPhonenumber
-											: '') as string
-									}
+									// error={
+									// 	(errors.businessPhonenumber && touched.businessPhonenumber
+									// 		? errors.businessPhonenumber
+									// 		: '') as string
+									// }
 									placeholder='Phone number'
 								/>
 							</div>

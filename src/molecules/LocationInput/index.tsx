@@ -7,8 +7,12 @@ import { useFormikContext } from 'formik';
 interface Props {
 	onSelectLocation: (address: ObjectData) => void;
 	error?: string;
+	disabled?: boolean;
+	className?: string;
+	defaultValue?: string;
 }
-const LocationInput: React.FC<Props> = ({ onSelectLocation, error }) => {
+const LocationInput: React.FC<Props> = props => {
+	const { onSelectLocation, disabled, className, defaultValue, error } = props;
 	const { setErrors } = useFormikContext();
 
 	return (
@@ -16,6 +20,7 @@ const LocationInput: React.FC<Props> = ({ onSelectLocation, error }) => {
 			<div className='input_wrapper'>
 				<Autocomplete
 					apiKey={process.env.NEXT_PUBLIC_GOOGLE_PLACE_API}
+					defaultValue={defaultValue}
 					onPlaceSelected={place => {
 						setErrors({ businessAddress: '' });
 						const addressComponents = place?.address_components;
@@ -56,7 +61,8 @@ const LocationInput: React.FC<Props> = ({ onSelectLocation, error }) => {
 
 						onSelectLocation(selectedAddress);
 					}}
-					className={`input ${error ? 'error' : ''}`}
+					className={`input ${error ? 'error' : ''} ${className}`}
+					style={{ pointerEvents: disabled ? 'none' : 'auto' }}
 					options={{
 						fields: [
 							'geometry.location',

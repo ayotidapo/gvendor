@@ -1,9 +1,10 @@
 'use client';
 import { SimpleBtn } from '@/atoms/buttons/Button';
 import { Icon } from '@/atoms/icon/icon';
-import EditInputBox, { EditGroupInputBox } from '@/molecules/EditInputBox';
+
 import React, { useState } from 'react';
 import DeleteAcct from './DeleteAcct';
+import EditInputBox, { EditGroupInputBox } from '@/molecules/EditInputBox';
 
 const ManageAcct = () => {
 	return (
@@ -15,12 +16,18 @@ const ManageAcct = () => {
 				{({ isNonEdit }: any) => {
 					return (
 						<div>
-							<EditInputBox title='Change password' nonEditable={isNonEdit} />
 							<EditInputBox
+								name=''
+								title='Change password'
+								nonEditable={isNonEdit}
+							/>
+							<EditInputBox
+								name=''
 								title='Enter new password'
 								nonEditable={isNonEdit}
 							/>
 							<EditInputBox
+								name=''
 								title='Re-enter new password'
 								nonEditable={isNonEdit}
 							/>

@@ -1,3 +1,4 @@
+'use client';
 import { Input } from '@/atoms/Input/Input';
 import React, { useEffect, useState } from 'react';
 import './seachfilter.scss';

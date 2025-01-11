@@ -7,7 +7,7 @@ import MetricCard from '@/molecules/MetricCard';
 import React, { useEffect, useMemo } from 'react';
 import './orders.scss';
 import OrdersTable from './OrdersTable';
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { constructQuery } from '@/utils/helpers';
 import { getOrders } from '@/redux/apis/orders';
 import { useDispatch, useSelector } from '@/redux/hooks';

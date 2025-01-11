@@ -3,7 +3,8 @@
 		li {
 			@apply mb-7 text-[#7A7978] font-normal cursor-pointer;
 			transition: font-weight 0.1s linear;
-			&:hover {
+			&:hover,
+			&.active {
 				@apply font-medium text-black;
 			}
 		}

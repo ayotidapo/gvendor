@@ -4,8 +4,11 @@ import { SimpleBtn } from '@/atoms/buttons/Button';
 import './settlement-details.scss';
 import { Icon } from '@/atoms/icon/icon';
 import OrderItem from '@/molecules/OrderItem';
+import { ObjectData } from '../../utils/interface';
+import { format } from 'date-fns';
 
-const SettlementDetailsPage = () => {
+const SettlementDetailsPage: React.FC<{ details: ObjectData }> = props => {
+	const { details: s } = props;
 	return (
 		<div className='settlementdetails'>
 			<section>
@@ -16,49 +19,68 @@ const SettlementDetailsPage = () => {
 			<section className='dl_section'>
 				<div className='dt_dd'>
 					<span>Transaction ID:</span>
-					<span className='text-[#050301] font-medium'>BI21DDC25XD2V</span>
+					<span className='text-[#050301] font-medium'>
+						{s?.transactionId || 'N/A'}
+					</span>
 				</div>
 				<div className='dt_dd'>
 					<span>Order ID:</span>
-					<span className='text-[#050301] font-medium'>BI21DDC25XD2V</span>
+					<span className='text-[#050301] font-medium'>
+						#{s?.order?.orderNumber || 'N/A'}
+					</span>
 				</div>
 				<div className='dt_dd'>
 					<span>Payment reference:</span>
-					<span className='text-[#050301] font-medium'>VYGYUFT67</span>
+					<span className='text-[#050301] font-medium'>
+						{s?.paymentReference || 'N/A'}
+					</span>
 				</div>
 				<div className='dt_dd'>
-					<span>Creator's account number:</span>
+					<span>Account number:</span>
 					<span className='text-[#050301] font-medium'>#15285047</span>
 				</div>
 				<div className='dt_dd'>
-					<span>Creator's account name:</span>
-					<span className='text-[#050301] font-medium'>David Adewumi</span>
+					<span>Account name:</span>
+					<span className='text-[#050301] font-medium'>
+						{s?.order?.personalInformation?.firstName} &nbsp;
+						{s?.order?.personalInformation?.lastName}
+					</span>
 				</div>
 				<div className='dt_dd'>
 					<span>Date:</span>
-					<span className='text-[#050301] font-medium'>27/10/2024 2:49PM</span>
+					<span className='text-[#050301] font-medium'>
+						<td>{format(s?.createdAt, 'dd/MM/yyyy hh:mm aa')}</td>
+					</span>
 				</div>
 				<div className='dt_dd'>
 					<span>Transaction status:</span>
 					<span className='text-[#050301] font-medium'>
-						<Tag title='Successful' className='completed' />
+						<Tag title={s?.status} className={s?.status} />
 					</span>
 				</div>
 				<div className='dt_dd'>
-					<span>Order amount:</span>
-					<span className='text-[#050301] font-medium'>#15285047</span>
+					<span>Order Subtotal:</span>
+					<span className='text-[#050301] font-medium'>
+						{s?.order?.subTotal || 'N/A'}
+					</span>
 				</div>
 				<div className='dt_dd'>
-					<span>Goods commission (20%):</span>
-					<span className='text-[#050301] font-medium'>#15285047</span>
+					<span>Percentage:</span>
+					<span className='text-[#050301] font-medium'>
+						{s?.percentage * 100}%
+					</span>
 				</div>
 				<div className='dt_dd'>
 					<span>Processing fee:</span>
-					<span className='text-[#050301] font-medium'>Bank transfer</span>
+					<span className='text-[#050301] font-medium'>
+						{s?.processingFee || 'N/A'}
+					</span>
 				</div>
 				<div className='dt_dd'>
 					<span>Amount Settled:</span>
-					<span className='text-[#050301] font-medium'>₦95,700.00</span>
+					<span className='text-[#050301] font-medium'>
+						₦{s?.amount.toLocaleString()}
+					</span>
 				</div>
 			</section>
 		</div>

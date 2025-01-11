@@ -12,7 +12,7 @@ interface IProps {
 const DialogRadio: React.FC<IProps> = props => {
 	const { values } = useFormikContext<Record<string, any>>();
 	const { rName, fName } = props;
-
+	console.log(values);
 	const validate = (value: string) => {
 		let error;
 

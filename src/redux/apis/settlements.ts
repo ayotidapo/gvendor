@@ -3,7 +3,7 @@ import Fetch from '@/utils/fetch';
 
 export const getSettlementsApi = async (queyString?: string) => {
 	const response = await Fetch(`/settlements${queyString}`);
-
+	console.log(response.data, 'ppp');
 	return response;
 };
 

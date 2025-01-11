@@ -14,9 +14,29 @@ interface Props {
 	textarea?: boolean;
 	title?: string;
 	nonEditable?: boolean;
+	deactivate?: boolean;
+	name: string;
+	ctaName?: string;
+	displayValue?: string | number;
+	cta?: () => void;
+	onChange?: (
+		e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+	) => void;
+	submitting?: boolean;
+	children?: React.ReactNode;
 }
 const EditInputBox: React.FC<Props> = props => {
-	const { type, rows, textarea, title, nonEditable, value } = props;
+	const {
+		rows,
+		textarea,
+		submitting,
+		ctaName = 'Request change',
+		title,
+		nonEditable,
+		deactivate,
+		cta,
+		...rest
+	} = props;
 	const non_Editable = nonEditable === undefined ? true : nonEditable;
 
 	const [isNonEdit, setIsNonEdit] = useState<boolean | undefined>(
@@ -35,10 +55,11 @@ const EditInputBox: React.FC<Props> = props => {
 					</span>
 				)}
 
-				{false && (
+				{!deactivate && (
 					<>
 						<SimpleBtn
 							className='toggle_edit'
+							type='button'
 							onClick={() => setIsNonEdit(isNonEdit => !isNonEdit)}
 						>
 							{isNonEdit ? (
@@ -53,18 +74,27 @@ const EditInputBox: React.FC<Props> = props => {
 					</>
 				)}
 			</div>
-			<Input
-				name='details'
-				type={type}
-				value={value}
-				rows={isNonEdit ? 1 : rows}
-				className={cx({ non_edit: isNonEdit, textarea })}
-				autoFocus={!isNonEdit}
-				readOnly={isNonEdit}
-			/>
+			{props.children ? (
+				<div className='my-5'>
+					{isNonEdit && <span>{props.displayValue}</span>}
+					<div className={isNonEdit ? 'hidden' : 'block  bg-[#fafafa] p-1'}>
+						{props.children}
+					</div>
+				</div>
+			) : (
+				<Input
+					rows={isNonEdit ? 1 : rows}
+					className={cx({ non_edit: isNonEdit, textarea })}
+					autoFocus={!isNonEdit}
+					readOnly={isNonEdit}
+					{...rest}
+				/>
+			)}
 
 			{!isNonEdit && (
-				<SimpleBtn className='req_change'>Request change</SimpleBtn>
+				<SimpleBtn className='req_change' disabled={submitting} onClick={cta}>
+					{ctaName}
+				</SimpleBtn>
 			)}
 			<hr className='hr' />
 		</div>
@@ -74,7 +104,7 @@ const EditInputBox: React.FC<Props> = props => {
 export default EditInputBox;
 
 type RestrictedUser = Omit<Props, 'password' | 'email'>;
-interface IProps extends Props {
+interface IProps {
 	children: React.FC;
 	groupTitle?: string;
 	actionBtn: string;

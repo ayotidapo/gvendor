@@ -205,3 +205,10 @@ img {
 .btn.notfound {
 	width: 300px;
 }
+
+.opening_days {
+	@apply flex items-center my-5;
+	& > .combine_input {
+		@apply flex-1;
+	}
+}

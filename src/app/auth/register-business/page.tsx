@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import RegisterBusiness from '@/onboard/RegisterBusiness';
 import { ServerProps } from '@/utils/interface';
 import jwt from 'jsonwebtoken';
@@ -27,7 +27,7 @@ const RegisterBusinessPage: React.FC<ServerProps> = async props => {
 
 	//console.log({ vendor });
 
-	return <RegisterBusiness vendor={vendor} />;
+	return <RegisterBusiness vendor={vendor} token={anyToken} />;
 };
 
 export default RegisterBusinessPage;

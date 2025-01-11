@@ -6,7 +6,6 @@ import cx from 'classnames';
 import './input.scss';
 import { IOption } from '@/utils/interface';
 import { Icon } from '../icon/icon';
-import 'react-phone-number-input/style.css';
 
 interface Props {
 	name: string;

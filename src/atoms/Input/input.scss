@@ -38,10 +38,17 @@ textarea.input {
 	@apply border-0;
 } */
 .PhoneInput {
-	@apply border border-[#7a7978]  rounded-lg pl-2  mb-5 w-full;
+	@apply border border-[#7a7978]  rounded-lg pl-2   w-full;
 
 	.PhoneInputInput {
 		@apply border-none pl-0;
+	}
+
+	&.non_edit {
+		@apply ring-0 outline-transparent rounded-none border-0 border-b-divider-gray pl-0 h-[48px] mt-0;
+		& > .PhoneInputCountry {
+			@apply hidden;
+		}
 	}
 }
 .error_ {

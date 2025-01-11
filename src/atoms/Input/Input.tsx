@@ -16,7 +16,6 @@ export const Input = ({
 	hasIcon,
 	iconSvg = '',
 	iconDimension = 20,
-
 	className = '',
 	error = '',
 	autoComplete = 'off',

@@ -12,14 +12,15 @@ export interface IAddress {
 }
 
 export interface IVendor {
+	_id?: string;
 	firstName: string;
 	lastName: string;
 	email: string;
 	phone: string;
-	businessName: string;
-	servicesOffered: string[];
-	website: string;
-	businessAddress: IAddress;
+	businessName?: string;
+	servicesOffered?: string[];
+	website?: string;
+	businessAddress?: IAddress;
 	[key: string]: any;
 }
 

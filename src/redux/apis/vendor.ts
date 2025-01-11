@@ -20,10 +20,19 @@ export const registerVendorApi = async (body: IVendor) => {
 	return response;
 };
 
-export const createPasswordApi = async (body: Record<string, any>) => {
-	const { password, vendorId } = body;
+export const updateVendorApi = async (body: IVendor) => {
+	const response = await Fetch(`/vendor`, {
+		body,
+		method: 'put',
+	});
 
-	const response = await Fetch(`/auth/set-password/${vendorId}`, {
+	return response;
+};
+
+export const createPasswordApi = async (body: Record<string, any>) => {
+	const { password, token } = body;
+
+	const response = await Fetch(`/auth/set-password/${token}`, {
 		body: { password },
 		method: 'post',
 	});
@@ -66,8 +75,9 @@ const getVendor = createAsyncThunk(
 );
 
 const registerVendor = createAsyncThunk('vendor/register', registerVendorApi);
+const updateVendor = createAsyncThunk('vendor/update', registerVendorApi);
 const login = createAsyncThunk('vendor/login', loginApi);
 
-export { getInvitedVendor, getVendor, registerVendor, login };
+export { getInvitedVendor, getVendor, registerVendor, updateVendor, login };
 
 //

@@ -11,9 +11,17 @@ const BankAcct = () => {
 				{({ isNonEdit }: any) => {
 					return (
 						<div>
-							<EditInputBox title='Account number' nonEditable={isNonEdit} />
-							<EditInputBox title='Bank name' nonEditable={isNonEdit} />
-							<EditInputBox title='Account name' nonEditable={isNonEdit} />
+							<EditInputBox
+								name=''
+								title='Account number'
+								nonEditable={isNonEdit}
+							/>
+							<EditInputBox name='' title='Bank name' nonEditable={isNonEdit} />
+							<EditInputBox
+								name=''
+								title='Account name'
+								nonEditable={isNonEdit}
+							/>
 						</div>
 					);
 				}}

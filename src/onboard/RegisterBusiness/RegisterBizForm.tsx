@@ -33,9 +33,9 @@ const RegisterBizForm: React.FC<Props> = props => {
 				<PhoneField
 					name='phone'
 					onChange={onChangePhone}
-					value={values.phone}
+					// value={values.phone}
 					onBlur={handleBlur}
-					error={(errors.phone && touched.phone ? errors.phone : '') as string}
+					// error={(errors.phone && touched.phone ? errors.phone : '') as string}
 					placeholder='Phone number'
 				/>
 
