@@ -1,5 +1,5 @@
 import React, { Suspense } from 'react';
-import RegisterBusiness from '@/onboard/RegisterBusiness';
+import RegisterBusiness from '@/onboard/Register';
 import { ServerProps } from '@/utils/interface';
 import jwt from 'jsonwebtoken';
 import { notFound } from 'next/navigation';

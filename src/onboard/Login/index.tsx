@@ -88,7 +88,7 @@ const LoginPage: React.FC = ({}) => {
 			<p className='text-black pt-5 text-center'>
 				New to good?{' '}
 				<Link
-					href='/auth/register-business'
+					href='/auth/register'
 					className='text-[#f45d2c] subpixel-antialiased'
 				>
 					Register your business
