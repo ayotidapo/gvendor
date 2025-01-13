@@ -8,7 +8,7 @@ import { ToastContainer, Zoom } from 'react-toastify';
 import SessionProvider from '@/providers/SessionProvider';
 import 'react-phone-number-input/style.css';
 import 'react-toastify/dist/ReactToastify.css';
-import './globals.css';
+import './globals.scss';
 import LayoutWrapper from '@/components/LayoutWrapper';
 
 export const metadata: Metadata = {

@@ -10,6 +10,8 @@ import { ObjectData } from '@/utils/interface';
 import { ErrorMessage, Form, Formik, useFormik } from 'formik';
 import React, { useState } from 'react';
 import { validationSchema } from '@/onboard/BusinessSetup/views/BusinessInfo';
+import { updateBizApi } from '@/redux/apis/business';
+import { toast } from 'react-toastify';
 
 const BizInfo = () => {
 	const { businessDetails } = useSelector(state => state?.vendor);
@@ -42,22 +44,23 @@ const BizInfo = () => {
 			}}
 			onSubmit={async values => {
 				try {
-					//setLoading(true);
-					// await updateVendorApi(values);
-					// toast.success(`Profile updated!`);
+					setLoading(true);
+					await updateBizApi(values);
+					toast.success(`usiness Information updated!`);
 				} catch (e: any) {
-					//toast.error(`Error: ${e.message}`);
+					toast.error(`Error: ${e.message}`);
 				} finally {
-					//setLoading(false);
+					setLoading(false);
 				}
 			}}
 			validationSchema={validationSchema}
 		>
-			{({ getFieldProps, setFieldValue, handleBlur, values }) => (
+			{({ setFieldValue, handleBlur, values }) => (
 				<Form>
 					<h2 className='h2'>Business Information</h2>
 
 					<EditInputBox
+						ctaName='Save'
 						name='businessName'
 						title='Business name'
 						value={businessName}
@@ -71,6 +74,7 @@ const BizInfo = () => {
 						submitting={loading}
 					/>
 					<EditInputBox
+						ctaName='Save'
 						name='businessEmail'
 						title='Business email address'
 						value={businessEmail}
@@ -84,23 +88,27 @@ const BizInfo = () => {
 						onBlur={handleBlur}
 					/>
 					<EditInputBox
+						ctaName='Save'
 						name='category'
 						title='Business category'
 						value={businessDetails?.servicesOffered?.[0]}
 					/>
 					<EditInputBox
+						ctaName='Save'
 						name='about'
 						title='About business'
 						value={businessDetails?.businessDescription}
 						type='textarea'
 					/>
 					<EditInputBox
+						ctaName='Save'
 						name='website'
 						title='Business website'
 						value={businessDetails?.website}
 					/>
 
 					<EditInputBox
+						ctaName='Save'
 						name='*'
 						title='Business opening hours'
 						displayValue='Click the edit icon to update opening hours'
@@ -110,6 +118,7 @@ const BizInfo = () => {
 						))}
 					</EditInputBox>
 					<EditInputBox
+						ctaName='Save'
 						name='*'
 						title='CAC Number'
 						displayValue={cacNumber || 'No CAC number Provided'}
@@ -121,6 +130,7 @@ const BizInfo = () => {
 						/>
 					</EditInputBox>
 					<EditInputBox
+						ctaName='Save'
 						name='*'
 						title='Tax Identification Number'
 						displayValue={
@@ -135,6 +145,7 @@ const BizInfo = () => {
 						/>
 					</EditInputBox>
 					<EditInputBox
+						ctaName='Save'
 						name='*'
 						title='SON Identification Number'
 						displayValue={
@@ -159,6 +170,7 @@ const BizInfo = () => {
 						</label>
 					</EditInputBox>
 					<EditInputBox
+						ctaName='Save'
 						name='*'
 						title='NAFDAC Number'
 						displayValue={

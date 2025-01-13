@@ -96,7 +96,7 @@ body {
 		@apply w-auto p-0 h-auto text-black bg-transparent;
 	}
 	.btn.req_change {
-		@apply w-[201px] my-4;
+		@apply w-auto my-4 px-10;
 	}
 	&:last-child {
 		@apply mb-2;
