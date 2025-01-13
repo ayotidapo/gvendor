@@ -316,8 +316,6 @@ pipelines:
             - echo
               "NEXT_PUBLIC_GOOGLE_PLACE_API=${NEXT_PUBLIC_GOOGLE_PLACE_API_STAGING}"
               >> .env
-            - ls -a
-            - cat .env
             - docker build -t ${IMAGE_NAME} .
             - docker tag ${IMAGE_NAME}:latest
               976193256269.dkr.ecr.${REGION}.amazonaws.com/${IMAGE_NAME}:${VERSION}
@@ -333,7 +331,6 @@ pipelines:
             - aws configure set region ${REGION} --profile default
             - aws secretsmanager get-secret-value --secret-id ${IMAGE_NAME}
               --profile default | jq -r ".SecretString" > secrets.yaml
-            - cat secrets.yaml
             - >-
               helm upgrade --atomic --install --namespace api \
                 --set
