@@ -314,9 +314,13 @@ pipelines:
               .env
             - echo "NEXTAUTH_URL=${NEXTAUTH_URL_STAGING}" >> .env
             - echo "NEXTAUTH_SECRET=${NEXTAUTH_SECRET_STAGING}" >> .env
+<<<<<<< HEAD
             - echo
               "NEXT_PUBLIC_GOOGLE_PLACE_API=${NEXT_PUBLIC_GOOGLE_PLACE_API_STAGING}"
               >> .env
+=======
+            - echo "NEXT_PUBLIC_GOOGLE_PLACE_API=${NEXT_PUBLIC_GOOGLE_PLACE_API_STAGING}" >> .env
+>>>>>>> 3f8a7dcd42c478df34527a815620689054dddcb4
             - docker build -t ${IMAGE_NAME} .
             - docker tag ${IMAGE_NAME}:latest
               976193256269.dkr.ecr.${REGION}.amazonaws.com/${IMAGE_NAME}:${VERSION}
@@ -330,8 +334,12 @@ pipelines:
             # - aws configure set role_arn $VAULT_ROLE_ARN --profile default
             - aws configure set source_profile default --profile default
             - aws configure set region ${REGION} --profile default
+<<<<<<< HEAD
             - aws secretsmanager get-secret-value --secret-id ${IMAGE_NAME}
               --profile default | jq -r ".SecretString" > secrets.yaml
+=======
+            - aws secretsmanager get-secret-value --secret-id ${IMAGE_NAME} --profile default | jq -r ".SecretString" > secrets.yaml
+>>>>>>> 3f8a7dcd42c478df34527a815620689054dddcb4
             - >-
               helm upgrade --atomic --install --namespace api \
                 --set
