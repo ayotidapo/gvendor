@@ -18,6 +18,7 @@ interface Props {
 	name: string;
 	ctaName?: string;
 	displayValue?: string | number;
+	error?: string;
 	cta?: () => void;
 	onChange?: (
 		e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>

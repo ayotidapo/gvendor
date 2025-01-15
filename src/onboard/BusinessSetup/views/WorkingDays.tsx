@@ -8,13 +8,17 @@ interface Props {
 	checked?: boolean;
 	defaultChecked?: boolean;
 	index: number;
+	toEdit?: boolean;
 }
 type Value = string | null;
 const WorkingDays: React.FC<Props> = props => {
-	const { day, checked, index: i, ...rest } = props;
+	const { day, checked, index: i, toEdit, ...rest } = props;
 	const { values, errors, touched, dirty, setFieldValue, setFieldTouched } =
 		useFormikContext<Record<string, any>>();
-	const bool = day === 'sunday' ? false : true;
+	let bool = day === 'sunday' ? false : true;
+
+	if (toEdit) bool = values?.availableHours[i]?.open;
+
 	const [showDay, setShowDay] = useState(bool);
 
 	// useEffect(() => {
@@ -28,6 +32,7 @@ const WorkingDays: React.FC<Props> = props => {
 	const onSetValue = (field: string, value: Value) => {
 		setFieldValue(field, value);
 	};
+	console.log('jfjkwrbfkruw', i);
 	return (
 		<section className='opening_days'>
 			<div className='flex  mt-2'>
@@ -58,9 +63,10 @@ const WorkingDays: React.FC<Props> = props => {
 						<TimeInput
 							name={`availableHours[${i}].openingTime`}
 							value={values.availableHours[i].openingTime}
-							onChange={(val: Value) =>
-								onSetValue(`availableHours[${i}].openingTime`, val)
-							}
+							onChange={(val: Value) => {
+								console.log(val, 'SDDDD', values.availableHours[i].openingTime);
+								onSetValue(`availableHours[${i}].openingTime`, val);
+							}}
 						/>
 					</div>
 					<div className='mt-4'>to</div>

@@ -21,7 +21,7 @@ interface Props {
 	onChange: (value: string) => void;
 	onBlur: (e: React.FocusEvent<HTMLElement, Element>) => void;
 }
-const EditAddressBox: React.FC<Props> = props => {
+const EditPhoneBox: React.FC<Props> = props => {
 	const {
 		submitting,
 		ctaName = 'Request change',
@@ -88,4 +88,4 @@ const EditAddressBox: React.FC<Props> = props => {
 	);
 };
 
-export default EditAddressBox;
+export default EditPhoneBox;

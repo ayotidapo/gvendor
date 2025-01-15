@@ -28,7 +28,7 @@ const Settings = () => {
 			<div className='page-title_div '>
 				<h2 className='title'>Settings</h2>
 			</div>
-			<div className='flex  w-[80%] pl-5'>
+			<div className='flex  w-[85%] pl-5'>
 				<section className='w-[27%] mt-5'>
 					<ul className='navi'>
 						{settingsTabs?.map((item, i) => {

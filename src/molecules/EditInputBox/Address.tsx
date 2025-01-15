@@ -8,16 +8,19 @@ import { Icon } from '@/atoms/icon/icon';
 import { Input } from '@/atoms/Input/Input';
 import LocationInput from '../LocationInput';
 import AddressInput from '@/atoms/common/AddressInput';
-import { ObjectData } from '@/utils/interface';
+import { IAddress, ObjectData } from '@/utils/interface';
 
 interface Props {
 	title?: string;
-	defaultValue?: string;
+	value?: string;
 	nonEditable?: boolean;
 	deactivate?: boolean;
+	error: string;
 	ctaName?: string;
 	cta?: () => void;
-	onSelectLocation: (address: ObjectData) => void;
+	onSelectLocation: (address: IAddress) => void;
+	onBlur: (e: React.FocusEvent<HTMLInputElement>) => void;
+	onChange: (value: string) => void;
 	submitting?: boolean;
 }
 const EditAddressBox: React.FC<Props> = props => {
@@ -26,8 +29,9 @@ const EditAddressBox: React.FC<Props> = props => {
 		ctaName = 'Request change',
 		title,
 		nonEditable,
-		defaultValue,
+		value,
 		deactivate,
+		error,
 		onSelectLocation,
 		cta,
 	} = props;
@@ -73,7 +77,10 @@ const EditAddressBox: React.FC<Props> = props => {
 				onSelectLocation={onSelectLocation}
 				disabled={isNonEdit}
 				className={cx({ non_edit: isNonEdit })}
-				defaultValue={defaultValue}
+				value={value}
+				error={error}
+				onChange={props.onChange}
+				onBlur={props.onBlur}
 			/>
 
 			{!isNonEdit && (

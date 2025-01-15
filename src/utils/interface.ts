@@ -5,7 +5,7 @@ export interface IOption {
 }
 
 export interface IAddress {
-	address?: string;
+	address: string;
 	longitude?: string;
 	latitude?: string;
 	[key: string]: any;

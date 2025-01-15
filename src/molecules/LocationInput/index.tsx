@@ -1,28 +1,31 @@
-import { ObjectData } from '@/utils/interface';
-import React from 'react';
+import { IAddress, ObjectData } from '@/utils/interface';
+import React, { useEffect } from 'react';
 import Autocomplete from 'react-google-autocomplete';
 import './location.scss';
 import { useFormikContext } from 'formik';
 
 interface Props {
-	onSelectLocation: (address: ObjectData) => void;
-	error?: string;
+	onSelectLocation: (address: IAddress) => void;
+	error: string;
 	disabled?: boolean;
 	className?: string;
-	defaultValue?: string;
+	value?: string;
+	onChange: (value: string) => void;
+	onBlur: (e: React.FocusEvent<HTMLInputElement>) => void;
 }
 const LocationInput: React.FC<Props> = props => {
-	const { onSelectLocation, disabled, className, defaultValue, error } = props;
-	const { setErrors } = useFormikContext();
+	const { onSelectLocation, disabled, className, value, error } = props;
+	const { setFieldError } = useFormikContext();
 
 	return (
 		<div className='location'>
 			<div className='input_wrapper'>
 				<Autocomplete
 					apiKey={process.env.NEXT_PUBLIC_GOOGLE_PLACE_API}
-					defaultValue={defaultValue}
+					value={value}
+					onChange={(e: any) => props.onChange?.(e.target.value)}
 					onPlaceSelected={place => {
-						setErrors({ businessAddress: '' });
+						setFieldError('businessAddress.address', '');
 						const addressComponents = place?.address_components;
 						const extraInfo: Record<string, any> = {
 							addressType: '',
@@ -73,8 +76,10 @@ const LocationInput: React.FC<Props> = props => {
 						types: ['address'],
 						componentRestrictions: { country: 'ng' },
 					}}
+					onBlur={props.onBlur}
 				/>
 			</div>
+			<div className=' -translate-y-5 error'>{error}</div>
 		</div>
 	);
 };
