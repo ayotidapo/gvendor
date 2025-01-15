@@ -15,7 +15,7 @@ import { IOption } from '@/utils/interface';
 import { regex } from '@/utils/constants';
 import { Spinner } from '@/molecules/LoadingPage';
 
-const validationSchema = Yup.object({
+export const validationSchema = Yup.object({
 	accountNumber: Yup.string()
 		.required('Business name is Required')
 		.min(10, 'account number not less than 10 digit'),

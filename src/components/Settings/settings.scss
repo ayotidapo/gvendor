@@ -45,3 +45,12 @@
 .agree > .checkbox_mirror {
 	@apply rounded-none;
 }
+
+.bank_acct {
+	div {
+		@apply bg-transparent;
+	}
+	.my-5 {
+		@apply mt-0;
+	}
+}

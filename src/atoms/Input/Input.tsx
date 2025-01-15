@@ -47,6 +47,8 @@ export const Input = ({
 }) => {
 	const [showPassword, setShowPassword] = useState<boolean>(false);
 	const revealPassword = type === 'password' && showPassword;
+
+	console.log({ error }, '94tu8943ut8934u');
 	return (
 		<div className={`input_wrapper ${error ? 'error' : ''}`}>
 			{title && <span className='mb-2 text-sm'>{title}</span>}

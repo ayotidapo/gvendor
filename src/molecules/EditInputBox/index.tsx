@@ -39,7 +39,7 @@ const EditInputBox: React.FC<Props> = props => {
 		...rest
 	} = props;
 	const non_Editable = nonEditable === undefined ? true : nonEditable;
-
+	console.log({ rest });
 	const [isNonEdit, setIsNonEdit] = useState<boolean | undefined>(
 		nonEditable ?? true
 	);
@@ -109,6 +109,7 @@ interface IProps {
 	children: React.FC;
 	groupTitle?: string;
 	actionBtn: string;
+	isLoading?: boolean;
 }
 const EditGroupInputBox: React.FC<IProps> = props => {
 	const { children, groupTitle, actionBtn } = props;
@@ -123,6 +124,7 @@ const EditGroupInputBox: React.FC<IProps> = props => {
 				</h2>
 				<SimpleBtn
 					className='master_toggle_edit'
+					type='button'
 					onClick={() => setIsNonEdit(editable => !editable)}
 				>
 					{isNonEdit ? (
@@ -143,7 +145,9 @@ const EditGroupInputBox: React.FC<IProps> = props => {
 			</div>
 
 			{!isNonEdit && (
-				<SimpleBtn className='req_all_change'>{actionBtn}</SimpleBtn>
+				<SimpleBtn className='req_all_change' disabled={props.isLoading}>
+					{actionBtn}
+				</SimpleBtn>
 			)}
 		</div>
 	);
