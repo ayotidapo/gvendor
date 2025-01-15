@@ -143,11 +143,8 @@ const BizInfo = () => {
 						<EditPhoneBox
 							name='businessPhonenumber'
 							title='Business phone number'
-							onChange={() =>
-								setFieldValue(
-									'businessPhonenumber',
-									values?.businessPhonenumber
-								)
+							onChange={(val: string) =>
+								setFieldValue('businessPhonenumber', val)
 							}
 							onBlur={handleBlur}
 							submitting={loading}
@@ -156,7 +153,7 @@ const BizInfo = () => {
 							ctaName='Save'
 							name='category'
 							title='Business category'
-							value={values?.servicesOffered?.[0]}
+							value={values?.servicesOffered}
 							error={errors?.category}
 							submitting={loading}
 							onChange={handleChange}

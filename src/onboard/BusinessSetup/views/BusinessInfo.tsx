@@ -174,7 +174,7 @@ const BusinessInfo: React.FC<Props> = props => {
 								/>
 								<PhoneField
 									name='businessPhonenumber'
-									onChange={(val: any) => {
+									onChange={(val: string) => {
 										setFieldValue('businessPhonenumber', val);
 									}}
 									onBlur={handleBlur}
