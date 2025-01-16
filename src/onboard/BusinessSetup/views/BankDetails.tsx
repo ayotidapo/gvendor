@@ -17,10 +17,10 @@ import { Spinner } from '@/molecules/LoadingPage';
 
 export const validationSchema = Yup.object({
 	accountNumber: Yup.string()
-		.required('Business name is Required')
-		.min(10, 'account number not less than 10 digit'),
+		.required('account number is Required')
+		.length(10, 'account number must be 10 digit'),
 	bankCode: Yup.string().required('bank code name is Required'),
-	accountName: Yup.string().required('account name not found'),
+	accountName: Yup.string().required('Account name not found'),
 });
 
 interface Props {

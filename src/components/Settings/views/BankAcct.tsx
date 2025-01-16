@@ -1,15 +1,14 @@
 'use client';
 import Select from '@/atoms/Select';
-import { SimpleBtn } from '@/atoms/buttons/Button';
-import { Icon } from '@/atoms/icon/icon';
-import Spinner from '@/atoms/spinner/Spinner';
+
 import EditInputBox, { EditGroupInputBox } from '@/molecules/EditInputBox';
+
 import { validationSchema } from '@/onboard/BusinessSetup/views/BankDetails';
 import { updateBankAccountApi } from '@/redux/apis/business';
 import { getAllBanks } from '@/redux/apis/settlements';
 import { useSelector } from '@/redux/hooks';
 import Fetch from '@/utils/fetch';
-import { ObjectData } from '@/utils/interface';
+
 import { useFormik } from 'formik';
 import React, { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
@@ -18,13 +17,14 @@ const BankAcct = () => {
 	const { settlementAccount } = useSelector(state => state.vendor);
 	const [loading, setLoading] = useState(false);
 	const [isLoading, setIsLoading] = useState(false);
-	const [banks, setBanks] = useState([]);
+	const [banks, setBanks] = useState<{ label: string; value: string }[]>([]);
+
 	const { values, setFieldValue, setFieldError, errors, ...formik } = useFormik(
 		{
 			initialValues: {
 				accountNumber: settlementAccount?.accountNumber || '',
 				bankCode: settlementAccount?.bankCode || '',
-				accountName: settlementAccount?.bankName || '',
+				accountName: settlementAccount?.accountName || '',
 			},
 			onSubmit: async values => {
 				try {
@@ -40,24 +40,26 @@ const BankAcct = () => {
 			validationSchema: validationSchema,
 		}
 	);
-
+	console.log({ formik, errors });
 	const getBankDetails = async () => {
 		const { bankCode, accountNumber } = values;
 
 		try {
 			setLoading(true);
 			setFieldError('accountName', '');
+
 			const response = await Fetch(
 				`/vendor/account-name?bankCode=${bankCode}&accountNumber=${accountNumber}`
 			);
 			setFieldValue('accountName', response?.data);
 		} catch (e) {
 			setFieldError('accountName', 'account name not found');
+			formik.setFieldTouched('accountName', true);
 		} finally {
 			setLoading(false);
 		}
 	};
-	console.log({ errors }, 'pos');
+
 	const getBanks = async () => {
 		try {
 			const banks = await getAllBanks();
@@ -98,13 +100,7 @@ const BankAcct = () => {
 								title='Bank name'
 								name='bankName'
 								nonEditable={isNonEdit}
-								displayValue={
-									(
-										banks?.find(
-											(bank: ObjectData) => bank?.value === values?.bankCode
-										) as any
-									)?.label
-								}
+								displayValue={settlementAccount?.bankName}
 							>
 								<Select
 									{...formik.getFieldProps('bankCode')}
@@ -114,10 +110,14 @@ const BankAcct = () => {
 							</EditInputBox>
 
 							<EditInputBox
-								title={loading ? 'loading account name...' : 'Account name'}
+								title={'Account name'}
 								{...formik.getFieldProps('accountName')}
 								nonEditable={isNonEdit}
-								error={errors?.accountName as string}
+								error={
+									formik.touched?.accountName
+										? (errors?.accountName as string)
+										: ''
+								}
 								onChange={() => {}}
 							/>
 						</div>
