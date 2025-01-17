@@ -1,6 +1,7 @@
 .tnc {
 	.auth_h2 {
 		@apply mb-2.5;
+		-webkit-font-smoothing: subpixel-antialiased;
 	}
 	.t_ {
 		@apply text-xl text-black subpixel-antialiased mb-2;

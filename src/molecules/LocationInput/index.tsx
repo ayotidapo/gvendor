@@ -12,7 +12,7 @@ const LocationInput: React.FC<Props> = ({ onSelectLocation, error }) => {
 	const { setErrors } = useFormikContext();
 
 	return (
-		<div className='location'>
+		<div className='location relative mb-5'>
 			<div className='input_wrapper'>
 				<Autocomplete
 					apiKey={process.env.NEXT_PUBLIC_GOOGLE_PLACE_API}
