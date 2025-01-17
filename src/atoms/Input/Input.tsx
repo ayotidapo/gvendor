@@ -14,7 +14,8 @@ export const Input = ({
 	onChange,
 	onBlur = () => {},
 	hasIcon,
-	iconSvg = '',
+	liconSvg,
+	riconSvg,
 	iconDimension = 20,
 
 	className = '',
@@ -22,7 +23,7 @@ export const Input = ({
 	autoComplete = 'off',
 	readOnly = false,
 	rows = 3,
-	extra,
+
 	...inputProps
 }: {
 	type?: string;
@@ -35,7 +36,8 @@ export const Input = ({
 		e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement, Element>
 	) => void;
 	hasIcon?: boolean;
-	iconSvg?: string;
+	liconSvg?: string;
+	riconSvg?: string;
 	iconDimension?: number;
 
 	className?: string;
@@ -47,49 +49,64 @@ export const Input = ({
 	autoFocus?: boolean;
 }) => {
 	const [showPassword, setShowPassword] = useState<boolean>(false);
-	const revealPassword = type === 'password' && showPassword;
+	const isPassword = type === 'password';
 	return (
-		<div className={`input_wrapper ${error ? 'error' : ''}`}>
-			{title && <span className='mb-2 text-sm'>{title}</span>}
+		<div className='relative mb-5'>
+			<div className={`input_wrapper ${error ? 'error' : ''}`}>
+				{title && <span className='mb-2 text-sm'>{title}</span>}
 
-			{hasIcon && (
-				<Icon
-					id={revealPassword ? iconSvg : 'show'}
-					width={iconDimension}
-					height={iconDimension}
-					className='icon_pos'
-					onClick={() => {
-						setShowPassword(!showPassword);
-					}}
-				/>
-			)}
-			{type === 'textarea' ? (
-				<textarea
-					name={name}
-					value={value}
-					placeholder={placeholder}
-					onChange={onChange}
-					onBlur={onBlur}
-					autoComplete={autoComplete}
-					readOnly={readOnly}
-					className={cx(`input ${className}`, { error })}
-					rows={rows}
-				/>
-			) : (
-				<input
-					type={revealPassword ? 'text' : type}
-					name={name}
-					value={value}
-					placeholder={placeholder}
-					onChange={onChange}
-					onBlur={onBlur}
-					autoComplete={autoComplete}
-					readOnly={readOnly}
-					className={cx(`input ${className}`, { hasIcon, error })}
-					{...inputProps}
-				/>
-			)}
-			{extra && extra}
+				{liconSvg && (
+					<Icon
+						id={showPassword ? 'show' : liconSvg}
+						width={iconDimension}
+						height={iconDimension}
+						className='licon_pos'
+						onClick={() => {
+							if (!isPassword) return;
+							setShowPassword(!showPassword);
+						}}
+					/>
+				)}
+				{type === 'textarea' ? (
+					<textarea
+						name={name}
+						value={value}
+						placeholder={placeholder}
+						onChange={onChange}
+						onBlur={onBlur}
+						autoComplete={autoComplete}
+						readOnly={readOnly}
+						className={cx(`input ${className}`, { error })}
+						rows={rows}
+					/>
+				) : (
+					<input
+						type={showPassword ? 'text' : type}
+						name={name}
+						value={value}
+						placeholder={placeholder}
+						onChange={onChange}
+						onBlur={onBlur}
+						autoComplete={autoComplete}
+						readOnly={readOnly}
+						className={cx(`input ${className}`, { riconSvg, liconSvg, error })}
+						{...inputProps}
+					/>
+				)}
+
+				{riconSvg && (
+					<Icon
+						id={showPassword ? 'show' : riconSvg}
+						width={iconDimension}
+						height={iconDimension}
+						className='ricon_pos'
+						onClick={() => {
+							if (!isPassword) return;
+							setShowPassword(!showPassword);
+						}}
+					/>
+				)}
+			</div>
 
 			{error && (
 				<div
