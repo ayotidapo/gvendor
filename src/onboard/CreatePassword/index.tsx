@@ -59,7 +59,7 @@ const CreatePaswordPage = () => {
 
 				router.replace(`/auth/terms-and-conditions?ck_token=${token}`);
 			} catch (e: any) {
-				toast.error(`${e?.message} || Something went wrong`);
+				toast.error(e?.message || 'Something went wrong');
 			}
 		},
 	});
@@ -77,6 +77,7 @@ const CreatePaswordPage = () => {
 					error={touched.password ? errors.password : ''}
 					type='password'
 					placeholder='Enter your password'
+					riconSvg='eye-x'
 				/>
 
 				<Input
@@ -84,6 +85,7 @@ const CreatePaswordPage = () => {
 					error={touched.confirm_password ? errors.confirm_password : ''}
 					type='password'
 					placeholder='Re-type your password'
+					riconSvg='eye-x'
 				/>
 			</div>
 

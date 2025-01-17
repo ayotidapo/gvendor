@@ -1,5 +1,5 @@
 .input_wrapper {
-	@apply relative w-full flex  items-center flex-wrap mb-5;
+	@apply w-full flex  items-center flex-wrap;
 	&.err {
 		@apply mb-2.5;
 	}
@@ -19,8 +19,11 @@ textarea.input {
 	@apply w-full h-[58px] border border-[#7a7978] focus:border-[#7a7978] focus:border-[1.5px] focus:ring-0 
     rounded-lg;
 
-	&.hasIcon {
+	&.liconSvg {
 		@apply pl-12;
+	}
+	&.riconSvg {
+		@apply pr-12;
 	}
 	&.textarea {
 		@apply h-auto;
@@ -30,8 +33,11 @@ textarea.input {
 	}
 }
 
-.icon_pos {
-	@apply min-w-fit absolute left-4;
+.licon_pos {
+	@apply min-w-fit absolute left-4 cursor-pointer;
+}
+.ricon_pos {
+	@apply min-w-fit absolute right-4 cursor-pointer;
 }
 
 /* .PhoneInputInput {
