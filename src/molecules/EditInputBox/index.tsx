@@ -19,6 +19,8 @@ interface Props {
 	ctaName?: string;
 	displayValue?: string | number;
 	error?: string;
+	placeholder?: string;
+	riconSvg?: string;
 	cta?: () => void;
 	onChange?: (
 		e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -76,8 +78,10 @@ const EditInputBox: React.FC<Props> = props => {
 				)}
 			</div>
 			{props.children ? (
-				<div className='my-5'>
-					{isNonEdit && <span>{props.displayValue}</span>}
+				<div className='input__container'>
+					{isNonEdit && (
+						<span className='h-[40px] inline-block'>{props.displayValue}</span>
+					)}
 					<div className={isNonEdit ? 'hidden' : 'block  bg-[#fafafa] p-1'}>
 						{props.children}
 					</div>
@@ -106,10 +110,11 @@ export default EditInputBox;
 
 type RestrictedUser = Omit<Props, 'password' | 'email'>;
 interface IProps {
-	children: React.FC;
+	children: React.FC | React.ReactNode;
 	groupTitle?: string;
 	actionBtn: string;
 	isLoading?: boolean;
+	editText?: string;
 }
 const EditGroupInputBox: React.FC<IProps> = props => {
 	const { children, groupTitle, actionBtn } = props;
@@ -117,7 +122,7 @@ const EditGroupInputBox: React.FC<IProps> = props => {
 	const [isNonEdit, setIsNonEdit] = useState<boolean>(true);
 
 	return (
-		<div className='multiple_box_div'>
+		<div className={`multiple_box_div ${isNonEdit ? '' : 'n_e'}  `}>
 			<div className='flex justify-between items-center mb-10'>
 				<h2 className='text-xl text-black   subpixel-antialiased'>
 					{groupTitle}
@@ -129,7 +134,7 @@ const EditGroupInputBox: React.FC<IProps> = props => {
 				>
 					{isNonEdit ? (
 						<span className={`cursor-pointer ml-1 flex`}>
-							Edit
+							{props?.editText || 'Edit'}
 							<Icon id='edit' width={20} height={20} />
 						</span>
 					) : (

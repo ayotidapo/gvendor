@@ -68,3 +68,7 @@ textarea.input {
 .error {
 	@apply text-red text-sm;
 }
+
+.input__container {
+	@apply relative mb-5;
+}

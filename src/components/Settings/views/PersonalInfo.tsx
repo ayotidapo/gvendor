@@ -42,7 +42,7 @@ const PersonalInfo = () => {
 
 	return (
 		<form onSubmit={handleSubmit}>
-			<h2 className='h2'>Personal Information</h2>
+			<h2 className='h2 text-black'>Personal Information</h2>
 			<EditInputBox
 				title='First name'
 				{...getFieldProps('firstName')}

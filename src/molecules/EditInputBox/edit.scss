@@ -35,4 +35,7 @@
 	.btn.req_all_change {
 		@apply w-auto my-1.5 px-10;
 	}
+	&.n_e hr {
+		display: none;
+	}
 }

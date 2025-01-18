@@ -54,3 +54,23 @@
 		@apply mt-0;
 	}
 }
+.manage_acct {
+	hr:not(.divider),
+	.input.non_edit {
+		display: none;
+	}
+	.multiple_box_div .btn.req_all_change {
+		@apply mb-5;
+	}
+	.input__container {
+		@apply mb-1;
+	}
+	.edit_ {
+		&:nth-of-type(1) .input {
+			@apply mt-2;
+		}
+		.input {
+			@apply mt-0;
+		}
+	}
+}

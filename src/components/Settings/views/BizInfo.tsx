@@ -101,7 +101,7 @@ const BizInfo = () => {
 				const errors = rest.errors as Record<string, string>;
 				return (
 					<Form>
-						<h2 className='h2'>Business Information</h2>
+						<h2 className='h2 text-black'>Business Information</h2>
 
 						<EditInputBox
 							ctaName='Save'
