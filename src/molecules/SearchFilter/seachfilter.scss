@@ -3,4 +3,7 @@
 	.input_wrapper {
 		@apply w-[372px];
 	}
+	& > div {
+		margin-bottom: 0;
+	}
 }
