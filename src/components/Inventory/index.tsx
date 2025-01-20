@@ -20,6 +20,9 @@ import Modal from '@/atoms/Modal';
 import { Form, Formik } from 'formik';
 import Input from '@/atoms/Input';
 import Image from 'next/image';
+import ReactPaginate from 'react-paginate';
+import Pagination from '@/molecules/Pagination';
+import Paginationc from '@/atoms/pagination';
 
 const AddItemSchema = Yup.object({
 	itemName: Yup.string().required('name of item is required'),
@@ -56,9 +59,7 @@ const InventoryPage = () => {
 		uriConfig: {},
 	});
 
-	console.log({ uploading, completed, onRemoveFile, files, resObj });
-
-	const { qString, page, status, search } = useApiSearchQuery(12);
+	const { qString, page, status, search } = useApiSearchQuery(limit);
 
 	useEffect(() => {
 		dispatch(getInventories(qString));
@@ -88,7 +89,7 @@ const InventoryPage = () => {
 	return (
 		<div className='inventory'>
 			<Modal open={showModal} onClose={() => setShowModal(false)}>
-				<div className='auth__form p-4 bg-white rounded-lg pb-10'>
+				<div className='auth__form  bg-white rounded-lg pb-10'>
 					<span className='x__close' onClick={() => setShowModal(false)}>
 						&times;
 					</span>
@@ -190,8 +191,15 @@ const InventoryPage = () => {
 					<section className={`under_review  mb-5 ${show ? 'show' : ''}`}>
 						<UnderReviewTable variants={[]} />
 					</section>
-					<section>
+					<section className='table__wrapper'>
 						<InventoryTable products={products} />
+						<Pagination
+							onPageChange={onPageChange}
+							page={Number(page)}
+							limit={limit}
+							totalItems={totalItems}
+							curItemsLen={products?.length}
+						/>
 					</section>
 				</>
 			)}
