@@ -9,6 +9,10 @@
 			border-radius: 4px;
 			margin: 0px 5px;
 			transition: all 0.25s linear;
+			display: inline-flex;
+			& > a {
+				flex: 1;
+			}
 		}
 	}
 	.next,

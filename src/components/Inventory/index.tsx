@@ -45,6 +45,9 @@ const InventoryPage = () => {
 	const dispatch = useDispatch();
 	const path = usePathname();
 	const [chosenFiles, setChosenFiles] = React.useState([]);
+
+	const limit = 20;
+
 	const { uploading, completed, onRemoveFile, files, resObj } = useRcfUploader({
 		uri: 'https://vendor-api.staging.goodthingco.xyz/api/v1/image/upload',
 		inputFieldName: 'gg',
@@ -74,7 +77,13 @@ const InventoryPage = () => {
 		setChosenFiles(newFiles);
 	};
 
-	console.log(len, 900);
+	const onPageChange = (page: { selected: number }) => {
+		const { selected } = page;
+		router.push(
+			`${path}?status=${status}&page=${selected + 1}&search=${search}`
+		);
+	};
+	const totalItems = productsInStock;
 
 	return (
 		<div className='inventory'>
