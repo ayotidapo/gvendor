@@ -39,7 +39,7 @@ const OrdersTable: React.FC<Props> = ({ orders }) => {
 						<td>{format(order?.date, 'dd/MM/yyyy hh:mm aa')}</td>
 						<td>
 							<Tag
-								title={order?.status?.toLowerCase()}
+								title={orderStatus[order?.status]?.toLowerCase()}
 								className={`${orderStatus[order?.status]} capitalize`}
 							/>
 						</td>
