@@ -2,8 +2,9 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import React, { useState } from 'react';
 import EditInputBox from '@/molecules/EditInputBox';
-import { useSelector } from '@/redux/hooks';
-import { updateVendorApi } from '@/redux/apis/vendor';
+import { useDispatch, useSelector } from '@/redux/hooks';
+import { setVendor } from '@/redux/reducers/vendor';
+
 import { toast } from 'react-toastify';
 
 const validationSchema = Yup.object({
@@ -16,6 +17,7 @@ const validationSchema = Yup.object({
 });
 
 const PersonalInfo = () => {
+	const dispatch = useDispatch();
 	const vendor = useSelector(state => state.vendor);
 	const [loading, setLoading] = useState(false);
 
@@ -29,7 +31,7 @@ const PersonalInfo = () => {
 		onSubmit: async values => {
 			try {
 				setLoading(true);
-				await updateVendorApi(values);
+				dispatch(setVendor(values));
 				toast.success(`Profile updated!`);
 			} catch (e: any) {
 				toast.error(`Error: ${e.message}`);

@@ -1,10 +1,12 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import './settings.scss';
 import dynamic from 'next/dynamic';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { settingsTabs } from '@/utils/data';
+import { getNotifSettings } from '@/redux/apis/notifications';
+import { useDispatch } from '@/redux/hooks';
 
 const BankAcct = dynamic(() => import('./views/BankAcct'));
 const BizInfo = dynamic(() => import('./views/BizInfo'));
@@ -19,10 +21,15 @@ const Settings = () => {
 	const path = usePathname();
 	const sQ = useSearchParams();
 	const tab = (sQ.get('tab') as string) || 'personal-info';
-
+	const dispatch = useDispatch();
 	const onNavigate = (tabValue: string) => {
 		router.push(`${path}?tab=${tabValue}`);
 	};
+
+	useEffect(() => {
+		dispatch(getNotifSettings());
+	});
+	
 	return (
 		<div className='settings '>
 			<div className='page-title_div '>

@@ -82,7 +82,7 @@ const EditInputBox: React.FC<Props> = props => {
 					{isNonEdit && (
 						<span className='h-[40px] inline-block'>{props.displayValue}</span>
 					)}
-					<div className={isNonEdit ? 'hidden' : 'block  bg-[#fafafa] p-1'}>
+					<div className={isNonEdit ? 'hidden' : 'block  p-1'}>
 						{props.children}
 					</div>
 				</div>
