@@ -29,7 +29,7 @@ const Settings = () => {
 	useEffect(() => {
 		dispatch(getNotifSettings());
 	});
-	
+
 	return (
 		<div className='settings '>
 			<div className='page-title_div '>
