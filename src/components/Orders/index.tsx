@@ -16,8 +16,8 @@ import StatusFilter from '@/molecules/StatusFilter';
 import useApiSearchQuery from '@/customHooks/useApiSearchQuery';
 import SearchFilter from '@/molecules/SearchFilter';
 import LoadingPage from '@/molecules/LoadingPage';
-import { orderStages } from '@/utils/data';
 import Pagination from '@/molecules/Pagination';
+import { orderStages, orderStatus } from '@/utils/data';
 
 const Orders = () => {
 	const {
@@ -79,7 +79,7 @@ const Orders = () => {
 				<SearchFilter onTextChange={onTextChange} />
 				<StatusFilter
 					onSetStatus={onSetStatus}
-					status={status}
+					status={orderStatus[status]}
 					states={orderStages}
 				/>
 			</div>
