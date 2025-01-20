@@ -19,7 +19,7 @@ const OrdersTable: React.FC<Props> = ({ orders }) => {
 		router.push(`/orders/${orderId}`);
 	};
 	return (
-		<table className='table_'>
+		<table className='table_  '>
 			<thead>
 				<tr className='th_row'>
 					<th></th>

@@ -27,7 +27,7 @@ const SearchFilter: React.FC<Props> = ({ onTextChange }) => {
 				name='search'
 				value={searchText?.trim() as string}
 				hasIcon
-				iconSvg='search'
+				liconSvg='search'
 				className='search'
 				placeholder='Search'
 				onChange={e => setSearchText(e.target.value)}

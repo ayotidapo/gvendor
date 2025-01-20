@@ -55,7 +55,7 @@ const LoginPage: React.FC = ({}) => {
 
 	return (
 		<form onSubmit={handleSubmit} className='auth__form'>
-			<h2 className='auth_h2'>Welcome Back</h2>
+			<h2 className='auth_h2'>Welcome back</h2>
 			<div>
 				<Input
 					{...getFieldProps('email')}
@@ -69,13 +69,14 @@ const LoginPage: React.FC = ({}) => {
 					error={touched.password ? errors.password : ''}
 					type='password'
 					placeholder='Password'
+					riconSvg='eye-x'
 				/>
 			</div>
 
 			<div className={` text-md cursor-pointer `}>
 				<Link
 					href={'/auth/forgot-password'}
-					className='hover:underline transition-all duration-500'
+					className='hover:underline transition-all duration-500 text-black'
 				>
 					{' '}
 					Forgot your password?

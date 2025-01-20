@@ -59,7 +59,7 @@ const RegisterBizForm: React.FC<Props> = props => {
 			</div>
 
 			<div className='mt-6'>
-				<SimpleBtn disabled={props.submitting}>Sign in</SimpleBtn>
+				<SimpleBtn disabled={props.submitting}>Submit</SimpleBtn>
 			</div>
 			<p className='text-black pt-5 text-center'>
 				Already have an account?{' '}
