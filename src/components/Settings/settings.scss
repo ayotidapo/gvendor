@@ -24,12 +24,6 @@
 	}
 }
 
-.notification {
-	.btn.req_change {
-		@apply w-auto mb-3.5 px-10;
-	}
-}
-
 .delete-prompt {
 	.reason {
 		@apply flex justify-between items-center border-b border-b-divider-gray py-4;

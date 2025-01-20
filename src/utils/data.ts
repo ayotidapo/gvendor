@@ -149,6 +149,8 @@ const settingsTabs = [
 	},
 ] as { value: string; title: string }[];
 
+const notificationSettings = [];
+
 export {
 	servicesOfferedOptions,
 	businessStructureOptions,
