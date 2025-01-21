@@ -1,7 +1,7 @@
 import Checkbox from '@/atoms/Checkbox';
 import { SimpleBtn } from '@/atoms/buttons/Button';
 import Fetch from '@/utils/fetch';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 import { toast } from 'react-toastify';
 
@@ -41,6 +41,7 @@ const DeletePrompt = () => {
 			setDeleting(false);
 		}
 	};
+
 	return (
 		<div className='delete-prompt'>
 			<h2 className='h2 text-black subpixel-antialiased'>Manage Account</h2>
@@ -82,7 +83,11 @@ const DeletePrompt = () => {
 					account and all your data
 				</span>
 			</div>
-			<SimpleBtn className='delete ' disabled={!isEnable} onClick={onDelete}>
+			<SimpleBtn
+				className='delete '
+				disabled={!isEnable || reasons?.length < 1}
+				onClick={onDelete}
+			>
 				Delete account
 			</SimpleBtn>
 		</div>

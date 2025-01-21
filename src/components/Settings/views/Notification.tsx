@@ -81,7 +81,7 @@ const Notification: React.FC<Props> = ({ children }) => {
 		try {
 			setLoading(true);
 			await updateNotifSettingsApi(body);
-			toast.error(`Settings update succesfully`);
+			toast.success(`Settings update succesfully`);
 		} catch (e: any) {
 			toast.error(`Error: ${e.message}`);
 		} finally {
