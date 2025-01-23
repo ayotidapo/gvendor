@@ -48,7 +48,7 @@ const Analytics = () => {
 	const sQ = useSearchParams();
 	const path = usePathname();
 
-	let period = sQ.get('duration') || 'day';
+	const period = sQ.get('duration') || 'day';
 
 	const getTimeDateLabel = (data: ObjectData) => {
 		const labels = data?.salesChart?.map((item: ObjectData) => {
