@@ -117,7 +117,7 @@ const Analytics = () => {
 					title='Total Sales'
 					value={
 						<PercentGrowth
-							amount={`₦${analytics?.totalSales?.totalRevenue || ''}`}
+							amount={`₦${analytics?.totalSales?.totalRevenue?.toLocaleString() || ''}`}
 							desc={`${analytics?.totalSales?.percentageIncrease || 0}% increase in the past week`}
 						/>
 					}
@@ -126,20 +126,27 @@ const Analytics = () => {
 					title='Total Orders'
 					value={
 						<PercentGrowth
-							amount={analytics?.totalOrders?.getPendingOrdersCount || ''}
+							amount={
+								analytics?.totalOrders?.getPendingOrdersCount?.toLocaleString() ||
+								''
+							}
 							desc={`${(analytics?.totalOrders?.percentageIncrease || 0) / 100}% increase in the past week`}
 						/>
 					}
 				/>
 				<MetricCard
 					title='Total Customers'
-					value={<PercentGrowth amount={analytics?.totalCustomers || ''} />}
+					value={
+						<PercentGrowth
+							amount={analytics?.totalCustomers?.toLocaleString() || ''}
+						/>
+					}
 				/>
 				<MetricCard
 					title='Average Order Value'
 					value={
 						<PercentGrowth
-							amount={`₦${analytics?.averageOrderValue?.averageOrderValue || ''}`}
+							amount={`₦${analytics?.averageOrderValue?.averageOrderValue?.toLocaleString() || ''}`}
 							desc={`${analytics?.averageOrderValue?.percentageChange || 0}% increase in the past week`}
 						/>
 					}
