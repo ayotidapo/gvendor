@@ -2,17 +2,23 @@
 
 import React, { useEffect, useState } from 'react';
 import MetricCard from '@/molecules/MetricCard';
-import { format } from 'date-fns';
 import PercentGrowth from './PercentGrowth';
 import { SimpleBtn } from '@/atoms/buttons/Button';
-import './analytics.scss';
 import Fetch from '@/utils/fetch';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import { ObjectData } from '@/utils/interface';
 import { constructQuery } from '@/utils/helpers';
-import { registerables, Chart, ChartOptions } from 'chart.js';
+import { registerables, Chart } from 'chart.js';
 import { Bar, Line } from 'react-chartjs-2';
-import { OrderChartOptions, SalesChartOptions } from '@/utils/data';
+import './analytics.scss';
+
+import {
+	OrderChartOptions,
+	SalesChartOptions,
+	constructOrdersData,
+	constructSalesData,
+	constructTopOrderData,
+	constructTopSellingData,
+} from './chart-utils';
 
 Chart.register(...registerables);
 
@@ -43,117 +49,12 @@ const Analytics = () => {
 		{ label: '3 months', value: 'month' },
 		{ label: '6 months', value: 'month' },
 		{ label: '1 year', value: 'year' },
-		{ label: 'custom', value: 'custom' },
+		//{ label: 'custom', value: 'custom' },
 	];
 	const sQ = useSearchParams();
 	const path = usePathname();
 
 	const period = sQ.get('duration') || 'day';
-
-	const getTimeDateLabel = (data: ObjectData) => {
-		const labels = data?.salesChart?.map((item: ObjectData) => {
-			let label = '';
-
-			if (period === 'week') label = format(item.dateTime, 'MMM dd');
-			else if (period === 'month') label = item.day;
-			else if (period === 'year') label = item.month;
-			else label = format(item.dateTime, 'h a');
-
-			return label;
-		});
-		return labels;
-	};
-
-	const constructSalesData = (data: ObjectData, period: string) => {
-		const dataValue = data.salesChart.map((item: ObjectData) => {
-			return item.total;
-		});
-
-		return {
-			labels: getTimeDateLabel(data),
-			datasets: [
-				{
-					label: '',
-					data: dataValue,
-					meta: data.salesChart.map((item: ObjectData) => {
-						return item.dateTime;
-					}),
-					borderColor: 'rgb(255, 99, 132)',
-					backgroundColor: 'rgba(255, 99, 132, 0.5)',
-				},
-			],
-		};
-	};
-
-	const constructTopSellingData = (data: ObjectData) => {
-		const labels = data.topSellingItems.map((item: ObjectData) => {
-			return item.name;
-		});
-		const dataValue = data.topSellingItems.map((item: ObjectData) => {
-			return item.amountSold;
-		});
-
-		return {
-			labels,
-			datasets: [
-				{
-					label: '',
-					data: dataValue,
-					meta: data.salesChart.map((item: ObjectData) => {
-						return item.dateTime;
-					}),
-					borderColor: 'rgb(255, 99, 132)',
-					backgroundColor: 'rgba(255, 99, 132, 0.5)',
-				},
-			],
-		};
-	};
-
-	const constructOrdersData = (data: ObjectData) => {
-		const dataValue = data.salesChart.map((item: ObjectData) => {
-			return item.count;
-		});
-
-		return {
-			labels: getTimeDateLabel(data),
-			datasets: [
-				{
-					label: '',
-					data: dataValue,
-					meta: data.salesChart.map((item: ObjectData) => {
-						return item.dateTime;
-					}),
-					borderColor: 'rgb(255, 99, 132)',
-					backgroundColor: 'rgba(255, 99, 132, 0.5)',
-				},
-			],
-		};
-	};
-
-	const constructTopOrderData = (data: ObjectData) => {
-		const labels = data.topSellingItems.map((item: ObjectData) => {
-			return item.name;
-		});
-		const dataValue = data.topSellingItems.map((item: ObjectData) => {
-			return item.unitsSold;
-		});
-		console.log(labels, 'ppoioioipoioio');
-		return {
-			labels,
-			dataValue,
-			datasets: [
-				{
-					label: '',
-					data: dataValue,
-					meta: data.salesChart.map((item: ObjectData) => {
-						return item.dateTime;
-					}),
-					borderColor: 'rgb(255, 99, 132)',
-					backgroundColor: 'rgba(255, 99, 132, 0.5)',
-				},
-			],
-		};
-	};
 
 	const getAnalytics = async () => {
 		let qS = constructQuery();
@@ -170,8 +71,9 @@ const Analytics = () => {
 		setAnalytics(data);
 
 		const sales = constructSalesData(data, period);
-		const topSelling = constructTopSellingData(data);
 		const orders = constructOrdersData(data);
+
+		const topSelling = constructTopSellingData(data);
 		const topOrder = constructTopOrderData(data);
 
 		setSalesData(sales);
@@ -259,18 +161,23 @@ const Analytics = () => {
 			{showSales ? (
 				<>
 					<section className='graph_div'>
+						<h2 className='title_h'>Sales</h2>
 						<Line data={salesData} options={SalesChartOptions} />
 					</section>
 					<section className='graph_div'>
+						<h2 className='title_h'>Top Selling Items</h2>
 						<Bar data={topSellData} options={SalesChartOptions} />;
 					</section>
 				</>
 			) : (
 				<>
 					<section className='graph_div'>
+						<h2 className='title_h'>Orders</h2>
+
 						<Line data={ordersData} options={OrderChartOptions} />
 					</section>
 					<section className='graph_div'>
+						<h2 className='title_h'>Most Ordered Items</h2>
 						<Bar data={topOrderData} options={OrderChartOptions} />;
 					</section>
 				</>

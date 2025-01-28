@@ -155,76 +155,6 @@ const settingsTabs = [
 
 const notificationSettings = [];
 
-const SalesChartOptions: ChartOptions<'line' | 'bar'> = {
-	responsive: true,
-
-	plugins: {
-		tooltip: {
-			callbacks: {
-				title: (tooltipItems: ObjectData[]) => {
-					console.log({ tooltipItems });
-					return `${format(tooltipItems[0].dataset.meta[tooltipItems[0].dataIndex], 'EEE MMM d, yyyy. h:mma')}\n`;
-				},
-				label: (tooltipItem: ObjectData) => {
-					console.log({ tooltipItem });
-					const value = tooltipItem.raw;
-					return `₦${value.toLocaleString()}`;
-				},
-				footer: (tooltipItems: ObjectData[]) => {
-					return ``;
-				},
-			},
-			bodyFont: {
-				size: 16,
-				weight: 'bold',
-				family: 'Arial',
-			},
-			titleFont: {
-				size: 14,
-				weight: 'normal',
-			},
-		},
-		legend: {
-			position: 'top',
-		},
-	},
-};
-
-const OrderChartOptions: ChartOptions<'line' | 'bar'> = {
-	responsive: true,
-
-	plugins: {
-		tooltip: {
-			callbacks: {
-				title: (tooltipItems: ObjectData[]) => {
-					console.log({ tooltipItems });
-					return `${format(tooltipItems[0].dataset.meta[tooltipItems[0].dataIndex], 'EEE MMM d, yyyy. h:mma')}\n`;
-				},
-				label: (tooltipItem: ObjectData) => {
-					console.log({ tooltipItem });
-					const value = tooltipItem.raw;
-					return `${value.toLocaleString()} Orders`;
-				},
-				footer: (tooltipItems: ObjectData[]) => {
-					return ``;
-				},
-			},
-			bodyFont: {
-				size: 16,
-				weight: 'bold',
-				family: 'Arial',
-			},
-			titleFont: {
-				size: 14,
-				weight: 'normal',
-			},
-		},
-		legend: {
-			position: 'top',
-		},
-	},
-};
-
 export {
 	servicesOfferedOptions,
 	businessStructureOptions,
@@ -234,6 +164,4 @@ export {
 	settlementStatus,
 	setStages,
 	settingsTabs,
-	SalesChartOptions,
-	OrderChartOptions,
 };

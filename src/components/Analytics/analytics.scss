@@ -18,6 +18,9 @@
 		}
 	}
 	.graph_div {
-		@apply relative h-[500px] border border-divider-gray rounded-2xl mt-10 overflow-hidden;
+		@apply relative h-[auto] border border-divider-gray rounded-2xl mt-10 overflow-hidden;
+		.title_h {
+			@apply pl-2.5 pt-2 text-xl text-black;
+		}
 	}
 }
