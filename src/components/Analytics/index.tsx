@@ -14,10 +14,7 @@ import './analytics.scss';
 import {
 	OrderChartOptions,
 	SalesChartOptions,
-	constructOrdersData,
-	constructSalesData,
-	constructTopOrderData,
-	constructTopSellingData,
+	sampleData,
 } from './chart-utils';
 
 Chart.register(...registerables);
@@ -27,20 +24,6 @@ const Analytics = () => {
 
 	const [analytics, setAnalytics] = useState<any>({});
 	const [showSales, setShowSales] = useState(true);
-
-	const [salesData, setSalesData] = useState<any>({
-		datasets: [],
-	});
-
-	const [topSellData, setTopSellData] = useState<any>({
-		datasets: [],
-	});
-	const [ordersData, setOrdersData] = useState<any>({
-		datasets: [],
-	});
-	const [topOrderData, setTopOrdersData] = useState<any>({
-		datasets: [],
-	});
 
 	const [dur, setDur] = useState({ label: '1 day', value: 'day' });
 	const definedFilter = [
@@ -69,23 +52,7 @@ const Analytics = () => {
 
 		const data = response?.data;
 		setAnalytics(data);
-
-		const sales = constructSalesData(data, period);
-		const orders = constructOrdersData(data);
-
-		const topSelling = constructTopSellingData(data);
-		const topOrder = constructTopOrderData(data);
-
-		setSalesData(sales);
-		setTopSellData(topSelling);
-		setOrdersData(orders);
-		setTopOrdersData(topOrder);
 	};
-
-	useEffect(() => {
-		if (period === 'custom') return;
-		getAnalytics();
-	}, [period]);
 
 	useEffect(() => {
 		router.push(`${path}?duration=${dur.value}`);
@@ -116,7 +83,7 @@ const Analytics = () => {
 					title='Total Sales'
 					value={
 						<PercentGrowth
-							amount={`₦${analytics?.totalSales?.totalRevenue || ''}`}
+							amount={`₦0`}
 							desc={`${analytics?.totalSales?.percentageIncrease || 0}% increase in the past week`}
 						/>
 					}
@@ -125,20 +92,20 @@ const Analytics = () => {
 					title='Total Orders'
 					value={
 						<PercentGrowth
-							amount={analytics?.totalOrders?.getPendingOrdersCount || ''}
+							amount={'0' || ''}
 							desc={`${(analytics?.totalOrders?.percentageIncrease || 0) / 100}% increase in the past week`}
 						/>
 					}
 				/>
 				<MetricCard
 					title='Total Customers'
-					value={<PercentGrowth amount={analytics?.totalCustomers || ''} />}
+					value={<PercentGrowth amount={0 || ''} />}
 				/>
 				<MetricCard
 					title='Average Order Value'
 					value={
 						<PercentGrowth
-							amount={`₦${analytics?.averageOrderValue?.averageOrderValue || ''}`}
+							amount={`₦0`}
 							desc={`${analytics?.averageOrderValue?.percentageChange || 0}% increase in the past week`}
 						/>
 					}
@@ -162,11 +129,11 @@ const Analytics = () => {
 				<>
 					<section className='graph_div'>
 						<h2 className='title_h'>Sales</h2>
-						<Line data={salesData} options={SalesChartOptions} />
+						<Line data={sampleData} options={{}} />
 					</section>
 					<section className='graph_div'>
 						<h2 className='title_h'>Top Selling Items</h2>
-						<Bar data={topSellData} options={SalesChartOptions} />;
+						<Bar data={sampleData} options={{}} />;
 					</section>
 				</>
 			) : (
@@ -174,11 +141,11 @@ const Analytics = () => {
 					<section className='graph_div'>
 						<h2 className='title_h'>Orders</h2>
 
-						<Line data={ordersData} options={OrderChartOptions} />
+						<Line data={sampleData} options={{}} />
 					</section>
 					<section className='graph_div'>
 						<h2 className='title_h'>Most Ordered Items</h2>
-						<Bar data={topOrderData} options={OrderChartOptions} />;
+						<Bar data={sampleData} options={{}} />;
 					</section>
 				</>
 			)}
