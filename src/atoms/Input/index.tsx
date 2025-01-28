@@ -6,7 +6,6 @@ import cx from 'classnames';
 import './input.scss';
 import { IOption } from '@/utils/interface';
 import { Icon } from '../icon/icon';
-import 'react-phone-number-input/style.css';
 
 interface Props {
 	name: string;
@@ -41,7 +40,7 @@ const Input: React.FC<Props> = props => {
 	const isPassword = type === 'password';
 	if (as === 'select') {
 		return (
-			<div className='relative mb-5'>
+			<div className='input__container'>
 				<div className={`input_wrapper ${hasError ? 'err' : ''}`}>
 					<Field
 						name={name}
@@ -61,7 +60,7 @@ const Input: React.FC<Props> = props => {
 		);
 	}
 	return (
-		<div className='relative mb-5'>
+		<div className='input__container'>
 			<div className={`input_wrapper ${hasError ? 'err' : ''}`}>
 				{liconSvg && (
 					<Icon

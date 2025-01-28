@@ -9,8 +9,10 @@ interface Props {
 	name: string;
 	value: string | null;
 }
+
 const TimeInput: React.FC<Props> = props => {
 	const { name, ...rest } = props;
+	console.log(name, 'name');
 	return (
 		<>
 			<Field name={name}>

@@ -12,6 +12,7 @@ const GetUserLayout: React.FC<{
 	const dispatch = useDispatch();
 
 	useEffect(() => {
+		localStorage.t_ = vendor?.goodToken;
 		dispatch(setVendor(vendor));
 	}, []);
 

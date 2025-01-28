@@ -3,7 +3,8 @@
 		li {
 			@apply mb-7 text-[#7A7978] font-normal cursor-pointer;
 			transition: font-weight 0.1s linear;
-			&:hover {
+			&:hover,
+			&.active {
 				@apply font-medium text-black;
 			}
 		}
@@ -23,12 +24,6 @@
 	}
 }
 
-.notification {
-	.btn.req_change {
-		@apply w-[160px] mb-3.5;
-	}
-}
-
 .delete-prompt {
 	.reason {
 		@apply flex justify-between items-center border-b border-b-divider-gray py-4;
@@ -43,4 +38,33 @@
 
 .agree > .checkbox_mirror {
 	@apply rounded-none;
+}
+
+.bank_acct {
+	div {
+		@apply bg-transparent;
+	}
+	.my-5 {
+		@apply mt-0;
+	}
+}
+.manage_acct {
+	hr:not(.divider),
+	.input.non_edit {
+		display: none;
+	}
+	.multiple_box_div .btn.req_all_change {
+		@apply mb-5;
+	}
+	.input__container {
+		@apply mb-1;
+	}
+	.edit_ {
+		&:nth-of-type(1) .input {
+			@apply mt-2;
+		}
+		.input {
+			@apply mt-0;
+		}
+	}
 }
