@@ -92,7 +92,7 @@ const Analytics = () => {
 					title='Total Orders'
 					value={
 						<PercentGrowth
-							amount={'0' || ''}
+							amount={'0'}
 							desc={`${(analytics?.totalOrders?.percentageIncrease || 0) / 100}% increase in the past week`}
 						/>
 					}
