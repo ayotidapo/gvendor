@@ -1,5 +1,5 @@
 .sidebar {
-	@apply w-[280px] border border-transparent border-r-divider-gray p-6;
+	@apply xx:w-0 xx:p-0  xx:border-r-transparent lg:w-[280px] border border-transparent lg:border-r-divider-gray lg:p-6;
 	li {
 		@apply h-[58px] rounded-lg overflow-hidden;
 	}

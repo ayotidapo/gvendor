@@ -40,10 +40,11 @@ body {
 }
 
 .filter_div {
-	@apply flex justify-between items-center gap-5 my-10 mt-[50px];
-	& > .input_wrapper {
-		@apply w-[372px];
+	@apply flex xx:flex-col-reverse md:flex-row justify-between items-center gap-5 my-10 mt-[50px];
+	& > .search__filter {
+		@apply xs:w-[372px] xx:w-full xs:order-[0] xx:order-1;
 	}
+
 	.btn {
 		&.filter {
 			@apply bg-transparent border border-[#202020] h-[50px] 
@@ -70,7 +71,7 @@ body {
 }
 
 .table_ {
-	@apply w-full border-separate border-spacing-0 border-0 border-b-[1px] border-t-divider-gray;
+	@apply xx:min-w-[700px] md:min-w-full border-separate border-spacing-0 border-0 border-b-[1px] border-t-divider-gray;
 
 	th {
 		@apply text-left  h-[58px] text-[#050301] text-sm font-medium;
@@ -205,6 +206,9 @@ img {
 	@apply xs:w-[420px] xx:w-full xs:px-2.5 xx:px-0;
 }
 
+.table_wrapper {
+	@apply w-[calc(100%-0px)] overflow-auto;
+}
 .table__wrapper {
 	@apply min-h-[200px]  w-[calc(100vw-380px)] px-2;
 }
