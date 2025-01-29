@@ -3,10 +3,10 @@
 import React from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import './inventory-table.scss';
 import Tag from '@/atoms/Tag';
 import { IProduct } from '@/redux/reducers/inventories';
 import { format } from 'date-fns';
+import './inventory-table.scss';
 
 const InventoryTable: React.FC<{ products: IProduct[] }> = ({ products }) => {
 	const router = useRouter();
@@ -15,12 +15,12 @@ const InventoryTable: React.FC<{ products: IProduct[] }> = ({ products }) => {
 		router.push(`/inventory/${id}`);
 	};
 	return (
-		<table className='table_'>
+		<table className='table_ inventory'>
 			<thead>
 				<tr className='th_row'>
 					<th>ITEM NAME</th>
-					<th className='w-24'>PRICE</th>
-					<th className='w-48'>QUANTITY IN STOCK</th>
+					<th>PRICE</th>
+					<th>QUANTITY IN STOCK</th>
 					<th>STATUS</th>
 					<th>ACTIONS</th>
 				</tr>

@@ -35,8 +35,8 @@ const Settings = () => {
 			<div className='page-title_div '>
 				<h2 className='title'>Settings</h2>
 			</div>
-			<div className='flex  w-[85%] pl-5'>
-				<section className='w-[27%] mt-5'>
+			<div className='flex xx:flex-col md:flex-row  md:w-[85%] xx:w-full pl-5'>
+				<section className='navi_wrapper'>
 					<ul className='navi'>
 						{settingsTabs?.map((item, i) => {
 							console.log(tab, item?.value);
@@ -53,7 +53,7 @@ const Settings = () => {
 					</ul>
 				</section>
 
-				<section className='flex-1  pl-10'>
+				<section className='flex-1  md:pl-10 xx:pl-0'>
 					{tab === 'personal-info' && <PersonalInfo />}
 					{tab === 'business-info' && <BizInfo />}
 					{tab === 'bank-account' && <BankAcct />}

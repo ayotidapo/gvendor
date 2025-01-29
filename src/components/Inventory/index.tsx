@@ -191,7 +191,7 @@ const InventoryPage = () => {
 					<section className={`under_review  mb-5 ${show ? 'show' : ''}`}>
 						<UnderReviewTable variants={[]} />
 					</section>
-					<section className='table__wrapper'>
+					<section className='table_wrapper'>
 						<InventoryTable products={products} />
 						<Pagination
 							onPageChange={onPageChange}
