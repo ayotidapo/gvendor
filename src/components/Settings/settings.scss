@@ -13,7 +13,7 @@
 			scroll-snap-stop: normal;
 			&:hover,
 			&.active {
-				@apply font-medium text-black;
+				@apply font-medium text-black xx:underline md:no-underline;
 			}
 		}
 	}

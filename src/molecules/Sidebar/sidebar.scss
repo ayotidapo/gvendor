@@ -1,5 +1,5 @@
 .sidebar {
-	@apply xx:w-0 xx:p-0  xx:border-r-transparent lg:w-[280px] border border-transparent lg:border-r-divider-gray lg:p-6;
+	@apply flex flex-col h-full xx:w-0 xx:p-0  xx:border-r-transparent lg:w-[280px] border border-transparent lg:border-r-divider-gray lg:p-6;
 	li {
 		@apply h-[58px] rounded-lg overflow-hidden;
 	}
@@ -11,6 +11,21 @@
 		}
 		&.active {
 			@apply font-semibold;
+		}
+	}
+}
+.sidebar_mobile_wrapper {
+	@apply fixed w-full h-screen top-0 left-0 bg-[rgba(0,0,0,0.5)] z-40 opacity-0 invisible;
+	transition: all 0.2s linear;
+
+	.sidebar {
+		@apply w-0 overflow-hidden  bg-white h-full;
+		transition: all 0.1s linear;
+	}
+	&.open {
+		@apply xx:opacity-100 xx:visible md:opacity-0 md:invisible;
+		.sidebar {
+			@apply xx:w-[80%] md:w-0;
 		}
 	}
 }
