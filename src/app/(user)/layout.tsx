@@ -24,9 +24,9 @@ const UserLayout: React.FC<{ children: React.ReactNode }> = async props => {
 	}
 
 	return (
-		<div className='flex'>
+		<div className='flex h-[calc(100vh-64px)]'>
 			<Sidebar />
-			<div className='flex-1 md:p-8 md:px-12 xx:p-2.5 h-[calc(100vh-64px)] overflow-y-auto'>
+			<div className='flex-1 md:p-8 md:px-12 xx:p-2.5 h-full overflow-y-auto'>
 				<Suspense>
 					<GetUserLayout vendor={{ ...vendor, goodToken }}>
 						{props.children}
