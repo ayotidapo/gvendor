@@ -13,7 +13,7 @@ const Pagination: React.FC<Props> = props => {
 	const { page, limit = 10, totalItems, curItemsLen } = props;
 	const pageCount = Math.ceil(totalItems / limit);
 	const isCurItemComplete = curItemsLen === limit;
-	
+
 	return (
 		<div className='pagination__div '>
 			<ReactPaginate

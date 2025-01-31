@@ -10,7 +10,6 @@ interface Props {
 }
 
 const Modal: React.FC<Props> = props => {
-
 	const { children, open, onClose, bodyClose } = props;
 
 	const onBodyClose = () => {
