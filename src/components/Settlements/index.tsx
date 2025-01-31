@@ -36,7 +36,7 @@ const SettlementPage = () => {
 	const onTextChange = (searchValue: string) => {
 		router.push(`${path}?status=${status}&page=1&search=${searchValue}`);
 	};
-	console.log({ docs });
+
 	const len = docs?.length;
 	return (
 		<div className='settlements'>
