@@ -53,8 +53,6 @@ const InventoryPage = () => {
 		uriConfig: {},
 	});
 
-	console.log({ uploading, completed, onRemoveFile, files, resObj });
-
 	const { qString, page, status, search } = useApiSearchQuery(12);
 
 	useEffect(() => {
@@ -73,8 +71,6 @@ const InventoryPage = () => {
 	const onSelectFile = (newFiles: any) => {
 		setChosenFiles(newFiles);
 	};
-
-	console.log(len, 900);
 
 	return (
 		<div className='inventory'>
