@@ -9,10 +9,11 @@ import { setVendor } from '@/redux/reducers/vendor';
 import { useFormik } from 'formik';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch } from '@/redux/hooks';
 
 import * as Yup from 'yup';
+import { signOut } from 'next-auth/react';
 
 const LoginSchema = Yup.object({
 	email: Yup.string()
