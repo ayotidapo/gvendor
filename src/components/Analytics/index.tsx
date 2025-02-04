@@ -4,7 +4,6 @@ import React, { useEffect, useState } from 'react';
 import MetricCard from '@/molecules/MetricCard';
 import PercentGrowth from './PercentGrowth';
 import { SimpleBtn } from '@/atoms/buttons/Button';
-import Fetch from '@/utils/fetch';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { constructQuery } from '@/utils/helpers';
 import { registerables, Chart } from 'chart.js';
@@ -20,13 +19,18 @@ import {
 	constructTopOrderData,
 	constructTopSellingData,
 } from './chart-utils';
+import { useDispatch, useSelector } from '@/redux/hooks';
+import { getAnalytics } from '@/redux/apis/analytics';
+import { toast } from 'react-toastify';
+import analytics from '@/redux/reducers/analytics';
 
 Chart.register(...registerables);
 
 const Analytics = () => {
 	const router = useRouter();
+	const dispatch = useDispatch();
+	const { ...analytics } = useSelector(state => state.analytics);
 
-	const [analytics, setAnalytics] = useState<any>({});
 	const [showSales, setShowSales] = useState(true);
 
 	const [salesData, setSalesData] = useState<any>({
@@ -57,7 +61,7 @@ const Analytics = () => {
 
 	const period = sQ.get('duration') || 'day';
 
-	const getAnalytics = async () => {
+	const onGetAnalytics = async () => {
 		let qS = constructQuery();
 
 		if (!sQ.get('duration')) {
@@ -65,27 +69,30 @@ const Analytics = () => {
 		} else {
 			qS = `?${qS}`;
 		}
+		const action = await dispatch(getAnalytics(qS));
 
-		const response = await Fetch(`/report/analytics${qS}`);
+		if (getAnalytics.fulfilled.match(action)) {
+			console.log('Success:', action);
+			const data = action?.payload?.data;
 
-		const data = response?.data;
-		setAnalytics(data);
+			const sales = constructSalesData(data, period);
+			const orders = constructOrdersData(data, period);
 
-		const sales = constructSalesData(data, period);
-		const orders = constructOrdersData(data, period);
+			const topSelling = constructTopSellingData(data);
+			const topOrder = constructTopOrderData(data);
 
-		const topSelling = constructTopSellingData(data);
-		const topOrder = constructTopOrderData(data);
-
-		setSalesData(sales);
-		setTopSellData(topSelling);
-		setOrdersData(orders);
-		setTopOrdersData(topOrder);
+			setSalesData(sales);
+			setTopSellData(topSelling);
+			setOrdersData(orders);
+			setTopOrdersData(topOrder);
+		} else if (getAnalytics.rejected.match(action)) {
+			toast.error(`Error: ${action?.error?.message}`);
+		}
 	};
 
 	useEffect(() => {
 		if (period === 'custom') return;
-		getAnalytics();
+		onGetAnalytics();
 	}, [period]);
 
 	useEffect(() => {
@@ -118,7 +125,7 @@ const Analytics = () => {
 					value={
 						<PercentGrowth
 							amount={`₦${analytics?.totalSales?.totalRevenue?.toLocaleString() || ''}`}
-							desc={`${analytics?.totalSales?.percentageIncrease || 0}% increase in the past week`}
+							desc={`${(analytics?.totalSales?.percentageIncrease || 0) / 100}% increase in the past week`}
 						/>
 					}
 				/>
@@ -147,7 +154,7 @@ const Analytics = () => {
 					value={
 						<PercentGrowth
 							amount={`₦${analytics?.averageOrderValue?.averageOrderValue?.toLocaleString() || ''}`}
-							desc={`${analytics?.averageOrderValue?.percentageChange || 0}% increase in the past week`}
+							desc={`${analytics?.averageOrderValue?.percentageChange || 0 / 100}% increase in the past week`}
 						/>
 					}
 				/>
