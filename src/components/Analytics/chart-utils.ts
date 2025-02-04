@@ -1,8 +1,9 @@
 import { ObjectData } from '@/utils/interface';
 import { ChartOptions } from 'chart.js';
+
 import { format } from 'date-fns';
 
-export const SalesChartOptions: ChartOptions<'line' | 'bar'> = {
+export const SalesChartOptions: ChartOptions<any> = {
 	responsive: true,
 
 	plugins: {
@@ -35,7 +36,7 @@ export const SalesChartOptions: ChartOptions<'line' | 'bar'> = {
 	},
 };
 
-export const OrderChartOptions: ChartOptions<'line' | 'bar'> = {
+export const OrderChartOptions: ChartOptions<any> = {
 	responsive: true,
 
 	plugins: {
@@ -171,4 +172,15 @@ export const constructTopOrderData = (data: ObjectData) => {
 			},
 		],
 	};
+};
+
+export const sampleData = {
+	labels: [],
+	datasets: [
+		{
+			label: 'Dataset 1',
+			data: [],
+			backgroundColor: 'rgba(255, 99, 132, 0.5)',
+		},
+	],
 };
