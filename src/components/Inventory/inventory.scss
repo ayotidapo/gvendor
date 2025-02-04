@@ -13,6 +13,9 @@
 	.btn.show_review {
 		@apply justify-start text-xl bg-transparent text-black active:scale-[0.99] items-center;
 	}
+	.auth__form {
+		@apply p-4;
+	}
 }
 
 .under_review {
