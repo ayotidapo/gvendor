@@ -56,7 +56,7 @@ const Analytics = () => {
 	const path = usePathname();
 
 	const period = sQ.get('duration') || 'day';
-
+	console.log('huyugyyu', period);
 	const getAnalytics = async () => {
 		let qS = constructQuery();
 
@@ -72,7 +72,7 @@ const Analytics = () => {
 		setAnalytics(data);
 
 		const sales = constructSalesData(data, period);
-		const orders = constructOrdersData(data);
+		const orders = constructOrdersData(data, period);
 
 		const topSelling = constructTopSellingData(data);
 		const topOrder = constructTopOrderData(data);
@@ -82,7 +82,7 @@ const Analytics = () => {
 		setOrdersData(orders);
 		setTopOrdersData(topOrder);
 	};
-
+	console.log('sales', salesData, 'order', ordersData);
 	useEffect(() => {
 		if (period === 'custom') return;
 		getAnalytics();
