@@ -88,16 +88,33 @@ const InventoryDetailsPage: React.FC<Props> = ({ details }) => {
 				<h2 className='text-xl text-black mt-10 mb-6 subpixel-antialiased'>
 					Items Details
 				</h2>
-				<EditInputBox title='Item name' value={details?.name} />
+				<EditInputBox
+					title='Item name'
+					name='name'
+					value={details?.name}
+					deactivate
+				/>
 				<EditInputBox
 					title='Item description'
+					name='description'
 					type='textarea'
 					rows={5}
 					textarea
 					value={details?.description}
+					deactivate
 				/>
-				<EditInputBox title='Price' value={details?.price?.toLocaleString()} />
-				<EditInputBox title='Item Category' value={details?.category?.name} />
+				<EditInputBox
+					title='Price'
+					name='price'
+					value={details?.price?.toLocaleString()}
+					deactivate
+				/>
+				<EditInputBox
+					title='Item Category'
+					name='category'
+					value={details?.category?.name}
+					deactivate
+				/>
 			</section>
 			{details?.variants?.length > 0 && (
 				<>

@@ -17,7 +17,6 @@ export const Input = ({
 	liconSvg,
 	riconSvg,
 	iconDimension = 20,
-
 	className = '',
 	error = '',
 	autoComplete = 'off',
@@ -51,7 +50,7 @@ export const Input = ({
 	const [showPassword, setShowPassword] = useState<boolean>(false);
 	const isPassword = type === 'password';
 	return (
-		<div className='relative mb-5'>
+		<div className='input__container'>
 			<div className={`input_wrapper ${error ? 'error' : ''}`}>
 				{title && <span className='mb-2 text-sm'>{title}</span>}
 

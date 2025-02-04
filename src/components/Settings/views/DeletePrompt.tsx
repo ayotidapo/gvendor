@@ -1,8 +1,47 @@
 import Checkbox from '@/atoms/Checkbox';
 import { SimpleBtn } from '@/atoms/buttons/Button';
-import React from 'react';
+import Fetch from '@/utils/fetch';
+import { useRouter } from 'next/navigation';
+import React, { useState } from 'react';
+import { toast } from 'react-toastify';
+
+const vendorReasons = [
+	"I've closed my business and no longer need the account.",
+	"I've decided to switch to a different selling platform.",
+	"I'm shifting to products that don't align with Good's offerings.",
+	"I'm not seeing enough sales activity on Good.",
+	'I find the fees or policies unsuitable for my business.',
+	'I need a platform that integrates better with my inventory system.',
+	'I prefer not to disclose a reason.',
+];
 
 const DeletePrompt = () => {
+	const router = useRouter();
+	const [isEnable, setIsEnable] = useState(false);
+	const [deleting, setDeleting] = useState(false);
+	const [reasons, setReasons] = useState<string[]>([]);
+	const onReason = (e: React.ChangeEvent<HTMLInputElement>) => {
+		const { checked, name, value } = e?.target;
+		if (checked) setReasons([...reasons, value]);
+		else setReasons([...reasons.filter(reason => reason !== value)]);
+	};
+
+	const onDelete = async () => {
+		try {
+			setDeleting(true);
+			await Fetch(`profile/delete`, {
+				method: 'post',
+				body: { reason: reasons[0] },
+			});
+			toast.success(`Account deleted`);
+			router.replace(`/auth-validate`);
+		} catch {
+			toast.error(`Could not delete account`);
+		} finally {
+			setDeleting(false);
+		}
+	};
+
 	return (
 		<div className='delete-prompt'>
 			<h2 className='h2 text-black subpixel-antialiased'>Manage Account</h2>
@@ -18,52 +57,39 @@ const DeletePrompt = () => {
 				Please select the reason for closing your Good creator account{' '}
 			</p>
 			<section>
-				<div className='reason'>
-					<span>
-						I&apos;ve closed my business and no longer need the account.
-					</span>
-					<Checkbox name='' value='' onChange={() => {}} />
-				</div>
-				<div className='reason'>
-					<span>
-						I&apos;ve decided to switch to a different selling platform.
-					</span>
-					<Checkbox name='' value='' onChange={() => {}} />
-				</div>
-				<div className='reason'>
-					<span>
-						i&apos;m shifting to products that don&apos;t align with Good&apos;s
-						offerings.
-					</span>
-					<Checkbox name='' value='' onChange={() => {}} />
-				</div>
-				<div className='reason'>
-					<span>I&apos;m not seeing enough sales activity on Good.</span>
-					<Checkbox name='' value='' onChange={() => {}} />
-				</div>
-				<div className='reason'>
-					<span>I find the fees or policies unsuitable for my business.</span>
-					<Checkbox name='' value='' onChange={() => {}} />
-				</div>
-				<div className='reason'>
-					<span>
-						I need a platform that integrates better with my inventory system.
-					</span>
-					<Checkbox name='' value='' onChange={() => {}} />
-				</div>
-				<div className='reason'>
-					<span>I prefer not to disclose a reason.</span>
-					<Checkbox name='' value='' onChange={() => {}} />
-				</div>
+				{vendorReasons.map(reason => (
+					<div className='reason' key={reason}>
+						<span>{reason}</span>
+						<Checkbox
+							name='reasons'
+							value={reason}
+							onChange={onReason}
+							checked={reasons.includes(reason)}
+						/>
+					</div>
+				))}
 			</section>
 			<div className='flex '>
-				<Checkbox className='agree' name='' value='' onChange={() => {}} />
+				<Checkbox
+					className='agree'
+					name=''
+					value=''
+					onChange={e => {
+						setIsEnable(x => !x);
+					}}
+				/>
 				<span className=' -translate-y-1'>
 					By selecting this checkbox, you agree to permanently delete your
 					account and all your data
 				</span>
 			</div>
-			<SimpleBtn className='delete '>Delete account</SimpleBtn>
+			<SimpleBtn
+				className='delete '
+				disabled={!isEnable || reasons?.length < 1}
+				onClick={onDelete}
+			>
+				Delete account
+			</SimpleBtn>
 		</div>
 	);
 };

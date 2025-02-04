@@ -2,7 +2,11 @@ import { SimpleBtn } from '@/atoms/buttons/Button';
 import { Icon } from '@/atoms/icon/icon';
 import React from 'react';
 
-const DeleteAcct = () => {
+interface Props {
+	onDelete: () => void;
+}
+
+const DeleteAcct: React.FC<Props> = ({ onDelete }) => {
 	return (
 		<div>
 			<div className='flex justify-between items-center'>
@@ -10,7 +14,7 @@ const DeleteAcct = () => {
 					Delete account
 				</span>
 
-				<SimpleBtn className='toggle_edit'>
+				<SimpleBtn className='toggle_edit' type='button' onClick={onDelete}>
 					<span className='cursor-pointer ml-1 flex text-[#B3434D]'>
 						Delete account
 					</span>

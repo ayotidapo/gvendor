@@ -18,7 +18,11 @@ const validationSchema = Yup.object({
 	firstName: Yup.string().required('First name is Required'),
 	lastName: Yup.string().required('Last name is Required'),
 	businessName: Yup.string().required('Business name is Required'),
-	businessAddress: Yup.string(),
+	businessAddress: Yup.object().shape({
+		address: Yup.string().required('Address is required'),
+		longitude: Yup.mixed(),
+		latitude: Yup.mixed(),
+	}),
 	email: Yup.string()
 		.email('Enter valid email address')
 		.required('Email is Required'),
@@ -47,17 +51,14 @@ const Register: React.FC<Props> = props => {
 	const dispatch = useDispatch();
 	const vendorUser = useSelector(state => state?.vendor);
 
-	const { isError, error, isSuccess, loading } = vendorUser;
+	const { isError, error, isSuccess, loading, businessDetails } = vendorUser;
 	const router = useRouter();
-	const [address, SetAddress] = useState<IAddress>({});
-	const { businessName, email, reference } = props?.vendor || {};
-	const onSelectLocation = (selectLocation: ObjectData) => {
-		SetAddress(selectLocation);
-	};
 
 	useEffect(() => {
 		dispatch(setVendor({ businessName, email }));
 	}, []);
+
+	const { businessName, email, reference } = props?.vendor || {};
 
 	if (isSuccess && !reference) {
 		return <GetBack />;
@@ -84,18 +85,16 @@ const Register: React.FC<Props> = props => {
 					businessName: businessName || '',
 					servicesOffered: '',
 					website: '',
-					businessAddress: '',
+					businessAddress: {
+						address: businessDetails?.businessAddress?.address,
+						...businessDetails?.businessAddress,
+					},
 				}}
 				validationSchema={validationSchema}
 				onSubmit={async (values, { setErrors }) => {
-					if (!address?.address) {
-						setErrors({ businessAddress: 'Address is required' });
-						return;
-					}
-
 					const payload = {
 						...values,
-						businessAddress: { ...address },
+						businessAddress: values?.businessAddress,
 						phone: values?.phone.replace('+', ''),
 						reference,
 						servicesOffered: [values?.servicesOffered],
@@ -104,13 +103,7 @@ const Register: React.FC<Props> = props => {
 					dispatch(registerVendor(payload));
 				}}
 			>
-				<Form className='auth__form'>
-					<h2 className='auth_h2'>Register your business with Good!</h2>
-					<RegisterBizForm
-						onSelectLocation={onSelectLocation}
-						submitting={loading}
-					/>
-				</Form>
+				<RegisterBizForm />
 			</Formik>
 		</>
 	);

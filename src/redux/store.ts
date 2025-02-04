@@ -7,6 +7,7 @@ import inventories from './reducers/inventories';
 import settlements from './reducers/settlements';
 import orderDetails from './reducers/order_details';
 import inventoryDetails from './reducers/inventory_details';
+import notifSettings from './reducers/notifications';
 
 export const makeStore = () => {
 	return configureStore({
@@ -18,6 +19,7 @@ export const makeStore = () => {
 			settlements,
 			orderDetails,
 			inventoryDetails,
+			notifSettings,
 		},
 		middleware: getDefaultMiddleware => getDefaultMiddleware().concat(logger),
 	});
