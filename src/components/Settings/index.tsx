@@ -39,7 +39,6 @@ const Settings = () => {
 				<section className='w-[27%] mt-5'>
 					<ul className='navi'>
 						{settingsTabs?.map((item, i) => {
-							console.log(tab, item?.value);
 							return (
 								<li
 									key={i}

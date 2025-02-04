@@ -32,7 +32,7 @@ const WorkingDays: React.FC<Props> = props => {
 	const onSetValue = (field: string, value: Value) => {
 		setFieldValue(field, value);
 	};
-	console.log('jfjkwrbfkruw', i);
+
 	return (
 		<section className='opening_days'>
 			<div className='flex  mt-2'>
@@ -64,7 +64,6 @@ const WorkingDays: React.FC<Props> = props => {
 							name={`availableHours[${i}].openingTime`}
 							value={values.availableHours[i].openingTime}
 							onChange={(val: Value) => {
-								console.log(val, 'SDDDD', values.availableHours[i].openingTime);
 								onSetValue(`availableHours[${i}].openingTime`, val);
 							}}
 						/>

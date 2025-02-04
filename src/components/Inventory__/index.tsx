@@ -56,8 +56,6 @@ const InventoryPage = () => {
 		uriConfig: {},
 	});
 
-	console.log({ uploading, completed, onRemoveFile, files, resObj });
-
 	const { qString, page, status, search } = useApiSearchQuery(12);
 
 	useEffect(() => {

@@ -76,7 +76,7 @@ const getTimeDateLabel = (data: ObjectData, period?: string) => {
 		else if (period === 'month') label = item.day;
 		else if (period === 'year') label = item.month;
 		else label = format(item.dateTime, 'h a');
-		console.log('huyugyyu', label, period);
+
 		return label;
 	});
 	return labels;
