@@ -4,7 +4,6 @@ import React, { useEffect, useState } from 'react';
 import MetricCard from '@/molecules/MetricCard';
 import PercentGrowth from './PercentGrowth';
 import { SimpleBtn } from '@/atoms/buttons/Button';
-import Fetch from '@/utils/fetch';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { constructQuery } from '@/utils/helpers';
 import { registerables, Chart } from 'chart.js';
