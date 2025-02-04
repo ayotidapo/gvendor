@@ -125,7 +125,7 @@ const Analytics = () => {
 					value={
 						<PercentGrowth
 							amount={`₦${analytics?.totalSales?.totalRevenue?.toLocaleString() || ''}`}
-							desc={`${analytics?.totalSales?.percentageIncrease || 0}% increase in the past week`}
+							desc={`${(analytics?.totalSales?.percentageIncrease || 0) / 100}% increase in the past week`}
 						/>
 					}
 				/>
@@ -154,7 +154,7 @@ const Analytics = () => {
 					value={
 						<PercentGrowth
 							amount={`₦${analytics?.averageOrderValue?.averageOrderValue?.toLocaleString() || ''}`}
-							desc={`${analytics?.averageOrderValue?.percentageChange || 0}% increase in the past week`}
+							desc={`${(analytics?.averageOrderValue?.percentageChange || 0) / 100}% increase in the past week`}
 						/>
 					}
 				/>
