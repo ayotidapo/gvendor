@@ -173,14 +173,3 @@ export const constructTopOrderData = (data: ObjectData) => {
 		],
 	};
 };
-
-export const sampleData = {
-	labels: [],
-	datasets: [
-		{
-			label: 'Dataset 1',
-			data: [],
-			backgroundColor: 'rgba(255, 99, 132, 0.5)',
-		},
-	],
-};
