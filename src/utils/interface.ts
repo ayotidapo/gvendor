@@ -5,7 +5,7 @@ export interface IOption {
 }
 
 export interface IAddress {
-	address?: string;
+	address: string;
 	longitude?: string;
 	latitude?: string;
 	[key: string]: any;
@@ -17,10 +17,10 @@ export interface IVendor {
 	lastName: string;
 	email: string;
 	phone: string;
-	businessName: string;
-	servicesOffered: string[];
-	website: string;
-	businessAddress: IAddress;
+	businessName?: string;
+	servicesOffered?: string[];
+	website?: string;
+	businessAddress?: IAddress;
 	[key: string]: any;
 }
 

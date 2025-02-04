@@ -1,9 +1,10 @@
-import { IVendor } from '@/utils/interface';
+import { IVendor, ObjectData } from '@/utils/interface';
 import { createSlice } from '@reduxjs/toolkit';
 import { getVendor, registerVendor } from '../apis/vendor';
 
 interface IState extends IVendor {
 	_id: string;
+	businessDetails: { availableHours: ObjectData; [key: string]: any };
 	isSuccess?: boolean;
 	isError?: boolean;
 	error: string | undefined;
@@ -12,6 +13,10 @@ interface IState extends IVendor {
 
 const initialState: IState = {
 	_id: '',
+	businessDetails: {
+		availableHours: {},
+		businessAddress: { address: '', longitude: '', latitude: '' },
+	},
 	firstName: '',
 	lastName: '',
 	email: '',

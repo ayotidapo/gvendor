@@ -22,7 +22,7 @@ interface IOrders {
 	orders: IOrder[];
 	isSuccess?: boolean;
 	isError?: boolean;
-	error?: string | undefined;
+	error?: string;
 	loading?: boolean;
 }
 const initialState: IOrders = {

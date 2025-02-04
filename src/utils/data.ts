@@ -1,3 +1,7 @@
+import { ChartOptions } from 'chart.js';
+import { ObjectData } from './interface';
+import { format } from 'date-fns';
+
 const servicesOfferedOptions = [
 	{ value: 'food', label: 'Food' },
 	{ value: 'electronics', label: 'Electronics' },
@@ -125,6 +129,32 @@ const settlementStatus = [
 		value: 'PENDING',
 	},
 ];
+
+const settingsTabs = [
+	{
+		value: 'personal-info',
+		title: 'Personal Information',
+	},
+	{
+		value: 'business-info',
+		title: 'Business Information',
+	},
+	{
+		value: 'bank-account',
+		title: 'Settlement Bank Account',
+	},
+	{
+		value: 'notification',
+		title: 'Notification Settings',
+	},
+	{
+		value: 'manage-account',
+		title: 'Manage Account',
+	},
+] as { value: string; title: string }[];
+
+const notificationSettings = [];
+
 export {
 	servicesOfferedOptions,
 	businessStructureOptions,
@@ -133,4 +163,5 @@ export {
 	inventoryStatus,
 	settlementStatus,
 	setStages,
+	settingsTabs,
 };

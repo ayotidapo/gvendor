@@ -5,11 +5,9 @@ import React from 'react';
 interface Props {
 	name: string;
 	value: string;
-	checked?: boolean;
-	defaultChecked?: boolean;
-	disabled?: boolean;
-	fieldName?: string;
 	onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+	isChecked?: boolean;
+	disabled?: boolean;
 }
 const Toggle: React.FC<Props> = props => {
 	const { name, value, ...rest } = props;

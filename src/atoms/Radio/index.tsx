@@ -11,20 +11,21 @@ interface Props {
 	checked?: boolean;
 	validate?: (val: string) => void;
 	formik?: boolean;
+	type?: 'radio' | 'checkbox';
 }
 const Radio: React.FC<Props> = props => {
-	const { className = '', name, value, title, formik, ...rest } = props;
+	const { className = '', type = 'radio', name, value, title, ...rest } = props;
 	return (
 		<label className={`radio ${className}`}>
-			{formik ? (
+			{rest.formik ? (
 				<Field
 					name={name}
-					type='radio'
+					type={type}
 					value={value}
 					validate={props.validate}
 				/>
 			) : (
-				<input type='radio' value={value} name={name} {...rest} />
+				<input type={type} value={value} name={name} {...rest} />
 			)}
 			<span className='radio_mirror' />
 			<span className='title'>{title}</span>

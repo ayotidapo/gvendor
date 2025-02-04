@@ -22,7 +22,7 @@ const OrderDetailsPage: React.FC<Props> = ({ details }) => {
 	useEffect(() => {
 		dispatch(setOrderDetails(details));
 	}, []);
-
+	console.log(o_details, 0);
 	const { personalInformation, orderitems } = o_details;
 	return (
 		<div className='orderdetails'>
