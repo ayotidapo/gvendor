@@ -7,18 +7,19 @@ import { days, servicesOfferedOptions } from '@/utils/data';
 import { ErrorMessage, Form, Formik } from 'formik';
 import DialogRadio from './DialogRadio';
 import LocationInput from '@/molecules/LocationInput';
-import { IAddress, ObjectData } from '@/utils/interface';
 import { useDispatch } from '@/redux/hooks';
 import { updateBiz } from '@/redux/apis/business';
 import WorkingDays from './WorkingDays';
 import { useSelector } from '@/redux/hooks';
 import { PhoneField } from '@/atoms/PhoneInput';
 
-type Value = string | null;
-
-const validationSchema = Yup.object({
+export const validationSchema = Yup.object({
 	businessName: Yup.string().required('Business name is Required'),
-	businessAddress: Yup.string(),
+	businessAddress: Yup.object().shape({
+		address: Yup.string().required('Address is required'),
+		longitude: Yup.mixed(),
+		latitude: Yup.mixed(),
+	}),
 	businessDescription: Yup.string().required('Tell us about your business'),
 	businessEmail: Yup.string()
 		.email('Enter valid email address')
@@ -45,7 +46,7 @@ const validationSchema = Yup.object({
 	isNafdacNumber: Yup.string().required('select an option'),
 	availableHours: Yup.array().of(
 		Yup.object().shape({
-			open: Yup.string(),
+			open: Yup.boolean(),
 			openingTime: Yup.string().when('open', {
 				is: (value: string) => !value,
 				then: schema => schema.notRequired(),
@@ -54,7 +55,7 @@ const validationSchema = Yup.object({
 			closingTime: Yup.string().when('open', {
 				is: (value: string) => !value,
 				then: schema => schema.notRequired(),
-				otherwise: schema => schema.required('Opening time is required'),
+				otherwise: schema => schema.required('Closing time is required'),
 			}),
 		})
 	),
@@ -65,21 +66,12 @@ interface Props {
 }
 const BusinessInfo: React.FC<Props> = props => {
 	const dispatch = useDispatch();
-	const { isSuccess } = useSelector(state => state?.business);
-	const { businessName, businessAddress } = useSelector(state => state?.vendor);
-	const [value, setValue] = useState<Record<string, Value>>({
-		openingTime: '',
-		closingTime: '',
-	});
-	const [address, SetAddress] = useState<IAddress>({});
+	const { isSuccess, loading } = useSelector(state => state?.business);
+	const { businessName, businessDetails } = useSelector(state => state?.vendor);
 
-	const onSelectLocation = (selectLocation: ObjectData) => {
-		SetAddress(selectLocation);
-	};
-
-	// const onSetTime = (name: string, val: Value) => {
-	// 	setValue({ ...value, [name]: val });
-	// };
+	const [addressValue, SetAddressValue] = useState(
+		businessDetails?.businessAddress?.address
+	);
 
 	if (isSuccess) {
 		props.setStep(1);
@@ -92,7 +84,10 @@ const BusinessInfo: React.FC<Props> = props => {
 			<Formik
 				initialValues={{
 					businessName,
-					businessAddress: businessAddress?.address,
+					businessAddress: {
+						address: businessDetails?.businessAddress?.address,
+						...businessDetails?.businessAddress,
+					},
 					businessEmail: '',
 					businessPhonenumber: '',
 					servicesOffered: '',
@@ -112,10 +107,11 @@ const BusinessInfo: React.FC<Props> = props => {
 						})),
 					],
 				}}
-				onSubmit={(values, { setErrors }) => {
+				onSubmit={values => {
 					const {
 						isCacNumber,
 						isTinNumber,
+						businessAddress,
 						isNafdacNumber: is_NafdacNumber,
 						isSonNumber: is_SonNumber,
 						businessEmail,
@@ -124,10 +120,7 @@ const BusinessInfo: React.FC<Props> = props => {
 
 					const isNafdacNumber = is_NafdacNumber === 'y' ? true : false;
 					const isSonNumber = is_SonNumber === 'y' ? true : false;
-					if (!address?.address) {
-						setErrors({ businessAddress: 'Address is required' });
-						return;
-					}
+
 					const mappedHours = values?.availableHours?.reduce((acc, cur, i) => {
 						if (!cur?.openingTime) delete (cur as any)?.openingTime;
 						if (!cur?.closingTime) delete (cur as any)?.closingTime;
@@ -139,7 +132,7 @@ const BusinessInfo: React.FC<Props> = props => {
 
 					const payload = {
 						...restValues,
-						businessAddress: { ...address },
+						businessAddress,
 						availableHours: mappedHours,
 						servicesOffered: [values?.servicesOffered],
 						isNafdacNumber,
@@ -151,7 +144,7 @@ const BusinessInfo: React.FC<Props> = props => {
 				}}
 				validationSchema={validationSchema}
 			>
-				{({ values, errors, touched, setFieldValue, handleBlur }) => {
+				{({ values, errors, setFieldValue, handleBlur }) => {
 					return (
 						<Form>
 							<Input
@@ -161,8 +154,18 @@ const BusinessInfo: React.FC<Props> = props => {
 							/>
 
 							<LocationInput
-								onSelectLocation={onSelectLocation}
-								error={errors?.businessAddress}
+								onSelectLocation={addressObj => {
+									setFieldValue('businessAddress', addressObj);
+									SetAddressValue(addressObj?.address);
+								}}
+								onBlur={() => {
+									SetAddressValue(values?.businessAddress?.address);
+								}}
+								onChange={(value: string) => {
+									SetAddressValue(value);
+								}}
+								value={addressValue}
+								error={(errors?.businessAddress as any)?.address}
 							/>
 							<div className='combine_input'>
 								<Input
@@ -171,17 +174,10 @@ const BusinessInfo: React.FC<Props> = props => {
 								/>
 								<PhoneField
 									name='businessPhonenumber'
-									onChange={(val: any) => {
+									onChange={(val: string) => {
 										setFieldValue('businessPhonenumber', val);
 									}}
-									className='ooooo'
-									value={values?.businessPhonenumber}
 									onBlur={handleBlur}
-									error={
-										(errors.businessPhonenumber && touched.businessPhonenumber
-											? errors.businessPhonenumber
-											: '') as string
-									}
 									placeholder='Phone number'
 								/>
 							</div>
@@ -241,7 +237,9 @@ const BusinessInfo: React.FC<Props> = props => {
 							<label className='block my-3.5'>
 								<Radio name='isNafdacNumber' value='n' formik /> No
 							</label>
-							<SimpleBtn className='normal'>Save & Continue</SimpleBtn>
+							<SimpleBtn className='normal' disabled={loading}>
+								Save & Continue
+							</SimpleBtn>
 						</Form>
 					);
 				}}

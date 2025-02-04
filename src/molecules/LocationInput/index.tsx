@@ -1,23 +1,31 @@
-import { ObjectData } from '@/utils/interface';
-import React from 'react';
+import { IAddress, ObjectData } from '@/utils/interface';
+import React, { useEffect } from 'react';
 import Autocomplete from 'react-google-autocomplete';
 import './location.scss';
 import { useFormikContext } from 'formik';
 
 interface Props {
-	onSelectLocation: (address: ObjectData) => void;
-	error?: string;
+	onSelectLocation: (address: IAddress) => void;
+	error: string;
+	disabled?: boolean;
+	className?: string;
+	value?: string;
+	onChange: (value: string) => void;
+	onBlur: (e: React.FocusEvent<HTMLInputElement>) => void;
 }
-const LocationInput: React.FC<Props> = ({ onSelectLocation, error }) => {
-	const { setErrors } = useFormikContext();
+const LocationInput: React.FC<Props> = props => {
+	const { onSelectLocation, disabled, className, value, error } = props;
+	const { setFieldError } = useFormikContext();
 
 	return (
-		<div className='location relative mb-5'>
+		<div className='location input__container'>
 			<div className='input_wrapper'>
 				<Autocomplete
 					apiKey={process.env.NEXT_PUBLIC_GOOGLE_PLACE_API}
+					value={value}
+					onChange={(e: any) => props.onChange?.(e.target.value)}
 					onPlaceSelected={place => {
-						setErrors({ businessAddress: '' });
+						setFieldError('businessAddress.address', '');
 						const addressComponents = place?.address_components;
 						const extraInfo: Record<string, any> = {
 							addressType: '',
@@ -56,7 +64,8 @@ const LocationInput: React.FC<Props> = ({ onSelectLocation, error }) => {
 
 						onSelectLocation(selectedAddress);
 					}}
-					className={`input ${error ? 'error' : ''}`}
+					className={`input ${error ? 'error' : ''} ${className}`}
+					style={{ pointerEvents: disabled ? 'none' : 'auto' }}
 					options={{
 						fields: [
 							'geometry.location',
@@ -67,8 +76,10 @@ const LocationInput: React.FC<Props> = ({ onSelectLocation, error }) => {
 						types: ['address'],
 						componentRestrictions: { country: 'ng' },
 					}}
+					onBlur={props.onBlur}
 				/>
 			</div>
+			<div className=' -translate-y-5 error'>{error}</div>
 		</div>
 	);
 };

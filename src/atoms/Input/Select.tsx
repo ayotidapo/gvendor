@@ -24,7 +24,7 @@ const Select: React.FC<Props> = props => {
 		...rest
 	} = props;
 	return (
-		<div className='relative mb-5'>
+		<div className='input__container'>
 			<div className={`input_wrapper ${hasError ? 'err' : ''}`}>
 				<select
 					name={name}
