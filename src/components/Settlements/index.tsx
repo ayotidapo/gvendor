@@ -13,17 +13,18 @@ import StatusFilter from '@/molecules/StatusFilter';
 import { settlementStatus } from '@/utils/data';
 import { getSettlements } from '@/redux/apis/settlements';
 import LoadingPage from '@/molecules/LoadingPage';
+import Pagination from '@/molecules/Pagination';
 
 const SettlementPage = () => {
 	const { docs, isError, isSuccess, total, loading } = useSelector(
 		state => state?.settlements
 	);
 	const router = useRouter();
-
+	const limit = 20;
 	const dispatch = useDispatch();
 	const path = usePathname();
 
-	const { qString, page, status, search } = useApiSearchQuery(12);
+	const { qString, page, status, search } = useApiSearchQuery(limit);
 
 	useEffect(() => {
 		dispatch(getSettlements(qString));
@@ -37,6 +38,12 @@ const SettlementPage = () => {
 		router.push(`${path}?status=${status}&page=1&search=${searchValue}`);
 	};
 
+	const onPageChange = (page: { selected: number }) => {
+		const { selected } = page;
+		router.push(
+			`${path}?status=${status}&page=${selected + 1}&search=${search}`
+		);
+	};
 	const len = docs?.length;
 	return (
 		<div className='settlements'>
@@ -64,6 +71,13 @@ const SettlementPage = () => {
 			{len > 0 && !loading && (
 				<section>
 					<SettlementTable settlements={docs} />
+					<Pagination
+						onPageChange={onPageChange}
+						page={Number(page)}
+						limit={limit}
+						totalItems={total}
+						curItemsLen={docs?.length}
+					/>
 				</section>
 			)}
 		</div>
