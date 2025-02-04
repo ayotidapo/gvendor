@@ -40,7 +40,7 @@ const BankAcct = () => {
 			validationSchema: validationSchema,
 		}
 	);
-	console.log({ formik, errors });
+
 	const getBankDetails = async () => {
 		const { bankCode, accountNumber } = values;
 

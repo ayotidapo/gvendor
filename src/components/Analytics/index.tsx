@@ -65,14 +65,14 @@ const Analytics = () => {
 		} else {
 			qS = `?${qS}`;
 		}
-		console.log({ qS });
+
 		const response = await Fetch(`/report/analytics${qS}`);
 
 		const data = response?.data;
 		setAnalytics(data);
 
 		const sales = constructSalesData(data, period);
-		const orders = constructOrdersData(data);
+		const orders = constructOrdersData(data, period);
 
 		const topSelling = constructTopSellingData(data);
 		const topOrder = constructTopOrderData(data);

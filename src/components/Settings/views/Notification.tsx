@@ -110,7 +110,6 @@ const Notification: React.FC<Props> = ({ children }) => {
 		}
 	};
 
-	console.log({ values });
 	return (
 		<form className='notification' onSubmit={formik.handleSubmit}>
 			<h2 className='h2'>Notification Settings</h2>

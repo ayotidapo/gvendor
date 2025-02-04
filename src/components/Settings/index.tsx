@@ -39,7 +39,6 @@ const Settings = () => {
 				<section className='navi_wrapper'>
 					<ul className='navi'>
 						{settingsTabs?.map((item, i) => {
-							console.log(tab, item?.value);
 							return (
 								<li
 									key={i}

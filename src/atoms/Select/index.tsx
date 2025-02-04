@@ -26,7 +26,6 @@ const Select: React.FC<SelectProps> = ({
 	className,
 	error,
 }) => {
-	console.log({ value, onChange });
 	return (
 		<div className='input_wrapper'>
 			<select

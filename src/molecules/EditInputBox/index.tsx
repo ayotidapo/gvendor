@@ -41,7 +41,7 @@ const EditInputBox: React.FC<Props> = props => {
 		...rest
 	} = props;
 	const non_Editable = nonEditable === undefined ? true : nonEditable;
-	console.log({ rest });
+
 	const [isNonEdit, setIsNonEdit] = useState<boolean | undefined>(
 		nonEditable ?? true
 	);

@@ -97,7 +97,6 @@ const BizInfo = () => {
 			validationSchema={validationSchema}
 		>
 			{({ setFieldValue, handleBlur, handleChange, values, ...rest }) => {
-				console.log({ values, ...rest });
 				const errors = rest.errors as Record<string, string>;
 				return (
 					<Form>

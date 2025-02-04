@@ -16,7 +16,7 @@ const RegisterBizForm: React.FC = () => {
 	const vendorUser = useSelector(state => state?.vendor);
 
 	const { loading, businessDetails } = vendorUser;
-	console.log({ businessDetails, op: 900 });
+
 	const onChangePhone = (value: any) => {
 		setFieldValue('phone', value);
 	};
@@ -29,7 +29,7 @@ const RegisterBizForm: React.FC = () => {
 	const [addressValue, SetAddressValue] = useState(
 		businessDetails?.businessAddress?.address
 	);
-	console.log({ errors });
+
 	return (
 		<Form className='auth__form'>
 			<h2 className='auth_h2'>Register your business with Good!</h2>
