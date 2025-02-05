@@ -6,7 +6,7 @@ import { Input } from '@/atoms/Input/Input';
 import { useFormik } from 'formik';
 import { updateBankAccountApi } from '@/redux/apis/business';
 import { toast } from 'react-toastify';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 import { signInUser } from '@/redux/apis/setAuth';
 import { useSelector } from '@/redux/hooks';
 import Select from '@/atoms/Input/Select';

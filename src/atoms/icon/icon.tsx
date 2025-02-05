@@ -23,7 +23,7 @@ export const Icon = ({
 			height={height}
 			{...props}
 		>
-			<use xlinkHref={`/assets/icons_sprite.svg#${id}`}></use>
+			<use xlinkHref={`/icons_sprite.svg#${id}`}></use>
 		</svg>
 	);
 };

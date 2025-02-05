@@ -36,10 +36,10 @@ export default async function RootLayout({
 						className=' object-cover'
 					/>
 					{/* <img
-						src='/onboardImg.png'
-						alt='bg image'
-						className='h-full w-full object-cover '
-					/> */}
+                                               src='/onboardImg.png'
+                                               alt='bg image'
+                                               className='h-full w-full object-cover '
+                                       /> */}
 				</div>
 			</div>
 			<OnboardFooter />

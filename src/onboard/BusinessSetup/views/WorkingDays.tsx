@@ -17,7 +17,7 @@ const WorkingDays: React.FC<Props> = props => {
 		useFormikContext<Record<string, any>>();
 	let bool = day === 'sunday' ? false : true;
 
-	if (toEdit) bool = values?.availableHours[i]?.open;
+	if (toEdit) bool = !!values?.availableHours[i]?.open;
 
 	const [showDay, setShowDay] = useState(bool);
 

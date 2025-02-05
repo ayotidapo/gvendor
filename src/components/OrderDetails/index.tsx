@@ -22,14 +22,14 @@ const OrderDetailsPage: React.FC<Props> = ({ details }) => {
 	useEffect(() => {
 		dispatch(setOrderDetails(details));
 	}, []);
-	console.log(o_details, 0);
+
 	const { personalInformation, orderitems } = o_details;
 	return (
 		<div className='orderdetails'>
 			<section className='flex flex-col'>
 				<div className='page-title_div'>
 					<h2 className='title'>Orders #{o_details?.orderNumber}</h2>
-					<div className='btn_div'>
+					<div className='btn_div opacity-[0.1]'>
 						<SimpleBtn
 							className='set_as'
 							//disabled={o_details.status === 'PROCESSING'}

@@ -76,6 +76,7 @@ const EditPhoneBox: React.FC<Props> = props => {
 				onChange={onChange}
 				onBlur={onBlur}
 				className={cx({ non_edit: isNonEdit })}
+				noEdit={isNonEdit}
 			/>
 
 			{!isNonEdit && (

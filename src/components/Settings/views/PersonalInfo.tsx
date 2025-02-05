@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from '@/redux/hooks';
 import { setVendor } from '@/redux/reducers/vendor';
 
 import { toast } from 'react-toastify';
+import { updateVendorApi } from '@/redux/apis/vendor';
 
 const validationSchema = Yup.object({
 	firstName: Yup.string().required('First name is Required'),
@@ -31,7 +32,8 @@ const PersonalInfo = () => {
 		onSubmit: async values => {
 			try {
 				setLoading(true);
-				dispatch(setVendor(values));
+				const response = await updateVendorApi(values);
+				dispatch(setVendor(response?.data));
 				toast.success(`Profile updated!`);
 			} catch (e: any) {
 				toast.error(`Error: ${e.message}`);
