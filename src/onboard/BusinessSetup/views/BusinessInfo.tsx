@@ -46,7 +46,7 @@ export const validationSchema = Yup.object({
 	isNafdacNumber: Yup.string().required('select an option'),
 	availableHours: Yup.array().of(
 		Yup.object().shape({
-			open: Yup.boolean(),
+			open: Yup.string(),
 			openingTime: Yup.string().when('open', {
 				is: (value: string) => !value,
 				then: schema => schema.notRequired(),

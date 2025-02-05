@@ -2,8 +2,7 @@ import { IVendor, ObjectData } from '@/utils/interface';
 import { createSlice } from '@reduxjs/toolkit';
 import { getVendor, registerVendor } from '../apis/vendor';
 
-interface IState extends IVendor {
-	_id: string;
+interface IVState extends IVendor {
 	businessDetails: { availableHours: ObjectData; [key: string]: any };
 	isSuccess?: boolean;
 	isError?: boolean;
@@ -11,7 +10,7 @@ interface IState extends IVendor {
 	loading: boolean;
 }
 
-const initialState: IState = {
+const initialState: IVState = {
 	_id: '',
 	businessDetails: {
 		availableHours: {},
@@ -35,7 +34,7 @@ export const vendorSlice = createSlice({
 	initialState,
 
 	reducers: {
-		setVendor(state: IState, action) {
+		setVendor(state: IVState, action) {
 			Object.assign(state, action.payload);
 		},
 	},
