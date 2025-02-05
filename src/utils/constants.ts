@@ -45,3 +45,13 @@ export const PAYMENTSTATUS = [
 export const regex: Record<string, RegExp> = {
 	onlyDigits: /^[^\w\d]*\d*[^\w\d]*$/,
 };
+
+export const initAvailableHours = {
+	sunday: { open: '' },
+	monday: { open: '' },
+	tuesday: { open: '' },
+	wednesday: { open: '' },
+	thursday: { open: '' },
+	friday: { open: '' },
+	saturday: { open: '' },
+};

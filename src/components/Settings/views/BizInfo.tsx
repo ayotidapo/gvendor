@@ -6,19 +6,22 @@ import DialogRadio from '@/onboard/BusinessSetup/views/DialogRadio';
 import WorkingDays from '@/onboard/BusinessSetup/views/WorkingDays';
 import { useDispatch, useSelector } from '@/redux/hooks';
 import { days } from '@/utils/data';
-import { IAddress, ObjectData } from '@/utils/interface';
-import { ErrorMessage, Form, Formik, useFormik } from 'formik';
+import { ErrorMessage, Form, Formik } from 'formik';
 import React, { useState } from 'react';
 import { validationSchema } from '@/onboard/BusinessSetup/views/BusinessInfo';
-import { updateBiz, updateBizApi } from '@/redux/apis/business';
+import { updateBiz } from '@/redux/apis/business';
 import { toast } from 'react-toastify';
+import { initAvailableHours } from '@/utils/constants';
 
 const BizInfo = () => {
 	const { businessDetails } = useSelector(state => state?.vendor);
 	const { loading } = useSelector(state => state?.business);
 	const dispatch = useDispatch();
-	const { businessName, availableHours, businessPhonenumber, cacNumber } =
-		businessDetails || {};
+	const {
+		businessName = '',
+		availableHours = { ...initAvailableHours },
+		businessPhonenumber,
+	} = businessDetails || {};
 
 	const [addressValue, SetAddressValue] = useState(
 		businessDetails?.businessAddress?.address
@@ -28,7 +31,9 @@ const BizInfo = () => {
 		<Formik
 			initialValues={{
 				businessName,
-				businessPhonenumber: `+${businessPhonenumber}`,
+				businessPhonenumber: businessPhonenumber
+					? `+${businessPhonenumber}`
+					: '',
 				businessAddress: {
 					address: businessDetails?.businessAddress?.address,
 					...businessDetails?.businessAddress,
@@ -40,15 +45,15 @@ const BizInfo = () => {
 				sonNumber: businessDetails?.sonNumber || '',
 				availableHours: [
 					...Object.keys(availableHours)?.map(day => ({
-						open: availableHours?.[day].open,
+						open: availableHours?.[day].open ? day : '',
 						openingTime: availableHours?.[day].openingTime || '',
 						closingTime: availableHours?.[day].closingTime || '',
 					})),
 				],
 				servicesOffered: businessDetails?.servicesOffered?.[0] || [],
-				cacNumber: cacNumber,
+				cacNumber: businessDetails?.cacNumber,
 				isCacNumber: businessDetails?.isCacNumber ? 'y' : 'n',
-				tinNumber: cacNumber,
+				tinNumber: businessDetails?.tinNumber,
 				isTinNumber: businessDetails?.tinNumber === true ? 'y' : 'n',
 				isSonNumber: businessDetails?.isSonNumber === true ? 'y' : 'n',
 				isNafdacNumber: businessDetails?.isNafdacNumber === true ? 'y' : 'n',
@@ -60,7 +65,6 @@ const BizInfo = () => {
 					businessAddress,
 					isNafdacNumber: is_NafdacNumber,
 					isSonNumber: is_SonNumber,
-					businessEmail,
 					...restValues
 				} = values;
 
@@ -78,9 +82,9 @@ const BizInfo = () => {
 
 				const payload = {
 					...restValues,
-					businessAddress,
 					availableHours: mappedHours,
 					servicesOffered: [values?.servicesOffered],
+					businessAddress,
 					isNafdacNumber,
 					isSonNumber,
 					businessPhonenumber: values?.businessPhonenumber?.replace('+', ''),
@@ -95,6 +99,7 @@ const BizInfo = () => {
 				});
 			}}
 			validationSchema={validationSchema}
+			enableReinitialize={true}
 		>
 			{({ setFieldValue, handleBlur, handleChange, values, ...rest }) => {
 				const errors = rest.errors as Record<string, string>;
@@ -150,10 +155,10 @@ const BizInfo = () => {
 						/>
 						<EditInputBox
 							ctaName='Save'
-							name='category'
+							name='servicesOffered'
 							title='Business category'
 							value={values?.servicesOffered}
-							error={errors?.category}
+							error={errors?.servicesOffered}
 							submitting={loading}
 							onChange={handleChange}
 						/>
@@ -162,7 +167,11 @@ const BizInfo = () => {
 							name='businessDescription'
 							title='About business'
 							value={values?.businessDescription}
-							error={errors?.businessDescription}
+							error={
+								rest.touched?.businessDescription
+									? errors?.businessDescription
+									: ''
+							}
 							type='textarea'
 							submitting={loading}
 							onChange={handleChange}
@@ -193,7 +202,7 @@ const BizInfo = () => {
 							ctaName='Save'
 							name='*'
 							title='CAC Number'
-							displayValue={cacNumber || 'No CAC number Provided'}
+							displayValue={values?.cacNumber || 'No CAC number Provided'}
 							submitting={loading}
 							onChange={handleChange}
 						>

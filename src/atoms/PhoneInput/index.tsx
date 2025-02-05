@@ -7,29 +7,30 @@ interface IPProps extends FieldProps {
 	onBlur: (e: any) => void;
 	placeholder?: string;
 	className?: string;
+	noEdit?: boolean;
 	// error?: string;
 }
 
 const InputPhone: React.FC<IPProps> = ({
-	field,
-	form: { errors },
-
+	field: { name, value },
+	form: { errors, touched },
 	onChange,
 	onBlur,
 	...props
 }) => {
 	return (
-		<div className={`ph_div ${errors[field?.name] ? 'error_' : ''}`}>
+		<div className={`ph_div ${errors[name] && touched[name] ? 'error_' : ''}`}>
 			<PhoneInput
 				defaultCountry='NG'
-				value={field.value}
-				name={field.name} // not really neccessary here tho
+				value={value}
+				name={name} // not really neccessary here tho
 				onChange={onChange}
 				onBlur={onBlur}
 				international
 				{...props}
+				readOnly={props.noEdit}
 			/>
-			<ErrorMessage name={field.name} component='div' className='error' />
+			<ErrorMessage name={name} component='div' className='error' />
 		</div>
 	);
 };
@@ -41,6 +42,7 @@ type PFProps = {
 	onChange: (val: any) => void;
 	onBlur: (e: React.FocusEvent<HTMLElement, Element>) => void;
 	placeholder?: string;
+	noEdit?: boolean;
 	// error?: string;
 };
 
