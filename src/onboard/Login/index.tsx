@@ -14,6 +14,7 @@ import { useDispatch } from '@/redux/hooks';
 
 import * as Yup from 'yup';
 import { signOut } from 'next-auth/react';
+import { toast } from 'react-toastify';
 
 const LoginSchema = Yup.object({
 	email: Yup.string()
@@ -37,7 +38,7 @@ const LoginPage: React.FC = ({}) => {
 			localStorage.t_ = response?.data?.token;
 			await signInUser({ goodToken: token, vendorId: user?._id });
 		} catch (e: any) {
-			//console.log(e)
+			toast.error(`Error: ${e?.message}`);
 		} finally {
 			setSubmitting(false);
 		}
