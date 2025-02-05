@@ -72,7 +72,6 @@ const Analytics = () => {
 		const action = await dispatch(getAnalytics(qS));
 
 		if (getAnalytics.fulfilled.match(action)) {
-			
 			const data = action?.payload?.data;
 
 			const sales = constructSalesData(data, period);
