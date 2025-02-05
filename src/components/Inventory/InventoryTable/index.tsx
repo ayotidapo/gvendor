@@ -34,7 +34,7 @@ const InventoryTable: React.FC<{ products: IProduct[] }> = ({ products }) => {
 									src={product.images?.[0] || '/assets/no-img.jpg'}
 									alt='img-product'
 									fill
-									className=' object-cover'
+									className='object-cover'
 								/>
 								{/* <img src={product.images?.[0]} alt='' className=''/> */}
 							</div>
