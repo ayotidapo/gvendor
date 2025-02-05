@@ -19,7 +19,7 @@ const validationSchema = Yup.object({
 
 const PersonalInfo = () => {
 	const dispatch = useDispatch();
-	const vendor = useSelector(state => state.vendor);
+	const vendor = useSelector(state => state?.vendor);
 	const [loading, setLoading] = useState(false);
 
 	const { getFieldProps, handleSubmit } = useFormik({
@@ -36,7 +36,7 @@ const PersonalInfo = () => {
 				dispatch(setVendor(response?.data));
 				toast.success(`Profile updated!`);
 			} catch (e: any) {
-				toast.error(`Error: ${e.message}`);
+				toast.error(`Error: ${e?.message}`);
 			} finally {
 				setLoading(false);
 			}
