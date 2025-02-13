@@ -88,3 +88,4 @@ const SettlementDetailsPage: React.FC<{ details: ObjectData }> = props => {
 };
 
 export default SettlementDetailsPage;
+//kfkfk
