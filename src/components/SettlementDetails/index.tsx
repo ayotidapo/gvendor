@@ -7,7 +7,7 @@ import OrderItem from '@/molecules/OrderItem';
 import { ObjectData } from '../../utils/interface';
 import { format } from 'date-fns';
 
-const SettlementDetailsPage: React.FC<{ details: string }> = props => {
+const SettlementDetailsPage: React.FC<{ details: ObjectData }> = props => {
 	const { details: s } = props;
 	return (
 		<div className='settlementdetails'>
