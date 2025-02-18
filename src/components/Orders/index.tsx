@@ -86,7 +86,7 @@ const Orders = () => {
 			{loading && <LoadingPage className='py-5 ' />}
 			{len < 1 && !loading && <h2 className='empty__state'>No Order found</h2>}
 			{len > 0 && !loading && (
-				<section>
+				<section className='table_wrapper'>
 					<OrdersTable orders={orders} />
 					<Pagination
 						onPageChange={onPageChange}

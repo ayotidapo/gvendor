@@ -34,9 +34,13 @@
 		".idea"
 	],
 	"lint-staged": {
-		"**/*.+(js|ts|tsx|jsx)": [
+		"**/*.+(ts|tsx)": [
 			"eslint --fix",
-			"prettier --write --ignore-unknown"
+			"prettier --write"
+		],
+		"**/*.+(js|jsx)": [
+			"eslint --fix",
+			"prettier --write"
 		],
 		"**/*.+(css|sass|less|scss|json|html|jsx)": [
 			"prettier --write --ignore-unknown"

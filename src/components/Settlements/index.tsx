@@ -69,7 +69,7 @@ const SettlementPage = () => {
 				<h2 className='empty__state'>No Settlement found</h2>
 			)}
 			{len > 0 && !loading && (
-				<section>
+				<section className='table_wrapper'>
 					<SettlementTable settlements={docs} />
 					<Pagination
 						onPageChange={onPageChange}

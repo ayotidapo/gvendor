@@ -8,7 +8,7 @@ import { setVendor } from '@/redux/reducers/vendor';
 
 import { useFormik } from 'formik';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { redirect, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { useDispatch } from '@/redux/hooks';
 

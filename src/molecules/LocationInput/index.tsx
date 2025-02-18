@@ -79,7 +79,7 @@ const LocationInput: React.FC<Props> = props => {
 					onBlur={props.onBlur}
 				/>
 			</div>
-			<div className=' -translate-y-5 error'>{error}</div>
+			<div className='error'>{error}</div>
 		</div>
 	);
 };

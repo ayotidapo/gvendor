@@ -1,8 +1,6 @@
 .search__filter {
-	@apply relative;
-	.input_wrapper {
-		@apply w-[372px];
-	}
+	@apply relative  xs:w-[372px] xx:w-full xs:order-[0] xx:order-1;
+
 	& > div {
 		margin-bottom: 0;
 	}

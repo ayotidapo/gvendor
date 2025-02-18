@@ -4,7 +4,7 @@ import './dropdown.scss';
 
 interface Props {
 	className?: string;
-	component?: React.ComponentType | React.ReactNode;
+	component?: React.ReactNode;
 	children: React.ReactNode;
 }
 
@@ -26,7 +26,7 @@ const DropDown: React.FC<Props> = props => {
 					/>
 				</svg>
 			)}
-			{typeof Component === 'function' ? <Component /> : Component}
+			{Component}
 			<div className='dropdown__content'>{children}</div>
 		</div>
 	);

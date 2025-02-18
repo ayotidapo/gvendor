@@ -29,7 +29,17 @@ export const validationSchema = Yup.object({
 		.required('Phone number is required')
 		.min(14, ' Enter valid phone number')
 		.max(15, ' Enter valid phone number'),
-	website: Yup.string().required('Enter a valid link'),
+	website: Yup.string()
+		.nullable()
+		.test('is-valid-url', 'Must be a valid URL', value => {
+			// Only validate if there's a value
+			if (value && value.length > 0) {
+				const regex =
+					/^(https?:\/\/)?([a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)+)(:\d+)?(\/[^\s]*)?$/;
+				return regex.test(value);
+			}
+			return true; // return true if no value (optional)
+		}),
 	cacNumber: Yup.string().when('isCacNumber', {
 		is: (value: string) => value === 'n',
 		then: schema => schema.notRequired(),
