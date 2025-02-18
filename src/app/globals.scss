@@ -218,8 +218,8 @@ img {
 }
 
 .opening_days {
-	@apply flex items-center my-5;
+	@apply flex md:items-center xx:items-start my-5 md:flex-row xx:flex-col;
 	& > .combine_input {
-		@apply flex-1;
+		@apply flex-1 xx:flex-row;
 	}
 }
