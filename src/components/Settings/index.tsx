@@ -10,8 +10,6 @@ import { useDispatch } from '@/redux/hooks';
 
 const BankAcct = dynamic(() => import('./views/BankAcct'));
 const BizInfo = dynamic(() => import('./views/BizInfo'));
-const DeleteAcct = dynamic(() => import('./views/DeleteAcct'));
-const DeletePrompt = dynamic(() => import('./views/DeletePrompt'));
 const ManageAcct = dynamic(() => import('./views/ManageAcct'));
 const Notification = dynamic(() => import('./views/Notification'));
 const PersonalInfo = dynamic(() => import('./views/PersonalInfo'));
@@ -35,7 +33,7 @@ const Settings = () => {
 			<div className='page-title_div '>
 				<h2 className='title'>Settings</h2>
 			</div>
-			<div className='flex xx:flex-col md:flex-row  md:w-[85%] xx:w-full md:pl-5 xx:px-2'>
+			<div className='flex xx:flex-col lg:flex-row  lg:w-[85%] xx:w-full md:pl-5 xx:px-2'>
 				<section className='navi_wrapper'>
 					<ul className='navi'>
 						{settingsTabs?.map((item, i) => {
