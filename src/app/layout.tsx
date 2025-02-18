@@ -11,7 +11,7 @@ import './globals.scss';
 import LayoutWrapper from '@/components/LayoutWrapper';
 
 export const metadata: Metadata = {
-	title: 'Good Vendor',
+	title: 'The Good Vendor',
 	description: 'Sell, Manage and Grow',
 };
 
