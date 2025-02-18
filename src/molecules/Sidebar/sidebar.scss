@@ -15,7 +15,7 @@
 	}
 }
 .sidebar_mobile_wrapper {
-	@apply fixed w-full h-screen top-0 left-0 bg-[rgba(0,0,0,0.5)] z-40 opacity-0 invisible;
+	@apply fixed w-full h-[calc(100%-64px)] top-16 left-0 bg-[rgba(0,0,0,0.5)] z-40 opacity-0 invisible;
 	transition: all 0.2s linear;
 
 	.sidebar {
@@ -23,9 +23,9 @@
 		transition: all 0.1s linear;
 	}
 	&.open {
-		@apply xx:opacity-100 xx:visible md:opacity-0 md:invisible;
+		@apply xx:opacity-100 xx:visible lg:opacity-0 lg:invisible;
 		.sidebar {
-			@apply xx:w-[80%] md:w-0;
+			@apply xx:w-[80%] lg:w-0;
 		}
 	}
 }

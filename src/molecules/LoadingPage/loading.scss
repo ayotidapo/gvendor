@@ -6,7 +6,7 @@
 }
 
 .spinner {
-	@apply inline-block min-h-6 min-w-6 rounded-full border border-white   border-t-gold1;
+	@apply inline-block min-h-6 min-w-6 rounded-full border border-white   border-t-[#f45d5c];
 	animation: pay-animation 1s infinite;
 	animation-timing-function: linear;
 }

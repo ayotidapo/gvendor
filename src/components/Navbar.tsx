@@ -19,6 +19,7 @@ const Trigger: React.FC<{ firstName: string }> = ({ firstName }) => (
 		<Icon id='caret-down' width={12} height={10} className='ml-2' />
 	</SimpleBtn>
 );
+
 const _Navbar: React.FC = () => {
 	const [open, setOpen] = useState(false);
 	const { firstName = '', _id } = useSelector(state => state?.vendor);
@@ -37,7 +38,7 @@ const _Navbar: React.FC = () => {
 					>
 						<Sidebar firstName={firstName} />
 					</div>
-					<div className='ml-auto xx:hidden md:block'>
+					<div className='ml-auto xx:hidden lg:block'>
 						<DropDown component={<Trigger firstName={firstName} />}>
 							<div className='w-[220px] flex flex-col p-4 gap-4'>
 								<span>Get help</span>
@@ -54,7 +55,7 @@ const _Navbar: React.FC = () => {
 						</DropDown>
 					</div>
 					<div
-						className='ml-auto z-[45] text-rose-400 xx:block md:hidden'
+						className='ml-auto z-[45] text-rose-400 xx:block lg:hidden'
 						onClick={() => setOpen(open => !open)}
 					>
 						<Icon id='menu-icon' width={35} height={35} />

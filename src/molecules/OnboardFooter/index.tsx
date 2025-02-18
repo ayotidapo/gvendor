@@ -6,10 +6,10 @@ const OnboardFooter = () => {
 	return (
 		<footer className='onboard_footer'>
 			<span>&copy; 2024 The Good Thing Company. All Rights Reserved.</span>
-			<span className='ml-10'>
+			<span className='md:ml-10 xx:ml-0'>
 				Why Good? | Are you an exceptional creator? | Get help
 			</span>
-			<div className='flex-1 flex justify-end gap-5 cursor-pointer'>
+			<div className='flex-1 flex md:items-stretch  xx:my-2 lg:my-0 xx:justify-center lg:justify-end gap-5 cursor-pointer'>
 				<Icon id='instagram' />
 				<Icon id='x' />
 				<Icon id='fb' />

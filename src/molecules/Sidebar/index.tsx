@@ -26,7 +26,7 @@ const Navbar: React.FC<{ firstName?: string }> = props => {
 						</Link>
 					</li>
 				))}
-				<li className='xx:flex md:hidden items-center pl-5 mt-auto'>
+				<li className='xx:flex lg:hidden items-center pl-5 mt-auto'>
 					<span className='w-5 h-5 rounded-full bg-black text-white inline-flex items-center justify-center subpixel-antialiased font-geist mr-2 uppercase'>
 						{props.firstName?.charAt(0)}
 					</span>
@@ -38,7 +38,7 @@ const Navbar: React.FC<{ firstName?: string }> = props => {
 					</span>
 				</li>
 				<li
-					className='pl-5 xx:flex md:hidden'
+					className='pl-5 xx:flex lg:hidden'
 					role='button'
 					onClick={() => {
 						localStorage.removeItem('t_');
