@@ -17,8 +17,8 @@ export default async function RootLayout({
 	return (
 		<div className='h-[calc(100vh-72px)] flex flex-col overflow-y-auto'>
 			<div className='flex h-full overflow-y-auto pb-[72px] '>
-				<section className='flex-1 flex  overflow-y-auto  justify-center items-center '>
-					<div className='max-h-[100%]'>
+				<section className='flex-1   overflow-y-auto   '>
+					<div className='h-full w-full flex justify-center items-center'>
 						<Suspense>{children}</Suspense>
 					</div>
 				</section>

@@ -203,7 +203,7 @@ img {
 }
 
 .auth__form {
-	@apply xs:w-[420px] xx:w-[calc(100vw-50px)] xs:px-2.5 xx:px-0 pb-10;
+	@apply max-h-full xs:w-[420px] xx:w-[calc(100vw-50px)] xs:px-2.5 xx:px-0 pb-10;
 }
 
 .table_wrapper {
