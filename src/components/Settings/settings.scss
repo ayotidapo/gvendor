@@ -1,10 +1,11 @@
 .settings {
 	.navi_wrapper {
 		@apply lg:w-[27%] xx:w-full overflow-x-scroll mt-5;
+		scroll-snap-type: x mandatory;
 	}
 	.navi {
 		@apply xx:flex lg:block gap-4 xx:w-[850px] lg:w-full;
-		scroll-snap-type: x mandatory;
+
 		li {
 			@apply mb-7 text-[#7A7978] font-normal cursor-pointer;
 			transition: font-weight 0.1s linear;
