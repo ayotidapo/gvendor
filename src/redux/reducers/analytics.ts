@@ -34,6 +34,7 @@ const initialState: IAnalytics = {
 		averageOrderValue: 0,
 		percentageChange: 0,
 	},
+	loading: true,
 };
 
 export const analyticsSlice = createSlice({

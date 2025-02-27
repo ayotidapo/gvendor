@@ -22,8 +22,7 @@ import { orderStages, orderStatus } from '@/utils/data';
 const Orders = () => {
 	const {
 		orders,
-		isError,
-		isSuccess,
+		fetching,
 		loading,
 		averageOrderValue = 0,
 		totalOrders = 0,
@@ -58,6 +57,9 @@ const Orders = () => {
 		);
 	};
 	const totalItems = totalOrders;
+
+	if (loading) return <LoadingPage className='py-5 ' />;
+
 	return (
 		<div className='orders'>
 			<div className='page-title_div '>
@@ -83,7 +85,7 @@ const Orders = () => {
 					states={orderStages}
 				/>
 			</div>
-			{loading && <LoadingPage className='py-5 ' />}
+			{/* {fetching && <LoadingPage className='py-5 ' />} */}
 			{len < 1 && !loading && <h2 className='empty__state'>No Order found</h2>}
 			{len > 0 && !loading && (
 				<section className='table_wrapper'>

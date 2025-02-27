@@ -23,6 +23,7 @@ import { useDispatch, useSelector } from '@/redux/hooks';
 import { getAnalytics } from '@/redux/apis/analytics';
 import { toast } from 'react-toastify';
 import analytics from '@/redux/reducers/analytics';
+import LoadingPage from '@/molecules/LoadingPage';
 
 Chart.register(...registerables);
 
@@ -101,7 +102,7 @@ const Analytics = () => {
 	const onUpdatePeriod = (df: { label: string; value: string }) => {
 		setDur(df);
 	};
-
+	if (analytics.loading) return <LoadingPage />;
 	return (
 		<div className='analytics'>
 			<div className='page-title_div '>

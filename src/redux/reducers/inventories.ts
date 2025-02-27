@@ -38,6 +38,7 @@ const initialState: IInventories = {
 	productsInStock: 0,
 	bestSellers: [],
 	products: [],
+	loading: true,
 };
 
 export const inventoriesSlice = createSlice({

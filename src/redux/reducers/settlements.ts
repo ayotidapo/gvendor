@@ -15,6 +15,7 @@ const initialState: ISettlements = {
 	docs: [],
 	total: 0,
 	totalPages: 0,
+	loading: true,
 };
 
 export const settlementsSlice = createSlice({

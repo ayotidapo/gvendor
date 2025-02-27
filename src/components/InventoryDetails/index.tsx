@@ -121,7 +121,7 @@ const InventoryDetailsPage: React.FC<Props> = ({ details }) => {
 					<h2 className='text-xl text-black my-8 mb-6 subpixel-antialiased'>
 						Variants
 					</h2>
-					<section>
+					<section className='table_wrapper'>
 						<UnderReviewTable variants={details?.variants} />
 					</section>
 				</>

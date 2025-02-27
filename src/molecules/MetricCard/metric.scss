@@ -1,3 +1,6 @@
 .order_metric_card {
 	@apply flex flex-col justify-between rounded-2xl border border-divider-gray min-h-[116px] p-4;
+	.spinner {
+		@apply border-2;
+	}
 }
