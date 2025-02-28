@@ -199,7 +199,7 @@ img {
 }
 
 .empty__state {
-	@apply h-[250px] flex justify-center items-center text-[#f45d5c] font-medium text-2xl border border-[#fbcece] rounded-md;
+	@apply h-[250px] flex justify-center items-center  text-base  bg-[#fcfcfc] rounded-md;
 }
 
 .auth__form {

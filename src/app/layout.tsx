@@ -36,9 +36,8 @@ export default async function RootLayout({
 							pauseOnFocusLoss
 							limit={1}
 						/>
-						<Suspense>
-							<LayoutWrapper>{children}</LayoutWrapper>
-						</Suspense>
+
+						<LayoutWrapper>{children}</LayoutWrapper>
 					</Provider>
 				</SessionProvider>
 			</body>

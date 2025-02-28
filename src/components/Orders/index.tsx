@@ -86,7 +86,9 @@ const Orders = () => {
 				/>
 			</div>
 			{/* {fetching && <LoadingPage className='py-5 ' />} */}
-			{len < 1 && !loading && <h2 className='empty__state'>No Order found</h2>}
+			{len < 1 && !loading && (
+				<h2 className='empty__state'>You haven't received any orders</h2>
+			)}
 			{len > 0 && !loading && (
 				<section className='table_wrapper'>
 					<OrdersTable orders={orders} />

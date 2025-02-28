@@ -125,7 +125,7 @@ const HomePage: React.FC = () => {
 				</div>
 				{loading && <LoadingPage className='py-5 ' />}
 				{len < 1 && !loading && (
-					<h2 className='empty__state'>No Order found</h2>
+					<h2 className='empty__state'>You haven't received any orders</h2>
 				)}
 				{len > 0 && !loading && (
 					<section className='orders_wrapper'>
@@ -138,7 +138,9 @@ const HomePage: React.FC = () => {
 								<div className='flex justify-between text-black subpixel-antialiased'>
 									Orders #15285057
 								</div>
-								<div className='my-2'>₦{order?.price?.toLocaleString()}</div>
+								<div className='my-2'>
+									₦{order?.totalAmount?.toLocaleString()}
+								</div>
 								<span className='text-sm'>5 mins ago</span>
 								<hr className='my-5' />
 								<div className='flex justify-between text-sm mt-auto mb-5'>

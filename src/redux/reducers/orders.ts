@@ -10,7 +10,12 @@ export interface IOrder {
 	quantity: number;
 	status: string;
 	date: string;
-	price: number;
+	totalAmount: number;
+	productDetail: {
+		[key: string]: string | number;
+		price: number;
+	};
+
 	customerFirstName: string;
 	customerLastName: string;
 }
