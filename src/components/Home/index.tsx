@@ -138,7 +138,7 @@ const HomePage: React.FC = () => {
 								<div className='flex justify-between text-black subpixel-antialiased'>
 									Orders #15285057
 								</div>
-								<div className='my-2'>₦{order?.price.toLocaleString()}</div>
+								<div className='my-2'>₦{order?.price?.toLocaleString()}</div>
 								<span className='text-sm'>5 mins ago</span>
 								<hr className='my-5' />
 								<div className='flex justify-between text-sm mt-auto mb-5'>
