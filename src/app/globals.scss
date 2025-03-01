@@ -57,7 +57,7 @@ body {
 	@apply flex  justify-between  md:flex-row xx:flex-col mb-7;
 
 	.title {
-		@apply font-recoleta text-[36px] text-black font-semibold md:order-1 xx:order-2;
+		@apply font-recoleta md:text-[36px] xx:text-2xl text-black font-semibold md:order-1 xx:order-2;
 	}
 	.btn_div {
 		@apply flex w-[290px] justify-between  md:order-2 xx:order-1;
@@ -203,7 +203,7 @@ img {
 }
 
 .auth__form {
-	@apply max-h-full xs:w-[420px] xx:w-[calc(100vw-50px)] xs:px-2.5 xx:px-0 pb-10;
+	@apply max-h-full overflow-auto xs:w-[420px] xx:w-[calc(100vw-50px)] xs:px-2.5 xx:px-0 pb-16;
 }
 
 .table_wrapper {

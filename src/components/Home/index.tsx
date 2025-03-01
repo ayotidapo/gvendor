@@ -146,10 +146,7 @@ const HomePage: React.FC = () => {
 								<div className='flex justify-between text-sm mt-auto mb-5'>
 									<span>Order status</span>
 
-									<Tag
-										title={orderStatus[status]?.toLowerCase()}
-										className='capitalize'
-									/>
+									<Tag title={orderStatus[order?.status]?.toLowerCase()} />
 								</div>
 								<SimpleBtn className='set_status'>Set as processing</SimpleBtn>
 							</article>

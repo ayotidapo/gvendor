@@ -4,7 +4,6 @@ import OnboardFooter from '@/molecules/OnboardFooter';
 import { getServerSession } from 'next-auth';
 import options from '@/utils/nextAuthOptions';
 import { redirect } from 'next/navigation';
-import { Suspense } from 'react';
 
 export default async function RootLayout({
 	children,
@@ -19,7 +18,7 @@ export default async function RootLayout({
 			<div className='flex h-full overflow-y-auto pb-[72px] '>
 				<section className='flex-1   overflow-y-auto   '>
 					<div className='h-full w-full flex justify-center items-center'>
-						<Suspense>{children}</Suspense>
+						{children}
 					</div>
 				</section>
 
