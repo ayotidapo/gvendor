@@ -63,30 +63,34 @@ const Analytics = () => {
 	const period = sQ.get('duration') || 'day';
 
 	const onGetAnalytics = async () => {
-		let qS = constructQuery();
+		try {
+			let qS = constructQuery();
 
-		if (!sQ.get('duration')) {
-			qS = `?duration=day${qS}`;
-		} else {
-			qS = `?${qS}`;
-		}
-		const action = await dispatch(getAnalytics(qS));
+			if (!sQ.get('duration')) {
+				qS = `?duration=day${qS}`;
+			} else {
+				qS = `?${qS}`;
+			}
+			const action = await dispatch(getAnalytics(qS));
 
-		if (getAnalytics.fulfilled.match(action)) {
-			const data = action?.payload?.data;
+			if (getAnalytics.fulfilled.match(action)) {
+				const data = action?.payload?.data;
 
-			const sales = constructSalesData(data, period);
-			const orders = constructOrdersData(data, period);
+				const sales = constructSalesData(data, period);
+				const orders = constructOrdersData(data, period);
 
-			const topSelling = constructTopSellingData(data);
-			const topOrder = constructTopOrderData(data);
+				const topSelling = constructTopSellingData(data);
+				const topOrder = constructTopOrderData(data);
 
-			setSalesData(sales);
-			setTopSellData(topSelling);
-			setOrdersData(orders);
-			setTopOrdersData(topOrder);
-		} else if (getAnalytics.rejected.match(action)) {
-			toast.error(`Error: ${action?.error?.message}`);
+				setSalesData(sales);
+				setTopSellData(topSelling);
+				setOrdersData(orders);
+				setTopOrdersData(topOrder);
+			} else if (getAnalytics.rejected.match(action)) {
+				toast.error(`Error: ${action?.error?.message}`);
+			}
+		} catch (e: any) {
+			toast.error(`Error: ${e?.message}`);
 		}
 	};
 

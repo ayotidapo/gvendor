@@ -1,8 +1,8 @@
 import React, { Suspense } from 'react';
-import CreatePasswordPage from '@/onboard/CreatePassword';
+import ResetPasswordPage from '@/onboard/ResetPassword';
 
 const CreatePassword = () => {
-	return <CreatePasswordPage />;
+	return <ResetPasswordPage />;
 };
 
 export default CreatePassword;

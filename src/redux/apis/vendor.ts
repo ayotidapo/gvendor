@@ -60,6 +60,24 @@ export const createBizApi = async (body: Record<string, any>) => {
 	return response;
 };
 
+export const forgotPasswordApi = async (body: Record<string, any>) => {
+	const response = await Fetch(`/auth/forgot-password`, {
+		body,
+		method: 'post',
+	});
+
+	return response;
+};
+
+export const resetPasswordApi = async (body: Record<string, any>) => {
+	const response = await Fetch(`/auth/reset-password`, {
+		body,
+		method: 'post',
+	});
+
+	return response;
+};
+
 export const getVendorApi = async (token = '') => {
 	const response = await Fetch(`/vendor`, {}, token);
 

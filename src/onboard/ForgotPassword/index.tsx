@@ -1,19 +1,17 @@
 'use client';
 
-import Button, { SimpleBtn } from '@/atoms/buttons/Button';
+import { SimpleBtn } from '@/atoms/buttons/Button';
 import { Input } from '@/atoms/Input/Input';
-import { signInUser } from '@/redux/apis/setAuth';
-import { createPasswordApi } from '@/redux/apis/vendor';
-import { useDispatch, useSelector } from '@/redux/hooks';
-import { setVendor } from '@/redux/reducers/vendor';
-import jwt from 'jsonwebtoken';
+
+import { forgotPasswordApi } from '@/redux/apis/vendor';
+
 import { useFormik } from 'formik';
 
-import { useRouter, useSearchParams } from 'next/navigation';
 import { toast } from 'react-toastify';
 import * as Yup from 'yup';
-import { IVendor } from '@/utils/interface';
+
 import Link from 'next/link';
+import { useState } from 'react';
 
 const ForgotPaswordPageSchema = Yup.object({
 	email: Yup.string()
@@ -22,14 +20,8 @@ const ForgotPaswordPageSchema = Yup.object({
 });
 
 const ForgotPaswordPage = () => {
-	const dispatch = useDispatch();
-	const sta = useSelector(state => state.vendor);
-
-	const router = useRouter();
-	const searchQ = useSearchParams();
-	const verifiedToken = searchQ.get('token');
-	const vendorId = searchQ.get('vendorId') as string;
-
+	const [sentLink, setSentLink] = useState(false);
+	const [loading, setLoading] = useState(false);
 	const { handleSubmit, getFieldProps, errors, touched } = useFormik({
 		initialValues: {
 			email: '',
@@ -37,34 +29,41 @@ const ForgotPaswordPage = () => {
 		validationSchema: ForgotPaswordPageSchema,
 		onSubmit: async values => {
 			try {
+				setLoading(true);
 				const { email } = values;
-				const response = await createPasswordApi({
+				await forgotPasswordApi({
 					email,
-					token: verifiedToken,
 				});
-				const { vendor = {}, token = '' } = response?.data;
-				dispatch(setVendor({ ...vendor, token }));
-				localStorage.t_ = token;
-
-				if (verifiedToken) {
-					await signInUser({
-						goodToken: token,
-						vendorId,
-					});
-					router.replace(`/`);
-					return;
-				}
-
-				router.replace(`/auth/terms-and-conditions?ck_token=${token}`);
+				setSentLink(true);
 			} catch (e: any) {
 				toast.error(e?.message || 'Something went wrong');
+			} finally {
+				setLoading(false);
 			}
 		},
 	});
 
-	const onLogin = async () => {
-		toast.success('Login successful', { theme: 'colored' });
-	};
+	if (sentLink)
+		return (
+			<div className='auth__form text-center'>
+				<h2 className='auth_h2'> Forgot password</h2>
+				<p>
+					If we find the email in our system, we will send you an email with a
+					link to reset your password. If you do not receive the email, check
+					your spam folder or try password reset using a different email
+					address.
+				</p>
+				<p className='text-black pt-5 text-center'>
+					New to Good?{' '}
+					<Link
+						href='/auth/register'
+						className='text-[#f45d2c] subpixel-antialiased'
+					>
+						Create an account
+					</Link>
+				</p>
+			</div>
+		);
 
 	return (
 		<form onSubmit={handleSubmit} className='auth__form'>
@@ -79,7 +78,7 @@ const ForgotPaswordPage = () => {
 			</div>
 
 			<div className='mt-6'>
-				<SimpleBtn>Get Link</SimpleBtn>
+				<SimpleBtn disabled={loading}>Get Link</SimpleBtn>
 			</div>
 			<p className='text-black pt-5 text-center'>
 				Remeber your password?{' '}
