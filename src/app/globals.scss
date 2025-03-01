@@ -57,7 +57,7 @@ body {
 	@apply flex  justify-between  md:flex-row xx:flex-col mb-7;
 
 	.title {
-		@apply font-recoleta md:text-[36px] xx:text-2xl text-black font-semibold md:order-1 xx:order-2;
+		@apply font-recoleta md:text-[36px] xx:text-[24px] text-black font-semibold md:order-1 xx:order-2;
 	}
 	.btn_div {
 		@apply flex w-[290px] justify-between  md:order-2 xx:order-1;

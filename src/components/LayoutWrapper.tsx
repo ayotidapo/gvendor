@@ -46,7 +46,7 @@ const LayoutWrapper: React.FC<{
 	return (
 		<>
 			<Navbar />
-			<main className='pt-16'>{children}</main>
+			<main className='pt-[64px]'>{children}</main>
 		</>
 	);
 };
