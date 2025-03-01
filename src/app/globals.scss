@@ -122,7 +122,7 @@ img {
 }
 
 .auth_h2 {
-	@apply lg:text-[40px] xx:text-[24px] mt-3.5 mb-7 text-black text-center subpixel-antialiased font-recoleta font-semibold;
+	@apply md:text-[40px] xx:text-[24px] mt-3.5 mb-7 text-black text-center subpixel-antialiased font-recoleta font-semibold leading-tight;
 	-webkit-font-smoothing: subpixel-antialiased;
 }
 
@@ -203,7 +203,7 @@ img {
 }
 
 .auth__form {
-	@apply max-h-full overflow-auto xs:w-[420px] xx:w-[calc(100vw-50px)] xs:px-2.5 xx:px-0 pb-16;
+	@apply max-h-full overflow-auto xs:w-[440px] xx:w-[calc(100vw-50px)] xs:px-2.5 xx:px-0 pb-16;
 }
 
 .table_wrapper {
