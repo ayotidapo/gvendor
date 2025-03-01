@@ -1,4 +1,3 @@
-'use client';
 import React, { useState } from 'react';
 import cx from 'classnames';
 import { SimpleBtn } from '@/atoms/buttons/Button';

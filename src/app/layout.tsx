@@ -21,7 +21,7 @@ export default async function RootLayout({
 	children: React.ReactNode;
 }) {
 	return (
-		<html lang='en'>
+		<html lang='en' className='md:text-base xx:text-[15px]'>
 			<body
 				className={`${Gilroy.variable} ${Geist.variable} ${Recoleta.variable} font-geist`}
 			>

@@ -22,6 +22,7 @@ import useApiSearchQuery from '@/customHooks/useApiSearchQuery';
 import StatusFilter from '../../molecules/StatusFilter';
 import SearchFilter from '@/molecules/SearchFilter';
 import { IOrder } from '@/redux/reducers/orders';
+import { toast } from 'react-toastify';
 
 const HomePage: React.FC = () => {
 	const {
@@ -35,6 +36,7 @@ const HomePage: React.FC = () => {
 
 	const router = useRouter();
 	const [metrics, setMetrics] = useState<ObjectData>({});
+	const [loadingMet, setLoadingMet] = useState(true);
 
 	const path = usePathname();
 	const { qString, /*page,*/ status, search } = useApiSearchQuery(5); //will need page later when pagnation is done
@@ -47,21 +49,28 @@ const HomePage: React.FC = () => {
 		dispatch(getOrders(qString));
 	}, [qString]);
 
-	const onGetAllMetrics = () => {
-		Fetch(`/order/all?status=NEW`).then(r => {
-			setMetrics(metrics => ({
-				...metrics,
-				totalNewOrders: r?.data?.totalOrders,
-				totalNewSales: r?.data?.totalSales,
-			}));
-		});
-		Fetch(`/order/all?status=ONGOING`).then(r => {
-			setMetrics(metrics => ({
-				...metrics,
-				totalProcessingOrders: r?.data?.totalOrders,
-				totalProcessingSales: r?.data?.totalSales,
-			}));
-		});
+	const onGetAllMetrics = async () => {
+		try {
+			setLoadingMet(true);
+			Fetch(`/order/all?status=NEW`).then(r => {
+				setMetrics(metrics => ({
+					...metrics,
+					totalNewOrders: r?.data?.totalOrders,
+					totalNewSales: r?.data?.totalSales,
+				}));
+			});
+			Fetch(`/order/all?status=ONGOING`).then(r => {
+				setMetrics(metrics => ({
+					...metrics,
+					totalProcessingOrders: r?.data?.totalOrders,
+					totalProcessingSales: r?.data?.totalSales,
+				}));
+			});
+		} catch (e: any) {
+			toast.error(`Error: ${e.message}`);
+		} finally {
+			setLoadingMet(false);
+		}
 	};
 
 	const onTextChange = (searchValue: string) => {
@@ -73,7 +82,7 @@ const HomePage: React.FC = () => {
 	};
 
 	const len = orders?.length;
-
+	if (loadingMet) return <LoadingPage className='py-5 ' />;
 	return (
 		<>
 			<div className='homepage'>
@@ -82,17 +91,17 @@ const HomePage: React.FC = () => {
 				</div>
 				<section className='metric_cards_wrapper'>
 					<MetricCard
-						title='Total Sales '
+						title='Total Sales'
 						value={
 							<>
 								<span className='font-medium'>&#8358;</span>
-								{totalSales.toLocaleString()}
+								{totalSales?.toLocaleString()}
 							</>
 						}
 					/>
 					<MetricCard
 						title='Total Orders '
-						value={`${totalOrders.toLocaleString() || 0} Orders`}
+						value={`${totalOrders?.toLocaleString() || 0} Orders`}
 					/>
 					<MetricCard
 						title='New Orders '
@@ -116,7 +125,7 @@ const HomePage: React.FC = () => {
 				</div>
 				{loading && <LoadingPage className='py-5 ' />}
 				{len < 1 && !loading && (
-					<h2 className='empty__state'>No Order found</h2>
+					<h2 className='empty__state'>You haven't received any orders</h2>
 				)}
 				{len > 0 && !loading && (
 					<section className='orders_wrapper'>
@@ -129,16 +138,15 @@ const HomePage: React.FC = () => {
 								<div className='flex justify-between text-black subpixel-antialiased'>
 									Orders #15285057
 								</div>
-								<div className='my-2'>₦{order?.price.toLocaleString()}</div>
+								<div className='my-2'>
+									₦{order?.totalAmount?.toLocaleString()}
+								</div>
 								<span className='text-sm'>5 mins ago</span>
 								<hr className='my-5' />
 								<div className='flex justify-between text-sm mt-auto mb-5'>
 									<span>Order status</span>
 
-									<Tag
-										title={orderStatus[status]?.toLowerCase()}
-										className='capitalize'
-									/>
+									<Tag title={orderStatus[order?.status]?.toLowerCase()} />
 								</div>
 								<SimpleBtn className='set_status'>Set as processing</SimpleBtn>
 							</article>

@@ -86,6 +86,8 @@ const InventoryPage = () => {
 	};
 	const totalItems = productsInStock;
 
+	if (loading) return <LoadingPage className='py-5 ' />;
+
 	return (
 		<div className='inventory'>
 			<Modal open={showModal} onClose={() => setShowModal(false)}>
@@ -168,7 +170,7 @@ const InventoryPage = () => {
 					states={inventoryStatus}
 				/>
 			</div>
-			{loading && <LoadingPage className='py-5 ' />}
+
 			{len < 1 && !loading && (
 				<h2 className='empty__state'>No Inventory found</h2>
 			)}

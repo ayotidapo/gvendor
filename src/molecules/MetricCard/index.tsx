@@ -11,7 +11,7 @@ const MetricCard: React.FC<Props> = props => {
 	const { title, value } = props;
 	return (
 		<article className='order_metric_card'>
-			<div className='flex justify-between text-baseCol text-[14px]'>
+			<div className='flex justify-between text-baseCol'>
 				{title}
 				<Icon
 					id='info'

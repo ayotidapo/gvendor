@@ -45,6 +45,9 @@ const SettlementPage = () => {
 		);
 	};
 	const len = docs?.length;
+
+	if (loading) return <LoadingPage className='py-5 ' />;
+
 	return (
 		<div className='settlements'>
 			<div className='page-title_div '>
@@ -64,7 +67,7 @@ const SettlementPage = () => {
 					states={settlementStatus}
 				/>
 			</div>
-			{loading && <LoadingPage className='py-5 ' />}
+
 			{len < 1 && !loading && (
 				<h2 className='empty__state'>No Settlement found</h2>
 			)}

@@ -34,12 +34,14 @@ const OrdersTable: React.FC<Props> = ({ orders }) => {
 				{orders?.map((order, i) => (
 					<tr onClick={() => onNavigate(order?._id)} key={i}>
 						<td></td>
-						<td>#{order?.orderId}</td>
-						<td>₦{order?.price?.toLocaleString()}</td>
+						<td>#{order?._id}</td>
+						<td>₦{order?.totalAmount.toLocaleString()}</td>
 						<td>{format(order?.date, 'dd/MM/yyyy hh:mm aa')}</td>
 						<td>
 							<Tag
-								title={orderStatus[order?.status]?.toLowerCase()}
+								title={(
+									orderStatus[order?.status] || order?.status
+								)?.toLowerCase()}
 								className={`${orderStatus[order?.status]} capitalize`}
 							/>
 						</td>

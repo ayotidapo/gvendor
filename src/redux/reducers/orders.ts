@@ -10,7 +10,12 @@ export interface IOrder {
 	quantity: number;
 	status: string;
 	date: string;
-	price: number;
+	totalAmount: number;
+	productDetail: {
+		[key: string]: string | number;
+		price: number;
+	};
+
 	customerFirstName: string;
 	customerLastName: string;
 }
@@ -24,12 +29,15 @@ interface IOrders {
 	isError?: boolean;
 	error?: string;
 	loading?: boolean;
+	fetching?: boolean;
 }
 const initialState: IOrders = {
 	totalSales: 0,
 	totalOrders: 0,
 	averageOrderValue: 0,
 	orders: [],
+	loading: true,
+	fetching: false,
 };
 
 export const ordersSlice = createSlice({
@@ -47,6 +55,7 @@ export const ordersSlice = createSlice({
 		builder
 			.addCase(getOrders.pending, state => {
 				state.loading = !state.isSuccess && !state.isError;
+				state.fetching = true;
 				state.isSuccess = false;
 				state.isError = false;
 			})
@@ -54,6 +63,7 @@ export const ordersSlice = createSlice({
 				state.isSuccess = true;
 				state.isError = false;
 				state.loading = false;
+				state.fetching = false;
 
 				Object.assign(state, action.payload?.data);
 			})
@@ -64,6 +74,7 @@ export const ordersSlice = createSlice({
 				state.isSuccess = false;
 				state.isError = true;
 				state.loading = false;
+				state.fetching = false;
 				state.error = action.error?.message;
 			});
 	},

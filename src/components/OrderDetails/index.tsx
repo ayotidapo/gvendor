@@ -65,7 +65,7 @@ const OrderDetailsPage: React.FC<Props> = ({ details }) => {
 					{personalInformation?.lastName}
 				</span>
 				<span className='my-2'>
-					5 mins ago <span className='mx-1.5 mr-2'>•</span>
+					{o_details?.timeAgo} <span className='mx-1.5 mr-2'>•</span>
 					<Tag
 						title={o_details.status?.toLowerCase()}
 						className={`${orderStatus[o_details.status]} capitalize`}

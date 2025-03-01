@@ -21,6 +21,7 @@ export interface IOrderDetails {
 	currency?: string;
 	paymentStatus?: string;
 	orderNumber?: string;
+	timeAgo?: string;
 	delivery?: {
 		type?: string;
 		charge?: number;
