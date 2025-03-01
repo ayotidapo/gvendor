@@ -9,6 +9,7 @@ import 'react-phone-number-input/style.css';
 import 'react-toastify/dist/ReactToastify.css';
 import './globals.scss';
 import LayoutWrapper from '@/components/LayoutWrapper';
+import LoadingPage from '@/molecules/LoadingPage';
 
 export const metadata: Metadata = {
 	title: 'The Good Vendor',
@@ -36,7 +37,7 @@ export default async function RootLayout({
 							pauseOnFocusLoss
 							limit={1}
 						/>
-						<Suspense>
+						<Suspense fallback={<LoadingPage />}>
 							<LayoutWrapper>{children}</LayoutWrapper>
 						</Suspense>
 					</Provider>
