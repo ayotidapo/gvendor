@@ -75,7 +75,7 @@ export const Input = ({
 						onBlur={onBlur}
 						autoComplete={autoComplete}
 						readOnly={readOnly}
-						className={cx(`input ${className}`, { error })}
+						className={cx(`input show-scroll ${className}`, { error })}
 						rows={rows}
 					/>
 				) : (

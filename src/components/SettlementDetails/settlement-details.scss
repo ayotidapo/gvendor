@@ -1,6 +1,6 @@
 .settlementdetails {
 	.dl_section {
-		@apply w-[70%];
+		@apply md:w-[70%] xx:w-full;
 	}
 	.dt_dd {
 		@apply flex justify-between flex-wrap;

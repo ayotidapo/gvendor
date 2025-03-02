@@ -8,11 +8,14 @@ const nextConfig = {
 		NEXT_PUBLIC_API_BASE_URL: process.env.NEXT_PUBLIC_API_BASE_URL,
 	},
 	images: {
-		domains: [
-			'goodliststagingstac.blob.core.windows.net',
-			'gtc-goodonline-images.s3.amazonaws.com',
-			'cdn.dorik.com',
-			'someee.com',
+		remotePatterns: [
+			{
+				protocol: 'https',
+				hostname: 'goodliststagingstac.blob.core.windows.net',
+			},
+			{ protocol: 'https', hostname: 'gtc-goodonline-images.s3.amazonaws.com' },
+			{ protocol: 'https', hostname: 'cdn.dorik.com' },
+			{ protocol: 'https', hostname: 'someee.com' },
 		],
 	},
 };

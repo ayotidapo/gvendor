@@ -84,7 +84,7 @@ const RegisterBizForm: React.FC = () => {
 						href='/auth/login'
 						className='text-[#f45d2c] subpixel-antialiased'
 					>
-						Sign in
+						Submit
 					</Link>
 				</p>
 			</>

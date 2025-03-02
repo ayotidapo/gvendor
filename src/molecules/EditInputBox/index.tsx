@@ -114,10 +114,11 @@ interface IProps {
 	groupTitle?: string;
 	actionBtn: string;
 	isLoading?: boolean;
+	deactivate?: boolean;
 	editText?: string;
 }
 const EditGroupInputBox: React.FC<IProps> = props => {
-	const { children, groupTitle, actionBtn } = props;
+	const { children, groupTitle, actionBtn, deactivate } = props;
 
 	const [isNonEdit, setIsNonEdit] = useState<boolean>(true);
 
@@ -127,20 +128,22 @@ const EditGroupInputBox: React.FC<IProps> = props => {
 				<h2 className='text-xl text-black   subpixel-antialiased'>
 					{groupTitle}
 				</h2>
-				<SimpleBtn
-					className='master_toggle_edit'
-					type='button'
-					onClick={() => setIsNonEdit(editable => !editable)}
-				>
-					{isNonEdit ? (
-						<span className={`cursor-pointer ml-1 flex`}>
-							{props?.editText || 'Edit'}
-							<Icon id='edit' width={20} height={20} />
-						</span>
-					) : (
-						<>Cancel</>
-					)}
-				</SimpleBtn>
+				{!deactivate && (
+					<SimpleBtn
+						className='master_toggle_edit'
+						type='button'
+						onClick={() => setIsNonEdit(editable => !editable)}
+					>
+						{isNonEdit ? (
+							<span className={`cursor-pointer ml-1 flex`}>
+								{props?.editText || 'Edit'}
+								<Icon id='edit' width={20} height={20} />
+							</span>
+						) : (
+							<>Cancel</>
+						)}
+					</SimpleBtn>
+				)}
 			</div>
 
 			<div>

@@ -66,16 +66,13 @@ const InventoryDetailsPage: React.FC<Props> = ({ details }) => {
 				<h2 className='text-xl text-black my-8 mb-6 subpixel-antialiased'>
 					Items Images
 				</h2>
-				<div className=' grid grid-cols-[repeat(auto-fill,minmax(140px,1fr))] gap-2.5 gap-y-6'>
+				<div className='items__wrapper'>
 					{/* <div className='relative h-[140px] w-[140px]  rounded-lg overflow-hidden'>
 						
 						<img src='/assets/image68.png' alt='' />
 					</div> */}
 					{details?.images?.map((img: string, i: number) => (
-						<div
-							className='relative h-[140px] w-[140px]  rounded-lg overflow-hidden'
-							key={i}
-						>
+						<div className='item_box' key={i}>
 							<Image
 								src={img}
 								fill
@@ -98,7 +95,7 @@ const InventoryDetailsPage: React.FC<Props> = ({ details }) => {
 					title='Item description'
 					name='description'
 					type='textarea'
-					rows={5}
+					rows={10}
 					textarea
 					value={details?.description}
 					deactivate

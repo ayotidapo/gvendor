@@ -86,6 +86,7 @@ const BankAcct = () => {
 				groupTitle='Settlement Bank Account'
 				actionBtn='Request Change'
 				isLoading={isLoading}
+				deactivate
 			>
 				{({ isNonEdit }: any) => {
 					return (
