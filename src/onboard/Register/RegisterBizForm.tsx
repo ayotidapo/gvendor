@@ -76,7 +76,7 @@ const RegisterBizForm: React.FC = () => {
 				</div>
 
 				<div className='mt-6'>
-					<SimpleBtn disabled={loading}>Sign in</SimpleBtn>
+					<SimpleBtn disabled={loading}>Submit</SimpleBtn>
 				</div>
 				<p className='text-black pt-5 text-center'>
 					Already have an account?{' '}

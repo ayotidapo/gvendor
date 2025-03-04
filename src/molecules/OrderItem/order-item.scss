@@ -12,4 +12,7 @@
 	&:last-of-type > hr {
 		@apply hidden;
 	}
+	img {
+		@apply object-cover object-center;
+	}
 }

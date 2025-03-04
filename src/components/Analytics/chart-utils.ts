@@ -97,8 +97,8 @@ export const constructSalesData = (data: ObjectData, period = 'day') => {
 				meta: data.salesChart.map((item: ObjectData) => {
 					return item.dateTime;
 				}),
-				borderColor: 'rgb(255, 99, 132)',
-				backgroundColor: 'rgba(255, 99, 132, 0.5)',
+				borderColor: '#F45D2C',
+				backgroundColor: '#F45D2C',
 			},
 		],
 	};
@@ -118,8 +118,8 @@ export const constructOrdersData = (data: ObjectData, period = 'day') => {
 				meta: data.salesChart.map((item: ObjectData) => {
 					return item.dateTime;
 				}),
-				borderColor: 'rgb(255, 99, 132)',
-				backgroundColor: 'rgba(255, 99, 132, 0.5)',
+				borderColor: '#F45D2C',
+				backgroundColor: '#F45D2C',
 			},
 		],
 	};
@@ -142,8 +142,8 @@ export const constructTopSellingData = (data: ObjectData) => {
 				meta: data.salesChart.map((item: ObjectData) => {
 					return item.dateTime;
 				}),
-				borderColor: 'rgb(255, 99, 132)',
-				backgroundColor: 'rgba(255, 99, 132, 0.5)',
+				borderColor: '#F45D2C',
+				backgroundColor: '#F45D2C',
 			},
 		],
 	};
@@ -167,8 +167,8 @@ export const constructTopOrderData = (data: ObjectData) => {
 				meta: data.salesChart.map((item: ObjectData) => {
 					return item.dateTime;
 				}),
-				borderColor: 'rgb(255, 99, 132)',
-				backgroundColor: 'rgba(255, 99, 132, 0.5)',
+				borderColor: '#F45D2C',
+				backgroundColor: '#F45D2C',
 			},
 		],
 	};

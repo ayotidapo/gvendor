@@ -90,8 +90,10 @@ const Orders = () => {
 				<h2 className='empty__state'>You haven't received any orders</h2>
 			)}
 			{len > 0 && !loading && (
-				<section className='table_wrapper'>
-					<OrdersTable orders={orders} />
+				<>
+					<section className='table_wrapper'>
+						<OrdersTable orders={orders} />
+					</section>
 					<Pagination
 						onPageChange={onPageChange}
 						page={Number(page)}
@@ -99,7 +101,7 @@ const Orders = () => {
 						totalItems={totalOrders}
 						curItemsLen={orders?.length}
 					/>
-				</section>
+				</>
 			)}
 		</div>
 	);

@@ -195,14 +195,14 @@ const InventoryPage = () => {
 					</section>
 					<section className='table_wrapper'>
 						<InventoryTable products={products} />
-						<Pagination
-							onPageChange={onPageChange}
-							page={Number(page)}
-							limit={limit}
-							totalItems={totalItems}
-							curItemsLen={products?.length}
-						/>
 					</section>
+					<Pagination
+						onPageChange={onPageChange}
+						page={Number(page)}
+						limit={limit}
+						totalItems={totalItems}
+						curItemsLen={products?.length}
+					/>
 				</>
 			)}
 		</div>
