@@ -1,16 +1,15 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
+import cx from 'classnames';
 import MetricCard from '@/molecules/MetricCard';
 import PercentGrowth from './PercentGrowth';
 import { SimpleBtn } from '@/atoms/buttons/Button';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import Datepicker, { DateValueType } from 'react-tailwindcss-datepicker';
 import { constructQuery } from '@/utils/helpers';
 import { registerables, Chart } from 'chart.js';
 import { Bar, Line } from 'react-chartjs-2';
-import './analytics.scss';
-Chart.register(...registerables);
-
 import {
 	OrderChartOptions,
 	SalesChartOptions,
@@ -22,8 +21,9 @@ import {
 import { useDispatch, useSelector } from '@/redux/hooks';
 import { getAnalytics } from '@/redux/apis/analytics';
 import { toast } from 'react-toastify';
-import analytics from '@/redux/reducers/analytics';
 import LoadingPage from '@/molecules/LoadingPage';
+import { definedFilter } from '@/utils/data';
+import './analytics.scss';
 
 Chart.register(...registerables);
 
@@ -49,18 +49,16 @@ const Analytics = () => {
 	});
 
 	const [dur, setDur] = useState({ label: '1 day', value: 'day' });
-	const definedFilter = [
-		{ label: '1 day', value: 'day' },
-		{ label: '1 week', value: 'week' },
-		{ label: '3 months', value: 'month' },
-		{ label: '6 months', value: 'month' },
-		{ label: '1 year', value: 'year' },
-		//{ label: 'custom', value: 'custom' },
-	];
+
+	const [date, setDate] = useState<DateValueType>({
+		startDate: null,
+		endDate: null,
+	});
+
 	const sQ = useSearchParams();
 	const path = usePathname();
 
-	const period = sQ.get('duration') || 'day';
+	const period = sQ.get('duration') || '';
 
 	const onGetAnalytics = async () => {
 		try {
@@ -95,18 +93,24 @@ const Analytics = () => {
 	};
 
 	useEffect(() => {
-		if (period === 'custom') return;
+		if (period === 'custom' && !date?.startDate && !date?.endDate) return;
 		onGetAnalytics();
-	}, [period]);
+	}, [period, date?.startDate, date?.endDate]);
 
 	useEffect(() => {
-		router.push(`${path}?duration=${dur.value}`);
-	}, [dur.label]);
+		if (dur.value === 'custom' && date?.startDate && date?.endDate)
+			router.push(
+				`${path}?startDate=${date?.startDate?.toISOString()}&endDate=${date?.endDate?.toISOString()}`
+			);
+		if (dur.value !== 'custom') router.push(`${path}?duration=${dur.value}`);
+	}, [dur.label, date?.startDate, date?.endDate]);
 
 	const onUpdatePeriod = (df: { label: string; value: string }) => {
 		setDur(df);
 	};
+
 	if (analytics.loading) return <LoadingPage />;
+
 	return (
 		<div className='analytics'>
 			<div className='page-title_div '>
@@ -123,6 +127,21 @@ const Analytics = () => {
 					</SimpleBtn>
 				))}
 			</div>
+
+			<Datepicker
+				containerClassName={cx('dp__wrapper', {
+					show__dp: dur?.value === 'custom',
+				})}
+				popoverDirection='down'
+				value={date}
+				onChange={newValue => {
+					console.log(newValue);
+					setDate(newValue);
+				}}
+				showShortcuts={true}
+				displayFormat='DD-MM-YYYY'
+			/>
+
 			<section className='metric_cards_wrapper'>
 				<MetricCard
 					title='Total Sales'

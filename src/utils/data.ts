@@ -27,11 +27,13 @@ const servicesOfferedOptions = [
 	{ value: 'other', label: 'Other' },
 ];
 
-const businessStructureOptions = [
-	{ value: 'sole proprietorship', label: 'Sole Proprietorship' },
-	{ value: 'partnership', label: 'Partnership' },
-	{ value: 'limited liability company', label: 'Limited Liability Company' },
-	{ value: 'corporation', label: 'Corporation' },
+export const definedFilter = [
+	{ label: '1 day', value: 'day' },
+	{ label: '1 week', value: 'week' },
+	{ label: '3 months', value: 'month' },
+	{ label: '6 months', value: 'month' },
+	{ label: '1 year', value: 'year' },
+	{ label: 'custom', value: 'custom' },
 ];
 
 export const weekDays = [
@@ -157,7 +159,6 @@ const notificationSettings = [];
 
 export {
 	servicesOfferedOptions,
-	businessStructureOptions,
 	orderStatus,
 	orderStages,
 	inventoryStatus,
