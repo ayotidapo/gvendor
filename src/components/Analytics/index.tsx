@@ -23,6 +23,7 @@ import { getAnalytics } from '@/redux/apis/analytics';
 import { toast } from 'react-toastify';
 import LoadingPage from '@/molecules/LoadingPage';
 import { definedFilter } from '@/utils/data';
+import 'react-datepicker/dist/react-datepicker.css';
 import './analytics.scss';
 
 Chart.register(...registerables);
