@@ -1,6 +1,6 @@
 .analytics {
 	.period_filter {
-		@apply flex justify-end  text-sm my-4 mb-8;
+		@apply flex justify-end  text-sm my-4 mb-4;
 		& > .btn {
 			@apply bg-transparent w-auto h-[42px] text-[#555555] capitalize;
 			&.active {
@@ -21,6 +21,18 @@
 		@apply relative h-[auto] border border-divider-gray rounded-2xl mt-10 overflow-hidden;
 		.title_h {
 			@apply pl-2.5 pt-2 text-xl text-black;
+		}
+	}
+	.metric_cards_wrapper {
+		@apply mt-7;
+	}
+	.dp__wrapper {
+		@apply relative md:w-[400px] xx:w-full ml-auto max-h-0 overflow-hidden transition-all;
+		input[type='text'] {
+			@apply font-semibold text-[#f45d2c];
+		}
+		&.show__dp {
+			@apply max-h-[42px] overflow-visible;
 		}
 	}
 }
