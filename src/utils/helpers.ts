@@ -7,11 +7,19 @@ export const formatPhoneNumber = (number: string) => {
 	return number;
 };
 
-export const constructQuery = (params: ObjectData) => {
-	const filteredParams = Object.fromEntries(
-		Object.entries(params).filter(([key, value]) => value !== '')
-	);
+export const constructQuery = () => {
+	const params = new URLSearchParams(location.search);
 
-	const queryString = new URLSearchParams(filteredParams).toString();
-	return queryString;
+	const toObject = Object.fromEntries(params.entries());
+
+	const filteredParams = Object.keys(toObject).reduce((acc, cur, i) => {
+		if (cur) {
+			return {
+				...acc,
+				[cur]: toObject[cur],
+			};
+		}
+		return acc;
+	}, {});
+	return new URLSearchParams(filteredParams).toString();
 };

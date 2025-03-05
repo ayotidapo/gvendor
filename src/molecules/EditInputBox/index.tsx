@@ -9,13 +9,37 @@ import { Input } from '@/atoms/Input/Input';
 
 interface Props {
 	type?: 'text' | 'password' | 'textarea' | 'date';
+	value?: string;
 	rows?: number;
 	textarea?: boolean;
 	title?: string;
 	nonEditable?: boolean;
+	deactivate?: boolean;
+	name: string;
+	ctaName?: string;
+	displayValue?: string | number;
+	error?: string;
+	placeholder?: string;
+	riconSvg?: string;
+	cta?: () => void;
+	onChange?: (
+		e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+	) => void;
+	submitting?: boolean;
+	children?: React.ReactNode;
 }
 const EditInputBox: React.FC<Props> = props => {
-	const { type, rows, textarea, title, nonEditable } = props;
+	const {
+		rows,
+		textarea,
+		submitting,
+		ctaName = 'Request change',
+		title,
+		nonEditable,
+		deactivate,
+		cta,
+		...rest
+	} = props;
 	const non_Editable = nonEditable === undefined ? true : nonEditable;
 
 	const [isNonEdit, setIsNonEdit] = useState<boolean | undefined>(
@@ -34,34 +58,48 @@ const EditInputBox: React.FC<Props> = props => {
 					</span>
 				)}
 
-				<>
-					<SimpleBtn
-						className='toggle_edit'
-						onClick={() => setIsNonEdit(isNonEdit => !isNonEdit)}
-					>
-						{isNonEdit ? (
-							<span className='cursor-pointer ml-1 flex'>
-								Edit
-								<Icon id='edit' width={20} height={20} />
-							</span>
-						) : (
-							<>Cancel</>
-						)}
-					</SimpleBtn>
-				</>
+				{!deactivate && (
+					<>
+						<SimpleBtn
+							className='toggle_edit'
+							type='button'
+							onClick={() => setIsNonEdit(isNonEdit => !isNonEdit)}
+						>
+							{isNonEdit ? (
+								<span className='cursor-pointer ml-1 flex'>
+									Edit
+									<Icon id='edit' width={20} height={20} />
+								</span>
+							) : (
+								<>Cancel</>
+							)}
+						</SimpleBtn>
+					</>
+				)}
 			</div>
-			<Input
-				name='search'
-				type={type}
-				rows={isNonEdit ? 1 : rows}
-				value='Jollof Rice and 6 Chicken Wings'
-				className={cx({ non_edit: isNonEdit, textarea })}
-				autoFocus={!isNonEdit}
-				readOnly={isNonEdit}
-			/>
+			{props.children ? (
+				<div className='input__container'>
+					{isNonEdit && (
+						<span className='h-[40px] inline-block'>{props.displayValue}</span>
+					)}
+					<div className={isNonEdit ? 'hidden' : 'block  p-1'}>
+						{props.children}
+					</div>
+				</div>
+			) : (
+				<Input
+					rows={isNonEdit ? 1 : rows}
+					className={cx({ non_edit: isNonEdit, textarea })}
+					autoFocus={!isNonEdit}
+					readOnly={isNonEdit}
+					{...rest}
+				/>
+			)}
 
 			{!isNonEdit && (
-				<SimpleBtn className='req_change'>Request change</SimpleBtn>
+				<SimpleBtn className='req_change' disabled={submitting} onClick={cta}>
+					{ctaName}
+				</SimpleBtn>
 			)}
 			<hr className='hr' />
 		</div>
@@ -71,10 +109,12 @@ const EditInputBox: React.FC<Props> = props => {
 export default EditInputBox;
 
 type RestrictedUser = Omit<Props, 'password' | 'email'>;
-interface IProps extends Props {
-	children: React.FC;
+interface IProps {
+	children: React.FC | React.ReactNode;
 	groupTitle?: string;
 	actionBtn: string;
+	isLoading?: boolean;
+	editText?: string;
 }
 const EditGroupInputBox: React.FC<IProps> = props => {
 	const { children, groupTitle, actionBtn } = props;
@@ -82,18 +122,19 @@ const EditGroupInputBox: React.FC<IProps> = props => {
 	const [isNonEdit, setIsNonEdit] = useState<boolean>(true);
 
 	return (
-		<div className='multiple_box_div'>
+		<div className={`multiple_box_div ${isNonEdit ? '' : 'n_e'}  `}>
 			<div className='flex justify-between items-center mb-10'>
 				<h2 className='text-xl text-black   subpixel-antialiased'>
 					{groupTitle}
 				</h2>
 				<SimpleBtn
 					className='master_toggle_edit'
+					type='button'
 					onClick={() => setIsNonEdit(editable => !editable)}
 				>
 					{isNonEdit ? (
 						<span className={`cursor-pointer ml-1 flex`}>
-							Edit
+							{props?.editText || 'Edit'}
 							<Icon id='edit' width={20} height={20} />
 						</span>
 					) : (
@@ -109,7 +150,9 @@ const EditGroupInputBox: React.FC<IProps> = props => {
 			</div>
 
 			{!isNonEdit && (
-				<SimpleBtn className='req_all_change'>{actionBtn}</SimpleBtn>
+				<SimpleBtn className='req_all_change' disabled={props.isLoading}>
+					{actionBtn}
+				</SimpleBtn>
 			)}
 		</div>
 	);

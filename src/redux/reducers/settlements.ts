@@ -1,41 +1,20 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { toast } from 'react-toastify';
-import { getInventories } from '../apis/inventories';
-
-export interface ISettlement {
-	_id: string;
-	name: string;
-	category: string;
-	inStock: number;
-	status: string;
-	date: string;
-	price: number;
-}
-
-export interface IBestSeller {
-	_id: string;
-	name: string;
-	category: any;
-	unitsSold: number;
-	price: number;
-	amountSold: number;
-}
+import { getSettlements } from '../apis/settlements';
 
 interface ISettlements {
-	totalUnitsSold: number;
-	productsInStock: number;
-	bestSellers: IBestSeller[];
-	products: ISettlement[];
+	docs: any[];
+	total: number;
+	totalPages: number;
 	isSuccess?: boolean;
 	isError?: boolean;
 	error?: string | undefined;
 	loading?: boolean;
 }
 const initialState: ISettlements = {
-	totalUnitsSold: 0,
-	productsInStock: 0,
-	bestSellers: [],
-	products: [],
+	docs: [],
+	total: 0,
+	totalPages: 0,
 };
 
 export const settlementsSlice = createSlice({
@@ -51,18 +30,18 @@ export const settlementsSlice = createSlice({
 
 	extraReducers: builder => {
 		builder
-			.addCase(getInventories.pending, state => {
+			.addCase(getSettlements.pending, state => {
 				state.loading = true;
 				state.isSuccess = false;
 				state.isError = false;
 			})
-			.addCase(getInventories.fulfilled, (state, action) => {
+			.addCase(getSettlements.fulfilled, (state, action) => {
 				state.isSuccess = true;
 				state.isError = false;
 				state.loading = false;
 				Object.assign(state, action.payload?.data);
 			})
-			.addCase(getInventories.rejected, (state, action) => {
+			.addCase(getSettlements.rejected, (state, action) => {
 				if (action.error?.message)
 					toast.error(`Error occured: ${action.error?.message}`);
 

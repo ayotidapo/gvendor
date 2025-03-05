@@ -5,6 +5,7 @@ import { getOrders } from '../apis/orders';
 
 export interface IOrder {
 	_id: string;
+	orderId: string;
 	itemsOrdered: string[];
 	quantity: number;
 	status: string;
@@ -21,7 +22,7 @@ interface IOrders {
 	orders: IOrder[];
 	isSuccess?: boolean;
 	isError?: boolean;
-	error?: string | undefined;
+	error?: string;
 	loading?: boolean;
 }
 const initialState: IOrders = {
@@ -45,7 +46,7 @@ export const ordersSlice = createSlice({
 	extraReducers: builder => {
 		builder
 			.addCase(getOrders.pending, state => {
-				state.loading = true;
+				state.loading = !state.isSuccess && !state.isError;
 				state.isSuccess = false;
 				state.isError = false;
 			})
@@ -53,6 +54,7 @@ export const ordersSlice = createSlice({
 				state.isSuccess = true;
 				state.isError = false;
 				state.loading = false;
+
 				Object.assign(state, action.payload?.data);
 			})
 			.addCase(getOrders.rejected, (state, action) => {

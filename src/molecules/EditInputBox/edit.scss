@@ -1,5 +1,8 @@
 .edit_ {
 	@apply mb-5;
+	.input_wrapper {
+		@apply mb-0;
+	}
 	.input {
 		@apply mt-2;
 		&.non_edit {
@@ -11,7 +14,7 @@
 		@apply w-auto p-0 h-auto text-black bg-transparent;
 	}
 	.btn.req_change {
-		@apply w-[201px] my-4;
+		@apply w-auto my-4 px-10;
 	}
 	&:last-child {
 		@apply mb-2;
@@ -30,6 +33,9 @@
 		@apply w-auto p-0 h-auto text-black bg-transparent;
 	}
 	.btn.req_all_change {
-		@apply w-[201px] my-1.5;
+		@apply w-auto my-1.5 px-10;
+	}
+	&.n_e hr {
+		display: none;
 	}
 }

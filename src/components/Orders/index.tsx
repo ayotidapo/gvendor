@@ -7,7 +7,7 @@ import MetricCard from '@/molecules/MetricCard';
 import React, { useEffect, useMemo } from 'react';
 import './orders.scss';
 import OrdersTable from './OrdersTable';
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { constructQuery } from '@/utils/helpers';
 import { getOrders } from '@/redux/apis/orders';
 import { useDispatch, useSelector } from '@/redux/hooks';
@@ -16,7 +16,8 @@ import StatusFilter from '@/molecules/StatusFilter';
 import useApiSearchQuery from '@/customHooks/useApiSearchQuery';
 import SearchFilter from '@/molecules/SearchFilter';
 import LoadingPage from '@/molecules/LoadingPage';
-import { orderStages } from '@/utils/data';
+import Pagination from '@/molecules/Pagination';
+import { orderStages, orderStatus } from '@/utils/data';
 
 const Orders = () => {
 	const {
@@ -24,16 +25,17 @@ const Orders = () => {
 		isError,
 		isSuccess,
 		loading,
-		averageOrderValue = '...',
-		totalOrders = '...',
-		totalSales = '...',
+		averageOrderValue = 0,
+		totalOrders = 0,
+		totalSales = 0,
 	} = useSelector(state => state?.orders);
 
 	const router = useRouter();
 	const dispatch = useDispatch();
 	const path = usePathname();
 
-	const { qString, page, status, search } = useApiSearchQuery(12);
+	const limit = 20;
+	const { qString, page, status, search } = useApiSearchQuery(limit);
 
 	useEffect(() => {
 		dispatch(getOrders(qString));
@@ -48,6 +50,14 @@ const Orders = () => {
 	};
 
 	const len = orders?.length;
+
+	const onPageChange = (page: { selected: number }) => {
+		const { selected } = page;
+		router.push(
+			`${path}?status=${status}&page=${selected + 1}&search=${search}`
+		);
+	};
+	const totalItems = totalOrders;
 	return (
 		<div className='orders'>
 			<div className='page-title_div '>
@@ -56,7 +66,7 @@ const Orders = () => {
 			<section className='metric_cards_wrapper'>
 				<MetricCard title='Total Orders' value={`${totalOrders || 0} Orders`} />
 				<MetricCard
-					title='Average Order value'
+					title='Total Order value'
 					value={
 						<>
 							<span className='font-medium'>&#8358;</span>
@@ -69,7 +79,7 @@ const Orders = () => {
 				<SearchFilter onTextChange={onTextChange} />
 				<StatusFilter
 					onSetStatus={onSetStatus}
-					status={status}
+					status={orderStatus[status]}
 					states={orderStages}
 				/>
 			</div>
@@ -78,6 +88,13 @@ const Orders = () => {
 			{len > 0 && !loading && (
 				<section>
 					<OrdersTable orders={orders} />
+					<Pagination
+						onPageChange={onPageChange}
+						page={Number(page)}
+						limit={limit}
+						totalItems={totalOrders}
+						curItemsLen={orders?.length}
+					/>
 				</section>
 			)}
 		</div>

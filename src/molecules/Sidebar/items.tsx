@@ -22,13 +22,13 @@ const items = [
 	},
 	{
 		name: 'Settlement',
-		icon: 'sales',
+		icon: 'settlement',
 		route: '/settlements',
 		match: /^\/settlements/,
 	},
 	{
 		name: 'Analytics',
-		icon: 'inventory',
+		icon: 'analytics',
 		route: '/analytics',
 		match: /^\/analytics/,
 	},

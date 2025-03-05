@@ -19,10 +19,10 @@ const OrdersTable: React.FC<Props> = ({ orders }) => {
 		router.push(`/orders/${orderId}`);
 	};
 	return (
-		<table className='table_'>
+		<table className='table_  '>
 			<thead>
 				<tr className='th_row'>
-					<th>_</th>
+					<th></th>
 					<th>ORDER ID</th>
 					<th>AMOUNT</th>
 					<th>DATE & TIME</th>
@@ -33,13 +33,13 @@ const OrdersTable: React.FC<Props> = ({ orders }) => {
 			<tbody>
 				{orders?.map((order, i) => (
 					<tr onClick={() => onNavigate(order?._id)} key={i}>
-						<td>_</td>
-						<td>#15285058</td>
+						<td></td>
+						<td>#{order?.orderId}</td>
 						<td>₦{order?.price?.toLocaleString()}</td>
 						<td>{format(order?.date, 'dd/MM/yyyy hh:mm aa')}</td>
 						<td>
 							<Tag
-								title={order?.status?.toLowerCase()}
+								title={orderStatus[order?.status]?.toLowerCase()}
 								className={`${orderStatus[order?.status]} capitalize`}
 							/>
 						</td>

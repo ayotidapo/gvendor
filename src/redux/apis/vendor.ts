@@ -20,12 +20,32 @@ export const registerVendorApi = async (body: IVendor) => {
 	return response;
 };
 
-export const createPasswordApi = async (body: Record<string, any>) => {
-	const { password, vendorId } = body;
+export const updateVendorApi = async (body: IVendor) => {
+	const response = await Fetch(`/vendor`, {
+		body,
+		method: 'put',
+	});
 
-	const response = await Fetch(`/auth/set-password/${vendorId}`, {
+	return response;
+};
+
+export const createPasswordApi = async (body: Record<string, any>) => {
+	const { password, token } = body;
+
+	const response = await Fetch(`/auth/set-password/${token}`, {
 		body: { password },
 		method: 'post',
+	});
+
+	return response;
+};
+
+export const changePasswordApi = async (body: Record<string, any>) => {
+	const { newPassword2, ...payload } = body;
+
+	const response = await Fetch(`/profile/change-password`, {
+		body: payload,
+		method: 'patch',
 	});
 
 	return response;
@@ -66,8 +86,9 @@ const getVendor = createAsyncThunk(
 );
 
 const registerVendor = createAsyncThunk('vendor/register', registerVendorApi);
+const updateVendor = createAsyncThunk('vendor/update', registerVendorApi);
 const login = createAsyncThunk('vendor/login', loginApi);
 
-export { getInvitedVendor, getVendor, registerVendor, login };
+export { getInvitedVendor, getVendor, registerVendor, updateVendor, login };
 
 //

@@ -30,3 +30,12 @@ yarn-error.log*
 .env.development.local
 .env.test.local
 .env.production.local
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts
+
+# vercel
+.vercel
+
+bitbucket-pipelines.yml

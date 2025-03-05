@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-require-imports */
 /** @type {import('tailwindcss').Config} */
 
 // eslint-disable-next-line no-undef
@@ -11,6 +12,7 @@ module.exports = {
 	theme: {
 		extend: {
 			colors: {
+				img: '#FFFCF9',
 				gold1: 'var(--gold1)',
 				baseCol: '#555555',
 				primary: '#F45D2C',

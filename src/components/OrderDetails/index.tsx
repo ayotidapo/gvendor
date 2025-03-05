@@ -29,28 +29,31 @@ const OrderDetailsPage: React.FC<Props> = ({ details }) => {
 			<section className='flex flex-col'>
 				<div className='page-title_div'>
 					<h2 className='title'>Orders #{o_details?.orderNumber}</h2>
-					<div className='btn_div'>
+					<div className='btn_div opacity-[0.1]'>
 						<SimpleBtn
 							className='set_as'
-							disabled={o_details.status === 'PROCESSING'}
+							//disabled={o_details.status === 'PROCESSING'}
+							disabled
 						>
 							Set as processing
 						</SimpleBtn>
 						<DropDown
 							className='x_dropdown'
 							component={
-								<SimpleBtn className='ellips'>
+								<SimpleBtn className='ellips' disabled>
 									<Icon id='ellipsis' width={20} height={20} />
 								</SimpleBtn>
 							}
 						>
-							<div className='w-[220px] flex flex-col p-4 gap-4 text-left'>
-								{setStages.map(({ name, value }, i) => (
-									<span role='button' onClick={() => {}} key={i}>
-										{name}
-									</span>
-								))}
-							</div>
+							{false && (
+								<div className='w-[220px] flex flex-col p-4 gap-4 text-left'>
+									{setStages.map(({ name, value }, i) => (
+										<span role='button' onClick={() => {}} key={i}>
+											{name}
+										</span>
+									))}
+								</div>
+							)}
 						</DropDown>
 					</div>
 				</div>
@@ -68,7 +71,7 @@ const OrderDetailsPage: React.FC<Props> = ({ details }) => {
 						className={`${orderStatus[o_details.status]} capitalize`}
 					/>
 				</span>
-				{o_details.status === 'COMPLETED' && (
+				{o_details.status === 'COMPLETED' && false && (
 					<span className='text-sm mt-2'>
 						This order is complete, and a driver has been requested for
 						delivery. If the status needs to be updated due to an error, press
@@ -81,7 +84,7 @@ const OrderDetailsPage: React.FC<Props> = ({ details }) => {
 				<OrderItem totalAmount={o_details?.totalAmount} item={item} key={i} />
 			))}
 			<div className='mt-20'>
-				<SettlementTable />
+				<SettlementTable settlements={[]} />
 			</div>
 		</div>
 	);

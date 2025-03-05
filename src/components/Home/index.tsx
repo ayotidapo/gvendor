@@ -110,7 +110,7 @@ const HomePage: React.FC = () => {
 					<SearchFilter onTextChange={onTextChange} />
 					<StatusFilter
 						onSetStatus={onSetStatus}
-						status={status}
+						status={orderStatus[status]}
 						states={orderStages}
 					/>
 				</div>
@@ -134,8 +134,9 @@ const HomePage: React.FC = () => {
 								<hr className='my-5' />
 								<div className='flex justify-between text-sm mt-auto mb-5'>
 									<span>Order status</span>
+
 									<Tag
-										title={orderStatus[order?.status]}
+										title={orderStatus[status]?.toLowerCase()}
 										className='capitalize'
 									/>
 								</div>

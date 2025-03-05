@@ -9,10 +9,12 @@ import { setVendor } from '@/redux/reducers/vendor';
 import { useFormik } from 'formik';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch } from '@/redux/hooks';
 
 import * as Yup from 'yup';
+import { signOut } from 'next-auth/react';
+import { toast } from 'react-toastify';
 
 const LoginSchema = Yup.object({
 	email: Yup.string()
@@ -36,7 +38,7 @@ const LoginPage: React.FC = ({}) => {
 			localStorage.t_ = response?.data?.token;
 			await signInUser({ goodToken: token, vendorId: user?._id });
 		} catch (e: any) {
-			//console.log(e)
+			toast.error(`Error: ${e?.message}`);
 		} finally {
 			setSubmitting(false);
 		}
@@ -54,8 +56,8 @@ const LoginPage: React.FC = ({}) => {
 	});
 
 	return (
-		<form onSubmit={handleSubmit} className='w-[420px]'>
-			<h2 className='auth_h2'>Welcome Back</h2>
+		<form onSubmit={handleSubmit} className='auth__form'>
+			<h2 className='auth_h2'>Welcome back</h2>
 			<div>
 				<Input
 					{...getFieldProps('email')}
@@ -69,13 +71,14 @@ const LoginPage: React.FC = ({}) => {
 					error={touched.password ? errors.password : ''}
 					type='password'
 					placeholder='Password'
+					riconSvg='eye-x'
 				/>
 			</div>
 
 			<div className={` text-md cursor-pointer `}>
 				<Link
 					href={'/auth/forgot-password'}
-					className='hover:underline transition-all duration-500'
+					className='hover:underline transition-all duration-500 text-black'
 				>
 					{' '}
 					Forgot your password?
@@ -88,7 +91,7 @@ const LoginPage: React.FC = ({}) => {
 			<p className='text-black pt-5 text-center'>
 				New to good?{' '}
 				<Link
-					href='/auth/register-business'
+					href='/auth/register'
 					className='text-[#f45d2c] subpixel-antialiased'
 				>
 					Register your business

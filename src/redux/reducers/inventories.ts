@@ -11,6 +11,7 @@ export interface IProduct {
 	status: string;
 	date: string;
 	price: number;
+	[key: string]: any;
 }
 
 export interface IBestSeller {
@@ -53,7 +54,7 @@ export const inventoriesSlice = createSlice({
 	extraReducers: builder => {
 		builder
 			.addCase(getInventories.pending, state => {
-				state.loading = true;
+				state.loading = !state.isSuccess && !state.isError;
 				state.isSuccess = false;
 				state.isError = false;
 			})

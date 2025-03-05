@@ -24,20 +24,22 @@ const Select: React.FC<Props> = props => {
 		...rest
 	} = props;
 	return (
-		<div className={`input_wrapper ${hasError ? 'err' : ''}`}>
-			<select
-				name={name}
-				className={cx(`input ${className}`, { error: hasError })}
-				{...rest}
-			>
-				<option value=''>{placeholder}</option>
-				{options?.map(option => (
-					<option key={option.value} value={option.value}>
-						{option.label}
-					</option>
-				))}
-			</select>
-			<div className='error'>{error}</div>
+		<div className='input__container'>
+			<div className={`input_wrapper ${hasError ? 'err' : ''}`}>
+				<select
+					name={name}
+					className={cx(`input ${className}`, { error: hasError })}
+					{...rest}
+				>
+					<option value=''>{placeholder}</option>
+					{options?.map(option => (
+						<option key={option.value} value={option.value}>
+							{option.label}
+						</option>
+					))}
+				</select>
+				<div className='error'>{error}</div>
+			</div>
 		</div>
 	);
 };

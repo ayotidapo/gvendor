@@ -7,48 +7,55 @@ interface IPProps extends FieldProps {
 	onBlur: (e: any) => void;
 	placeholder?: string;
 	className?: string;
-	error?: string;
+	noEdit?: boolean;
+	// error?: string;
 }
 
 const InputPhone: React.FC<IPProps> = ({
-	field,
-	form,
-	error,
+	field: { name, value },
+	form: { errors, touched },
 	onChange,
 	onBlur,
 	...props
 }) => {
 	return (
-		<div className={`ph_div ${error ? 'error_' : ''}`}>
+		<div className={`ph_div ${errors[name] && touched[name] ? 'error_' : ''}`}>
 			<PhoneInput
 				defaultCountry='NG'
-				value={field.value}
-				name={field.name}
+				value={value}
+				name={name} // not really neccessary here tho
 				onChange={onChange}
 				onBlur={onBlur}
 				international
 				{...props}
+				readOnly={props.noEdit}
 			/>
-			<ErrorMessage name={field.name} component='div' className='error' />
+			<ErrorMessage name={name} component='div' className='error' />
 		</div>
 	);
 };
 
-type PFProps = FieldProps['field'] & {
+type PFProps = {
 	className?: string;
 	defaultCountry?: string;
+	name: string;
 	onChange: (val: any) => void;
 	onBlur: (e: React.FocusEvent<HTMLElement, Element>) => void;
 	placeholder?: string;
-	error?: string;
+	noEdit?: boolean;
+	// error?: string;
 };
 
-const PhoneField: React.FC<PFProps> = ({ onChange, value, ...rest }) => {
+const PhoneField: React.FC<PFProps> = ({
+	onChange,
+	defaultCountry,
+	...rest
+}) => {
 	return (
 		<Field
 			component={InputPhone}
+			defaultCountry={defaultCountry}
 			onChange={(val: any) => onChange(val)}
-			value={value}
 			{...rest}
 		/>
 	);

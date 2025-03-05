@@ -6,7 +6,7 @@ import { Input } from '@/atoms/Input/Input';
 import { useFormik } from 'formik';
 import { updateBankAccountApi } from '@/redux/apis/business';
 import { toast } from 'react-toastify';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 import { signInUser } from '@/redux/apis/setAuth';
 import { useSelector } from '@/redux/hooks';
 import Select from '@/atoms/Input/Select';
@@ -15,12 +15,12 @@ import { IOption } from '@/utils/interface';
 import { regex } from '@/utils/constants';
 import { Spinner } from '@/molecules/LoadingPage';
 
-const validationSchema = Yup.object({
+export const validationSchema = Yup.object({
 	accountNumber: Yup.string()
-		.required('Business name is Required')
-		.min(10, 'account number not less than 10 digit'),
+		.required('account number is Required')
+		.length(10, 'account number must be 10 digit'),
 	bankCode: Yup.string().required('bank code name is Required'),
-	accountName: Yup.string().required('account name not found'),
+	accountName: Yup.string().required('Account name not found'),
 });
 
 interface Props {

@@ -4,6 +4,7 @@ import OnboardFooter from '@/molecules/OnboardFooter';
 import { getServerSession } from 'next-auth';
 import options from '@/utils/nextAuthOptions';
 import { redirect } from 'next/navigation';
+import { Suspense } from 'react';
 
 export const metadata = {
 	title: 'Next.js',
@@ -16,21 +17,29 @@ export default async function RootLayout({
 	children: React.ReactNode;
 }) {
 	const session = await getServerSession(options);
-	if (session) redirect(`/`);
+
+	if (session?.user) redirect(`/`);
 	return (
 		<div className='h-[calc(100vh-72px)] flex flex-col overflow-y-auto'>
 			<div className='flex h-full overflow-y-auto pb-[72px] '>
 				<section className='flex-1 flex  overflow-y-auto  justify-center items-center '>
-					<div className='max-h-[100%]'>{children}</div>
+					<div className='max-h-[100%]'>
+						<Suspense>{children}</Suspense>
+					</div>
 				</section>
 
-				<div className='flex justify-end  w-[40%] h-[98%] relative'>
+				<div className='flex justify-end  md:w-[40%] xs:w-0 h-[98%] relative bg-img '>
 					<Image
 						src='/assets/onboard-img.png'
-						layout='fill'
+						fill
 						alt='bg image'
-						objectFit='cover'
+						className=' object-cover'
 					/>
+					{/* <img
+                                               src='/onboardImg.png'
+                                               alt='bg image'
+                                               className='h-full w-full object-cover '
+                                       /> */}
 				</div>
 			</div>
 			<OnboardFooter />
