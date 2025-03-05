@@ -1,5 +1,6 @@
 'use client'; // Error components must be Client Components
 
+import { SimpleBtn } from '@/atoms/buttons/Button';
 import { useEffect } from 'react';
 
 export default function Error({
@@ -15,16 +16,16 @@ export default function Error({
 	}, [error]);
 
 	return (
-		<div>
+		<div className='h-screen flex flex-col justify-center items-center'>
 			<h2>Something went wrong!</h2>
-			<button
+			<SimpleBtn
 				onClick={
 					// Attempt to recover by trying to re-render the segment
 					() => reset()
 				}
 			>
 				Try again
-			</button>
+			</SimpleBtn>
 		</div>
 	);
 }

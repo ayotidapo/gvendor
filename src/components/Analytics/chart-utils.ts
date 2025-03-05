@@ -14,7 +14,7 @@ export const SalesChartOptions: ChartOptions<any> = {
 				},
 				label: (tooltipItem: ObjectData) => {
 					const value = tooltipItem.raw;
-					return `₦${value.toLocaleString()}`;
+					return `₦${value?.toLocaleString()}`;
 				},
 				footer: (tooltipItems: ObjectData[]) => {
 					return ``;
@@ -47,7 +47,7 @@ export const OrderChartOptions: ChartOptions<any> = {
 				},
 				label: (tooltipItem: ObjectData) => {
 					const value = tooltipItem.raw;
-					return `${value.toLocaleString()} Orders`;
+					return `${value?.toLocaleString()} Orders`;
 				},
 				footer: (tooltipItems: ObjectData[]) => {
 					return ``;
@@ -74,9 +74,9 @@ const getTimeDateLabel = (data: ObjectData, period?: string) => {
 		let label = '';
 
 		if (period === 'week') label = format(item.dateTime, 'MMM dd');
-		else if (period === 'custom' && data?.salesChart?.length > 24)
-			label = item.month;
-		else if (period === 'month' || period === 'custom') label = item.day;
+		// else if (period === 'custom' && data?.salesChart?.length > 24)
+		// 	label = item.month;
+		else if (period?.includes('month') || period === 'custom') label = item.day;
 		else if (period === 'year') label = item.month;
 		else label = format(item.dateTime, 'h a');
 

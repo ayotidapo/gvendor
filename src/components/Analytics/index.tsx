@@ -100,7 +100,7 @@ const Analytics = () => {
 	}, [duration, startDate, endDate]);
 
 	useEffect(() => {
-		if (duration === 'custom') document.getElementById('date_')?.focus();
+		if (durObj?.value === 'custom') document.getElementById('date_')?.focus();
 
 		if (date?.startDate && date?.endDate)
 			router.push(
