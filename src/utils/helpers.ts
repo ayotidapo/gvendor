@@ -1,5 +1,3 @@
-import { ObjectData } from './interface';
-
 export const formatPhoneNumber = (number: string) => {
 	if (number.startsWith('0')) {
 		return '234' + number.slice(1);
@@ -11,7 +9,8 @@ export const constructQuery = () => {
 	const params = new URLSearchParams(location.search);
 
 	const toObject = Object.fromEntries(params.entries());
-
+	if (toObject?.duration === 'custom') delete toObject?.duration;
+	console.log({ toObject, m: location.search });
 	const filteredParams = Object.keys(toObject).reduce((acc, cur, i) => {
 		if (cur) {
 			return {
