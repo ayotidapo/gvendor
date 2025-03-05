@@ -35,7 +35,7 @@ const OrdersTable: React.FC<Props> = ({ orders }) => {
 					<tr onClick={() => onNavigate(order?._id)} key={i}>
 						<td></td>
 						<td>#{order?._id}</td>
-						<td>₦{order?.totalAmount.toLocaleString()}</td>
+						<td>₦{order?.totalAmount?.toLocaleString()}</td>
 						<td>{format(order?.date, 'dd/MM/yyyy hh:mm aa')}</td>
 						<td>
 							<Tag

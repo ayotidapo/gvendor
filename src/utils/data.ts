@@ -30,8 +30,8 @@ const servicesOfferedOptions = [
 export const definedFilter = [
 	{ label: '1 day', value: 'day' },
 	{ label: '1 week', value: 'week' },
-	{ label: '3 months', value: 'month' },
-	{ label: '6 months', value: 'month' },
+	{ label: '3 months', value: 'three_months' },
+	{ label: '6 months', value: 'six_months' },
 	{ label: '1 year', value: 'year' },
 	{ label: 'custom', value: 'custom' },
 ];
