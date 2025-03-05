@@ -10,6 +10,7 @@ import Datepicker, { DateValueType } from 'react-tailwindcss-datepicker';
 import { constructQuery } from '@/utils/helpers';
 import { registerables, Chart } from 'chart.js';
 import { Bar, Line } from 'react-chartjs-2';
+
 import {
 	OrderChartOptions,
 	SalesChartOptions,
@@ -24,12 +25,22 @@ import { toast } from 'react-toastify';
 import LoadingPage from '@/molecules/LoadingPage';
 import { definedFilter } from '@/utils/data';
 import './analytics.scss';
+import { differenceInDays, subMonths } from 'date-fns';
+import { ObjectData } from '@/utils/interface';
 
 Chart.register(...registerables);
 
 const Analytics = () => {
 	const router = useRouter();
 	const dispatch = useDispatch();
+
+	const sQ = useSearchParams();
+	const path = usePathname();
+
+	const duration = sQ.get('duration') || 'day';
+	const startDate = sQ.get('startDate') || '';
+	const endDate = sQ.get('endDate') || '';
+
 	const { ...analytics } = useSelector(state => state.analytics);
 
 	const [showSales, setShowSales] = useState(true);
@@ -48,34 +59,26 @@ const Analytics = () => {
 		datasets: [],
 	});
 
-	const [dur, setDur] = useState({ label: '1 day', value: 'day' });
-
 	const [date, setDate] = useState<DateValueType>({
-		startDate: null,
-		endDate: null,
+		startDate: startDate ? new Date(startDate) : null,
+		endDate: endDate ? new Date(endDate) : null,
 	});
 
-	const sQ = useSearchParams();
-	const path = usePathname();
-
-	const period = sQ.get('duration') || '';
+	const [durObj, setDurObj] = useState<ObjectData>({});
 
 	const onGetAnalytics = async () => {
 		try {
 			let qS = constructQuery();
 
-			if (!sQ.get('duration')) {
-				qS = `?duration=day${qS}`;
-			} else {
-				qS = `?${qS}`;
-			}
+			qS = `?${qS}`;
+
 			const action = await dispatch(getAnalytics(qS));
 
 			if (getAnalytics.fulfilled.match(action)) {
 				const data = action?.payload?.data;
 
-				const sales = constructSalesData(data, period);
-				const orders = constructOrdersData(data, period);
+				const sales = constructSalesData(data, duration);
+				const orders = constructOrdersData(data, duration);
 
 				const topSelling = constructTopSellingData(data);
 				const topOrder = constructTopOrderData(data);
@@ -93,20 +96,31 @@ const Analytics = () => {
 	};
 
 	useEffect(() => {
-		if (period === 'custom' && !date?.startDate && !date?.endDate) return;
 		onGetAnalytics();
-	}, [period, date?.startDate, date?.endDate]);
+	}, [duration, startDate, endDate]);
 
 	useEffect(() => {
-		if (dur.value === 'custom' && date?.startDate && date?.endDate)
-			router.push(
-				`${path}?startDate=${date?.startDate?.toISOString()}&endDate=${date?.endDate?.toISOString()}`
-			);
-		if (dur.value !== 'custom') router.push(`${path}?duration=${dur.value}`);
-	}, [dur.label, date?.startDate, date?.endDate]);
+		if (duration === 'custom') document.getElementById('date_')?.focus();
 
-	const onUpdatePeriod = (df: { label: string; value: string }) => {
-		setDur(df);
+		if (date?.startDate && date?.endDate)
+			router.push(
+				`${path}?startDate=${date?.startDate?.toISOString()}&endDate=${date?.endDate?.toISOString()}&duration=${duration}`
+			);
+		else router.push(`${path}?duration=${durObj?.value || 'day'}`);
+	}, [durObj?.value, date?.startDate, date?.endDate]);
+
+	const onSetDuration = (durObj: { label: string; value: string }) => {
+		setDate({ startDate: null, endDate: null });
+		setDurObj(durObj);
+	};
+
+	const onChangeDate = (newValue: DateValueType) => {
+		const customDays = Math.abs(
+			differenceInDays(newValue?.startDate as Date, newValue?.endDate as Date)
+		);
+		if (customDays > 365)
+			return toast.error(`Custom filter above ONE YEAR is not allowed`);
+		setDate(newValue);
 	};
 
 	if (analytics.loading) return <LoadingPage />;
@@ -117,29 +131,28 @@ const Analytics = () => {
 				<h2 className='title'>Analytics</h2>
 			</div>
 			<div className='period_filter'>
-				{definedFilter.map(df => (
+				{definedFilter.map(durObj => (
 					<SimpleBtn
-						className={df.label === dur.label ? 'active' : ''}
-						onClick={() => onUpdatePeriod(df)}
-						key={df.label}
+						className={duration === durObj.value ? 'active' : ''}
+						onClick={() => onSetDuration(durObj)}
+						key={durObj.label}
 					>
-						{df.label}
+						{durObj.label}
 					</SimpleBtn>
 				))}
 			</div>
-
 			<Datepicker
 				containerClassName={cx('dp__wrapper', {
-					show__dp: dur?.value === 'custom',
+					show__dp: duration === 'custom',
 				})}
 				popoverDirection='down'
+				inputId='date_'
 				value={date}
-				onChange={newValue => {
-					console.log(newValue);
-					setDate(newValue);
-				}}
+				onChange={onChangeDate}
 				showShortcuts={true}
-				displayFormat='DD-MM-YYYY'
+				displayFormat='MMM D, YYYY'
+				startFrom={subMonths(new Date(), 2)}
+				maxDate={new Date()}
 			/>
 
 			<section className='metric_cards_wrapper'>
@@ -157,8 +170,7 @@ const Analytics = () => {
 					value={
 						<PercentGrowth
 							amount={
-								analytics?.totalOrders?.getPendingOrdersCount?.toLocaleString() ||
-								''
+								analytics?.totalOrders?.ordersCount?.toLocaleString() || ''
 							}
 							desc={`${(analytics?.totalOrders?.percentageIncrease || 0) / 100}% increase in the past week`}
 						/>
@@ -168,7 +180,10 @@ const Analytics = () => {
 					title='Total Customers'
 					value={
 						<PercentGrowth
-							amount={analytics?.totalCustomers?.toLocaleString() || ''}
+							amount={
+								analytics?.totalCustomers?.totalNoOfCustomers?.toLocaleString() ||
+								''
+							}
 						/>
 					}
 				/>
@@ -225,38 +240,3 @@ const Analytics = () => {
 };
 
 export default Analytics;
-
-// const initDataSource = {
-// 	chart: {
-// 		caption: '',
-// 		yaxisname: 'Orders',
-// 		anchorradius: '5',
-// 		plottooltext: '$label \n <b>$dataValue orders</b>',
-// 		showhovereffect: '1',
-// 		showToolTipShadow: '1',
-// 		useSmartLabels: '1',
-// 		toolTipPosition: 'bottom',
-// 		showBorder: '0',
-// 		showvalues: '0',
-// 		bgColor: '#ffffff',
-// 		numbersuffix: '',
-// 		lineColor: '#FF5733',
-// 		theme: 'umber',
-// 		showAlternateHGridColor: '0', // Disable alternate horizontal grid lines
-// 		showAlternateVGridColor: '0', // Disable alternate vertical grid lines
-
-// 		numVDivLines: '10',
-// 		vDivLineColor: '#cccccc',
-// 		vDivLineThickness: '1',
-// 		vDivLineAlpha: '50',
-
-// 		drawAnchors: '1', // Enable anchors (dots)
-// 		anchorBgColor: '#FF5733',
-// 		anchorHoverColor: '#FF5733',
-// 		palettecolors: '#72D7B2',
-
-// 		borderColor: '#FFFFFF', // Set border color to white (if you want to keep the space)
-// 		borderThickness: '0',
-// 	},
-// 	data: [],
-// };

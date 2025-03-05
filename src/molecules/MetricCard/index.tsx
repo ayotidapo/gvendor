@@ -20,9 +20,9 @@ const MetricCard: React.FC<Props> = props => {
 					className='hover:cursor-pointer'
 				/>
 			</div>
-			<span className='text-black text-2xl font-geist font-semibold'>
+			<div className='text-black text-2xl font-geist font-semibold'>
 				{value}
-			</span>
+			</div>
 		</article>
 	);
 };

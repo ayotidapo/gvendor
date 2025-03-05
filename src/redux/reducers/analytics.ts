@@ -8,10 +8,12 @@ interface IAnalytics {
 	topSellingItems: ObjectData[];
 	totalSales: { totalRevenue: number; percentageIncrease: number };
 	totalOrders: {
-		getPendingOrdersCount: number;
+		ordersCount: number;
 		percentageIncrease: number;
 	};
-	totalCustomers: number;
+	totalCustomers: {
+		totalNoOfCustomers: number;
+	};
 	averageOrderValue: {
 		averageOrderValue: number;
 		percentageChange: number;
@@ -26,10 +28,12 @@ const initialState: IAnalytics = {
 	topSellingItems: [],
 	totalSales: { totalRevenue: 0, percentageIncrease: 0 },
 	totalOrders: {
-		getPendingOrdersCount: 0,
+		ordersCount: 0,
 		percentageIncrease: 0,
 	},
-	totalCustomers: 0,
+	totalCustomers: {
+		totalNoOfCustomers: 0,
+	},
 	averageOrderValue: {
 		averageOrderValue: 0,
 		percentageChange: 0,

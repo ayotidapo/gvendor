@@ -74,7 +74,9 @@ const getTimeDateLabel = (data: ObjectData, period?: string) => {
 		let label = '';
 
 		if (period === 'week') label = format(item.dateTime, 'MMM dd');
-		else if (period === 'month') label = item.day;
+		else if (period === 'custom' && data?.salesChart?.length > 24)
+			label = item.month;
+		else if (period === 'month' || period === 'custom') label = item.day;
 		else if (period === 'year') label = item.month;
 		else label = format(item.dateTime, 'h a');
 
@@ -173,3 +175,39 @@ export const constructTopOrderData = (data: ObjectData) => {
 		],
 	};
 };
+
+///----For fusionCharts-----
+// const initDataSource = {
+// 	chart: {
+// 		caption: '',
+// 		yaxisname: 'Orders',
+// 		anchorradius: '5',
+// 		plottooltext: '$label \n <b>$dataValue orders</b>',
+// 		showhovereffect: '1',
+// 		showToolTipShadow: '1',
+// 		useSmartLabels: '1',
+// 		toolTipPosition: 'bottom',
+// 		showBorder: '0',
+// 		showvalues: '0',
+// 		bgColor: '#ffffff',
+// 		numbersuffix: '',
+// 		lineColor: '#FF5733',
+// 		theme: 'umber',
+// 		showAlternateHGridColor: '0', // Disable alternate horizontal grid lines
+// 		showAlternateVGridColor: '0', // Disable alternate vertical grid lines
+
+// 		numVDivLines: '10',
+// 		vDivLineColor: '#cccccc',
+// 		vDivLineThickness: '1',
+// 		vDivLineAlpha: '50',
+
+// 		drawAnchors: '1', // Enable anchors (dots)
+// 		anchorBgColor: '#FF5733',
+// 		anchorHoverColor: '#FF5733',
+// 		palettecolors: '#72D7B2',
+
+// 		borderColor: '#FFFFFF', // Set border color to white (if you want to keep the space)
+// 		borderThickness: '0',
+// 	},
+// 	data: [],
+// };
