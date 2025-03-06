@@ -141,7 +141,7 @@ const Analytics = () => {
 					</SimpleBtn>
 				))}
 			</div>
-			{/* <Datepicker
+			<Datepicker
 				containerClassName={cx('dp__wrapper', {
 					show__dp: duration === 'custom',
 				})}
@@ -151,9 +151,9 @@ const Analytics = () => {
 				onChange={onChangeDate}
 				showShortcuts={true}
 				displayFormat='MMM D, YYYY'
-				startFrom={subMonths(new Date(), 2)}
-				maxDate={new Date()}
-			/> */}
+				//startFrom={subMonths(new Date(), 2)}
+				//maxDate={new Date()}
+			/>
 
 			<section className='metric_cards_wrapper'>
 				<MetricCard
