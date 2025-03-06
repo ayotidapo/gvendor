@@ -8,6 +8,7 @@
 		"start": "next start",
 		"lint": "next lint",
 		"prettier-fix": "prettier --write \"**/*.{js,jsx,ts,tsx,md,mdx,css,html,scss}\" \"!\\.next/**\"",
+		"dev-prod": "NODE_ENV=production next build && next start",
 		"prepare": "husky install"
 	},
 	"prettier": {
