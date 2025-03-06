@@ -19,7 +19,7 @@ export default function Error({
 		<div className='h-screen flex flex-col justify-center items-center'>
 			<h2>Something went wrong!</h2>
 			<SimpleBtn
-				className='notfound'
+				className='notfound '
 				onClick={
 					// Attempt to recover by trying to re-render the segment
 					() => reset()

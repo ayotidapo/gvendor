@@ -79,7 +79,7 @@ const SettlementDetailsPage: React.FC<{ details: ObjectData }> = props => {
 				<div className='dt_dd'>
 					<span>Amount Settled:</span>
 					<span className='text-[#050301] font-medium'>
-						₦{s?.amount.toLocaleString()}
+						₦{s?.amount?.toLocaleString()}
 					</span>
 				</div>
 			</section>
