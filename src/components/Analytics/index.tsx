@@ -142,9 +142,9 @@ const Analytics = () => {
 				))}
 			</div>
 			<Datepicker
-				containerClassName={cx('dp__wrapper', {
-					show__dp: duration === 'custom',
-				})}
+				// containerClassName={cx('dp__wrapper', {
+				// 	show__dp: duration === 'custom',
+				// })}
 				popoverDirection='down'
 				inputId='date_'
 				value={date}
