@@ -38,8 +38,8 @@ const Analytics = () => {
 	const path = usePathname();
 
 	const duration = sQ.get('duration') || 'day';
-	const startDate = sQ.get('startDate') || '';
-	const endDate = sQ.get('endDate') || '';
+	const startDate = sQ.get('startDate') || null;
+	const endDate = sQ.get('endDate') || null;
 
 	const { ...analytics } = useSelector(state => state.analytics);
 
@@ -141,10 +141,10 @@ const Analytics = () => {
 					</SimpleBtn>
 				))}
 			</div>
-			<Datepicker
-				// containerClassName={cx('dp__wrapper', {
-				// 	show__dp: duration === 'custom',
-				// })}
+			{/* <Datepicker
+				containerClassName={cx('dp__wrapper', {
+					show__dp: duration === 'custom',
+				})}
 				popoverDirection='down'
 				inputId='date_'
 				value={date}
@@ -153,6 +153,11 @@ const Analytics = () => {
 				displayFormat='MMM D, YYYY'
 				startFrom={subMonths(new Date(), 2)}
 				maxDate={new Date()}
+			/> */}
+
+			<Datepicker
+				value={{ startDate: new Date(), endDate: new Date() }}
+				onChange={() => {}}
 			/>
 
 			<section className='metric_cards_wrapper'>
