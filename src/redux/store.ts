@@ -23,7 +23,10 @@ export const makeStore = () => {
 			notifSettings,
 			analytics,
 		},
-		middleware: getDefaultMiddleware => getDefaultMiddleware().concat(logger),
+		middleware: getDefaultMiddleware =>
+			process.env.NODE_ENV === 'production'
+				? getDefaultMiddleware()
+				: getDefaultMiddleware().concat(logger),
 	});
 };
 
