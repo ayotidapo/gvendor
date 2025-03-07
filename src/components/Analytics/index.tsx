@@ -165,6 +165,7 @@ const Analytics = () => {
 						/>
 					}
 				/>
+
 				<MetricCard
 					title='Total Orders'
 					value={
