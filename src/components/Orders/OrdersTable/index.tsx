@@ -42,7 +42,7 @@ const OrdersTable: React.FC<Props> = ({ orders }) => {
 								title={(
 									orderStatus[order?.status] || order?.status
 								)?.toLowerCase()}
-								className={`${orderStatus[order?.status]} capitalize`}
+								className={`${orderStatus[order?.status] || ''} capitalize`}
 							/>
 						</td>
 						<td onClick={e => e.stopPropagation()}>
