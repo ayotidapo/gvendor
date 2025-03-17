@@ -152,7 +152,9 @@ const HomePage: React.FC = () => {
 										)?.toLowerCase()}
 									/>
 								</div>
-								<SimpleBtn className='set_status'>Set as processing</SimpleBtn>
+								<SimpleBtn className='set_status' disabled>
+									.{/* Set as processing */}
+								</SimpleBtn>
 							</article>
 						))}
 					</section>
