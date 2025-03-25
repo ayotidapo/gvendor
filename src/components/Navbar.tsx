@@ -54,7 +54,7 @@ const _Navbar: React.FC = () => {
 						</DropDown>
 					</div>
 					<div
-						className='ml-auto z-[45] text-rose-400 xx:block lg:hidden'
+						className='ml-auto z-[45] text-rose-400 xx:block lg:hidden cursor-pointer'
 						onClick={() => setOpen(open => !open)}
 					>
 						<Icon id='menu-icon' width={35} height={35} />

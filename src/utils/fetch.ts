@@ -41,7 +41,7 @@ const Fetch = async (
 
 		if (!response.ok) {
 			if (response.status === 401 && typeof global.window !== 'undefined') {
-				signOut();
+				return signOut({ callbackUrl: '/auth/login' });
 			}
 
 			const responseErr = await response.json();
@@ -58,7 +58,7 @@ const Fetch = async (
 		// if (e.status === 401 ) {
 		// 	//console.log('e')
 		// }
-		// console.log(e.message, e.status, 9000, e);
+
 		throw { message: e.message, status: e.status };
 	}
 };

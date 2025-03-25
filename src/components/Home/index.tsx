@@ -27,7 +27,6 @@ import { toast } from 'react-toastify';
 const HomePage: React.FC = () => {
 	const {
 		orders,
-		isSuccess,
 		loading,
 		totalOrders = '',
 		totalSales = '',
@@ -141,7 +140,7 @@ const HomePage: React.FC = () => {
 								<div className='my-2'>
 									₦{order?.totalAmount?.toLocaleString()}
 								</div>
-								<span className='text-sm'>5 mins ago</span>
+								<span className='text-sm'>{order?.timeAgo}`</span>
 								<hr className='my-5' />
 								<div className='flex justify-between text-sm mt-auto mb-5'>
 									<span>Order status</span>
