@@ -15,7 +15,7 @@ export interface IOrder {
 		[key: string]: string | number;
 		price: number;
 	};
-
+	timeAgo?: string;
 	customerFirstName: string;
 	customerLastName: string;
 }

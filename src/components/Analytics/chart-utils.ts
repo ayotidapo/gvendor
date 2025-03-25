@@ -32,6 +32,7 @@ export const SalesChartOptions: ChartOptions<any> = {
 		},
 		legend: {
 			position: 'top',
+			display: false,
 		},
 	},
 };
@@ -65,6 +66,7 @@ export const OrderChartOptions: ChartOptions<any> = {
 		},
 		legend: {
 			position: 'top',
+			display: false,
 		},
 	},
 };

@@ -29,7 +29,7 @@ const LayoutWrapper: React.FC<{
 					//console.error('Error:', action.error.message);
 				}
 			} catch {
-				await signOut();
+				await signOut({ redirect: false });
 				redirect(`/auth/login`);
 			} finally {
 				setLoading(false);
