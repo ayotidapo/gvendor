@@ -36,7 +36,10 @@ const LoginPage: React.FC = ({}) => {
 			dispatch(setVendor({ ...user }));
 
 			localStorage.t_ = response?.data?.token;
-			await signInUser({ goodToken: token, vendorId: user?._id });
+			await signInUser({
+				goodToken: token,
+				vendorId: user?._id,
+			});
 		} catch (e: any) {
 			toast.error(`Error: ${e?.message}`);
 		} finally {

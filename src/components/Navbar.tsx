@@ -39,7 +39,57 @@ const _Navbar: React.FC = () => {
 					</div>
 
 					<div className='ml-auto xx:hidden lg:block'>
-						<Icon id='ring' width={20} height={20} />
+						<DropDown
+							component={
+								<span className='notification__span' data-count='50'>
+									<Icon id='bell' />
+								</span>
+							}
+							className='notification__section'
+						>
+							<section className='w-[420px] min-h-[400px] p-6'>
+								<Icon id='close_' />
+								<h3 className='text-2xl text-black font-recoleta font-semibold mb-5'>
+									Notifications
+								</h3>
+								<article className='mt-6'>
+									<div className='flex justify-between mb-1.5'>
+										<h2 className='text-black subpixel-antialiased'>
+											Order Update
+										</h2>
+										<span className='text-sm'>24m ago</span>
+									</div>
+									<p className='text-sm text-[#555555]'>
+										Your order for “Jollof Rice and 6 Chicken Wings” has been
+										placed. Tap here to track this order.
+									</p>
+								</article>
+								<article className='mt-6'>
+									<div className='flex justify-between mb-1.5'>
+										<h2 className='text-black subpixel-antialiased'>
+											Order Update
+										</h2>
+										<span className='text-sm'>07/10/2024</span>
+									</div>
+									<p className='text-sm text-[#555555]'>
+										Your order for “Jollof Rice and 6 Chicken Wings” has been
+										placed. Tap here to track this order.
+									</p>
+								</article>
+								<article className='mt-6'>
+									<div className='flex justify-between mb-1.5'>
+										<h2 className='text-black subpixel-antialiased'>
+											Order Update
+										</h2>
+										<span className='text-sm'>04/10/2024</span>
+									</div>
+									<p className='text-sm text-[#555555]'>
+										Your order for “Jollof Rice and 6 Chicken Wings” has been
+										placed. Tap here to track this order.
+									</p>
+								</article>
+							</section>
+						</DropDown>
 
 						<DropDown component={<Trigger firstName={firstName} />}>
 							<div className='w-[220px] flex flex-col p-4 gap-4'>
