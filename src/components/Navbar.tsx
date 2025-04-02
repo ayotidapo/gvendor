@@ -37,7 +37,10 @@ const _Navbar: React.FC = () => {
 					>
 						<Sidebar firstName={firstName} />
 					</div>
+
 					<div className='ml-auto xx:hidden lg:block'>
+						<Icon id='ring' width={20} height={20} />
+
 						<DropDown component={<Trigger firstName={firstName} />}>
 							<div className='w-[220px] flex flex-col p-4 gap-4'>
 								<span>Get help</span>

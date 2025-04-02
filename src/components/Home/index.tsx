@@ -128,7 +128,7 @@ const HomePage: React.FC = () => {
 				)}
 				{len > 0 && !loading && (
 					<section className='orders_wrapper'>
-						{orders.map((order: IOrder, i) => (
+						{orders.slice(0, 5).map((order: IOrder, i) => (
 							<article
 								onClick={() => router.push(`/orders/${order?._id}`)}
 								className={`order_card ${orderStatus[order?.status]}`}
