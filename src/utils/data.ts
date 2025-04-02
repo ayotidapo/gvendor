@@ -73,10 +73,10 @@ const orderStages = [
 		name: 'All',
 		value: '',
 	},
-	{
-		name: 'New',
-		value: 'NEW',
-	},
+	// {
+	// 	name: 'New',
+	// 	value: 'NEW',
+	// },
 	{
 		name: 'Processing',
 		value: 'ONGOING',

@@ -27,7 +27,7 @@ const OrdersTable: React.FC<Props> = ({ orders }) => {
 					<th>AMOUNT</th>
 					<th>DATE & TIME</th>
 					<th>ORDER STATUS</th>
-					<th>Actions</th>
+					{/* <th>Actions</th> */}
 				</tr>
 			</thead>
 			<tbody>
@@ -45,9 +45,9 @@ const OrdersTable: React.FC<Props> = ({ orders }) => {
 								className={`${orderStatus[order?.status] || ''} capitalize`}
 							/>
 						</td>
-						<td onClick={e => e.stopPropagation()}>
+						{/* <td onClick={e => e.stopPropagation()}>
 							<Icon id='ellipsis' />
-						</td>
+						</td> */}
 					</tr>
 				))}
 			</tbody>
