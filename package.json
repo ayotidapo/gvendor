@@ -59,6 +59,7 @@
 		"date-fns": "^3.6.0",
 		"dayjs": "^1.11.13",
 		"files-uploader-rc": "^3.3.8",
+		"firebase": "^11.6.0",
 		"formik": "^2.4.6",
 		"fusioncharts": "^3.18.0",
 		"html-react-parser": "^5.1.13",

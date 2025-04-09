@@ -240,19 +240,14 @@ img {
 	}
 }
 
-.dropdown.notification__section {
-	.dropdown__content {
-		@apply -left-[400px];
-	}
-}
 .notification__span {
 	@apply relative inline-block mr-7 cursor-pointer;
-	&::after {
+	.badge {
 		position: absolute;
 		top: -6px;
 		left: 10px;
 		border: 1px solid #fff;
-		content: attr(data-count);
+		//content: attr(data-count);
 		display: inline-flex;
 		justify-content: center;
 		align-items: center;
@@ -263,5 +258,13 @@ img {
 		height: 20px;
 		background-color: rgb(245, 71, 71);
 		font-size: 12px;
+	}
+	.notification__bar {
+		@apply w-[420px] h-[400px] overflow-auto p-6 bg-white absolute shadow-lg rounded-lg right-0 top-[42px] invisible opacity-0;
+		transition: all 0.2s linear;
+
+		&.reveal_ {
+			@apply visible opacity-100;
+		}
 	}
 }
