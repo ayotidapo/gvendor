@@ -7,7 +7,8 @@ import inventories from './reducers/inventories';
 import settlements from './reducers/settlements';
 import orderDetails from './reducers/order_details';
 import inventoryDetails from './reducers/inventory_details';
-import notifSettings from './reducers/notifications';
+import notifSettings from './reducers/notifications_settings';
+import notifications from './reducers/notifications';
 import analytics from './reducers/analytics';
 
 export const makeStore = () => {
@@ -21,6 +22,7 @@ export const makeStore = () => {
 			orderDetails,
 			inventoryDetails,
 			notifSettings,
+			notifications,
 			analytics,
 		},
 		middleware: getDefaultMiddleware =>

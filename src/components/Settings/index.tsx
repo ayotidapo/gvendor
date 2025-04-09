@@ -5,7 +5,7 @@ import './settings.scss';
 import dynamic from 'next/dynamic';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { settingsTabs } from '@/utils/data';
-import { getNotifSettings } from '@/redux/apis/notifications';
+import { getNotifSettings } from '@/redux/apis/notifications_settings';
 import { useDispatch } from '@/redux/hooks';
 
 const BankAcct = dynamic(() => import('./views/BankAcct'));

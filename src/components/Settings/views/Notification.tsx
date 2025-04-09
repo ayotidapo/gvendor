@@ -1,7 +1,7 @@
 import Radio from '@/atoms/Radio';
 import { SimpleBtn } from '@/atoms/buttons/Button';
 import ToggleDisplay from '@/molecules/ToggleDisplay';
-import { updateNotifSettingsApi } from '@/redux/apis/notifications';
+import { updateNotifSettingsApi } from '@/redux/apis/notifications_settings';
 import { useSelector } from '@/redux/hooks';
 import { ObjectData } from '@/utils/interface';
 import { useFormik } from 'formik';
