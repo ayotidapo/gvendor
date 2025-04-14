@@ -29,7 +29,7 @@ const _Navbar: React.FC = () => {
 	const [reveal, setReveal] = useState(false);
 	const { firstName = '', _id } = useSelector(state => state?.vendor);
 	const { loading, notifications } = useSelector(state => state?.notifications);
-	console.log({ notifications });
+
 	const getAllNotifications = () => {
 		setReveal(true);
 		dispatch(getNotifications());

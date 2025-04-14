@@ -36,10 +36,11 @@ const requestForToken = async () => {
 
 		if (token) {
 			console.log('FCM Token:', token);
+			localStorage.fcm = token;
 			// Send this token to your backend or use it to send push notifications
 		} else {
 			alert('Unable to load token, refresh the browser');
-			console.log('No FCM token available.');
+			//console.log('No FCM token available.');
 		}
 	} catch (error) {
 		console.error('Error requesting notification permission:', error);
@@ -65,12 +66,10 @@ export const requestToken = async () => {
 			const permission = await Notification.requestPermission();
 			if (permission === 'granted') {
 				requestForToken();
-				console.log(1);
 			} else if (permission === 'default') {
 				const permission = await Notification.requestPermission();
 				if (permission === 'granted') {
 					requestForToken();
-					console.log(2);
 				}
 			}
 		}
