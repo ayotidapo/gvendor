@@ -75,14 +75,10 @@ const Register: React.FC<Props> = props => {
 	}
 
 	if (isRegSuccess && reference) {
-		const qS = props?.token ? `&token=${props.token}` : '';
+		const qS = props?.token ? `&token=${vendorUser?.token}` : '';
+
 		router.replace(`/auth/create-password?vendorId=${vendorUser?._id}${qS}`);
 	}
-
-	// if (isError) {
-	// 	toast.error(`Error: ${error}`);
-	// 	notFound();
-	// }
 
 	return (
 		<>
@@ -110,7 +106,12 @@ const Register: React.FC<Props> = props => {
 						servicesOffered: [values?.servicesOffered],
 					};
 
-					dispatch(registerVendor(payload));
+					const action = (await dispatch(
+						registerVendor(payload)
+					)) as ObjectData;
+					if (action?.error) {
+						toast.error(`Error: ${action?.error?.message}`);
+					}
 				}}
 			>
 				<RegisterBizForm />

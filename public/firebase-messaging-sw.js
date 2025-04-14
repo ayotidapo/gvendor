@@ -26,7 +26,7 @@ messaging.onBackgroundMessage(messaging, payload => {
 });
 
 self.addEventListener('notificationclick', event => {
-	console.log('Notification click event: ', event);
+	// ('Notification click event: ', event);
 	event.notification.close();
 
 	// Open a URL when the notification is clicked
@@ -45,7 +45,7 @@ self.addEventListener('notificationclick', event => {
 				}
 
 				if (clients.openWindow) {
-					console.log('OPENWINDOW ON CLIENT');
+					// console.log('OPENWINDOW ON CLIENT');
 					return clients.openWindow(url);
 				}
 			})

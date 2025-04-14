@@ -2,11 +2,7 @@
 import React, { useEffect } from 'react';
 //import { getMessaging, onMessage } from 'firebase/messaging';
 import { useDispatch } from '@/redux/hooks';
-import {
-	requestToken,
-	firebaseConfig,
-	initializeFirebase,
-} from '@/utils/fcmPushNotification';
+import { requestToken, initializeFirebase } from '@/utils/fcmPushNotification';
 import { setVendor } from '@/redux/reducers/vendor';
 import { IVendor } from '@/utils/interface';
 
