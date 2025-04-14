@@ -28,9 +28,7 @@ const _Navbar: React.FC = () => {
 	const [open, setOpen] = useState(false);
 	const [reveal, setReveal] = useState(false);
 	const { firstName = '', _id } = useSelector(state => state?.vendor);
-	const { error, loading, notifications } = useSelector(
-		state => state?.notifications
-	);
+	const { loading, notifications } = useSelector(state => state?.notifications);
 	console.log({ notifications });
 	const getAllNotifications = () => {
 		setReveal(true);
@@ -53,6 +51,7 @@ const _Navbar: React.FC = () => {
 					</div>
 
 					<div className='ml-auto xx:hidden lg:block'>
+						{/* this need to be moved out of here to be always displayed on both mobile and large screen  */}
 						<span className='notification__span' data-count='50'>
 							<span onClick={getAllNotifications}>
 								<Icon id='bell' />
@@ -95,7 +94,7 @@ const _Navbar: React.FC = () => {
 								))}
 							</section>
 						</span>
-
+						{/* this  */}
 						<DropDown component={<Trigger firstName={firstName} />}>
 							<div className='w-[220px] flex flex-col p-4 gap-4'>
 								<span>Get help</span>

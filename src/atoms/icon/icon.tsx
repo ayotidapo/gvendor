@@ -5,6 +5,7 @@ export const Icon = ({
 	height = 24,
 	className = '',
 	onClick,
+	onFocus,
 	...props
 }: {
 	id?: string;
@@ -13,6 +14,7 @@ export const Icon = ({
 	height?: number;
 	className?: string;
 	onClick?: () => void;
+	onFocus?: () => void;
 }) => {
 	return (
 		<svg

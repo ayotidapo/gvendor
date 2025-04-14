@@ -61,7 +61,7 @@ const Register: React.FC<Props> = props => {
 	const dispatch = useDispatch();
 	const vendorUser = useSelector(state => state?.vendor);
 
-	const { isError, error, isSuccess, loading, businessDetails } = vendorUser;
+	const { isRegSuccess, businessDetails } = vendorUser;
 	const router = useRouter();
 
 	useEffect(() => {
@@ -70,19 +70,19 @@ const Register: React.FC<Props> = props => {
 
 	const { businessName, email, reference } = props?.vendor || {};
 
-	if (isSuccess && !reference) {
+	if (isRegSuccess && !reference) {
 		return <GetBack />;
 	}
 
-	if (isSuccess && reference) {
+	if (isRegSuccess && reference) {
 		const qS = props?.token ? `&token=${props.token}` : '';
 		router.replace(`/auth/create-password?vendorId=${vendorUser?._id}${qS}`);
 	}
 
-	if (isError) {
-		toast.error(`Error: ${error}`);
-		notFound();
-	}
+	// if (isError) {
+	// 	toast.error(`Error: ${error}`);
+	// 	notFound();
+	// }
 
 	return (
 		<>

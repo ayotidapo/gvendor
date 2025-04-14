@@ -30,9 +30,9 @@ const GetUserLayout: React.FC<{
 		localStorage.t_ = vendor?.goodToken;
 		dispatch(setVendor(vendor));
 	}, []);
-	console.log(vendor, 98777777);
+
 	useEffect(() => {
-		// startPushNotification();
+		startPushNotification();
 		// const messaging = getMessaging();
 		// onMessage(messaging, payload => {
 		// 	console.log('Message received in foreground:', payload);
