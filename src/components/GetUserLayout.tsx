@@ -32,7 +32,7 @@ const GetUserLayout: React.FC<{
 	}, []);
 
 	useEffect(() => {
-		startPushNotification();
+		// startPushNotification();
 		// const messaging = getMessaging();
 		// onMessage(messaging, payload => {
 		// 	console.log('Message received in foreground:', payload);
