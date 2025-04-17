@@ -43,9 +43,9 @@ export const createPasswordApi = async (body: Record<string, any>) => {
 export const changePasswordApi = async (body: Record<string, any>) => {
 	const { newPassword2, ...payload } = body;
 
-	const response = await Fetch(`/profile/change-password`, {
+	const response = await Fetch(`/vendor/change-password`, {
 		body: payload,
-		method: 'patch',
+		method: 'put',
 	});
 
 	return response;

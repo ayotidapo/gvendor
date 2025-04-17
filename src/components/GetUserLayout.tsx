@@ -4,7 +4,8 @@ import React, { useEffect } from 'react';
 import { useDispatch } from '@/redux/hooks';
 import { requestToken, initializeFirebase } from '@/utils/fcmPushNotification';
 import { setVendor } from '@/redux/reducers/vendor';
-import { IVendor } from '@/utils/interface';
+import { IVendor, ObjectData } from '@/utils/interface';
+import { updateVendor } from '@/redux/apis/vendor';
 
 const GetUserLayout: React.FC<{
 	children: React.ReactNode;
@@ -16,7 +17,23 @@ const GetUserLayout: React.FC<{
 		const { onMessage } = await import('firebase/messaging');
 		const messaging = await initializeFirebase();
 
-		await requestToken();
+		const token = await requestToken();
+
+		const userDeviceTokens = vendor?.deviceToken || [];
+		const existingFcmToken = localStorage?.fcm || '';
+
+		const validDeviceTokens = userDeviceTokens.filter(
+			(itemToken: string) => itemToken !== existingFcmToken
+		);
+		validDeviceTokens.unshift(token);
+
+		const action = await dispatch(
+			updateVendor({ deviceTokens: validDeviceTokens })
+		);
+
+		if (updateVendor?.rejected?.match(action)) {
+			console.log('device token not updated');
+		}
 		onMessage(messaging, payload => {
 			console.log('Message received in foreground:', payload);
 		});
@@ -28,7 +45,7 @@ const GetUserLayout: React.FC<{
 	}, []);
 
 	useEffect(() => {
-		// startPushNotification();
+		startPushNotification();
 		// const messaging = getMessaging();
 		// onMessage(messaging, payload => {
 		// 	console.log('Message received in foreground:', payload);

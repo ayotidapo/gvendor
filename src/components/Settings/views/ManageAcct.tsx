@@ -34,9 +34,9 @@ const ManageAcct = () => {
 			try {
 				setLoading(true);
 				await changePasswordApi(values);
-				toast.error(`Password successfully changed`);
-			} catch {
-				toast.error(`Error: could not change password`);
+				toast.success(`Password successfully changed`);
+			} catch (e: any) {
+				toast.error(`Error: ${e.message} \ncould not change password`);
 			} finally {
 				setLoading(false);
 			}

@@ -26,6 +26,7 @@ export const initializeFirebase = async () => {
 };
 
 const requestForToken = async () => {
+	let devToken;
 	try {
 		const messaging = await initializeFirebase();
 
@@ -36,6 +37,7 @@ const requestForToken = async () => {
 
 		if (token) {
 			console.log('FCM Token:', token);
+			devToken = token;
 			localStorage.fcm = token;
 			// Send this token to your backend or use it to send push notifications
 		} else {
@@ -45,6 +47,8 @@ const requestForToken = async () => {
 	} catch (error) {
 		console.error('Error requesting notification permission:', error);
 	}
+
+	return devToken;
 };
 
 export const requestToken = async () => {
@@ -65,11 +69,11 @@ export const requestToken = async () => {
 			}
 			const permission = await Notification.requestPermission();
 			if (permission === 'granted') {
-				requestForToken();
+				return requestForToken();
 			} else if (permission === 'default') {
 				const permission = await Notification.requestPermission();
 				if (permission === 'granted') {
-					requestForToken();
+					return requestForToken();
 				}
 			}
 		}
