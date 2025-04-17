@@ -9,8 +9,8 @@ interface IVState extends IVendor {
 	isRegError?: boolean;
 	isRegLoading?: boolean;
 	isError?: boolean;
-	error: string | undefined;
-	regError: string | undefined;
+	error?: string | undefined;
+	regError?: string | undefined;
 	loading: boolean;
 }
 
@@ -28,8 +28,6 @@ const initialState: IVState = {
 	servicesOffered: [''],
 	website: '',
 	businessAddress: { address: '', longitude: '', latitude: '' },
-	error: '',
-	regError: '',
 	loading: false,
 };
 

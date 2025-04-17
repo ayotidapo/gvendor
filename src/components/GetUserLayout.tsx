@@ -5,7 +5,7 @@ import { useDispatch } from '@/redux/hooks';
 import { requestToken, initializeFirebase } from '@/utils/fcmPushNotification';
 import { setVendor } from '@/redux/reducers/vendor';
 import { IVendor, ObjectData } from '@/utils/interface';
-import { updateVendor } from '@/redux/apis/vendor';
+import { updateVendor, updateVendorApi } from '@/redux/apis/vendor';
 
 const GetUserLayout: React.FC<{
 	children: React.ReactNode;
@@ -14,29 +14,32 @@ const GetUserLayout: React.FC<{
 	const dispatch = useDispatch();
 
 	const startPushNotification = async () => {
-		const { onMessage } = await import('firebase/messaging');
-		const messaging = await initializeFirebase();
+		try {
+			const { onMessage } = await import('firebase/messaging');
+			const messaging = await initializeFirebase();
 
-		const token = await requestToken();
+			const token = await requestToken();
 
-		const userDeviceTokens = vendor?.deviceToken || [];
-		const existingFcmToken = localStorage?.fcm || '';
+			const userDeviceTokens = vendor?.deviceToken || [];
+			const existingFcmToken = localStorage?.fcm || '';
 
-		const validDeviceTokens = userDeviceTokens.filter(
-			(itemToken: string) => itemToken !== existingFcmToken
-		);
-		validDeviceTokens.unshift(token);
+			const validDeviceTokens = userDeviceTokens.filter(
+				(itemToken: string) => itemToken !== existingFcmToken
+			);
 
-		const action = await dispatch(
-			updateVendor({ deviceTokens: validDeviceTokens })
-		);
+			validDeviceTokens.unshift(token);
 
-		if (updateVendor?.rejected?.match(action)) {
-			console.log('device token not updated');
+			const response = await updateVendorApi({
+				deviceTokens: validDeviceTokens,
+			});
+			console.log({ response });
+			dispatch(setVendor(response?.data));
+			onMessage(messaging, payload => {
+				console.log('Message received in foreground:', payload);
+			});
+		} catch (e: any) {
+			console.log(e?.message);
 		}
-		onMessage(messaging, payload => {
-			console.log('Message received in foreground:', payload);
-		});
 	};
 
 	useEffect(() => {
@@ -45,7 +48,7 @@ const GetUserLayout: React.FC<{
 	}, []);
 
 	useEffect(() => {
-		startPushNotification();
+		//startPushNotification();
 		// const messaging = getMessaging();
 		// onMessage(messaging, payload => {
 		// 	console.log('Message received in foreground:', payload);

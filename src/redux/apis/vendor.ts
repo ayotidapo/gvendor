@@ -104,7 +104,7 @@ const getVendor = createAsyncThunk(
 );
 
 const registerVendor = createAsyncThunk('vendor/register', registerVendorApi);
-const updateVendor = createAsyncThunk('vendor/update', registerVendorApi);
+const updateVendor = createAsyncThunk('vendor/update', updateVendorApi);
 const login = createAsyncThunk('vendor/login', loginApi);
 
 export { getInvitedVendor, getVendor, registerVendor, updateVendor, login };
