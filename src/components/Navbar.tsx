@@ -41,7 +41,7 @@ const _Navbar: React.FC = () => {
 				<Image src='/assets/logo.png' width={100} height={32} alt='logo' />
 				{/* <Image src={Logo} alt='bg image' width={100} height={32} /> */}
 			</div>
-			{_id && firstName && (
+			{_id && (
 				<>
 					<div
 						className={cx(`sidebar_mobile_wrapper`, { open })}
