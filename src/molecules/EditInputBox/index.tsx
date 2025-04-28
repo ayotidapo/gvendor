@@ -48,7 +48,7 @@ const EditInputBox: React.FC<Props> = props => {
 	useEffect(() => {
 		setIsNonEdit(non_Editable);
 	}, [non_Editable]);
-
+	console.log(props.error);
 	return (
 		<div className='edit_'>
 			<div className='flex justify-between items-center'>
