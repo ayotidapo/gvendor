@@ -12,11 +12,11 @@ import SettlementTable from '../Settlements/SettlementTable';
 import DropDown from '@/atoms/DropDown';
 
 interface Props {
-	details: IOrderDetails;
+	details: IOrderDetails & { settlements: [] };
 }
 
 const OrderDetailsPage: React.FC<Props> = ({ details }) => {
-	const { personalInformation, orderitems } = details;
+	const { personalInformation, orderitems, settlements = [] } = details;
 	return (
 		<div className='orderdetails'>
 			<section className='flex flex-col'>
@@ -76,9 +76,11 @@ const OrderDetailsPage: React.FC<Props> = ({ details }) => {
 			{orderitems?.map((item, i) => (
 				<OrderItem totalAmount={details?.totalAmount} item={item} key={i} />
 			))}
-			<section className='table_wrapper mt-20'>
-				<SettlementTable settlements={[]} />
-			</section>
+			{settlements?.length > 0 && (
+				<section className='table_wrapper mt-20'>
+					<SettlementTable settlements={[]} />
+				</section>
+			)}
 		</div>
 	);
 };

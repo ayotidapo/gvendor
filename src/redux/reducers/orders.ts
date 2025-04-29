@@ -5,6 +5,7 @@ import { getOrders } from '../apis/orders';
 
 export interface IOrder {
 	_id: string;
+	orderNumber: string;
 	orderId: string;
 	itemsOrdered: string[];
 	quantity: number;
