@@ -61,7 +61,10 @@ const orderStatus: Record<string, any> = {
 	PENDING: 'new',
 	PROCESSING: 'processing',
 	COMPLETED: 'completed',
-
+	DELIVERED: 'completed',
+	PREPARING_DELIVERY: 'processing',
+	READY_FOR_PICKUP: 'processing',
+	SHIPPED: 'processing',
 	NEW: 'new',
 	ONGOING: 'processing',
 	FULFILLED: 'completed',

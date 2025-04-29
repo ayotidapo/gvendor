@@ -55,7 +55,7 @@ const _Navbar: React.FC = () => {
 						<span className='notification__span' data-count='50'>
 							<span onClick={getAllNotifications}>
 								<Icon id='bell' />
-								<span className='badge'>50</span>
+								{/* <span className='badge'>50</span> */}
 							</span>
 							<section
 								className={`notification__bar ${reveal ? 'reveal_' : ''}`}
@@ -78,20 +78,22 @@ const _Navbar: React.FC = () => {
 										No notification found
 									</div>
 								)}
-								{notifications?.map((item, i) => (
-									<article className='mt-7' key={i}>
-										<div className='flex justify-between mb-1.5'>
-											<h2 className='text-black subpixel-antialiased'>
-												{item?.title}
-											</h2>
-											<span className='text-sm'>
-												{item?.updatedAt &&
-													format(item?.updatedAt, 'dd/MM/yyyy hh:mm aa')}
-											</span>
-										</div>
-										<p className='text-sm text-[#555555]'>{item?.message}</p>
-									</article>
-								))}
+								<section className='notification_list_wrapper'>
+									{notifications?.map((item, i) => (
+										<article className='mt-7' key={i}>
+											<div className='flex justify-between mb-1.5'>
+												<h2 className='text-black subpixel-antialiased'>
+													{item?.title}
+												</h2>
+												<span className='text-sm'>
+													{item?.updatedAt &&
+														format(item?.updatedAt, 'dd/MM/yyyy hh:mm aa')}
+												</span>
+											</div>
+											<p className='text-sm text-[#555555]'>{item?.message}</p>
+										</article>
+									))}
+								</section>
 							</section>
 						</span>
 						{/* this  */}

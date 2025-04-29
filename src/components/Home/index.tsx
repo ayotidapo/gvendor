@@ -135,7 +135,7 @@ const HomePage: React.FC = () => {
 								key={i}
 							>
 								<div className='flex justify-between text-black subpixel-antialiased'>
-									Orders #15285057
+									#{order?.orderNumber}
 								</div>
 								<div className='my-2'>
 									₦{order?.totalAmount?.toLocaleString()}
