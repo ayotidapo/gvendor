@@ -8,6 +8,11 @@ export const getSettlementsApi = async (queyString?: string) => {
 	return response;
 };
 
+export const getSettlementsByOrderApi = async (orderId: string) => {
+	const response = await Fetch(`/settlements/${orderId}/order`);
+	return response;
+};
+
 const getSettlements = createAsyncThunk(
 	'settlements/getSettlements',
 	getSettlementsApi

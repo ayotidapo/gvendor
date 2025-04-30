@@ -14,7 +14,8 @@
 	&.Completed,
 	&.Successful,
 	&.COMPLETED,
-	&.SUCCESSFUL {
+	&.SUCCESSFUL,
+	&.delivered {
 		@apply text-[#1b9066] bg-[#d1e7df];
 	}
 	&.new,
