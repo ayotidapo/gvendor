@@ -98,8 +98,14 @@ const Register: React.FC<Props> = props => {
 				}}
 				validationSchema={validationSchema}
 				onSubmit={async (values, { setErrors }) => {
+					let body: ObjectData = { ...values };
+					if (!values.website) {
+						const { website, ...rest } = values;
+						body = { ...rest };
+					}
+
 					const payload = {
-						...values,
+						...body,
 						businessAddress: values?.businessAddress,
 						phone: values?.phone.replace('+', ''),
 						reference,

@@ -79,3 +79,53 @@ export const requestToken = async () => {
 		}
 	}
 };
+
+//Backend Implementation
+
+// const admin = require('firebase-admin');
+// const express = require('express');
+// const app = express();
+
+// const serviceAccount = require('./path/to/serviceAccountKey.json');
+
+// admin.initializeApp({
+// 	credential: admin.credential.cert(serviceAccount),
+// });
+
+// // Body parsing middleware
+// app.use(express.json());
+
+// // Endpoint to send push notification
+// app.post('/send', async (req, res) => {
+// 	const { token, title, body } = req.body;
+
+// 	const message = {
+// Target the device using the token
+//      token: "YOUR_DEVICE_REGISTRATION_TOKEN",
+// Notification payload
+//   notification: {
+//     title: "Hello!",
+//     body: "This is a test message.",
+//     "icon": "https://yourdomain.com/icons/icon-96x96.png"
+//   },
+// Custom data payload
+//   data: {
+//     key1: "value1",
+//     key2: "value2",
+//     customKey: "some custom value",
+//   },
+//
+// 	};
+
+// 	try {
+// 		const response = await admin.messaging().send(message);
+// 		console.log('Successfully sent message:', response);
+// 		res.status(200).json({ success: true, response });
+// 	} catch (error) {
+// 		console.error('Error sending message:', error);
+// 		res.status(500).json({ success: false, error: error.message });
+// 	}
+// });
+
+// // Start server
+// app.listen(3000, () => console.log('Server running on port 3000'));
