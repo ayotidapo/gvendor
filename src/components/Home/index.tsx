@@ -82,6 +82,7 @@ const HomePage: React.FC = () => {
 
 	const len = orders?.length;
 	if (loadingMet) return <LoadingPage className='py-5 ' />;
+
 	return (
 		<>
 			<div className='homepage'>

@@ -10,13 +10,20 @@ import { IOrderDetails } from '@/redux/reducers/order_details';
 import { orderStatus, setStages } from '@/utils/data';
 import SettlementTable from '../Settlements/SettlementTable';
 import DropDown from '@/atoms/DropDown';
+import { ObjectData } from '@/utils/interface';
 
 interface Props {
-	details: IOrderDetails & { settlements: [] };
+	details: IOrderDetails;
+	orderSettlement: {
+		amount: number;
+		status: string;
+		createdAt: string;
+	} & ObjectData;
 }
 
-const OrderDetailsPage: React.FC<Props> = ({ details }) => {
-	const { personalInformation, orderitems, settlements = [] } = details;
+const OrderDetailsPage: React.FC<Props> = ({ details, orderSettlement }) => {
+	const { personalInformation, orderitems } = details;
+	const settlements = [orderSettlement];
 	return (
 		<div className='orderdetails'>
 			<section className='flex flex-col'>
@@ -76,9 +83,9 @@ const OrderDetailsPage: React.FC<Props> = ({ details }) => {
 			{orderitems?.map((item, i) => (
 				<OrderItem totalAmount={details?.totalAmount} item={item} key={i} />
 			))}
-			{settlements?.length > 0 && (
+			{orderSettlement?._id && (
 				<section className='table_wrapper mt-20'>
-					<SettlementTable settlements={[]} />
+					<SettlementTable settlements={settlements} />
 				</section>
 			)}
 		</div>

@@ -20,7 +20,8 @@
 			@apply text-[#ea8d00] bg-[#f7e9d5];
 		}
 	}
-	&.completed {
+	&.completed,
+	&.delivered {
 		@apply border-[#1b9066];
 		.tag {
 			@apply text-[#1b9066] bg-[#d1e7df];

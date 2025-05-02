@@ -21,6 +21,7 @@ const SettlementTable: React.FC<Props> = props => {
 	const onNavigate = (id: string) => {
 		router.push(`/settlements/${id}`);
 	};
+
 	return (
 		<>
 			<table className='table_'>
