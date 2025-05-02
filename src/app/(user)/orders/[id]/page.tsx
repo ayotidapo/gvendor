@@ -21,15 +21,21 @@ const OrderDetails: React.FC<ServerProps> = async ({ params }) => {
 	const details = response?.data;
 	console.log({ orderId });
 
-	const res_settlements = await Fetch(
-		`/settlements/${orderId}/order`,
-		{},
-		user?.goodToken
+	let res_settlements;
+	try {
+		const response = await Fetch(
+			`/settlements/${orderId}/order`,
+			{},
+			user?.goodToken
+		);
+		res_settlements = { ...response?.data };
+	} catch (e: any) {
+		console.log(`Error: ${e?.message}`);
+	}
+
+	return (
+		<OrderDetailsPage details={details} orderSettlement={res_settlements} />
 	);
-
-	console.log({ res_settlements });
-
-	return <OrderDetailsPage details={details} />;
 };
 
 export default OrderDetails;

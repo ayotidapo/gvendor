@@ -260,14 +260,16 @@ img {
 		font-size: 12px;
 	}
 	.notification__bar {
-		@apply w-[420px] p-6 bg-white absolute shadow-lg rounded-lg right-0 top-[42px] invisible opacity-0;
+		@apply w-[420px] p-6 pr-2.5 bg-white absolute shadow-lg rounded-lg right-0 top-[42px] invisible opacity-0;
 		transition: all 0.2s linear;
 
 		&.reveal_ {
 			@apply visible opacity-100;
 		}
 		.notification_list_wrapper {
-			@apply h-[345px] overflow-auto;
+			@apply h-[345px] overflow-auto pr-2.5;
+			&.show-scroll::-webkit-scrollbar-thumb {
+			}
 		}
 	}
 }

@@ -78,7 +78,7 @@ const _Navbar: React.FC = () => {
 										No notification found
 									</div>
 								)}
-								<section className='notification_list_wrapper'>
+								<section className='notification_list_wrapper show-scroll'>
 									{notifications?.map((item, i) => (
 										<article className='mt-7' key={i}>
 											<div className='flex justify-between mb-1.5'>
