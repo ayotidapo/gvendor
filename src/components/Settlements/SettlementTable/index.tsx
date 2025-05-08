@@ -11,17 +11,18 @@ import { orderStatus } from '@/utils/data';
 
 interface Props {
 	settlements: ObjectData[];
+	isNonClikable?: boolean;
 }
 
 const SettlementTable: React.FC<Props> = props => {
-	const { settlements } = props;
+	const { settlements, isNonClikable } = props;
 
 	const router = useRouter();
 
 	const onNavigate = (id: string) => {
 		router.push(`/settlements/${id}`);
 	};
-
+	console.log({ settlements });
 	return (
 		<>
 			<table className='table_'>
@@ -36,8 +37,13 @@ const SettlementTable: React.FC<Props> = props => {
 				</thead>
 				<tbody>
 					{settlements.map((stlmnt: ObjectData, i: number) => (
-						<tr onClick={() => onNavigate(stlmnt?._id)} key={i}>
-							<td>#{stlmnt?.transactionId || 'N/A'}</td>
+						<tr
+							onClick={() =>
+								isNonClikable ? () => {} : onNavigate(stlmnt?.order?.paymentId)
+							}
+							key={i}
+						>
+							<td>#{stlmnt?.order?.paymentId || 'N/A'}</td>
 							<td>#{stlmnt?.order?.orderNumber || 'N/A'}</td>
 							<td>₦{stlmnt?.amount?.toLocaleString()}</td>
 							<td>

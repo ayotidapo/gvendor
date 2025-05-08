@@ -85,7 +85,7 @@ const OrderDetailsPage: React.FC<Props> = ({ details, orderSettlement }) => {
 			))}
 			{orderSettlement?._id && (
 				<section className='table_wrapper mt-20'>
-					<SettlementTable settlements={settlements} />
+					<SettlementTable settlements={settlements} isNonClikable />
 				</section>
 			)}
 		</div>
