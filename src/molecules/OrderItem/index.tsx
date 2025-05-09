@@ -10,10 +10,11 @@ interface Props {
 }
 
 const OrderItem: React.FC<Props> = ({ item }) => {
+	const itemImage = item?.productDetail?.images?.[0] || '';
 	return (
 		<article className='order_item'>
-			<div className='relative w-[140px] h-[140px]'>
-				<Image src='/assets/image68.png' alt='order-img' fill />
+			<div className='relative w-[140px] h-[140px] rounded-lg overflow-hidden'>
+				<Image src={itemImage} alt='order-img' fill />
 			</div>
 
 			<div className='flex-1 px-5'>

@@ -27,6 +27,7 @@ import { definedFilter } from '@/utils/data';
 import './analytics.scss';
 import { differenceInDays, subMonths } from 'date-fns';
 import { ObjectData } from '@/utils/interface';
+import settlements from '@/redux/reducers/settlements';
 
 Chart.register(...registerables);
 
@@ -42,6 +43,7 @@ const Analytics = () => {
 	const endDate = sQ.get('endDate') || null;
 
 	const { ...analytics } = useSelector(state => state.analytics);
+	const { totalEarnings } = useSelector(state => state.settlements);
 
 	const [showSales, setShowSales] = useState(true);
 
@@ -157,10 +159,10 @@ const Analytics = () => {
 
 			<section className='metric_cards_wrapper'>
 				<MetricCard
-					title='Total Sales'
+					title='Total Settled Amount'
 					value={
 						<PercentGrowth
-							amount={`₦${analytics?.totalSales?.totalRevenue?.toLocaleString() || ''}`}
+							amount={`₦${totalEarnings?.toLocaleString() || ''}`}
 							desc={`${((analytics?.totalSales?.percentageIncrease || 0) / 100).toFixed(2)}% increase in the past week`}
 						/>
 					}

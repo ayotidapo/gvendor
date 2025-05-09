@@ -6,6 +6,7 @@ interface ISettlements {
 	docs: any[];
 	total: number;
 	totalPages: number;
+	totalEarnings?: number;
 	isSuccess?: boolean;
 	isError?: boolean;
 	error?: string | undefined;
@@ -15,6 +16,7 @@ const initialState: ISettlements = {
 	docs: [],
 	total: 0,
 	totalPages: 0,
+	totalEarnings: 0,
 	loading: true,
 };
 
@@ -32,7 +34,7 @@ export const settlementsSlice = createSlice({
 	extraReducers: builder => {
 		builder
 			.addCase(getSettlements.pending, state => {
-				state.loading = true;
+				state.loading = !state.isSuccess && !state.isError;
 				state.isSuccess = false;
 				state.isError = false;
 			})

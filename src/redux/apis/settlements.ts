@@ -3,7 +3,7 @@ import Fetch from '@/utils/fetch';
 import { ObjectData } from '@/utils/interface';
 
 export const getSettlementsApi = async (queyString?: string) => {
-	const response = await Fetch(`/settlements${queyString}`);
+	const response = await Fetch(`/settlements${queyString || ''}`);
 
 	return response;
 };

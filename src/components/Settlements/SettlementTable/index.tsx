@@ -39,11 +39,16 @@ const SettlementTable: React.FC<Props> = props => {
 					{settlements.map((stlmnt: ObjectData, i: number) => (
 						<tr
 							onClick={() =>
-								isNonClikable ? () => {} : onNavigate(stlmnt?.order?.paymentId)
+								isNonClikable ? () => {} : onNavigate(stlmnt?._id)
 							}
 							key={i}
 						>
-							<td>#{stlmnt?.order?.paymentId || 'N/A'}</td>
+							<td>
+								#
+								{stlmnt?.order?.paymentId?._id ||
+									stlmnt?.order?.paymentId ||
+									'N/A'}
+							</td>
 							<td>#{stlmnt?.order?.orderNumber || 'N/A'}</td>
 							<td>₦{stlmnt?.amount?.toLocaleString()}</td>
 							<td>
