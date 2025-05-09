@@ -6,6 +6,7 @@ import { requestToken, initializeFirebase } from '@/utils/fcmPushNotification';
 import { setVendor } from '@/redux/reducers/vendor';
 import { IVendor, ObjectData } from '@/utils/interface';
 import { updateVendor, updateVendorApi } from '@/redux/apis/vendor';
+import { getSettlements } from '@/redux/apis/settlements';
 
 const GetUserLayout: React.FC<{
 	children: React.ReactNode;
@@ -45,6 +46,7 @@ const GetUserLayout: React.FC<{
 	useEffect(() => {
 		localStorage.t_ = vendor?.goodToken;
 		dispatch(setVendor(vendor));
+		dispatch(getSettlements());
 	}, []);
 
 	useEffect(() => {

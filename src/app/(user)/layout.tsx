@@ -17,7 +17,8 @@ const UserLayout: React.FC<{ children: React.ReactNode }> = async props => {
 	try {
 		const response = await getVendorApi(goodToken);
 		vendor = response?.data;
-	} catch (e) {
+	} catch (e: any) {
+		console.log(`${e?.message} DDDPDPDPp`);
 		redirect(`/auth-validate`);
 	}
 

@@ -16,9 +16,8 @@ import LoadingPage from '@/molecules/LoadingPage';
 import Pagination from '@/molecules/Pagination';
 
 const SettlementPage = () => {
-	const { docs, isError, isSuccess, total, loading } = useSelector(
-		state => state?.settlements
-	);
+	const { docs, isError, isSuccess, total, totalEarnings, loading } =
+		useSelector(state => state?.settlements);
 	const router = useRouter();
 	const limit = 20;
 	const dispatch = useDispatch();
@@ -55,8 +54,8 @@ const SettlementPage = () => {
 			</div>
 			<section className='metric_cards_wrapper'>
 				<MetricCard
-					title='Total Earnings'
-					value={`₦${total?.toLocaleString()}`}
+					title='Total Amount Settled'
+					value={`₦${totalEarnings?.toLocaleString()}`}
 				/>
 			</section>
 			<div className='filter_div'>

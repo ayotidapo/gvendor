@@ -24,6 +24,7 @@ interface Props {
 const OrderDetailsPage: React.FC<Props> = ({ details, orderSettlement }) => {
 	const { personalInformation, orderitems } = details;
 	const settlements = [orderSettlement];
+
 	return (
 		<div className='orderdetails'>
 			<section className='flex flex-col'>

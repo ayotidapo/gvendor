@@ -23,6 +23,7 @@ import StatusFilter from '../../molecules/StatusFilter';
 import SearchFilter from '@/molecules/SearchFilter';
 import { IOrder } from '@/redux/reducers/orders';
 import { toast } from 'react-toastify';
+import { getSettlements } from '@/redux/apis/settlements';
 
 const HomePage: React.FC = () => {
 	const {
@@ -31,6 +32,7 @@ const HomePage: React.FC = () => {
 		totalOrders = '',
 		totalSales = '',
 	} = useSelector(state => state?.orders);
+	const { totalEarnings } = useSelector(state => state?.settlements);
 	const dispatch = useDispatch();
 
 	const router = useRouter();
@@ -51,7 +53,15 @@ const HomePage: React.FC = () => {
 	const onGetAllMetrics = async () => {
 		try {
 			setLoadingMet(true);
-			Fetch(`/order/all?status=NEW`).then(r => {
+			dispatch(getSettlements()).then(action => {
+				if (action?.meta?.requestStatus === 'fulfilled') {
+					setMetrics(metrics => ({
+						...metrics,
+						totalSettled: totalEarnings,
+					}));
+				}
+			});
+			Fetch(`/order/all?status=FULFILLED`).then(r => {
 				setMetrics(metrics => ({
 					...metrics,
 					totalNewOrders: r?.data?.totalOrders,
@@ -91,11 +101,11 @@ const HomePage: React.FC = () => {
 				</div>
 				<section className='metric_cards_wrapper'>
 					<MetricCard
-						title='Total Sales'
+						title='Total Settled Amount'
 						value={
 							<>
 								<span className='font-medium'>&#8358;</span>
-								{totalSales?.toLocaleString()}
+								{metrics?.totalSettled?.toLocaleString()}
 							</>
 						}
 					/>
@@ -104,7 +114,7 @@ const HomePage: React.FC = () => {
 						value={`${totalOrders?.toLocaleString() || 0} Orders`}
 					/>
 					<MetricCard
-						title='New Orders '
+						title='Completed Orders '
 						value={`${metrics?.totalNewOrders || 0} orders`}
 					/>
 					<MetricCard
