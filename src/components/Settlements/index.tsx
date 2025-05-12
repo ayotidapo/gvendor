@@ -55,6 +55,7 @@ const SettlementPage = () => {
 			<section className='metric_cards_wrapper'>
 				<MetricCard
 					title='Total Amount Settled'
+					iconDesc='Amount paid to your account after Good’s commission is deducted.'
 					value={`₦${totalEarnings?.toLocaleString()}`}
 				/>
 			</section>

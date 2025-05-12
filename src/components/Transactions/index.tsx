@@ -35,7 +35,11 @@ const TransactionPage = () => {
 			</div>
 
 			<div className='metric_cards_wrapper'>
-				<MetricCard title='Total Sales' value='₦149,720,000.00' />
+				<MetricCard
+					title='Total Sales'
+					iconDesc='Total amount customers paid for their orders.'
+					value='₦149,720,000.00'
+				/>
 			</div>
 			<div className='w-[372px] my-12'>
 				<SearchFilter onTextChange={onTextChange} />

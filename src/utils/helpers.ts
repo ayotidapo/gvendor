@@ -22,3 +22,14 @@ export const constructQuery = () => {
 	}, {});
 	return new URLSearchParams(filteredParams).toString();
 };
+
+export const formatAmount = (
+	number: number,
+	minimumFractionDigits = 2,
+	maximumFractionDigits = 2
+) => {
+	return number.toLocaleString('en-US', {
+		minimumFractionDigits,
+		maximumFractionDigits,
+	});
+};

@@ -78,7 +78,7 @@ body {
 	}
 
 	td {
-		@apply border border-b-0 border-t-divider-gray border-x-0 h-[58px] pr-2.5;
+		@apply border border-b-0 border-t-divider-gray border-x-0 h-[58px];
 	}
 	tr:hover {
 		@apply cursor-pointer bg-gray-100;

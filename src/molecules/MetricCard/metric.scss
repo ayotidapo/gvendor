@@ -3,4 +3,30 @@
 	.spinner {
 		@apply border-2;
 	}
+	.info {
+		@apply relative hover:cursor-pointer after:content-[attr(data-desc)] after:shadow-lg;
+
+		&::after {
+			width: 250px;
+			min-height: 80px;
+			background-color: #fff;
+			position: absolute;
+			top: 10px;
+			left: -228px;
+			padding: 15px;
+			margin-top: 18px;
+			z-index: 10;
+			opacity: 0;
+			border-radius: 16px 0px 16px 0px;
+			visibility: hidden;
+			transition: all 0.25s linear;
+			font-size: 0.9rem;
+			color: #f45d2c;
+			border: 1px solid transparent;
+		}
+
+		&:hover::after {
+			@apply visible opacity-100 border border-gray-100;
+		}
+	}
 }
