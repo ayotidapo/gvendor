@@ -66,9 +66,24 @@ const Orders = () => {
 				<h2 className='title'>Orders</h2>
 			</div>
 			<section className='metric_cards_wrapper'>
-				<MetricCard title='Total Orders' value={`${totalOrders || 0} Orders`} />
+				<MetricCard
+					title='Total Orders'
+					iconDesc='Number of completed sales.'
+					value={`${totalOrders || 0} Orders`}
+				/>
 				<MetricCard
 					title='Total Order value'
+					iconDesc='Total amount customers paid for their orders.'
+					value={
+						<>
+							<span className='font-medium'>&#8358;</span>
+							{totalSales?.toLocaleString() || 0}
+						</>
+					}
+				/>
+				<MetricCard
+					title='Average Order value'
+					iconDesc='This is the average amount each customer spends per order'
 					value={
 						<>
 							<span className='font-medium'>&#8358;</span>

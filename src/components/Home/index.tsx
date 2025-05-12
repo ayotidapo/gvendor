@@ -101,6 +101,7 @@ const HomePage: React.FC = () => {
 				</div>
 				<section className='metric_cards_wrapper'>
 					<MetricCard
+						iconDesc='Amount paid to your account after Good’s commission is deducted.'
 						title='Total Settled Amount'
 						value={
 							<>
@@ -110,7 +111,8 @@ const HomePage: React.FC = () => {
 						}
 					/>
 					<MetricCard
-						title='Total Orders '
+						title='Total Orders'
+						iconDesc='Number of completed sales.'
 						value={`${totalOrders?.toLocaleString() || 0} Orders`}
 					/>
 					<MetricCard

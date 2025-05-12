@@ -7,7 +7,7 @@ import PercentGrowth from './PercentGrowth';
 import { SimpleBtn } from '@/atoms/buttons/Button';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import Datepicker, { DateValueType } from 'react-tailwindcss-datepicker';
-import { constructQuery } from '@/utils/helpers';
+import { constructQuery, formatAmount } from '@/utils/helpers';
 import { registerables, Chart } from 'chart.js';
 import { Bar, Line } from 'react-chartjs-2';
 
@@ -160,6 +160,7 @@ const Analytics = () => {
 			<section className='metric_cards_wrapper'>
 				<MetricCard
 					title='Total Settled Amount'
+					iconDesc='Amount paid to your account after Good’s commission is deducted.'
 					value={
 						<PercentGrowth
 							amount={`₦${totalEarnings?.toLocaleString() || ''}`}
@@ -170,6 +171,7 @@ const Analytics = () => {
 
 				<MetricCard
 					title='Total Orders'
+					iconDesc='Number of completed sales.'
 					value={
 						<PercentGrowth
 							amount={
@@ -181,6 +183,7 @@ const Analytics = () => {
 				/>
 				<MetricCard
 					title='Total Customers'
+					iconDesc='Number of unique buyers.'
 					value={
 						<PercentGrowth
 							amount={
@@ -192,9 +195,10 @@ const Analytics = () => {
 				/>
 				<MetricCard
 					title='Average Order Value'
+					iconDesc='This is the average amount each customer spends per order'
 					value={
 						<PercentGrowth
-							amount={`₦${analytics?.averageOrderValue?.averageOrderValue?.toLocaleString() || ''}`}
+							amount={`₦${formatAmount(analytics?.averageOrderValue?.averageOrderValue) || ''}`}
 							desc={`${((analytics?.averageOrderValue?.percentageChange || 0) / 100).toFixed(2)}% increase in the past week`}
 						/>
 					}
