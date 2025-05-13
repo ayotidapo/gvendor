@@ -28,6 +28,7 @@ import './analytics.scss';
 import { differenceInDays, subMonths } from 'date-fns';
 import { ObjectData } from '@/utils/interface';
 import settlements from '@/redux/reducers/settlements';
+import { getSettlements } from '@/redux/apis/settlements';
 
 Chart.register(...registerables);
 
@@ -43,7 +44,7 @@ const Analytics = () => {
 	const endDate = sQ.get('endDate') || null;
 
 	const { ...analytics } = useSelector(state => state.analytics);
-	const { totalEarnings } = useSelector(state => state.settlements);
+	const { totalRevenue } = useSelector(state => state.settlements);
 
 	const [showSales, setShowSales] = useState(true);
 
@@ -96,6 +97,10 @@ const Analytics = () => {
 			toast.error(`Error: ${e?.message}`);
 		}
 	};
+
+	useEffect(() => {
+		dispatch(getSettlements());
+	}, []);
 
 	useEffect(() => {
 		onGetAnalytics();
@@ -163,7 +168,7 @@ const Analytics = () => {
 					iconDesc='Amount paid to your account after Good’s commission is deducted.'
 					value={
 						<PercentGrowth
-							amount={`₦${totalEarnings?.toLocaleString() || ''}`}
+							amount={`₦${totalRevenue?.toLocaleString() || ''}`}
 							desc={`${((analytics?.totalSales?.percentageIncrease || 0) / 100).toFixed(2)}% increase in the past week`}
 						/>
 					}

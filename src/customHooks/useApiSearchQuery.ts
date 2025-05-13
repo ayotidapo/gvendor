@@ -7,6 +7,10 @@ const useApiSearchQuery = (limit = 10) => {
 	const page = sQ.get('page') || 1;
 	const status = sQ.get('status') || '';
 	const search = sQ.get('search') || '';
+	const startDate = sQ.get('startDate') || new Date();
+	const endDate = sQ.get('endDate') || new Date();
+	const filter = sQ.get('filter') || '';
+	const isCustomDateRange = sQ.get('isCustomDateRange') || '';
 	const searchParamsObject = Object.fromEntries(sQ.entries());
 
 	const constructApiQuery = () => {
@@ -31,7 +35,16 @@ const useApiSearchQuery = (limit = 10) => {
 		return constructApiQuery();
 	}, [page, status, search]);
 
-	return { qString, page, status, search };
+	return {
+		qString,
+		page,
+		status,
+		search,
+		startDate,
+		endDate,
+		filter,
+		isCustomDateRange,
+	};
 };
 
 export default useApiSearchQuery;

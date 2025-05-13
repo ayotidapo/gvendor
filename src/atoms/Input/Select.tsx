@@ -1,6 +1,7 @@
 import React from 'react';
 import cx from 'classnames';
 import { IOption } from '@/utils/interface';
+import { ErrorMessage, Field, useField, useFormik } from 'formik';
 
 interface Props {
 	hasError?: boolean;
@@ -8,6 +9,7 @@ interface Props {
 	options: IOption[];
 	className?: string;
 	placeholder?: string;
+	useFormik?: boolean;
 	error?: string;
 	value?: string;
 	onChange?: (e: React.ChangeEvent<HTMLSelectElement>) => void;
@@ -21,8 +23,33 @@ const Select: React.FC<Props> = props => {
 		placeholder,
 		error = '',
 		options,
+		useFormik,
 		...rest
 	} = props;
+
+	if (useFormik) {
+		return (
+			<div className='input__container'>
+				<div className={`input_wrapper ${hasError ? 'err' : ''}`}>
+					<Field
+						name={name}
+						as='select'
+						className={cx(`input ${className}`, { error: hasError })}
+						{...rest}
+					>
+						<option value=''>{placeholder}</option>
+						{options?.map(option => (
+							<option key={option.value} value={option.value}>
+								{option.label}
+							</option>
+						))}
+					</Field>
+					<ErrorMessage name={name} component='div' className='error' />
+				</div>
+			</div>
+		);
+	}
+
 	return (
 		<div className='input__container'>
 			<div className={`input_wrapper ${hasError ? 'err' : ''}`}>

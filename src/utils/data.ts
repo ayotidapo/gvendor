@@ -159,6 +159,52 @@ const settingsTabs = [
 	},
 ] as { value: string; title: string }[];
 
+const settlementFilter = [
+	{
+		label: 'All',
+		value: '',
+	},
+	{
+		label: 'Completed',
+		value: 'COMPLETED',
+	},
+	{
+		label: 'Pending',
+		value: 'PENDING',
+	},
+	{
+		label: 'Failed',
+		value: 'FAILED',
+	},
+	{
+		label: 'Pending Confirmation',
+		value: 'PENDING CONFIRMATION',
+	},
+];
+
+const periodFilter = [
+	{
+		label: 'Today',
+		value: 'today',
+	},
+	{
+		label: 'Yesterday',
+		value: 'yesterday',
+	},
+	{
+		label: 'This week',
+		value: 'this_week',
+	},
+	{
+		label: 'This month',
+		value: 'this_month',
+	},
+	{
+		label: 'This year',
+		value: 'this_year',
+	},
+];
+
 const notificationSettings = [];
 
 export {
@@ -169,4 +215,6 @@ export {
 	settlementStatus,
 	setStages,
 	settingsTabs,
+	settlementFilter,
+	periodFilter,
 };

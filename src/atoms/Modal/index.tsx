@@ -22,7 +22,7 @@ const Modal: React.FC<Props> = props => {
 			<section className={cx(`modal_content `, { open })} onClick={onBodyClose}>
 				{false && <div className='close_icon'>&times;</div>}
 
-				<div>{children}</div>
+				{children}
 			</section>
 		</div>
 	);

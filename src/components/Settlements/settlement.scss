@@ -1,2 +1,26 @@
 .settlements {
+	.btn.export {
+		@apply w-[150px];
+	}
+	.export_wrapper {
+		@apply md:w-[500px] xx:w-[calc(80vw-0px)] bg-white rounded-md p-5;
+		.headings {
+			@apply text-[26px];
+		}
+		.toggle__div {
+			@apply flex border gap-4 rounded-md p-1 mt-10;
+			.tog {
+				@apply h-[40px] bg-transparent text-[#555555] font-medium;
+				&.active {
+					@apply bg-[rgba(244,93,44,0.05)] text-[#f45d5c];
+				}
+			}
+		}
+		.date__range__wrapper {
+			@apply flex gap-4 xx:flex-wrap md:flex-nowrap;
+		}
+		.proceed {
+			@apply mt-5;
+		}
+	}
 }
