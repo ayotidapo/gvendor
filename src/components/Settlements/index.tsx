@@ -11,7 +11,10 @@ import { usePathname } from 'next/navigation';
 import SearchFilter from '@/molecules/SearchFilter';
 import StatusFilter from '@/molecules/StatusFilter';
 import { periodFilter, settlementFilter, settlementStatus } from '@/utils/data';
-import { getSettlements } from '@/redux/apis/settlements';
+import {
+	downloadSettlementsApi,
+	getSettlements,
+} from '@/redux/apis/settlements';
 import LoadingPage from '@/molecules/LoadingPage';
 import Pagination from '@/molecules/Pagination';
 import { SimpleBtn } from '@/atoms/buttons/Button';
@@ -20,6 +23,8 @@ import './settlement.scss';
 import { Icon } from '@/atoms/icon/icon';
 import Select from '@/atoms/Input/Select';
 import Input from '@/atoms/Input';
+import { toast } from 'react-toastify';
+import FilterModal from './FilterModal';
 
 const validationSchema = Yup.object({
 	startDate: Yup.string(),
@@ -31,6 +36,7 @@ const validationSchema = Yup.object({
 const SettlementPage = () => {
 	const { docs, isSuccess, isFetching, total, totalRevenue, loading } =
 		useSelector(state => state?.settlements);
+
 	const limit = 20;
 
 	const {
@@ -47,7 +53,7 @@ const SettlementPage = () => {
 	const activeVal = isCustomDateRange ? 'range' : 'period';
 	const [active, setActive] = useState(activeVal);
 	const [openModal, setOpenModal] = useState(false);
-
+	const [downloading, setDownloading] = useState(false);
 	const router = useRouter();
 
 	const dispatch = useDispatch();
@@ -61,8 +67,15 @@ const SettlementPage = () => {
 		if (isSuccess) setOpenModal(false);
 	}, [isSuccess]);
 
-	const onSetStatus = (status: string) => {
-		router.push(`${path}?status=${status}&page=1&search=${search}`);
+	const onDownloadSettlement = async () => {
+		try {
+			setDownloading(true);
+			await downloadSettlementsApi(qString);
+		} catch (e: any) {
+			toast.error(`Could not download report: ${e.message}`);
+		} finally {
+			setDownloading(false);
+		}
 	};
 
 	const onTextChange = (searchValue: string) => {
@@ -74,6 +87,14 @@ const SettlementPage = () => {
 		router.push(
 			`${path}?status=${status}&page=${selected + 1}&search=${search}`
 		);
+	};
+
+	const onSetModal = (status: boolean) => {
+		setOpenModal(status);
+	};
+
+	const onSetActive = (value: string) => {
+		setActive(value);
 	};
 
 	const len = docs?.length;
@@ -90,9 +111,9 @@ const SettlementPage = () => {
 			}}
 			onSubmit={values => {
 				const { status, startDate, endDate, filter } = values;
-				console.log({ status, startDate, endDate, filter });
+				console.log({ status, startDate, endDate, filter, active });
 				router.push(
-					`${path}?status=${status}&page=1&startDate=${new Date(startDate)?.toISOString()}&endDate=${new Date(endDate)?.toISOString()}&filter=${filter}&isCustomDateRange=${active === 'range'}`
+					`${path}?status=${status}&page=1&isCustomDateRange=${active === 'range'}&startDate=${new Date(startDate)?.toISOString()}&filter=${filter}&endDate=${new Date(endDate)?.toISOString()}`
 				);
 			}}
 			validationSchema={validationSchema}
@@ -102,86 +123,15 @@ const SettlementPage = () => {
 					<Modal
 						open={openModal}
 						onClose={() => {
-							setOpenModal(false);
+							onSetModal(false);
 						}}
 					>
-						<div className='export_wrapper'>
-							<div className='flex justify-between md:items-center xx:items-start'>
-								<h2 className='headings'>Export Bee's store Settlements</h2>
-								<Icon
-									id='close'
-									width={32}
-									height={32}
-									className='cursor-pointer'
-									onClick={() => {
-										setOpenModal(false);
-									}}
-								/>
-							</div>
-							<div className='toggle__div'>
-								<SimpleBtn
-									type='button'
-									className={`tog ${active === 'period' ? 'active' : ''}`}
-									onClick={() => setActive('period')}
-								>
-									Period
-								</SimpleBtn>
-								<SimpleBtn
-									type='button'
-									className={`tog ${active === 'range' ? 'active' : ''}`}
-									onClick={() => setActive('range')}
-								>
-									Date Range
-								</SimpleBtn>
-							</div>
-
-							{active === 'range' ? (
-								<div className='date__range__wrapper'>
-									<div className='w-full'>
-										<div className='mt-7 mb-1 text-[#555555] font-medium'>
-											Start date
-										</div>
-										<Input
-											name='startDate'
-											type='date'
-											onClick={e => e.currentTarget.showPicker()}
-										/>
-									</div>
-									<div className='w-full'>
-										<div className='mt-7 mb-1 text-[#555555] font-medium'>
-											End date
-										</div>
-										<Input
-											name='endDate'
-											type='date'
-											onClick={e => e.currentTarget.showPicker()}
-										/>
-									</div>
-								</div>
-							) : (
-								<>
-									<div className='mt-7 mb-1 text-[#555555] font-medium'>
-										Period
-									</div>
-									<Select
-										name='filter'
-										options={periodFilter}
-										useFormik
-										placeholder='select period'
-									/>
-								</>
-							)}
-							<div className='mb-1 text-[#555555] font-medium'>Settlement</div>
-							<Select
-								name='status'
-								options={settlementFilter}
-								useFormik
-								placeholder='select settlement status'
-							/>
-							<SimpleBtn className='proceed' disabled={isFetching}>
-								Proceed
-							</SimpleBtn>
-						</div>
+						<FilterModal
+							onCloseModal={onSetModal}
+							active={active}
+							onSetActive={onSetActive}
+							isFetching={isFetching}
+						/>
 					</Modal>
 					<div className='page-title_div '>
 						<h2 className='title'>Settlements</h2>
@@ -196,17 +146,24 @@ const SettlementPage = () => {
 					<div className='filter_div'>
 						<SearchFilter onTextChange={onTextChange} />
 						<div className='flex items-center gap-5'>
-							<StatusFilter
-								onSetStatus={onSetStatus}
-								status={status}
-								states={settlementStatus}
-							/>
+							<span
+								className='status_filter_wrapper'
+								role='button'
+								onClick={() => setOpenModal(true)}
+							>
+								<Icon id='sortp' className='mr-2' />
+								Filter:{' '}
+								<span className='capitalize'>
+									&nbsp;{status?.toLocaleLowerCase() || 'All'}
+								</span>
+							</span>
 							<SimpleBtn
 								type='button'
 								className='export'
-								onClick={() => setOpenModal(true)}
+								onClick={onDownloadSettlement}
+								disabled={downloading}
 							>
-								Export
+								{downloading ? <em>Downloading...</em> : 'Export'}
 							</SimpleBtn>
 						</div>
 					</div>

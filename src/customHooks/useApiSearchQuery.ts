@@ -21,6 +21,7 @@ const useApiSearchQuery = (limit = 10) => {
 		);
 
 		let qString = new URLSearchParams(filteredParams).toString();
+		console.log({ qString2: qString });
 
 		const skip = (Number(page) - 1) * limit;
 
@@ -33,7 +34,7 @@ const useApiSearchQuery = (limit = 10) => {
 
 	const qString = useMemo(() => {
 		return constructApiQuery();
-	}, [page, status, search]);
+	}, [page, status, search, startDate, endDate, filter, isCustomDateRange]);
 
 	return {
 		qString,
