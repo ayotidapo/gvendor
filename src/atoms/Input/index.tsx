@@ -20,6 +20,9 @@ interface Props {
 	className?: string;
 	rows?: number;
 	readOnly?: boolean;
+	min?: string;
+	max?: string;
+	disabled?: boolean;
 }
 const Input: React.FC<Props> = props => {
 	const [showPassword, setShowPassword] = useState<boolean>(false);
@@ -38,6 +41,7 @@ const Input: React.FC<Props> = props => {
 
 	const [_field, { touched, error }] = useField(name);
 	const hasError = error && touched;
+
 	const isPassword = type === 'password';
 	if (as === 'select') {
 		return (

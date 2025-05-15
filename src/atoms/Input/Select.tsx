@@ -17,7 +17,6 @@ interface Props {
 
 const Select: React.FC<Props> = props => {
 	const {
-		hasError,
 		name,
 		className = '',
 		placeholder,
@@ -26,7 +25,7 @@ const Select: React.FC<Props> = props => {
 		useFormik,
 		...rest
 	} = props;
-
+	const [_, { error: hasError }] = useField(name);
 	if (useFormik) {
 		return (
 			<div className='input__container'>
@@ -52,10 +51,10 @@ const Select: React.FC<Props> = props => {
 
 	return (
 		<div className='input__container'>
-			<div className={`input_wrapper ${hasError ? 'err' : ''}`}>
+			<div className={`input_wrapper ${error ? 'err' : ''}`}>
 				<select
 					name={name}
-					className={cx(`input ${className}`, { error: hasError })}
+					className={cx(`input ${className}`, { error })}
 					{...rest}
 				>
 					<option value=''>{placeholder}</option>

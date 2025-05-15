@@ -1,9 +1,12 @@
 import React from 'react';
+import { format } from 'date-fns';
 import Input from '@/atoms/Input';
 import Select from '@/atoms/Input/Select';
 import { SimpleBtn } from '@/atoms/buttons/Button';
 import { periodFilter, settlementFilter } from '@/utils/data';
 import { Icon } from '@/atoms/icon/icon';
+import { useSearchParams } from 'next/navigation';
+import { useField, useFormikContext } from 'formik';
 
 interface Props {
 	isFetching?: boolean;
@@ -14,7 +17,10 @@ interface Props {
 }
 
 const FilterModal: React.FC<Props> = props => {
+	const [{ value: startDateValue }] = useField('startDate');
+	const { setFieldValue } = useFormikContext();
 	const { isFetching, active, onSetActive, onCloseModal, businessName } = props;
+	const today = format(new Date(), 'yyyy-MM-dd');
 
 	return (
 		<div className='export_wrapper'>
@@ -55,6 +61,11 @@ const FilterModal: React.FC<Props> = props => {
 							name='startDate'
 							type='date'
 							onClick={e => e.currentTarget.showPicker()}
+							onChange={e => {
+								setFieldValue('startDate', e.target.value);
+								setFieldValue('endDate', '');
+							}}
+							max={today}
 						/>
 					</div>
 					<div className='w-full'>
@@ -63,6 +74,13 @@ const FilterModal: React.FC<Props> = props => {
 							name='endDate'
 							type='date'
 							onClick={e => e.currentTarget.showPicker()}
+							min={
+								startDateValue
+									? format(new Date(startDateValue), 'yyyy-MM-dd')
+									: ''
+							}
+							max={today}
+							disabled={!startDateValue}
 						/>
 					</div>
 				</div>

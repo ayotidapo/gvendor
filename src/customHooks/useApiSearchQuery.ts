@@ -21,7 +21,6 @@ const useApiSearchQuery = (limit = 10) => {
 		);
 
 		let qString = new URLSearchParams(filteredParams).toString();
-		console.log({ qString2: qString });
 
 		const skip = (Number(page) - 1) * limit;
 

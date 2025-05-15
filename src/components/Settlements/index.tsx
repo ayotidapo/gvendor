@@ -1,5 +1,5 @@
 'use client';
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Form, Formik } from 'formik';
 import MetricCard from '@/molecules/MetricCard';
 import * as Yup from 'yup';
@@ -9,8 +9,7 @@ import { useDispatch, useSelector } from '@/redux/hooks';
 import useApiSearchQuery from '@/customHooks/useApiSearchQuery';
 import { usePathname } from 'next/navigation';
 import SearchFilter from '@/molecules/SearchFilter';
-import StatusFilter from '@/molecules/StatusFilter';
-import { periodFilter, settlementFilter, settlementStatus } from '@/utils/data';
+
 import {
 	downloadSettlementsApi,
 	getSettlements,
@@ -21,8 +20,7 @@ import { SimpleBtn } from '@/atoms/buttons/Button';
 import Modal from '@/atoms/Modal';
 import './settlement.scss';
 import { Icon } from '@/atoms/icon/icon';
-import Select from '@/atoms/Input/Select';
-import Input from '@/atoms/Input';
+
 import { toast } from 'react-toastify';
 import FilterModal from './FilterModal';
 
@@ -71,8 +69,15 @@ const SettlementPage = () => {
 	const onDownloadSettlement = async () => {
 		try {
 			setDownloading(true);
-			const blob = await downloadSettlementsApi(qString);
-			const url = window.URL.createObjectURL(blob);
+			const response = await downloadSettlementsApi(qString);
+			//console.log({ docs, response });
+			// if (response?.message.includes('No records')) {
+			// 	toast.info(`No record found`);
+			// 	console.log(response);
+			// 	return;
+			// }
+
+			const url = window.URL.createObjectURL(response);
 			const a = document.createElement('a');
 			a.href = url;
 			a.download = `${businessName || 'settlement-report'}.xlsx`;
@@ -113,16 +118,21 @@ const SettlementPage = () => {
 	return (
 		<Formik
 			initialValues={{
-				startDate: new Date(startDate),
-				endDate: new Date(endDate),
+				startDate: '',
+				endDate: '',
 				status: status,
 				filter: filter,
 			}}
 			onSubmit={values => {
 				const { status, startDate, endDate, filter } = values;
-				console.log({ status, startDate, endDate, filter, active });
+
+				if (active === 'range')
+					return router.push(
+						`${path}?status=${status}&page=1&isCustomDateRange=true&startDate=${new Date(startDate || new Date())?.toISOString()}&endDate=${new Date(endDate || new Date())?.toISOString()}`
+					);
+
 				router.push(
-					`${path}?status=${status}&page=1&isCustomDateRange=${active === 'range'}&startDate=${new Date(startDate)?.toISOString()}&filter=${filter}&endDate=${new Date(endDate)?.toISOString()}`
+					`${path}?status=${status}&page=1&isCustomDateRange=false&filter=${filter}`
 				);
 			}}
 			validationSchema={validationSchema}

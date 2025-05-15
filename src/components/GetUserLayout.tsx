@@ -33,7 +33,7 @@ const GetUserLayout: React.FC<{
 			const response = await updateVendorApi({
 				deviceTokens: validDeviceTokens,
 			});
-			console.log({ response });
+
 			dispatch(setVendor(response?.data));
 			onMessage(messaging, payload => {
 				console.log('Message received in foreground:', payload);
