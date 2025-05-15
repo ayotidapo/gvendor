@@ -1,23 +1,20 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Input from '@/atoms/Input';
 import Select from '@/atoms/Input/Select';
-import Modal from '@/atoms/Modal';
 import { SimpleBtn } from '@/atoms/buttons/Button';
 import { periodFilter, settlementFilter } from '@/utils/data';
 import { Icon } from '@/atoms/icon/icon';
-import { useSelector } from '@/redux/hooks';
-import { useSearchParams } from 'next/navigation';
 
 interface Props {
 	isFetching?: boolean;
 	active: string;
+	businessName?: string;
 	onSetActive: (value: string) => void;
 	onCloseModal: (status: boolean) => void;
 }
 
 const FilterModal: React.FC<Props> = props => {
-	const { businessName } = useSelector(state => state?.vendor);
-	const { isFetching, active, onSetActive, onCloseModal } = props;
+	const { isFetching, active, onSetActive, onCloseModal, businessName } = props;
 
 	return (
 		<div className='export_wrapper'>

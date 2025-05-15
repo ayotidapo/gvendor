@@ -36,6 +36,7 @@ const validationSchema = Yup.object({
 const SettlementPage = () => {
 	const { docs, isSuccess, isFetching, total, totalRevenue, loading } =
 		useSelector(state => state?.settlements);
+	const { businessName } = useSelector(state => state?.vendor);
 
 	const limit = 20;
 
@@ -70,7 +71,15 @@ const SettlementPage = () => {
 	const onDownloadSettlement = async () => {
 		try {
 			setDownloading(true);
-			await downloadSettlementsApi(qString);
+			const blob = await downloadSettlementsApi(qString);
+			const url = window.URL.createObjectURL(blob);
+			const a = document.createElement('a');
+			a.href = url;
+			a.download = `${businessName || 'settlement-report'}.xlsx`;
+			document.body.appendChild(a);
+			a.click();
+			a.remove();
+			window.URL.revokeObjectURL(url);
 		} catch (e: any) {
 			toast.error(`Could not download report: ${e.message}`);
 		} finally {
@@ -127,6 +136,7 @@ const SettlementPage = () => {
 						}}
 					>
 						<FilterModal
+							businessName={businessName}
 							onCloseModal={onSetModal}
 							active={active}
 							onSetActive={onSetActive}
