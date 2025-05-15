@@ -16,7 +16,10 @@ const StatusFilter: React.FC<Props> = ({ onSetStatus, status, states }) => {
 			component={
 				<span className='border-2 inline-flex h-[50px] items-center p-5 border-black rounded-md'>
 					<Icon id='sortp' className='mr-2' />
-					Sort by: <span className='capitalize'>&nbsp;{status || 'ALL'}</span>
+					Sort by:{' '}
+					<span className='capitalize'>
+						&nbsp;{status?.toLocaleLowerCase() || 'All'}
+					</span>
 				</span>
 			}
 		>

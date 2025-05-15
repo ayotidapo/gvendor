@@ -10,6 +10,7 @@ import { Icon } from '../icon/icon';
 interface Props {
 	name: string;
 	onChange?: (e: any) => void;
+	onClick?: (e: any) => void;
 	type?: string;
 	liconSvg?: string;
 	riconSvg?: string;
@@ -19,6 +20,9 @@ interface Props {
 	className?: string;
 	rows?: number;
 	readOnly?: boolean;
+	min?: string;
+	max?: string;
+	disabled?: boolean;
 }
 const Input: React.FC<Props> = props => {
 	const [showPassword, setShowPassword] = useState<boolean>(false);
@@ -37,6 +41,7 @@ const Input: React.FC<Props> = props => {
 
 	const [_field, { touched, error }] = useField(name);
 	const hasError = error && touched;
+
 	const isPassword = type === 'password';
 	if (as === 'select') {
 		return (
@@ -79,6 +84,7 @@ const Input: React.FC<Props> = props => {
 						liconSvg,
 						error: hasError,
 					})}
+					type={showPassword ? 'text' : type}
 					placeholder={placeholder}
 					as={as}
 					{...rest}

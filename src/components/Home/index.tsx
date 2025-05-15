@@ -32,7 +32,7 @@ const HomePage: React.FC = () => {
 		totalOrders = '',
 		totalSales = '',
 	} = useSelector(state => state?.orders);
-	const { totalEarnings } = useSelector(state => state?.settlements);
+	const { totalRevenue } = useSelector(state => state?.settlements);
 	const dispatch = useDispatch();
 
 	const router = useRouter();
@@ -57,7 +57,7 @@ const HomePage: React.FC = () => {
 				if (action?.meta?.requestStatus === 'fulfilled') {
 					setMetrics(metrics => ({
 						...metrics,
-						totalSettled: totalEarnings,
+						totalSettled: totalRevenue,
 					}));
 				}
 			});

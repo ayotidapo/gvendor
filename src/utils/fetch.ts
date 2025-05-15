@@ -39,19 +39,28 @@ const Fetch = async (
 			body: JSON.stringify(config.body),
 		});
 
+		const cType = response.headers.get('Content-Type');
+		const xlsx =
+			'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
 		if (!response.ok) {
 			if (response.status === 401 && typeof global.window !== 'undefined') {
 				return signOut({ callbackUrl: '/auth/login' });
 			}
 
-			const responseErr = await response.json();
+			let responseErr;
+
+			if (cType === xlsx) responseErr = await response.blob();
+			else responseErr = await response.json();
 
 			const errMessage =
 				responseErr.message || response.statusText || responseErr.error;
 			throw { status: response.status, message: errMessage };
 		}
 
-		const result = await response.json();
+		let result;
+
+		if (cType === xlsx) result = await response.blob();
+		else result = await response.json();
 
 		return result;
 	} catch (e: any) {
