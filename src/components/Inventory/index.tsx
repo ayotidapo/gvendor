@@ -154,11 +154,13 @@ const InventoryPage = () => {
 			</div>
 			<div className='metric_cards_wrapper'>
 				<MetricCard
-					title='Total Unit Sold'
+					title='Total Units Sold'
+					iconDesc='Sum of all product units sold across completed orders.'
 					value={totalUnitsSold?.toLocaleString()}
 				/>
 				<MetricCard
 					title='Items In Stock'
+					iconDesc='Current quantity of available products listed by the creator.'
 					value={productsInStock?.toLocaleString()}
 				/>
 			</div>

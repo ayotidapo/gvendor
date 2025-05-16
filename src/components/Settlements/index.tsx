@@ -125,14 +125,15 @@ const SettlementPage = () => {
 			}}
 			onSubmit={values => {
 				const { status, startDate, endDate, filter } = values;
+				const _status = status === 'ALL' ? '' : status;
 
 				if (active === 'range')
 					return router.push(
-						`${path}?status=${status}&page=1&isCustomDateRange=true&startDate=${new Date(startDate || new Date())?.toISOString()}&endDate=${new Date(endDate || new Date())?.toISOString()}`
+						`${path}?status=${_status}&page=1&isCustomDateRange=true&startDate=${new Date(startDate || new Date())?.toISOString()}&endDate=${new Date(endDate || new Date())?.toISOString()}`
 					);
 
 				router.push(
-					`${path}?status=${status}&page=1&isCustomDateRange=false&filter=${filter}`
+					`${path}?status=${_status}&page=1&isCustomDateRange=false&filter=${filter}`
 				);
 			}}
 			validationSchema={validationSchema}

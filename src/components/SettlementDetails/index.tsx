@@ -1,14 +1,15 @@
+'use client';
 import React from 'react';
 import Tag from '@/atoms/Tag';
-import { SimpleBtn } from '@/atoms/buttons/Button';
+
 import './settlement-details.scss';
-import { Icon } from '@/atoms/icon/icon';
-import OrderItem from '@/molecules/OrderItem';
+
 import { ObjectData } from '../../utils/interface';
 import { format } from 'date-fns';
 
 const SettlementDetailsPage: React.FC<{ details: ObjectData }> = props => {
 	const { details: s } = props;
+
 	return (
 		<div className='settlementdetails'>
 			<section>
@@ -20,7 +21,7 @@ const SettlementDetailsPage: React.FC<{ details: ObjectData }> = props => {
 				<div className='dt_dd'>
 					<span>Transaction ID:</span>
 					<span className='text-[#050301] font-medium'>
-						{s?.transactionId || 'N/A'}
+						#{s?.order?.paymentId?._id || s?.order?.paymentId || 'N/A'}
 					</span>
 				</div>
 				<div className='dt_dd'>
@@ -49,7 +50,7 @@ const SettlementDetailsPage: React.FC<{ details: ObjectData }> = props => {
 				<div className='dt_dd'>
 					<span>Date:</span>
 					<span className='text-[#050301] font-medium'>
-						<td>{format(s?.createdAt, 'dd/MM/yyyy hh:mm aa')}</td>
+						<span>{format(s?.createdAt, 'dd/MM/yyyy hh:mm aa')}</span>
 					</span>
 				</div>
 				<div className='dt_dd'>

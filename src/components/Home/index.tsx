@@ -116,11 +116,13 @@ const HomePage: React.FC = () => {
 						value={`${totalOrders?.toLocaleString() || 0} Orders`}
 					/>
 					<MetricCard
-						title='Completed Orders '
+						title='Completed Orders'
+						iconDesc='Total number of customer orders that have been successfully fulfilled.'
 						value={`${metrics?.totalNewOrders || 0} orders`}
 					/>
 					<MetricCard
-						title='Processing Orders '
+						title='Processing Orders'
+						iconDesc='Orders that are currently being prepared or are awaiting fulfillment.'
 						value={`${metrics?.totalProcessingOrders || 0} orders`}
 					/>
 				</section>
