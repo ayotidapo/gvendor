@@ -61,14 +61,14 @@ const HomePage: React.FC = () => {
 					}));
 				}
 			});
-			Fetch(`/order/all?status=FULFILLED`).then(r => {
+			await Fetch(`/order/all?status=FULFILLED`).then(r => {
 				setMetrics(metrics => ({
 					...metrics,
 					totalNewOrders: r?.data?.totalOrders,
 					totalNewSales: r?.data?.totalSales,
 				}));
 			});
-			Fetch(`/order/all?status=ONGOING`).then(r => {
+			await Fetch(`/order/all?status=ONGOING`).then(r => {
 				setMetrics(metrics => ({
 					...metrics,
 					totalProcessingOrders: r?.data?.totalOrders,
