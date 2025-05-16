@@ -31,6 +31,9 @@ textarea.input {
 	&.error {
 		@apply border border-red text-baseCol;
 	}
+	&:disabled {
+		@apply cursor-not-allowed opacity-50;
+	}
 }
 
 .licon_pos {

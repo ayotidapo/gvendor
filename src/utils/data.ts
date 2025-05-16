@@ -162,7 +162,7 @@ const settingsTabs = [
 const settlementFilter = [
 	{
 		label: 'All',
-		value: '',
+		value: 'ALL',
 	},
 	{
 		label: 'Completed',

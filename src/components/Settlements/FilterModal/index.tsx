@@ -5,8 +5,8 @@ import Select from '@/atoms/Input/Select';
 import { SimpleBtn } from '@/atoms/buttons/Button';
 import { periodFilter, settlementFilter } from '@/utils/data';
 import { Icon } from '@/atoms/icon/icon';
-import { useSearchParams } from 'next/navigation';
-import { useField, useFormikContext } from 'formik';
+import { useFormikContext } from 'formik';
+import { ObjectData } from '@/utils/interface';
 
 interface Props {
 	isFetching?: boolean;
@@ -17,9 +17,10 @@ interface Props {
 }
 
 const FilterModal: React.FC<Props> = props => {
-	const [{ value: startDateValue }] = useField('startDate');
-	const { setFieldValue } = useFormikContext();
+	const { setFieldValue, values } = useFormikContext();
 	const { isFetching, active, onSetActive, onCloseModal, businessName } = props;
+
+	const { startDate } = values as ObjectData;
 	const today = format(new Date(), 'yyyy-MM-dd');
 
 	return (
@@ -74,13 +75,9 @@ const FilterModal: React.FC<Props> = props => {
 							name='endDate'
 							type='date'
 							onClick={e => e.currentTarget.showPicker()}
-							min={
-								startDateValue
-									? format(new Date(startDateValue), 'yyyy-MM-dd')
-									: ''
-							}
+							min={startDate ? format(new Date(startDate), 'yyyy-MM-dd') : ''}
 							max={today}
-							disabled={!startDateValue}
+							disabled={!startDate}
 						/>
 					</div>
 				</div>

@@ -15,11 +15,13 @@ const Notification = dynamic(() => import('./views/Notification'));
 const PersonalInfo = dynamic(() => import('./views/PersonalInfo'));
 
 const Settings = () => {
+	const dispatch = useDispatch();
 	const router = useRouter();
 	const path = usePathname();
 	const sQ = useSearchParams();
+
 	const tab = (sQ.get('tab') as string) || 'personal-info';
-	const dispatch = useDispatch();
+
 	const onNavigate = (tabValue: string) => {
 		router.push(`${path}?tab=${tabValue}`);
 	};
