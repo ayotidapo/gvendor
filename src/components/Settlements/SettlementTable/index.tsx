@@ -4,7 +4,7 @@ import Tag from '@/atoms/Tag';
 import React from 'react';
 import { useRouter } from 'next/navigation';
 import { Icon } from '@/atoms/icon/icon';
-import './settlement.scss';
+import './settlement-table.scss';
 import { ObjectData } from '@/utils/interface';
 import { format } from 'date-fns';
 import { orderStatus } from '@/utils/data';

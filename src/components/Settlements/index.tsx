@@ -13,6 +13,7 @@ import SearchFilter from '@/molecules/SearchFilter';
 import {
 	downloadSettlementsApi,
 	getSettlements,
+	sendExportToEmailApi,
 } from '@/redux/apis/settlements';
 import LoadingPage from '@/molecules/LoadingPage';
 import Pagination from '@/molecules/Pagination';
@@ -23,6 +24,10 @@ import { Icon } from '@/atoms/icon/icon';
 
 import { toast } from 'react-toastify';
 import FilterModal from './FilterModal';
+import StatusFilter from '@/molecules/StatusFilter';
+import { settlementStatus } from '@/utils/data';
+import Radio from '@/atoms/Radio';
+import ExportModal from './ExportModal';
 
 const validationSchema = Yup.object({
 	startDate: Yup.string(),
@@ -51,8 +56,8 @@ const SettlementPage = () => {
 
 	const activeVal = isCustomDateRange ? 'range' : 'period';
 	const [active, setActive] = useState(activeVal);
-	const [openModal, setOpenModal] = useState(false);
-	const [downloading, setDownloading] = useState(false);
+	const [view, setView] = useState('');
+	const [exporting, setExporting] = useState(false);
 	const router = useRouter();
 
 	const dispatch = useDispatch();
@@ -63,20 +68,13 @@ const SettlementPage = () => {
 	}, [qString]);
 
 	useEffect(() => {
-		if (isSuccess) setOpenModal(false);
+		if (isSuccess) setView('');
 	}, [isSuccess]);
 
 	const onDownloadSettlement = async () => {
 		try {
-			setDownloading(true);
+			setExporting(true);
 			const response = await downloadSettlementsApi(qString);
-			//console.log({ docs, response });
-			// if (response?.message.includes('No records')) {
-			// 	toast.info(`No record found`);
-			// 	console.log(response);
-			// 	return;
-			// }
-
 			const url = window.URL.createObjectURL(response);
 			const a = document.createElement('a');
 			a.href = url;
@@ -85,10 +83,11 @@ const SettlementPage = () => {
 			a.click();
 			a.remove();
 			window.URL.revokeObjectURL(url);
+			toast.success(`Report successfully downloaded to your device`);
 		} catch (e: any) {
 			toast.error(`Could not download report: ${e.message}`);
 		} finally {
-			setDownloading(false);
+			setExporting(false);
 		}
 	};
 
@@ -103,8 +102,25 @@ const SettlementPage = () => {
 		);
 	};
 
-	const onSetModal = (status: boolean) => {
-		setOpenModal(status);
+	const onProceed = async (exportValue: string) => {
+		if (exportValue === 'download') return onDownloadSettlement();
+		try {
+			setExporting(true);
+			await sendExportToEmailApi();
+			toast.success(`Report sent to mail`);
+		} catch (e: any) {
+			toast.error(`Could not send report: ${e.message}`);
+		} finally {
+			setExporting(false);
+		}
+	};
+
+	const onSetView = (status: string) => {
+		setView(view);
+	};
+
+	const onCloseModal = () => {
+		setView('');
 	};
 
 	const onSetActive = (value: string) => {
@@ -122,6 +138,7 @@ const SettlementPage = () => {
 				endDate: '',
 				status: status,
 				filter: filter,
+				export: '',
 			}}
 			onSubmit={values => {
 				const { status, startDate, endDate, filter } = values;
@@ -138,74 +155,86 @@ const SettlementPage = () => {
 			}}
 			validationSchema={validationSchema}
 		>
-			<Form>
-				<div className='settlements'>
-					<Modal
-						open={openModal}
-						onClose={() => {
-							onSetModal(false);
-						}}
-					>
-						<FilterModal
-							businessName={businessName}
-							onCloseModal={onSetModal}
-							active={active}
-							onSetActive={onSetActive}
-							isFetching={isFetching}
-						/>
-					</Modal>
-					<div className='page-title_div '>
-						<h2 className='title'>Settlements</h2>
-					</div>
-					<section className='metric_cards_wrapper'>
-						<MetricCard
-							title='Total Amount Settled'
-							iconDesc='Amount paid to your account after Good’s commission is deducted.'
-							value={`₦${totalRevenue?.toLocaleString()}`}
-						/>
-					</section>
-					<div className='filter_div'>
-						<SearchFilter onTextChange={onTextChange} />
-						<div className='flex items-center gap-5'>
-							<span
-								className='status_filter_wrapper'
-								role='button'
-								onClick={() => setOpenModal(true)}
-							>
-								<Icon id='sortp' className='mr-2' />
-								Filter:{' '}
-								<span className='capitalize'>
-									&nbsp;{status?.toLocaleLowerCase() || 'All'}
-								</span>
-							</span>
-							<SimpleBtn
-								type='button'
-								className='export'
-								onClick={onDownloadSettlement}
-								disabled={downloading}
-							>
-								{downloading ? <em>Downloading...</em> : 'Export'}
-							</SimpleBtn>
+			{({ values }) => (
+				<Form>
+					<div className='settlements'>
+						<Modal open={view !== ''} onClose={onCloseModal} iconClose>
+							{view === 'filter' && (
+								<FilterModal
+									businessName={businessName}
+									onCloseModal={onCloseModal}
+									active={active}
+									onSetActive={onSetActive}
+									isFetching={isFetching}
+								/>
+							)}
+							{view === 'export' && (
+								<ExportModal
+									onProceed={() => onProceed(values?.export)}
+									exporting={exporting}
+								/>
+							)}
+						</Modal>
+						<div className='page-title_div '>
+							<h2 className='title'>Settlements</h2>
 						</div>
-					</div>
-
-					{len < 1 && !loading && (
-						<h2 className='empty__state'>No Settlement found</h2>
-					)}
-					{len > 0 && !loading && (
-						<section className='table_wrapper'>
-							<SettlementTable settlements={docs} />
-							<Pagination
-								onPageChange={onPageChange}
-								page={Number(page)}
-								limit={limit}
-								totalItems={total}
-								curItemsLen={docs?.length}
+						<section className='metric_cards_wrapper'>
+							<MetricCard
+								title='Total Amount Settled'
+								iconDesc='Amount paid to your account after Good’s commission is deducted.'
+								value={`₦${totalRevenue?.toLocaleString()}`}
 							/>
 						</section>
-					)}
-				</div>
-			</Form>
+						<div className='filter_div'>
+							<SearchFilter onTextChange={onTextChange} />
+
+							<div className='flex items-center gap-5'>
+								{/* <StatusFilter
+								onSetStatus={onSetStatus}
+								status={status}
+								states={settlementStatus}
+							/> */}
+								<span
+									className='status_filter_wrapper'
+									role='button'
+									onClick={() => setView('filter')}
+								>
+									<Icon id='sortp' className='mr-2' />
+									Filter:{' '}
+									<span className='capitalize'>
+										&nbsp;{status?.toLocaleLowerCase() || 'All'}
+									</span>
+								</span>
+								<SimpleBtn
+									type='button'
+									className='export'
+									//onClick={onDownloadSettlement}
+									onClick={() => setView('export')}
+									disabled={exporting}
+								>
+									Export
+								</SimpleBtn>
+							</div>
+						</div>
+
+						{len < 1 && !loading && (
+							<h2 className='empty__state'>No Settlement found</h2>
+						)}
+						{len > 0 && !loading && (
+							<section className='table_wrapper'>
+								<SettlementTable settlements={docs} />
+								<Pagination
+									onPageChange={onPageChange}
+									page={Number(page)}
+									limit={limit}
+									totalItems={total}
+									curItemsLen={docs?.length}
+								/>
+							</section>
+						)}
+					</div>
+				</Form>
+			)}
 		</Formik>
 	);
 };

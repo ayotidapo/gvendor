@@ -7,6 +7,7 @@ import { periodFilter, settlementFilter } from '@/utils/data';
 import { Icon } from '@/atoms/icon/icon';
 import { useFormikContext } from 'formik';
 import { ObjectData } from '@/utils/interface';
+import Radio from '@/atoms/Radio';
 
 interface Props {
 	isFetching?: boolean;
@@ -31,7 +32,7 @@ const FilterModal: React.FC<Props> = props => {
 					id='close'
 					width={32}
 					height={32}
-					className='cursor-pointer'
+					className='cursor-pointer hidden'
 					onClick={() => onCloseModal(false)}
 				/>
 			</div>
@@ -51,7 +52,6 @@ const FilterModal: React.FC<Props> = props => {
 					Date Range
 				</SimpleBtn>
 			</div>
-
 			{active === 'range' ? (
 				<div className='date__range__wrapper'>
 					<div className='w-full'>
@@ -99,6 +99,7 @@ const FilterModal: React.FC<Props> = props => {
 				useFormik
 				placeholder='select settlement status'
 			/>
+
 			<SimpleBtn className='proceed' disabled={isFetching}>
 				Proceed
 			</SimpleBtn>

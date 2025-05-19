@@ -8,6 +8,12 @@ export const downloadSettlementsApi = async (queyString?: string) => {
 	return response;
 };
 
+export const sendExportToEmailApi = async (queyString?: string) => {
+	const response = await Fetch(`/report/export${queyString || ''}`);
+
+	return response;
+};
+
 export const getSettlementsApi = async (queyString?: string) => {
 	const response = await Fetch(`/settlements${queyString || ''}`);
 

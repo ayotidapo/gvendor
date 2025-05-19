@@ -1,17 +1,24 @@
 import Radio from '@/atoms/Radio';
+import React, { useState } from 'react';
+import * as Yup from 'yup';
 import EditInputBox from '@/molecules/EditInputBox';
 import EditAddressBox from '@/molecules/EditInputBox/Address';
 import EditPhoneBox from '@/molecules/EditInputBox/Phone';
 import DialogRadio from '@/onboard/BusinessSetup/views/DialogRadio';
 import WorkingDays from '@/onboard/BusinessSetup/views/WorkingDays';
 import { useDispatch, useSelector } from '@/redux/hooks';
-import { days } from '@/utils/data';
+import { days, servicesOfferedOptions } from '@/utils/data';
 import { ErrorMessage, Form, Formik } from 'formik';
-import React, { useState } from 'react';
-import { validationSchema } from '@/onboard/BusinessSetup/views/BusinessInfo';
+import { validationSchema as BaseValidationSchema } from '@/onboard/BusinessSetup/views/BusinessInfo';
 import { updateBiz } from '@/redux/apis/business';
 import { toast } from 'react-toastify';
 import { initAvailableHours } from '@/utils/constants';
+import Select from '@/atoms/Input/Select';
+import { ObjectData } from '@/utils/interface';
+
+const validationSchema = BaseValidationSchema.shape({
+	servicesOffered: Yup.string().required(),
+});
 
 const BizInfo = () => {
 	const { businessDetails } = useSelector(state => state?.vendor);
@@ -32,7 +39,7 @@ const BizInfo = () => {
 			initialValues={{
 				businessName,
 				businessPhonenumber: businessPhonenumber
-					? `+${businessPhonenumber}`
+					? `${businessPhonenumber}`
 					: '',
 				businessAddress: {
 					address: businessDetails?.businessAddress?.address,
@@ -50,7 +57,7 @@ const BizInfo = () => {
 						closingTime: availableHours?.[day].closingTime || '',
 					})),
 				],
-				servicesOffered: businessDetails?.servicesOffered?.[0] || [],
+				servicesOffered: businessDetails?.servicesOffered?.[0] || '',
 				cacNumber: businessDetails?.cacNumber,
 				isCacNumber: businessDetails?.isCacNumber ? 'y' : 'n',
 				tinNumber: businessDetails?.tinNumber,
@@ -80,15 +87,21 @@ const BizInfo = () => {
 					};
 				}, {});
 
-				const payload = {
+				let payload: ObjectData = {};
+
+				payload = {
 					...restValues,
 					availableHours: mappedHours,
 					servicesOffered: [values?.servicesOffered],
 					businessAddress,
 					isNafdacNumber,
 					isSonNumber,
-					businessPhonenumber: values?.businessPhonenumber?.replace('+', ''),
+					businessPhonenumber: values?.businessPhonenumber,
 				};
+
+				if (!values.website) {
+					delete payload?.website;
+				}
 
 				dispatch(updateBiz(payload)).then(result => {
 					if (result.type === 'vendor/updateBiz/fulfilled') {
@@ -106,7 +119,6 @@ const BizInfo = () => {
 				return (
 					<Form>
 						<h2 className='h2 text-black'>Business Information</h2>
-
 						<EditInputBox
 							ctaName='Save'
 							name='businessName'
@@ -117,7 +129,6 @@ const BizInfo = () => {
 							submitting={loading}
 							onChange={handleChange}
 						/>
-
 						<EditAddressBox
 							title='Business address'
 							onSelectLocation={addressObj => {
@@ -144,24 +155,33 @@ const BizInfo = () => {
 							submitting={loading}
 							onChange={handleChange}
 						/>
-						<EditPhoneBox
-							name='businessPhonenumber'
+						<EditInputBox
 							title='Business phone number'
-							onChange={(val: string) =>
-								setFieldValue('businessPhonenumber', val)
-							}
-							onBlur={handleBlur}
 							submitting={loading}
+							{...rest.getFieldProps('businessPhonenumber')}
+							ctaName='Save'
+							error={
+								rest?.touched?.businessPhonenumber
+									? errors?.businessPhonenumber
+									: ''
+							}
 						/>
+
 						<EditInputBox
 							ctaName='Save'
 							name='servicesOffered'
 							title='Business category'
-							value={values?.servicesOffered}
-							error={errors?.servicesOffered}
+							//value={values?.servicesOffered}
+							//error={errors?.servicesOffered}
 							submitting={loading}
-							onChange={handleChange}
-						/>
+							//onChange={handleChange}
+						>
+							<Select
+								name='servicesOffered'
+								options={servicesOfferedOptions}
+								useFormik
+							/>
+						</EditInputBox>
 						<EditInputBox
 							ctaName='Save'
 							name='businessDescription'
@@ -185,7 +205,6 @@ const BizInfo = () => {
 							submitting={loading}
 							onChange={handleChange}
 						/>
-
 						<EditInputBox
 							ctaName='Save'
 							name='*'

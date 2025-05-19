@@ -23,4 +23,13 @@
 			@apply mt-5;
 		}
 	}
+	.download__box {
+		@apply p-5 bg-white rounded-md flex gap-x-10 flex-wrap w-[450px];
+		.headings {
+			@apply w-full mb-10;
+		}
+		.proceed {
+			@apply mt-10;
+		}
+	}
 }
