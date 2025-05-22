@@ -29,12 +29,26 @@ import { settlementStatus } from '@/utils/data';
 import Radio from '@/atoms/Radio';
 import ExportModal from './ExportModal';
 
-const validationSchema = Yup.object({
-	startDate: Yup.string(),
-	endDate: Yup.string(),
-	status: Yup.string(),
-	filter: Yup.string(),
-});
+const validationSchema = (active: string) =>
+	Yup.object({
+		startDate: Yup.string().test(
+			'sDate-valid',
+			'Start date is required',
+			value => {
+				if (active === 'range' && !value) return false;
+				return true;
+			}
+		),
+		endDate: Yup.string().test('sDate-valid', 'End date is required', value => {
+			if (active === 'range' && !value) return false;
+			return true;
+		}),
+		status: Yup.string().required('Select status'),
+		filter: Yup.string().test('filter', 'Period is required', value => {
+			if (active === 'period' && !value) return false;
+			return true;
+		}),
+	});
 
 const SettlementPage = () => {
 	const { docs, isSuccess, isFetching, total, totalRevenue, loading } =
@@ -65,6 +79,7 @@ const SettlementPage = () => {
 
 	useEffect(() => {
 		dispatch(getSettlements(qString));
+		console.log({ qString });
 	}, [qString]);
 
 	useEffect(() => {
@@ -84,6 +99,7 @@ const SettlementPage = () => {
 			a.remove();
 			window.URL.revokeObjectURL(url);
 			toast.success(`Report successfully downloaded to your device`);
+			setView('');
 		} catch (e: any) {
 			toast.error(`Could not download report: ${e.message}`);
 		} finally {
@@ -106,8 +122,9 @@ const SettlementPage = () => {
 		if (exportValue === 'download') return onDownloadSettlement();
 		try {
 			setExporting(true);
-			await sendExportToEmailApi();
+			await sendExportToEmailApi(qString);
 			toast.success(`Report sent to mail`);
+			setView('');
 		} catch (e: any) {
 			toast.error(`Could not send report: ${e.message}`);
 		} finally {
@@ -115,12 +132,13 @@ const SettlementPage = () => {
 		}
 	};
 
-	const onSetView = (status: string) => {
+	const onSetView = (view: string) => {
 		setView(view);
 	};
 
 	const onCloseModal = () => {
 		setView('');
+		router.push(`/settlements`);
 	};
 
 	const onSetActive = (value: string) => {
@@ -131,11 +149,13 @@ const SettlementPage = () => {
 
 	if (loading) return <LoadingPage className='py-5 ' />;
 
+	const isNoFiltering = !startDate && !endDate && !filter;
+
 	return (
 		<Formik
 			initialValues={{
-				startDate: '',
-				endDate: '',
+				startDate: startDate || '',
+				endDate: endDate || '',
 				status: status,
 				filter: filter,
 				export: '',
@@ -144,16 +164,19 @@ const SettlementPage = () => {
 				const { status, startDate, endDate, filter } = values;
 				const _status = status === 'ALL' ? '' : status;
 
+				const sDate = startDate ? new Date(startDate)?.toISOString() : '';
+				const eDate = endDate ? new Date(endDate)?.toISOString() : '';
+
 				if (active === 'range')
 					return router.push(
-						`${path}?status=${_status}&page=1&isCustomDateRange=true&startDate=${new Date(startDate || new Date())?.toISOString()}&endDate=${new Date(endDate || new Date())?.toISOString()}`
+						`${path}?status=${_status}&page=1&isCustomDateRange=true&startDate=${sDate}&endDate=${eDate}`
 					);
 
 				router.push(
 					`${path}?status=${_status}&page=1&isCustomDateRange=false&filter=${filter}`
 				);
 			}}
-			validationSchema={validationSchema}
+			validationSchema={validationSchema(active)}
 		>
 			{({ values }) => (
 				<Form>
@@ -209,8 +232,8 @@ const SettlementPage = () => {
 									type='button'
 									className='export'
 									//onClick={onDownloadSettlement}
-									onClick={() => setView('export')}
-									disabled={exporting}
+									onClick={() => onSetView('export')}
+									disabled={exporting || docs?.length < 1 || isNoFiltering}
 								>
 									Export
 								</SimpleBtn>

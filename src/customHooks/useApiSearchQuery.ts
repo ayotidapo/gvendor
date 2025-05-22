@@ -7,10 +7,10 @@ const useApiSearchQuery = (limit = 10) => {
 	const page = sQ.get('page') || 1;
 	const status = sQ.get('status') || '';
 	const search = sQ.get('search') || '';
-	const startDate = sQ.get('startDate') || new Date();
-	const endDate = sQ.get('endDate') || new Date();
+	const startDate = sQ.get('startDate') || '';
+	const endDate = sQ.get('endDate') || '';
 	const filter = sQ.get('filter') || '';
-	const isCustomDateRange = sQ.get('isCustomDateRange') || '';
+	const isCustomDateRange = !!sQ.get('isCustomDateRange') || false;
 	const searchParamsObject = Object.fromEntries(sQ.entries());
 
 	const constructApiQuery = () => {

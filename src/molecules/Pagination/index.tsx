@@ -20,6 +20,7 @@ const Pagination: React.FC<Props> = props => {
 				breakLabel='...'
 				onPageChange={props.onPageChange}
 				initialPage={props.page - 1}
+				disableInitialCallback={true}
 				pageRangeDisplayed={1}
 				pageCount={pageCount}
 				activeClassName='bg-black text-white'

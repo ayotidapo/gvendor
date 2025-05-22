@@ -7,7 +7,6 @@ import { periodFilter, settlementFilter } from '@/utils/data';
 import { Icon } from '@/atoms/icon/icon';
 import { useFormikContext } from 'formik';
 import { ObjectData } from '@/utils/interface';
-import Radio from '@/atoms/Radio';
 
 interface Props {
 	isFetching?: boolean;
@@ -33,7 +32,7 @@ const FilterModal: React.FC<Props> = props => {
 					width={32}
 					height={32}
 					className='cursor-pointer hidden'
-					onClick={() => onCloseModal(false)}
+					//onClick={() => onCloseModal(false)}
 				/>
 			</div>
 			<div className='toggle__div'>

@@ -105,7 +105,15 @@ const _Navbar: React.FC = () => {
 						{/* this  */}
 						<DropDown component={<Trigger firstName={firstName} />}>
 							<div className='w-[220px] flex flex-col p-4 gap-4'>
-								<span>Get help</span>
+								<span
+									onClick={() =>
+										window.open(
+											`https://thegoodthingcompany.zohodesk.com/portal/en/home`
+										)
+									}
+								>
+									Get help
+								</span>
 								<span
 									role='button'
 									onClick={() => {
