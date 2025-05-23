@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import cx from 'classnames';
 import './modal.scss';
+import { Icon } from '../icon/icon';
 
 interface Props {
 	children: React.ReactNode;
 	open: boolean;
 	onClose: () => void;
 	bodyClose?: boolean;
+	iconClose?: boolean;
 }
 
 const Modal: React.FC<Props> = props => {
@@ -20,7 +22,15 @@ const Modal: React.FC<Props> = props => {
 	return (
 		<div className={cx(`modal`, { open })}>
 			<section className={cx(`modal_content `, { open })} onClick={onBodyClose}>
-				{false && <div className='close_icon'>&times;</div>}
+				{props.iconClose && (
+					<Icon
+						id='close'
+						width={32}
+						height={32}
+						className='cursor-pointer close-x'
+						onClick={onClose}
+					/>
+				)}
 
 				{children}
 			</section>

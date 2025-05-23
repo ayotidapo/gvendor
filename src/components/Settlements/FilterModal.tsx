@@ -31,8 +31,8 @@ const FilterModal: React.FC<Props> = props => {
 					id='close'
 					width={32}
 					height={32}
-					className='cursor-pointer'
-					onClick={() => onCloseModal(false)}
+					className='cursor-pointer hidden'
+					//onClick={() => onCloseModal(false)}
 				/>
 			</div>
 			<div className='toggle__div'>
@@ -51,7 +51,6 @@ const FilterModal: React.FC<Props> = props => {
 					Date Range
 				</SimpleBtn>
 			</div>
-
 			{active === 'range' ? (
 				<div className='date__range__wrapper'>
 					<div className='w-full'>
@@ -99,6 +98,7 @@ const FilterModal: React.FC<Props> = props => {
 				useFormik
 				placeholder='select settlement status'
 			/>
+
 			<SimpleBtn className='proceed' disabled={isFetching}>
 				Proceed
 			</SimpleBtn>

@@ -54,7 +54,6 @@ const HomePage: React.FC = () => {
 		try {
 			setLoadingMet(true);
 			dispatch(getSettlements()).then(action => {
-				console.log({ action });
 				if (action?.meta?.requestStatus === 'fulfilled') {
 					setMetrics(metrics => ({
 						...metrics,
@@ -93,7 +92,7 @@ const HomePage: React.FC = () => {
 
 	const len = orders?.length;
 	if (loadingMet) return <LoadingPage className='py-5 ' />;
-	console.log({ metrics });
+
 	return (
 		<>
 			<div className='homepage'>

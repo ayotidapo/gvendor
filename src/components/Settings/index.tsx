@@ -57,7 +57,7 @@ const Settings = () => {
 					{tab === 'business-info' && <BizInfo />}
 					{tab === 'bank-account' && <BankAcct />}
 					{tab === 'notification' && <Notification />}
-					{tab === 'manage-account' && <ManageAcct />}
+					{tab === 'manage-account' && <ManageAcct onNavigate={onNavigate} />}
 				</section>
 			</div>
 		</div>

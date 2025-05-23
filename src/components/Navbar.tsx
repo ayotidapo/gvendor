@@ -12,6 +12,7 @@ import Sidebar from '@/molecules/Sidebar';
 import { getNotifications } from '@/redux/apis/notifications';
 import { format } from 'date-fns';
 import { Spinner } from '@/molecules/LoadingPage';
+import { useRouter } from 'next/navigation';
 
 const Trigger: React.FC<{ firstName: string }> = ({ firstName }) => (
 	<SimpleBtn className='nav__bar_btn'>
@@ -25,6 +26,7 @@ const Trigger: React.FC<{ firstName: string }> = ({ firstName }) => (
 
 const _Navbar: React.FC = () => {
 	const dispatch = useDispatch();
+	const router = useRouter();
 	const [open, setOpen] = useState(false);
 	const [reveal, setReveal] = useState(false);
 	const { firstName = '', _id } = useSelector(state => state?.vendor);
@@ -80,9 +82,13 @@ const _Navbar: React.FC = () => {
 								)}
 								<section className='notification_list_wrapper show-scroll'>
 									{notifications?.map((item, i) => (
-										<article className='mt-7' key={i}>
+										<article
+											className='mt-7 hover:bg-slate-100'
+											key={i}
+											//onClick={() => router.push(`/orders/${item?._id}`)}
+										>
 											<div className='flex justify-between mb-1.5'>
-												<h2 className='text-black subpixel-antialiased'>
+												<h2 className='text-black subpixel-antialiased '>
 													{item?.title}
 												</h2>
 												<span className='text-sm'>
@@ -90,7 +96,7 @@ const _Navbar: React.FC = () => {
 														format(item?.updatedAt, 'dd/MM/yyyy hh:mm aa')}
 												</span>
 											</div>
-											<p className='text-sm text-[#555555]'>{item?.message}</p>
+											<p className='text-sm text-[#555555] '>{item?.message}</p>
 										</article>
 									))}
 								</section>
@@ -99,7 +105,15 @@ const _Navbar: React.FC = () => {
 						{/* this  */}
 						<DropDown component={<Trigger firstName={firstName} />}>
 							<div className='w-[220px] flex flex-col p-4 gap-4'>
-								<span>Get help</span>
+								<span
+									onClick={() =>
+										window.open(
+											`https://thegoodthingcompany.zohodesk.com/portal/en/home`
+										)
+									}
+								>
+									Get help
+								</span>
 								<span
 									role='button'
 									onClick={() => {

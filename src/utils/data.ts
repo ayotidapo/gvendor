@@ -1,7 +1,3 @@
-import { ChartOptions } from 'chart.js';
-import { ObjectData } from './interface';
-import { format } from 'date-fns';
-
 const servicesOfferedOptions = [
 	{ value: 'food', label: 'Food' },
 	{ value: 'electronics', label: 'Electronics' },
