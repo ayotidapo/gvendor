@@ -45,7 +45,7 @@ const CreatePaswordPage = () => {
 					password,
 				});
 				toast.success(`password successfully reset, you can now login`);
-				router.replace(`/auth,login`);
+				router.replace(`/auth/login`);
 			} catch (e: any) {
 				toast.error(e?.message || 'Something went wrong');
 			} finally {

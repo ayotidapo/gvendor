@@ -1,6 +1,8 @@
 'use client';
 import { SimpleBtn } from '@/atoms/buttons/Button';
 import * as Yup from 'yup';
+import { useSelector } from '@/redux/hooks';
+import { format } from 'date-fns';
 import EditInputBox, { EditGroupInputBox } from '@/molecules/EditInputBox';
 import React, { useState } from 'react';
 import DeleteAcct from './DeleteAcct';
@@ -21,7 +23,11 @@ const validationSchema = Yup.object({
 		.required('cannot be empty'),
 });
 
-const ManageAcct = () => {
+interface Props {
+	onNavigate: (page: string) => void;
+}
+const ManageAcct: React.FC<Props> = props => {
+	const { updatedAt } = useSelector(state => state.vendor);
 	const [loading, setLoading] = useState<boolean>(false);
 	const [del, setDel] = useState<boolean>(false);
 	const { getFieldProps, errors, touched, handleSubmit } = useFormik({
@@ -34,9 +40,10 @@ const ManageAcct = () => {
 			try {
 				setLoading(true);
 				await changePasswordApi(values);
-				toast.error(`Password successfully changed`);
-			} catch {
-				toast.error(`Error: could not change password`);
+				toast.success(`Password successfully changed`);
+				props.onNavigate('personal-info');
+			} catch (e: any) {
+				toast.error(`Error: ${e.message} \ncould not change password`);
 			} finally {
 				setLoading(false);
 			}
@@ -67,7 +74,10 @@ const ManageAcct = () => {
 							/>
 
 							{isNonEdit && (
-								<span>You last updated your password on Sep 18, 2023</span>
+								<span>
+									You last updated your password on{' '}
+									{format(new Date(updatedAt), 'MMM d, yyyy')}
+								</span>
 							)}
 							<EditInputBox
 								nonEditable={isNonEdit}

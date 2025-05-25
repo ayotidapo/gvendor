@@ -45,6 +45,7 @@ const CreatePaswordPage = () => {
 					password,
 					token: verifiedToken,
 				});
+
 				const { vendor = {}, token = '' } = response?.data;
 				dispatch(setVendor({ ...vendor, token }));
 				localStorage.t_ = token;

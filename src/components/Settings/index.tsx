@@ -5,7 +5,7 @@ import './settings.scss';
 import dynamic from 'next/dynamic';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { settingsTabs } from '@/utils/data';
-import { getNotifSettings } from '@/redux/apis/notifications';
+import { getNotifSettings } from '@/redux/apis/notifications_settings';
 import { useDispatch } from '@/redux/hooks';
 
 const BankAcct = dynamic(() => import('./views/BankAcct'));
@@ -15,11 +15,13 @@ const Notification = dynamic(() => import('./views/Notification'));
 const PersonalInfo = dynamic(() => import('./views/PersonalInfo'));
 
 const Settings = () => {
+	const dispatch = useDispatch();
 	const router = useRouter();
 	const path = usePathname();
 	const sQ = useSearchParams();
+
 	const tab = (sQ.get('tab') as string) || 'personal-info';
-	const dispatch = useDispatch();
+
 	const onNavigate = (tabValue: string) => {
 		router.push(`${path}?tab=${tabValue}`);
 	};
@@ -55,7 +57,7 @@ const Settings = () => {
 					{tab === 'business-info' && <BizInfo />}
 					{tab === 'bank-account' && <BankAcct />}
 					{tab === 'notification' && <Notification />}
-					{tab === 'manage-account' && <ManageAcct />}
+					{tab === 'manage-account' && <ManageAcct onNavigate={onNavigate} />}
 				</section>
 			</div>
 		</div>

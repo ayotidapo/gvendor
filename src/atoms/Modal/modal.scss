@@ -5,6 +5,9 @@
 		visibility 0.3s linear;
 	.modal_content {
 		@apply -translate-y-20 relative rounded-xl;
+		.close-x {
+			@apply absolute top-2.5 right-2.5;
+		}
 	}
 	&.open {
 		@apply opacity-100 visible;

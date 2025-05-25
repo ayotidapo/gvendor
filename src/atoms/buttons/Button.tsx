@@ -123,7 +123,7 @@ export const LinkButton: FC<ButtonProps> = ({
 interface Props {
 	children: React.ReactNode;
 	type?: 'submit' | 'button' | 'reset';
-	onClick?: () => void;
+	onClick?: (e: any) => void;
 	className?: string;
 	disabled?: boolean;
 }

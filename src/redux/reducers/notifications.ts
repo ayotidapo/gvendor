@@ -1,77 +1,50 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { getNotifSettings } from '../apis/notifications';
+import { getNotifications } from '../apis/notifications';
 
-interface INotifSettings {
-	newOrder: {
-		email: boolean | string;
-		pushNotification: boolean | string;
-	};
-	settlementAndWithdrawal: {
-		email: boolean | string;
-		pushNotification: boolean | string;
-	};
-	lowStockAlerts: {
-		email: boolean | string;
-		pushNotification: boolean | string;
-	};
-	signInActivity: {
-		email: boolean | string;
-		pushNotification: boolean | string;
-	};
-	isSuccess?: boolean;
-	isError?: boolean;
-	error: string | undefined;
-	loading: boolean;
+type INotification = {
+	_id: string;
+	title: string;
+	message: string;
+	updatedAt: string;
+	[key: string]: any;
+}[];
+interface InotificationState {
+	notifications: INotification;
+	[key: string]: any;
 }
-
-const initialState: INotifSettings = {
-	newOrder: {
-		email: false,
-		pushNotification: false,
-	},
-	settlementAndWithdrawal: {
-		email: false,
-		pushNotification: false,
-	},
-	lowStockAlerts: {
-		email: false,
-		pushNotification: false,
-	},
-	signInActivity: {
-		email: false,
-		pushNotification: false,
-	},
+const initialState: InotificationState = {
+	notifications: [{ _id: '', title: '', message: '', updatedAt: '' }],
 	isSuccess: false,
 	isError: false,
 	error: '',
 	loading: false,
 };
 
-export const notifSettingsSlice = createSlice({
-	name: 'notifSettings',
+export const notificationsSlice = createSlice({
+	name: 'notifications',
 
 	initialState,
 
 	reducers: {
-		setNotifSettings(state: INotifSettings, action) {
+		setNotifications(state: InotificationState, action) {
 			Object.assign(state, action.payload);
 		},
 	},
 
 	extraReducers: builder => {
 		builder
-			.addCase(getNotifSettings.pending, state => {
+			.addCase(getNotifications.pending, state => {
 				state.isSuccess = false;
 				state.isError = false;
 				state.loading = true;
 			})
-			.addCase(getNotifSettings.fulfilled, (state, action) => {
+			.addCase(getNotifications.fulfilled, (state, action) => {
 				state.isSuccess = true;
 				state.isError = false;
 				state.loading = false;
-				Object.assign(state, action.payload?.data);
+				Object.assign(state, { notifications: [...action.payload?.data] });
 			})
-			.addCase(getNotifSettings.rejected, (state, action) => {
+			.addCase(getNotifications.rejected, (state, action) => {
 				state.isSuccess = false;
 				state.isError = true;
 				state.loading = false;
@@ -80,5 +53,5 @@ export const notifSettingsSlice = createSlice({
 	},
 });
 
-export const { setNotifSettings } = notifSettingsSlice.actions;
-export default notifSettingsSlice.reducer;
+export const { setNotifications } = notificationsSlice.actions;
+export default notificationsSlice.reducer;

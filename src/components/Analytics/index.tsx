@@ -7,7 +7,7 @@ import PercentGrowth from './PercentGrowth';
 import { SimpleBtn } from '@/atoms/buttons/Button';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import Datepicker, { DateValueType } from 'react-tailwindcss-datepicker';
-import { constructQuery } from '@/utils/helpers';
+import { constructQuery, formatAmount } from '@/utils/helpers';
 import { registerables, Chart } from 'chart.js';
 import { Bar, Line } from 'react-chartjs-2';
 
@@ -27,6 +27,8 @@ import { definedFilter } from '@/utils/data';
 import './analytics.scss';
 import { differenceInDays, subMonths } from 'date-fns';
 import { ObjectData } from '@/utils/interface';
+import settlements from '@/redux/reducers/settlements';
+import { getSettlements } from '@/redux/apis/settlements';
 
 Chart.register(...registerables);
 
@@ -38,10 +40,11 @@ const Analytics = () => {
 	const path = usePathname();
 
 	const duration = sQ.get('duration') || 'day';
-	const startDate = sQ.get('startDate') || '';
-	const endDate = sQ.get('endDate') || '';
+	const startDate = sQ.get('startDate') || null;
+	const endDate = sQ.get('endDate') || null;
 
 	const { ...analytics } = useSelector(state => state.analytics);
+	const { totalRevenue } = useSelector(state => state.settlements);
 
 	const [showSales, setShowSales] = useState(true);
 
@@ -94,6 +97,10 @@ const Analytics = () => {
 			toast.error(`Error: ${e?.message}`);
 		}
 	};
+
+	useEffect(() => {
+		dispatch(getSettlements());
+	}, []);
 
 	useEffect(() => {
 		onGetAnalytics();
@@ -157,27 +164,31 @@ const Analytics = () => {
 
 			<section className='metric_cards_wrapper'>
 				<MetricCard
-					title='Total Sales'
+					title='Total Settled Amount'
+					iconDesc='Amount paid to your account after Good’s commission is deducted.'
 					value={
 						<PercentGrowth
-							amount={`₦${analytics?.totalSales?.totalRevenue?.toLocaleString() || ''}`}
-							desc={`${(analytics?.totalSales?.percentageIncrease || 0) / 100}% increase in the past week`}
+							amount={`₦${totalRevenue?.toLocaleString() || ''}`}
+							desc={`${((analytics?.totalSales?.percentageIncrease || 0) / 100).toFixed(2)}% increase in the past week`}
 						/>
 					}
 				/>
+
 				<MetricCard
 					title='Total Orders'
+					iconDesc='Number of completed sales.'
 					value={
 						<PercentGrowth
 							amount={
 								analytics?.totalOrders?.ordersCount?.toLocaleString() || ''
 							}
-							desc={`${(analytics?.totalOrders?.percentageIncrease || 0) / 100}% increase in the past week`}
+							desc={`${((analytics?.totalOrders?.percentageIncrease || 0) / 100).toFixed(2)}% increase in the past week`}
 						/>
 					}
 				/>
 				<MetricCard
 					title='Total Customers'
+					iconDesc='Number of unique buyers.'
 					value={
 						<PercentGrowth
 							amount={
@@ -189,10 +200,11 @@ const Analytics = () => {
 				/>
 				<MetricCard
 					title='Average Order Value'
+					iconDesc='This is the average amount each customer spends per order'
 					value={
 						<PercentGrowth
-							amount={`₦${analytics?.averageOrderValue?.averageOrderValue?.toLocaleString() || ''}`}
-							desc={`${(analytics?.averageOrderValue?.percentageChange || 0) / 100}% increase in the past week`}
+							amount={`₦${formatAmount(analytics?.averageOrderValue?.averageOrderValue) || ''}`}
+							desc={`${((analytics?.averageOrderValue?.percentageChange || 0) / 100).toFixed(2)}% increase in the past week`}
 						/>
 					}
 				/>

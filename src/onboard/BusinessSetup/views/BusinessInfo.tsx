@@ -27,7 +27,7 @@ export const validationSchema = Yup.object({
 	servicesOffered: Yup.string().required('Select business type'),
 	businessPhonenumber: Yup.string()
 		.required('Phone number is required')
-		.min(14, ' Enter valid phone number')
+		.min(11, ' Enter valid phone number')
 		.max(15, ' Enter valid phone number'),
 	website: Yup.string()
 		.nullable()

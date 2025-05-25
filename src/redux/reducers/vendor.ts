@@ -5,8 +5,12 @@ import { getVendor, registerVendor } from '../apis/vendor';
 interface IVState extends IVendor {
 	businessDetails: { availableHours: ObjectData; [key: string]: any };
 	isSuccess?: boolean;
+	isRegSuccess?: boolean;
+	isRegError?: boolean;
+	isRegLoading?: boolean;
 	isError?: boolean;
-	error: string | undefined;
+	error?: string | undefined;
+	regError?: string | undefined;
 	loading: boolean;
 }
 
@@ -24,7 +28,6 @@ const initialState: IVState = {
 	servicesOffered: [''],
 	website: '',
 	businessAddress: { address: '', longitude: '', latitude: '' },
-	error: '',
 	loading: false,
 };
 
@@ -43,20 +46,21 @@ export const vendorSlice = createSlice({
 		builder
 			.addCase(registerVendor.pending, state => {
 				state.status = 'pending';
-				state.loading = true;
-				state.isSuccess = false;
+				state.isRegLoading = true;
+				state.isRegSuccess = false;
+				state.isRegError = false;
 			})
 			.addCase(registerVendor.fulfilled, (state, action) => {
-				state.isSuccess = true;
-				state.isError = false;
-				state.loading = false;
+				state.isRegSuccess = true;
+				state.isRegError = false;
+				state.isRegLoading = false;
 				Object.assign(state, action.payload?.data);
 			})
 			.addCase(registerVendor.rejected, (state, action) => {
-				state.isSuccess = false;
-				state.isError = true;
-				state.loading = false;
-				state.error = action.error.message;
+				state.isRegSuccess = false;
+				state.isRegError = true;
+				state.isRegLoading = false;
+				state.regError = action.error.message;
 			})
 			.addCase(getVendor.pending, state => {
 				state.isSuccess = false;

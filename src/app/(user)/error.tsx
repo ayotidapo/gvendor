@@ -16,8 +16,8 @@ export default function Error({
 	}, [error]);
 
 	return (
-		<div className='h-screen flex flex-col justify-center items-center'>
-			<h2>Something went wrong!</h2>
+		<div className='h-[calc(100vh-140px)] flex flex-col justify-center items-center'>
+			<h2 className='mb-2'>Something went wrong!</h2>
 			<SimpleBtn
 				className='notfound '
 				onClick={

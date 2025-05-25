@@ -10,7 +10,7 @@ export const constructQuery = () => {
 
 	const toObject = Object.fromEntries(params.entries());
 	if (toObject?.duration === 'custom') delete toObject?.duration;
-	console.log({ toObject, m: location.search });
+
 	const filteredParams = Object.keys(toObject).reduce((acc, cur, i) => {
 		if (cur) {
 			return {
@@ -21,4 +21,15 @@ export const constructQuery = () => {
 		return acc;
 	}, {});
 	return new URLSearchParams(filteredParams).toString();
+};
+
+export const formatAmount = (
+	number: number,
+	minimumFractionDigits = 2,
+	maximumFractionDigits = 2
+) => {
+	return number.toLocaleString('en-US', {
+		minimumFractionDigits,
+		maximumFractionDigits,
+	});
 };

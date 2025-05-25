@@ -4,23 +4,25 @@ import Tag from '@/atoms/Tag';
 import React from 'react';
 import { useRouter } from 'next/navigation';
 import { Icon } from '@/atoms/icon/icon';
-import './settlement.scss';
+import './settlement-table.scss';
 import { ObjectData } from '@/utils/interface';
 import { format } from 'date-fns';
 import { orderStatus } from '@/utils/data';
 
 interface Props {
 	settlements: ObjectData[];
+	isNonClikable?: boolean;
 }
 
 const SettlementTable: React.FC<Props> = props => {
-	const { settlements } = props;
+	const { settlements, isNonClikable } = props;
 
 	const router = useRouter();
 
 	const onNavigate = (id: string) => {
 		router.push(`/settlements/${id}`);
 	};
+
 	return (
 		<>
 			<table className='table_'>
@@ -35,8 +37,18 @@ const SettlementTable: React.FC<Props> = props => {
 				</thead>
 				<tbody>
 					{settlements.map((stlmnt: ObjectData, i: number) => (
-						<tr onClick={() => onNavigate(stlmnt?._id)} key={i}>
-							<td>#{stlmnt?.transactionId || 'N/A'}</td>
+						<tr
+							onClick={() =>
+								isNonClikable ? () => {} : onNavigate(stlmnt?._id)
+							}
+							key={i}
+						>
+							<td>
+								#
+								{stlmnt?.order?.paymentId?._id ||
+									stlmnt?.order?.paymentId ||
+									'N/A'}
+							</td>
 							<td>#{stlmnt?.order?.orderNumber || 'N/A'}</td>
 							<td>₦{stlmnt?.amount?.toLocaleString()}</td>
 							<td>

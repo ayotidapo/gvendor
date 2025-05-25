@@ -2,9 +2,26 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import Fetch from '@/utils/fetch';
 import { ObjectData } from '@/utils/interface';
 
-export const getSettlementsApi = async (queyString?: string) => {
-	const response = await Fetch(`/settlements${queyString}`);
+export const downloadSettlementsApi = async (queyString?: string) => {
+	const response = await Fetch(`/report/export-download${queyString || ''}`);
 
+	return response;
+};
+
+export const sendExportToEmailApi = async (queyString?: string) => {
+	const response = await Fetch(`/report/export${queyString || ''}`);
+
+	return response;
+};
+
+export const getSettlementsApi = async (queyString?: string) => {
+	const response = await Fetch(`/settlements${queyString || ''}`);
+
+	return response;
+};
+
+export const getSettlementsByOrderApi = async (orderId: string) => {
+	const response = await Fetch(`/settlements/${orderId}/order`);
 	return response;
 };
 

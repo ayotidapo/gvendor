@@ -23,15 +23,16 @@ import StatusFilter from '../../molecules/StatusFilter';
 import SearchFilter from '@/molecules/SearchFilter';
 import { IOrder } from '@/redux/reducers/orders';
 import { toast } from 'react-toastify';
+import { getSettlements } from '@/redux/apis/settlements';
 
 const HomePage: React.FC = () => {
 	const {
 		orders,
-		isSuccess,
 		loading,
 		totalOrders = '',
 		totalSales = '',
 	} = useSelector(state => state?.orders);
+	const { totalRevenue } = useSelector(state => state?.settlements);
 	const dispatch = useDispatch();
 
 	const router = useRouter();
@@ -52,14 +53,22 @@ const HomePage: React.FC = () => {
 	const onGetAllMetrics = async () => {
 		try {
 			setLoadingMet(true);
-			Fetch(`/order/all?status=NEW`).then(r => {
+			dispatch(getSettlements()).then(action => {
+				if (action?.meta?.requestStatus === 'fulfilled') {
+					setMetrics(metrics => ({
+						...metrics,
+						totalSettled: action?.payload?.data?.totalRevenue,
+					}));
+				}
+			});
+			await Fetch(`/order/all?status=FULFILLED`).then(r => {
 				setMetrics(metrics => ({
 					...metrics,
 					totalNewOrders: r?.data?.totalOrders,
 					totalNewSales: r?.data?.totalSales,
 				}));
 			});
-			Fetch(`/order/all?status=ONGOING`).then(r => {
+			await Fetch(`/order/all?status=ONGOING`).then(r => {
 				setMetrics(metrics => ({
 					...metrics,
 					totalProcessingOrders: r?.data?.totalOrders,
@@ -83,6 +92,7 @@ const HomePage: React.FC = () => {
 
 	const len = orders?.length;
 	if (loadingMet) return <LoadingPage className='py-5 ' />;
+
 	return (
 		<>
 			<div className='homepage'>
@@ -91,24 +101,28 @@ const HomePage: React.FC = () => {
 				</div>
 				<section className='metric_cards_wrapper'>
 					<MetricCard
-						title='Total Sales'
+						iconDesc='Amount paid to your account after Good’s commission is deducted.'
+						title='Total Settled Amount'
 						value={
 							<>
 								<span className='font-medium'>&#8358;</span>
-								{totalSales?.toLocaleString()}
+								{metrics?.totalSettled?.toLocaleString()}
 							</>
 						}
 					/>
 					<MetricCard
-						title='Total Orders '
+						title='Total Orders'
+						iconDesc='Number of completed sales.'
 						value={`${totalOrders?.toLocaleString() || 0} Orders`}
 					/>
 					<MetricCard
-						title='New Orders '
+						title='Completed Orders'
+						iconDesc='Total number of customer orders that have been successfully fulfilled.'
 						value={`${metrics?.totalNewOrders || 0} orders`}
 					/>
 					<MetricCard
-						title='Processing Orders '
+						title='Processing Orders'
+						iconDesc='Orders that are currently being prepared or are awaiting fulfillment.'
 						value={`${metrics?.totalProcessingOrders || 0} orders`}
 					/>
 				</section>
@@ -129,26 +143,32 @@ const HomePage: React.FC = () => {
 				)}
 				{len > 0 && !loading && (
 					<section className='orders_wrapper'>
-						{orders.map((order: IOrder, i) => (
+						{orders.slice(0, 5).map((order: IOrder, i) => (
 							<article
 								onClick={() => router.push(`/orders/${order?._id}`)}
 								className={`order_card ${orderStatus[order?.status]}`}
 								key={i}
 							>
 								<div className='flex justify-between text-black subpixel-antialiased'>
-									Orders #15285057
+									#{order?.orderNumber}
 								</div>
 								<div className='my-2'>
 									₦{order?.totalAmount?.toLocaleString()}
 								</div>
-								<span className='text-sm'>5 mins ago</span>
+								<span className='text-sm'>{order?.timeAgo}`</span>
 								<hr className='my-5' />
 								<div className='flex justify-between text-sm mt-auto mb-5'>
 									<span>Order status</span>
 
-									<Tag title={orderStatus[order?.status]?.toLowerCase()} />
+									<Tag
+										title={(
+											orderStatus[order?.status] || order?.status
+										)?.toLowerCase()}
+									/>
 								</div>
-								<SimpleBtn className='set_status'>Set as processing</SimpleBtn>
+								<SimpleBtn className='set_status' disabled>
+									.{/* Set as processing */}
+								</SimpleBtn>
 							</article>
 						))}
 					</section>

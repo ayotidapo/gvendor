@@ -27,29 +27,31 @@ const OrdersTable: React.FC<Props> = ({ orders }) => {
 					<th>AMOUNT</th>
 					<th>DATE & TIME</th>
 					<th>ORDER STATUS</th>
-					<th>Actions</th>
+					{/* <th>Actions</th> */}
 				</tr>
 			</thead>
 			<tbody>
-				{orders?.map((order, i) => (
-					<tr onClick={() => onNavigate(order?._id)} key={i}>
-						<td></td>
-						<td>#{order?._id}</td>
-						<td>₦{order?.totalAmount?.toLocaleString()}</td>
-						<td>{format(order?.date, 'dd/MM/yyyy hh:mm aa')}</td>
-						<td>
-							<Tag
-								title={(
-									orderStatus[order?.status] || order?.status
-								)?.toLowerCase()}
-								className={`${orderStatus[order?.status]} capitalize`}
-							/>
-						</td>
-						<td onClick={e => e.stopPropagation()}>
+				{orders?.map((order, i) => {
+					return (
+						<tr onClick={() => onNavigate(order?._id)} key={i}>
+							<td></td>
+							<td>#{order?.orderNumber}</td>
+							<td>₦{order?.totalAmount?.toLocaleString()}</td>
+							<td>{format(order?.date, 'dd/MM/yyyy hh:mm aa')}</td>
+							<td>
+								<Tag
+									title={(
+										orderStatus[order?.status] || order?.status
+									)?.toLowerCase()}
+									className={`${orderStatus[order?.status] || ''} capitalize`}
+								/>
+							</td>
+							{/* <td onClick={e => e.stopPropagation()}>
 							<Icon id='ellipsis' />
-						</td>
-					</tr>
-				))}
+						</td> */}
+						</tr>
+					);
+				})}
 			</tbody>
 		</table>
 	);

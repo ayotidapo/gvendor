@@ -1,7 +1,3 @@
-import { ChartOptions } from 'chart.js';
-import { ObjectData } from './interface';
-import { format } from 'date-fns';
-
 const servicesOfferedOptions = [
 	{ value: 'food', label: 'Food' },
 	{ value: 'electronics', label: 'Electronics' },
@@ -61,7 +57,10 @@ const orderStatus: Record<string, any> = {
 	PENDING: 'new',
 	PROCESSING: 'processing',
 	COMPLETED: 'completed',
-
+	DELIVERED: 'delivered',
+	PREPARING_DELIVERY: 'processing',
+	READY_FOR_PICKUP: 'processing',
+	SHIPPED: 'processing',
 	NEW: 'new',
 	ONGOING: 'processing',
 	FULFILLED: 'completed',
@@ -73,10 +72,10 @@ const orderStages = [
 		name: 'All',
 		value: '',
 	},
-	{
-		name: 'New',
-		value: 'NEW',
-	},
+	// {
+	// 	name: 'New',
+	// 	value: 'NEW',
+	// },
 	{
 		name: 'Processing',
 		value: 'ONGOING',
@@ -125,6 +124,7 @@ const settlementStatus = [
 	{
 		name: 'Successful',
 		value: 'SUCCESSFUL',
+		// value: 'COMPLETED',
 	},
 	{
 		name: 'Pending',
@@ -155,6 +155,52 @@ const settingsTabs = [
 	},
 ] as { value: string; title: string }[];
 
+const settlementFilter = [
+	{
+		label: 'All',
+		value: 'ALL',
+	},
+	{
+		label: 'Completed',
+		value: 'COMPLETED',
+	},
+	{
+		label: 'Pending',
+		value: 'PENDING',
+	},
+	{
+		label: 'Failed',
+		value: 'FAILED',
+	},
+	{
+		label: 'Pending Confirmation',
+		value: 'PENDING CONFIRMATION',
+	},
+];
+
+const periodFilter = [
+	{
+		label: 'Today',
+		value: 'today',
+	},
+	{
+		label: 'Yesterday',
+		value: 'yesterday',
+	},
+	{
+		label: 'This week',
+		value: 'this_week',
+	},
+	{
+		label: 'This month',
+		value: 'this_month',
+	},
+	{
+		label: 'This year',
+		value: 'this_year',
+	},
+];
+
 const notificationSettings = [];
 
 export {
@@ -165,4 +211,6 @@ export {
 	settlementStatus,
 	setStages,
 	settingsTabs,
+	settlementFilter,
+	periodFilter,
 };

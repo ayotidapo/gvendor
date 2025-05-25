@@ -1,16 +1,20 @@
 'use client';
 import React, { useEffect, useState } from 'react';
-import { useDispatch } from '@/redux/hooks';
+import { useDispatch, useSelector } from '@/redux/hooks';
 import { getVendor } from '@/redux/apis/vendor';
 
-import { redirect, useSearchParams } from 'next/navigation';
+import { notFound, redirect, useSearchParams } from 'next/navigation';
 import Navbar from './Navbar';
 import LoadingPage from '@/molecules/LoadingPage';
 import { signOut } from 'next-auth/react';
+import { toast } from 'react-toastify';
 
 const LayoutWrapper: React.FC<{
 	children: React.ReactNode;
 }> = ({ children }) => {
+	const vendorUser = useSelector(state => state?.vendor);
+
+	const { isError, error } = vendorUser;
 	const dispatch = useDispatch();
 	const [loading, setLoading] = useState(false);
 	const sQ = useSearchParams();
@@ -29,8 +33,8 @@ const LayoutWrapper: React.FC<{
 					//console.error('Error:', action.error.message);
 				}
 			} catch {
-				await signOut();
-				redirect(`/auth/login`);
+				signOut();
+				//redirect(`/auth/login`);
 			} finally {
 				setLoading(false);
 			}
@@ -42,6 +46,11 @@ const LayoutWrapper: React.FC<{
 	}, [ck_token]);
 
 	if (loading) return <LoadingPage />;
+
+	if (isError) {
+		toast.error(`Error: ${error}`);
+		notFound();
+	}
 
 	return (
 		<>

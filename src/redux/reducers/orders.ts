@@ -5,6 +5,7 @@ import { getOrders } from '../apis/orders';
 
 export interface IOrder {
 	_id: string;
+	orderNumber: string;
 	orderId: string;
 	itemsOrdered: string[];
 	quantity: number;
@@ -15,7 +16,7 @@ export interface IOrder {
 		[key: string]: string | number;
 		price: number;
 	};
-
+	timeAgo?: string;
 	customerFirstName: string;
 	customerLastName: string;
 }

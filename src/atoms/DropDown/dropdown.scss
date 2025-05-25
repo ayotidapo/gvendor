@@ -4,7 +4,7 @@
 	.dropdown__content {
 		@apply rounded-lg absolute  top-12 -left-20 invisible opacity-0 shadow-lg p-1 z-[1000] bg-white;
 
-		transition: all 0.05s linear;
+		transition: all 0.2s linear;
 	}
 
 	&:focus-within > .dropdown__content {

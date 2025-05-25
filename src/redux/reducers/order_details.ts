@@ -9,8 +9,13 @@ export interface IOrderItem {
 	quantity: number;
 	variants: any[];
 	comboItems: any[];
+	productDetail: {
+		comboItems: any[];
+		[key: string]: any;
+	};
 	name: string;
 	price: number;
+	images?: string[];
 }
 export interface IOrderDetails {
 	_id: string;
