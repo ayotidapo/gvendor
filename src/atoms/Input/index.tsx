@@ -41,11 +41,12 @@ const Input: React.FC<Props> = props => {
 
 	const [_field, { touched, error }] = useField(name);
 	const hasError = error && touched;
-
+	console.log({ touched });
 	const isPassword = type === 'password';
 	if (as === 'select') {
 		return (
 			<div className='input__container'>
+				ADDDE
 				<div className={`input_wrapper ${hasError ? 'err' : ''}`}>
 					<Field
 						name={name}

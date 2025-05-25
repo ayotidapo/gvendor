@@ -25,7 +25,8 @@ const Select: React.FC<Props> = props => {
 		useFormik,
 		...rest
 	} = props;
-	const [_, { error: hasError }] = useField(name);
+	const [_, meta] = useField(name);
+	const hasError = meta.error && meta.touched;
 	if (useFormik) {
 		return (
 			<div className='input__container'>
