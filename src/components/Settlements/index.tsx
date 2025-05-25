@@ -194,7 +194,7 @@ const SettlementPage = () => {
 									onCloseModal={onCloseModal}
 									active={active}
 									onSetActive={onSetActive}
-									isFetching={isFetching}
+									isExporting={exporting}
 								/>
 							)}
 						</Modal>

@@ -10,7 +10,7 @@ import { ErrorMessage, useFormikContext } from 'formik';
 import { ObjectData } from '@/utils/interface';
 
 interface Props {
-	isFetching?: boolean;
+	isExporting?: boolean;
 	active: string;
 	businessName?: string;
 	onSetActive: (value: string) => void;
@@ -19,7 +19,8 @@ interface Props {
 
 const FilterModal: React.FC<Props> = props => {
 	const { setFieldValue, values } = useFormikContext();
-	const { isFetching, active, onSetActive, onCloseModal, businessName } = props;
+	const { isExporting, active, onSetActive, onCloseModal, businessName } =
+		props;
 
 	const { startDate } = values as ObjectData;
 	const today = format(new Date(), 'yyyy-MM-dd');
@@ -107,8 +108,8 @@ const FilterModal: React.FC<Props> = props => {
 				<Radio name='action' value='download' formik /> Download as Excel
 			</div>
 
-			<SimpleBtn className='proceed' disabled={isFetching}>
-				Proceed
+			<SimpleBtn className='proceed' disabled={isExporting}>
+				{isExporting ? <em>Processing...</em> : 'Proceed'}
 			</SimpleBtn>
 		</div>
 	);
