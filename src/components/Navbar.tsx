@@ -85,7 +85,10 @@ const _Navbar: React.FC = () => {
 										<article
 											className='mt-7 hover:bg-slate-100'
 											key={i}
-											//onClick={() => router.push(`/orders/${item?._id}`)}
+											onClick={() => {
+												setReveal(false);
+												router.push(`/orders/${item?.contextData?.order?._id}`);
+											}}
 										>
 											<div className='flex justify-between mb-1.5'>
 												<h2 className='text-black subpixel-antialiased '>

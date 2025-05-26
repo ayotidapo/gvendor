@@ -48,11 +48,13 @@ const validationSchema = (active: string) =>
 			if (active === 'period' && !value) return false;
 			return true;
 		}),
+		action: Yup.string().required('Select an option'),
 	});
 
 const SettlementPage = () => {
-	const { docs, isSuccess, isFetching, total, totalRevenue, loading } =
-		useSelector(state => state?.settlements);
+	const { docs, isFetching, total, totalRevenue, loading } = useSelector(
+		state => state?.settlements
+	);
 	const { businessName } = useSelector(state => state?.vendor);
 
 	const limit = 20;
@@ -70,6 +72,7 @@ const SettlementPage = () => {
 
 	const activeVal = isCustomDateRange ? 'range' : 'period';
 	const [active, setActive] = useState(activeVal);
+	const [actionQuery, setActionQuery] = useState({ query: '', action: '' });
 	const [view, setView] = useState('');
 	const [exporting, setExporting] = useState(false);
 	const router = useRouter();
@@ -79,17 +82,18 @@ const SettlementPage = () => {
 
 	useEffect(() => {
 		dispatch(getSettlements(qString));
-		console.log({ qString });
 	}, [qString]);
 
 	useEffect(() => {
-		if (isSuccess) setView('');
-	}, [isSuccess]);
+		const { action } = actionQuery;
+		if (action) onExport();
+	}, [actionQuery]);
 
 	const onDownloadSettlement = async () => {
+		const { query } = actionQuery;
 		try {
 			setExporting(true);
-			const response = await downloadSettlementsApi(qString);
+			const response = await downloadSettlementsApi(query);
 			const url = window.URL.createObjectURL(response);
 			const a = document.createElement('a');
 			a.href = url;
@@ -118,13 +122,16 @@ const SettlementPage = () => {
 		);
 	};
 
-	const onProceed = async (exportValue: string) => {
-		if (exportValue === 'download') return onDownloadSettlement();
+	const onExport = async () => {
+		const { action, query } = actionQuery;
+		if (action === 'download') {
+			return onDownloadSettlement();
+		}
 		try {
 			setExporting(true);
-			await sendExportToEmailApi(qString);
+			await sendExportToEmailApi(query);
 			toast.success(`Report sent to mail`);
-			setView('');
+			return setView('');
 		} catch (e: any) {
 			toast.error(`Could not send report: ${e.message}`);
 		} finally {
@@ -145,11 +152,13 @@ const SettlementPage = () => {
 		setActive(value);
 	};
 
+	const onSetStatus = (status: string) => {
+		router.push(`${path}?status=${status}&page=1&search=${search}`);
+	};
+
 	const len = docs?.length;
 
 	if (loading) return <LoadingPage className='py-5 ' />;
-
-	const isNoFiltering = !startDate && !endDate && !filter;
 
 	return (
 		<Formik
@@ -158,23 +167,20 @@ const SettlementPage = () => {
 				endDate: endDate || '',
 				status: status,
 				filter: filter,
-				export: '',
+				action: '',
 			}}
-			onSubmit={values => {
-				const { status, startDate, endDate, filter } = values;
+			onSubmit={async values => {
+				const { status, startDate, endDate, filter, action } = values;
 				const _status = status === 'ALL' ? '' : status;
 
 				const sDate = startDate ? new Date(startDate)?.toISOString() : '';
 				const eDate = endDate ? new Date(endDate)?.toISOString() : '';
-
+				let query = '';
 				if (active === 'range')
-					return router.push(
-						`${path}?status=${_status}&page=1&isCustomDateRange=true&startDate=${sDate}&endDate=${eDate}`
-					);
-
-				router.push(
-					`${path}?status=${_status}&page=1&isCustomDateRange=false&filter=${filter}`
-				);
+					query = `?status=${_status}&page=1&isCustomDateRange=true&startDate=${sDate}&endDate=${eDate}`;
+				else
+					query = `?status=${_status}&page=1&isCustomDateRange=false&filter=${filter}`;
+				setActionQuery({ query, action });
 			}}
 			validationSchema={validationSchema(active)}
 		>
@@ -188,13 +194,7 @@ const SettlementPage = () => {
 									onCloseModal={onCloseModal}
 									active={active}
 									onSetActive={onSetActive}
-									isFetching={isFetching}
-								/>
-							)}
-							{view === 'export' && (
-								<ExportModal
-									onProceed={() => onProceed(values?.export)}
-									exporting={exporting}
+									isExporting={exporting}
 								/>
 							)}
 						</Modal>
@@ -212,28 +212,16 @@ const SettlementPage = () => {
 							<SearchFilter onTextChange={onTextChange} />
 
 							<div className='flex items-center gap-5'>
-								{/* <StatusFilter
-								onSetStatus={onSetStatus}
-								status={status}
-								states={settlementStatus}
-							/> */}
-								<span
-									className='status_filter_wrapper'
-									role='button'
-									onClick={() => setView('filter')}
-								>
-									<Icon id='sortp' className='mr-2' />
-									Filter:{' '}
-									<span className='capitalize'>
-										&nbsp;{status?.toLocaleLowerCase() || 'All'}
-									</span>
-								</span>
+								<StatusFilter
+									onSetStatus={onSetStatus}
+									status={status}
+									states={settlementStatus}
+								/>
 								<SimpleBtn
 									type='button'
 									className='export'
-									//onClick={onDownloadSettlement}
-									onClick={() => onSetView('export')}
-									disabled={exporting || docs?.length < 1 || isNoFiltering}
+									onClick={() => onSetView('filter')}
+									disabled={exporting}
 								>
 									Export
 								</SimpleBtn>
