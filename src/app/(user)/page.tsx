@@ -26,7 +26,7 @@ export default async function Home() {
 		totalNewSales: fulfiledOrder?.value?.data?.totalSales,
 		totalProcessingOrders: ongoingOrder?.value?.data?.totalOrders,
 		totalProcessingSales: ongoingOrder?.value?.data?.totalSales,
-		topViewed: topViewed?.value?.data?.totalViews,
+		totalViewed: topViewed?.value?.data?.totalViews,
 		itemsSold: itemsSold?.value?.data?.totalUnitsSold,
 	};
 
