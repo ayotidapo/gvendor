@@ -37,6 +37,10 @@ body {
 
 .metric_cards_wrapper {
 	@apply grid grid-cols-[repeat(auto-fill,minmax(240px,1fr))] gap-6;
+
+	&.autofit {
+		@apply grid-cols-[repeat(auto-fit,minmax(240px,1fr))];
+	}
 }
 
 .filter_div {
