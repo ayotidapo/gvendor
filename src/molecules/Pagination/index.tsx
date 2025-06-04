@@ -13,13 +13,13 @@ const Pagination: React.FC<Props> = props => {
 	const { page, limit = 10, totalItems, curItemsLen } = props;
 	const pageCount = Math.ceil(totalItems / limit);
 	const isCurItemComplete = curItemsLen === limit;
-
+	console.log(props.page - 1, 'pepeppe');
 	return (
 		<div className='pagination__div '>
 			<ReactPaginate
 				breakLabel='...'
 				onPageChange={props.onPageChange}
-				initialPage={props.page - 1}
+				forcePage={props.page - 1}
 				disableInitialCallback={true}
 				pageRangeDisplayed={1}
 				pageCount={pageCount}

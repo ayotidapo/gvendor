@@ -57,8 +57,6 @@ export const ordersSlice = createSlice({
 			.addCase(getOrders.pending, state => {
 				state.loading = !state.isSuccess && !state.isError;
 				state.fetching = true;
-				state.isSuccess = false;
-				state.isError = false;
 			})
 			.addCase(getOrders.fulfilled, (state, action) => {
 				state.isSuccess = true;
