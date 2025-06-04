@@ -126,8 +126,12 @@ const settlementStatus = [
 		value: 'COMPLETED',
 	},
 	{
-		name: 'Pending',
-		value: 'PENDING',
+		name: 'Pending Confirmation',
+		value: 'PENDING_CONFIRMATION',
+	},
+	{
+		name: 'Failed',
+		value: 'FAILED',
 	},
 ];
 
