@@ -30,7 +30,7 @@ const Orders: React.FC<Props> = props => {
 		totalProducts,
 		topViewed,
 	} = props.metrics;
-
+	console.log({ a: props.metrics });
 	const {
 		orders,
 		loading,

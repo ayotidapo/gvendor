@@ -107,8 +107,8 @@ const HomePage: React.FC<Props> = props => {
 						value={`${totalViewed?.toLocaleString() || 0} Items`}
 					/>
 					<MetricCard
-						title='Items Sold'
-						iconDesc=''
+						title='Active Product'
+						iconDesc='Product bought by customers.'
 						value={`${itemsSold?.toLocaleString() || 0} Items`}
 					/>
 				</section>
