@@ -20,14 +20,10 @@ import Pagination from '@/molecules/Pagination';
 import { SimpleBtn } from '@/atoms/buttons/Button';
 import Modal from '@/atoms/Modal';
 import './settlement.scss';
-import { Icon } from '@/atoms/icon/icon';
-
 import { toast } from 'react-toastify';
 import FilterModal from './FilterModal';
 import StatusFilter from '@/molecules/StatusFilter';
 import { settlementStatus } from '@/utils/data';
-import Radio from '@/atoms/Radio';
-import ExportModal from './ExportModal';
 
 const validationSchema = (active: string) =>
 	Yup.object({
