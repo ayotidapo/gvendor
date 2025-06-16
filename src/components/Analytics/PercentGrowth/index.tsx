@@ -1,23 +1,27 @@
-import { Icon } from '@/atoms/icon/icon';
 import React from 'react';
+import { Icon } from '@/atoms/icon/icon';
+import './perc-growth.scss';
 
 interface Props {
 	amount: string;
 	desc?: string;
+	className?: string;
 }
+
 const PercentGrowth: React.FC<Props> = props => {
+	const { amount, desc, className = '' } = props;
 	return (
-		<div className='flex flex-col translate-y-1'>
-			<span className='mt-1 mb-2'>{props.amount?.toLocaleString()}</span>
-			<span className='text-sm font-thin flex items-center text-[#1b9066]'>
+		<div className={`perc_growth ${className}`}>
+			<span className='mt-1 mb-2'>{amount?.toLocaleString()}</span>
+			<span className='perc_desc'>
 				<Icon
-					id={props.desc ? 'arrow_up' : ''}
+					id={desc ? 'arrow_up' : ''}
 					width={10}
 					height={10}
 					className='mr-1'
 				/>
 
-				{props.desc}
+				{desc}
 			</span>
 		</div>
 	);

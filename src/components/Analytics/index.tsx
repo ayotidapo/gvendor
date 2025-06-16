@@ -27,27 +27,32 @@ import { definedFilter } from '@/utils/data';
 import { differenceInDays, subMonths } from 'date-fns';
 import { ObjectData } from '@/utils/interface';
 import './analytics.scss';
+import ViewsTable from './ViewsTable';
+import Pagination from '@/molecules/Pagination';
+import { Serializer } from 'v8';
 
 Chart.register(...registerables);
 
 interface Props {
 	metrics: ObjectData;
+	topViewedProducts: ObjectData;
 }
 
 const Analytics: React.FC<Props> = props => {
 	const router = useRouter();
 	const dispatch = useDispatch();
-
+	const limit = 20;
 	const sQ = useSearchParams();
 	const path = usePathname();
-
+	console.log({ u: props.topViewedProducts });
 	const duration = sQ.get('duration') || 'day';
 	const startDate = sQ.get('startDate') || null;
 	const endDate = sQ.get('endDate') || null;
+	const page = sQ.get('page') || 1;
 
 	const { ...analytics } = useSelector(state => state.analytics);
 
-	const [showSales, setShowSales] = useState(true);
+	const [tab, setTab] = useState('sales');
 
 	const [salesData, setSalesData] = useState<any>({
 		datasets: [],
@@ -127,8 +132,13 @@ const Analytics: React.FC<Props> = props => {
 		setDate(newValue);
 	};
 
-	const { totalRevenue, topViewed, totalSold, totalProducts } = props?.metrics;
+	const onPageChange = (page: { selected: number }) => {
+		const { selected } = page;
+		router.push(`${path}?page=${selected + 1}`);
+	};
 
+	const { totalRevenue, topViewed, totalSold, totalProducts } = props?.metrics;
+	const len = props.topViewedProducts?.products?.length;
 	if (analytics.loading) return <LoadingPage />;
 
 	return (
@@ -160,7 +170,6 @@ const Analytics: React.FC<Props> = props => {
 				startFrom={subMonths(new Date(), 2)}
 				maxDate={new Date()}
 			/>
-
 			<section className='metric_cards_wrapper'>
 				<MetricCard
 					title='Total Settled Amount'
@@ -168,7 +177,8 @@ const Analytics: React.FC<Props> = props => {
 					value={
 						<PercentGrowth
 							amount={`₦${totalRevenue?.toLocaleString() || ''}`}
-							desc={`${(analytics?.totalSales?.percentageIncrease || 0).toFixed(2)}% increase in the past week`}
+							desc={`${(Math.abs(analytics?.totalSales?.percentageIncrease) || 0).toFixed(2)}% ${analytics?.totalSales?.growth} in the past week`}
+							className={analytics?.totalSales?.growth}
 						/>
 					}
 				/>
@@ -181,7 +191,8 @@ const Analytics: React.FC<Props> = props => {
 							amount={
 								analytics?.totalOrders?.ordersCount?.toLocaleString() || ''
 							}
-							desc={`${(analytics?.totalOrders?.percentageIncrease || 0).toFixed(2)}% increase in the past week`}
+							desc={`${(Math.abs(analytics?.totalOrders?.percentageIncrease) || 0).toFixed(2)}%  ${analytics?.totalOrders?.percentageIncrease > 0 ? 'increase' : 'decrease'} in the past week`}
+							className={analytics?.totalOrders?.growth}
 						/>
 					}
 				/>
@@ -203,14 +214,10 @@ const Analytics: React.FC<Props> = props => {
 					value={
 						<PercentGrowth
 							amount={`₦${formatAmount(analytics?.averageOrderValue?.averageOrderValue) || ''}`}
-							desc={`${(analytics?.averageOrderValue?.percentageChange || 0).toFixed(2)}% increase in the past week`}
+							desc={`${(Math.abs(analytics?.averageOrderValue?.percentageChange) || 0).toFixed(2)}%  ${analytics?.averageOrderValue?.percentageChange > 0 ? 'increase' : 'decrease'} in the past week`}
+							className={analytics?.averageOrderValue?.growth}
 						/>
 					}
-				/>
-				<MetricCard
-					title='Top Viewed'
-					iconDesc='Most viewed by customers. Shows high interest or demand.'
-					value={<>{topViewed?.toLocaleString() || 0}</>}
 				/>
 				<MetricCard
 					title='Active Product'
@@ -225,42 +232,71 @@ const Analytics: React.FC<Props> = props => {
 			</section>
 			<div className='tabs_div'>
 				<SimpleBtn
-					className={showSales ? 'active' : ''}
-					onClick={() => setShowSales(true)}
+					className={tab === 'sales' ? 'active' : ''}
+					onClick={() => setTab('sales')}
 				>
 					Sales (₦)
 				</SimpleBtn>
 				<SimpleBtn
-					className={!showSales ? 'active' : ''}
-					onClick={() => setShowSales(false)}
+					className={tab === 'orders' ? 'active' : ''}
+					onClick={() => setTab('orders')}
 				>
 					Order volume
 				</SimpleBtn>
+				<SimpleBtn
+					className={tab === 'views' ? 'active' : ''}
+					onClick={() => setTab('views')}
+				>
+					Views
+				</SimpleBtn>
 			</div>
-			{showSales ? (
-				<>
-					<section className='graph_div'>
-						<h2 className='title_h'>Sales</h2>
-						<Line data={salesData} options={SalesChartOptions} />
-					</section>
-					<section className='graph_div'>
-						<h2 className='title_h'>Top Selling Items</h2>
-						<Bar data={topSellData} options={SalesChartOptions} />;
-					</section>
-				</>
-			) : (
-				<>
-					<section className='graph_div'>
-						<h2 className='title_h'>Orders</h2>
+			<section className='mt-10'>
+				{tab === 'sales' && (
+					<>
+						<section className='graph_div'>
+							<h2 className='title_h'>Sales</h2>
+							<Line data={salesData} options={SalesChartOptions} />
+						</section>
+						<section className='graph_div'>
+							<h2 className='title_h'>Top Selling Items</h2>
+							<Bar data={topSellData} options={SalesChartOptions} />;
+						</section>
+					</>
+				)}
+				{tab === 'orders' && (
+					<>
+						<section className='graph_div'>
+							<h2 className='title_h'>Orders</h2>
 
-						<Line data={ordersData} options={OrderChartOptions} />
-					</section>
-					<section className='graph_div'>
-						<h2 className='title_h'>Most Ordered Items</h2>
-						<Bar data={topOrderData} options={OrderChartOptions} />;
-					</section>
-				</>
-			)}
+							<Line data={ordersData} options={OrderChartOptions} />
+						</section>
+						<section className='graph_div'>
+							<h2 className='title_h'>Most Ordered Items</h2>
+							<Bar data={topOrderData} options={OrderChartOptions} />;
+						</section>
+					</>
+				)}
+				{tab === 'views' && (
+					<>
+						{len < 1 && !analytics.loading && (
+							<h2 className='empty__state'>No data to display</h2>
+						)}
+
+						<section className='table_wrapper'>
+							<ViewsTable
+								topViewedProducts={props.topViewedProducts?.products}
+							/>
+						</section>
+						<Pagination
+							onPageChange={onPageChange}
+							page={Number(page)}
+							limit={limit}
+							totalItems={props.topViewedProducts?.products?.length} // this will still change to totalItem or count
+							curItemsLen={len}
+						/>
+					</>
+				)}
+			</section>
 		</div>
 	);
 };

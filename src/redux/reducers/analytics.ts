@@ -6,10 +6,15 @@ import { ObjectData } from '@/utils/interface';
 interface IAnalytics {
 	salesChart: ObjectData[];
 	topSellingItems: ObjectData[];
-	totalSales: { totalRevenue: number; percentageIncrease: number };
+	totalSales: {
+		totalRevenue: number;
+		percentageIncrease: number;
+		growth?: 'increase' | 'decrease' | '';
+	};
 	totalOrders: {
 		ordersCount: number;
 		percentageIncrease: number;
+		growth?: 'increase' | 'decrease' | '';
 	};
 	totalCustomers: {
 		totalNoOfCustomers: number;
@@ -17,6 +22,7 @@ interface IAnalytics {
 	averageOrderValue: {
 		averageOrderValue: number;
 		percentageChange: number;
+		growth: 'increase' | 'decrease' | '';
 	};
 	isSuccess?: boolean;
 	isError?: boolean;
@@ -26,10 +32,11 @@ interface IAnalytics {
 const initialState: IAnalytics = {
 	salesChart: [],
 	topSellingItems: [],
-	totalSales: { totalRevenue: 0, percentageIncrease: 0 },
+	totalSales: { totalRevenue: 0, percentageIncrease: 0, growth: '' },
 	totalOrders: {
 		ordersCount: 0,
 		percentageIncrease: 0,
+		growth: '',
 	},
 	totalCustomers: {
 		totalNoOfCustomers: 0,
@@ -37,6 +44,7 @@ const initialState: IAnalytics = {
 	averageOrderValue: {
 		averageOrderValue: 0,
 		percentageChange: 0,
+		growth: '',
 	},
 	loading: true,
 };
@@ -64,6 +72,15 @@ export const analyticsSlice = createSlice({
 				state.isError = false;
 				state.loading = false;
 				Object.assign(state, action.payload?.data);
+
+				state.totalSales.growth =
+					state.totalSales.percentageIncrease > 0 ? 'increase' : 'decrease';
+				state.totalOrders.growth =
+					state.totalOrders.percentageIncrease > 0 ? 'increase' : 'decrease';
+				state.averageOrderValue.growth =
+					state.averageOrderValue.percentageChange > 0
+						? 'increase'
+						: 'decrease';
 			})
 			.addCase(getAnalytics.rejected, (state, action) => {
 				if (action.error?.message)

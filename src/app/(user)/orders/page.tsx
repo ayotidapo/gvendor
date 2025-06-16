@@ -21,7 +21,7 @@ const Order: React.FC = async () => {
 		orders: orders?.value?.data,
 		totalSold: totalActive?.value?.data?.totalSoldProductsCount,
 		totalProducts: totalActive?.value?.data?.totalProductsCount,
-		topViewed: topViewed?.value?.data?.topViewed,
+		topViewed: topViewed?.value?.data?.products?.[0]?.viewCount,
 	};
 	return <OrdersPage metrics={metrics} />;
 };

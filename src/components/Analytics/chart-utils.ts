@@ -158,6 +158,8 @@ export const constructTopSellingData = (data: ObjectData) => {
 				}),
 				borderColor: '#F45D2C',
 				backgroundColor: '#F45D2C',
+				barThickness: 24, // adjust this for bar width
+				borderRadius: 10, // adjust this for rounded corners
 			},
 		],
 	};
@@ -183,6 +185,8 @@ export const constructTopOrderData = (data: ObjectData) => {
 				}),
 				borderColor: '#F45D2C',
 				backgroundColor: '#F45D2C',
+				barThickness: 24, // adjust this for bar width
+				borderRadius: 10, // adjust this for rounded corners
 			},
 		],
 	};

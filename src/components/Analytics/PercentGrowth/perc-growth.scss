@@ -1,0 +1,17 @@
+.perc_growth {
+	@apply flex flex-col translate-y-1;
+
+	.perc_desc {
+		@apply text-sm font-thin flex items-center text-[#1b9066];
+	}
+
+	&.decrease {
+		.perc_desc {
+			@apply text-[#CA3542];
+
+			& > svg {
+				transform: rotate(90deg);
+			}
+		}
+	}
+}

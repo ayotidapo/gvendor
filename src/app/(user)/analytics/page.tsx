@@ -21,11 +21,14 @@ const Analytics = async () => {
 		totalRevenue: settlementData?.value?.data?.totalRevenue,
 		totalSold: totalActive?.value?.data?.totalSoldProductsCount,
 		totalProducts: totalActive?.value?.data?.totalProductsCount,
-		topViewed: topViewed?.value?.data?.topViewed,
+		topViewed: topViewed?.value?.data?.products?.[0]?.viewCount,
 	};
 	return (
 		<div>
-			<AnalyticsPage metrics={metrics} />
+			<AnalyticsPage
+				metrics={metrics}
+				topViewedProducts={topViewed?.value?.data}
+			/>
 		</div>
 	);
 };

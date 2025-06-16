@@ -20,6 +20,7 @@ interface Props {
 }
 
 const InventoryDetailsPage: React.FC<Props> = ({ details }) => {
+	console.log({ details });
 	return (
 		<div className='inventory_details'>
 			<section className='flex flex-col'>
@@ -109,7 +110,7 @@ const InventoryDetailsPage: React.FC<Props> = ({ details }) => {
 				<EditInputBox
 					title='Item Category'
 					name='category'
-					value={details?.category?.name}
+					value={details?.category?.[0]?.name}
 					deactivate
 				/>
 			</section>
