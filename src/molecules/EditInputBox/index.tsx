@@ -17,7 +17,7 @@ interface Props {
 	deactivate?: boolean;
 	name: string;
 	ctaName?: string;
-	displayValue?: string | number;
+	displayValue?: string | number | React.ReactNode;
 	error?: string;
 	placeholder?: string;
 	riconSvg?: string;

@@ -173,6 +173,9 @@ const BizInfo = () => {
 							title='Business category'
 							//value={values?.servicesOffered}
 							//error={errors?.servicesOffered}
+							displayValue={
+								<span className='capitalize'>{values?.servicesOffered}</span>
+							}
 							submitting={loading}
 							//onChange={handleChange}
 						>
