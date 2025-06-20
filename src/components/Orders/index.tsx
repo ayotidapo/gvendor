@@ -11,7 +11,7 @@ import { usePathname, useRouter } from 'next/navigation';
 import { constructQuery } from '@/utils/helpers';
 import { getOrders } from '@/redux/apis/orders';
 import { useDispatch, useSelector } from '@/redux/hooks';
-import { IFilter } from '@/utils/interface';
+import { IFilter, ObjectData } from '@/utils/interface';
 import StatusFilter from '@/molecules/StatusFilter';
 import useApiSearchQuery from '@/customHooks/useApiSearchQuery';
 import SearchFilter from '@/molecules/SearchFilter';
@@ -19,14 +19,24 @@ import LoadingPage from '@/molecules/LoadingPage';
 import Pagination from '@/molecules/Pagination';
 import { orderStages, orderStatus } from '@/utils/data';
 
-const Orders = () => {
+interface Props {
+	metrics: ObjectData;
+}
+
+const Orders: React.FC<Props> = props => {
+	const {
+		orders: _orders,
+		totalSold,
+		totalProducts,
+		topViewed,
+	} = props.metrics;
+	console.log({ a: props.metrics });
 	const {
 		orders,
-		fetching,
 		loading,
-		averageOrderValue = 0,
-		totalOrders = 0,
-		totalSales = 0,
+		averageOrderValue = _orders?.averageOrderValue,
+		totalOrders = _orders?.totalOrders,
+		totalSales = _orders?.totalSales,
 	} = useSelector(state => state?.orders);
 
 	const router = useRouter();
@@ -69,11 +79,13 @@ const Orders = () => {
 				<MetricCard
 					title='Total Orders'
 					iconDesc='Number of completed sales.'
+					loading={loading}
 					value={`${totalOrders || 0} Orders`}
 				/>
 				<MetricCard
 					title='Total Order value'
 					iconDesc='Total amount customers paid for their orders.'
+					loading={loading}
 					value={
 						<>
 							<span className='font-medium'>&#8358;</span>
@@ -84,6 +96,7 @@ const Orders = () => {
 				<MetricCard
 					title='Average Order value'
 					iconDesc='This is the average amount each customer spends per order'
+					loading={loading}
 					value={
 						<>
 							<span className='font-medium'>&#8358;</span>
@@ -91,7 +104,23 @@ const Orders = () => {
 						</>
 					}
 				/>
+				<MetricCard
+					title='Top Viewed'
+					iconDesc='Most viewed by customers. Shows high interest or demand.'
+					value={<>{topViewed?.toLocaleString() || 0}</>}
+				/>
+				<MetricCard
+					title='Active Product'
+					iconDesc='Product bought by customers'
+					value={
+						<>
+							{totalSold?.toLocaleString() || 0}/
+							{totalProducts?.toLocaleString() || 0}
+						</>
+					}
+				/>
 			</section>
+
 			<div className='filter_div'>
 				<SearchFilter onTextChange={onTextChange} />
 				<StatusFilter

@@ -8,7 +8,13 @@ const OnboardFooter = () => {
 			<span className='mr-10'>
 				&copy; 2024 The Good Thing Company. All Rights Reserved.
 			</span>
-			<span>Why Good? | Are you an exceptional creator? | Get help</span>
+			<span>
+				Why Good? |{' '}
+				<a href='https://form.typeform.com/to/ZoYPp9gZ'>
+					Are you an exceptional creator?
+				</a>{' '}
+				| Get help
+			</span>
 			<div className='flex-1 flex md:items-stretch  xx:my-2 lg:my-0 xx:justify-center lg:justify-end gap-5 cursor-pointer'>
 				<Icon id='instagram' />
 				<Icon id='x' />

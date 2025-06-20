@@ -116,22 +116,6 @@ const inventoryStatus = [
 	},
 ];
 
-const settlementStatus = [
-	{
-		name: 'All',
-		value: '',
-	},
-	{
-		name: 'Successful',
-		value: 'SUCCESSFUL',
-		// value: 'COMPLETED',
-	},
-	{
-		name: 'Pending',
-		value: 'PENDING',
-	},
-];
-
 const settingsTabs = [
 	{
 		value: 'personal-info',
@@ -155,6 +139,29 @@ const settingsTabs = [
 	},
 ] as { value: string; title: string }[];
 
+const settlementStatus = [
+	{
+		name: 'All',
+		value: '',
+	},
+	{
+		name: 'Completed',
+		value: 'COMPLETED',
+	},
+	{
+		name: 'Pending',
+		value: 'PENDING',
+	},
+	{
+		name: 'Pending Confirmation',
+		value: 'PENDING_CONFIRMATION',
+	},
+	{
+		name: 'Failed',
+		value: 'FAILED',
+	},
+];
+
 const settlementFilter = [
 	{
 		label: 'All',
@@ -169,12 +176,12 @@ const settlementFilter = [
 		value: 'PENDING',
 	},
 	{
-		label: 'Failed',
-		value: 'FAILED',
+		label: 'Pending Confirmation',
+		value: 'PENDING_CONFIRMATION',
 	},
 	{
-		label: 'Pending Confirmation',
-		value: 'PENDING CONFIRMATION',
+		label: 'Failed',
+		value: 'FAILED',
 	},
 ];
 

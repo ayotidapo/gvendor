@@ -24,15 +24,17 @@ import { getAnalytics } from '@/redux/apis/analytics';
 import { toast } from 'react-toastify';
 import LoadingPage from '@/molecules/LoadingPage';
 import { definedFilter } from '@/utils/data';
-import './analytics.scss';
 import { differenceInDays, subMonths } from 'date-fns';
 import { ObjectData } from '@/utils/interface';
-import settlements from '@/redux/reducers/settlements';
-import { getSettlements } from '@/redux/apis/settlements';
+import './analytics.scss';
 
 Chart.register(...registerables);
 
-const Analytics = () => {
+interface Props {
+	metrics: ObjectData;
+}
+
+const Analytics: React.FC<Props> = props => {
 	const router = useRouter();
 	const dispatch = useDispatch();
 
@@ -44,7 +46,6 @@ const Analytics = () => {
 	const endDate = sQ.get('endDate') || null;
 
 	const { ...analytics } = useSelector(state => state.analytics);
-	const { totalRevenue } = useSelector(state => state.settlements);
 
 	const [showSales, setShowSales] = useState(true);
 
@@ -99,10 +100,6 @@ const Analytics = () => {
 	};
 
 	useEffect(() => {
-		dispatch(getSettlements());
-	}, []);
-
-	useEffect(() => {
 		onGetAnalytics();
 	}, [duration, startDate, endDate]);
 
@@ -129,6 +126,8 @@ const Analytics = () => {
 			return toast.error(`Custom filter above ONE YEAR is not allowed`);
 		setDate(newValue);
 	};
+
+	const { totalRevenue, topViewed, totalSold, totalProducts } = props?.metrics;
 
 	if (analytics.loading) return <LoadingPage />;
 
@@ -169,7 +168,7 @@ const Analytics = () => {
 					value={
 						<PercentGrowth
 							amount={`₦${totalRevenue?.toLocaleString() || ''}`}
-							desc={`${((analytics?.totalSales?.percentageIncrease || 0) / 100).toFixed(2)}% increase in the past week`}
+							desc={`${(analytics?.totalSales?.percentageIncrease || 0).toFixed(2)}% increase in the past week`}
 						/>
 					}
 				/>
@@ -182,7 +181,7 @@ const Analytics = () => {
 							amount={
 								analytics?.totalOrders?.ordersCount?.toLocaleString() || ''
 							}
-							desc={`${((analytics?.totalOrders?.percentageIncrease || 0) / 100).toFixed(2)}% increase in the past week`}
+							desc={`${(analytics?.totalOrders?.percentageIncrease || 0).toFixed(2)}% increase in the past week`}
 						/>
 					}
 				/>
@@ -204,8 +203,23 @@ const Analytics = () => {
 					value={
 						<PercentGrowth
 							amount={`₦${formatAmount(analytics?.averageOrderValue?.averageOrderValue) || ''}`}
-							desc={`${((analytics?.averageOrderValue?.percentageChange || 0) / 100).toFixed(2)}% increase in the past week`}
+							desc={`${(analytics?.averageOrderValue?.percentageChange || 0).toFixed(2)}% increase in the past week`}
 						/>
+					}
+				/>
+				<MetricCard
+					title='Top Viewed'
+					iconDesc='Most viewed by customers. Shows high interest or demand.'
+					value={<>{topViewed?.toLocaleString() || 0}</>}
+				/>
+				<MetricCard
+					title='Active Product'
+					iconDesc='Product bought by customers'
+					value={
+						<>
+							{totalSold?.toLocaleString() || 0}/
+							{totalProducts?.toLocaleString() || 0}
+						</>
 					}
 				/>
 			</section>

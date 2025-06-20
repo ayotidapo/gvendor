@@ -1,8 +1,4 @@
 .homepage {
-	.metric_cards_wrapper {
-		@apply grid grid-cols-[repeat(auto-fill,minmax(240px,1fr))] gap-6;
-	}
-
 	.orders_wrapper {
 		@apply grid grid-cols-[repeat(auto-fill,minmax(290px,1fr))] gap-6 min-h-[200px];
 	}

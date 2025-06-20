@@ -23,64 +23,37 @@ import StatusFilter from '../../molecules/StatusFilter';
 import SearchFilter from '@/molecules/SearchFilter';
 import { IOrder } from '@/redux/reducers/orders';
 import { toast } from 'react-toastify';
-import { getSettlements } from '@/redux/apis/settlements';
+import { getSettlements, getSettlementsApi } from '@/redux/apis/settlements';
+import Spinner from '@/atoms/spinner/Spinner';
 
-const HomePage: React.FC = () => {
+interface Props {
+	metrics: ObjectData;
+}
+const HomePage: React.FC<Props> = props => {
 	const {
 		orders,
 		loading,
 		totalOrders = '',
 		totalSales = '',
 	} = useSelector(state => state?.orders);
-	const { totalRevenue } = useSelector(state => state?.settlements);
+
 	const dispatch = useDispatch();
 
 	const router = useRouter();
-	const [metrics, setMetrics] = useState<ObjectData>({});
-	const [loadingMet, setLoadingMet] = useState(true);
+	const {
+		totalRevenue,
+		totalNewOrders,
+		totalProcessingOrders,
+		totalViewed,
+		itemsSold,
+	} = props.metrics;
 
 	const path = usePathname();
 	const { qString, /*page,*/ status, search } = useApiSearchQuery(5); //will need page later when pagnation is done
 
 	useEffect(() => {
-		onGetAllMetrics();
-	}, []);
-
-	useEffect(() => {
 		dispatch(getOrders(qString));
 	}, [qString]);
-
-	const onGetAllMetrics = async () => {
-		try {
-			setLoadingMet(true);
-			dispatch(getSettlements()).then(action => {
-				if (action?.meta?.requestStatus === 'fulfilled') {
-					setMetrics(metrics => ({
-						...metrics,
-						totalSettled: action?.payload?.data?.totalRevenue,
-					}));
-				}
-			});
-			await Fetch(`/order/all?status=FULFILLED`).then(r => {
-				setMetrics(metrics => ({
-					...metrics,
-					totalNewOrders: r?.data?.totalOrders,
-					totalNewSales: r?.data?.totalSales,
-				}));
-			});
-			await Fetch(`/order/all?status=ONGOING`).then(r => {
-				setMetrics(metrics => ({
-					...metrics,
-					totalProcessingOrders: r?.data?.totalOrders,
-					totalProcessingSales: r?.data?.totalSales,
-				}));
-			});
-		} catch (e: any) {
-			toast.error(`Error: ${e.message}`);
-		} finally {
-			setLoadingMet(false);
-		}
-	};
 
 	const onTextChange = (searchValue: string) => {
 		router.push(`${path}?status=${status}&page=1&search=${searchValue}`);
@@ -91,7 +64,6 @@ const HomePage: React.FC = () => {
 	};
 
 	const len = orders?.length;
-	if (loadingMet) return <LoadingPage className='py-5 ' />;
 
 	return (
 		<>
@@ -106,26 +78,41 @@ const HomePage: React.FC = () => {
 						value={
 							<>
 								<span className='font-medium'>&#8358;</span>
-								{metrics?.totalSettled?.toLocaleString()}
+								{totalRevenue?.toLocaleString()}
 							</>
 						}
 					/>
 					<MetricCard
 						title='Total Orders'
 						iconDesc='Number of completed sales.'
+						loading={loading}
 						value={`${totalOrders?.toLocaleString() || 0} Orders`}
 					/>
 					<MetricCard
 						title='Completed Orders'
 						iconDesc='Total number of customer orders that have been successfully fulfilled.'
-						value={`${metrics?.totalNewOrders || 0} orders`}
+						value={`${totalNewOrders || 0} orders`}
 					/>
 					<MetricCard
 						title='Processing Orders'
 						iconDesc='Orders that are currently being prepared or are awaiting fulfillment.'
-						value={`${metrics?.totalProcessingOrders || 0} orders`}
+						value={`${totalProcessingOrders || 0} orders`}
 					/>
 				</section>
+
+				<section className='metric_cards_wrapper autofit mt-8 '>
+					<MetricCard
+						iconDesc='Most viewed by customers. Shows high interest or demand.'
+						title='Total Viewed Products'
+						value={`${totalViewed?.toLocaleString() || 0} Items`}
+					/>
+					<MetricCard
+						title='Active Product'
+						iconDesc='Product bought by customers.'
+						value={`${itemsSold?.toLocaleString() || 0} Items`}
+					/>
+				</section>
+
 				<div className='filter_div'>
 					<span className='text-xl subpixel-antialiased flex-1 text-black'>
 						Recent Orders

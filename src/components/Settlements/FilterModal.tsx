@@ -1,15 +1,16 @@
 import React from 'react';
 import { format } from 'date-fns';
 import Input from '@/atoms/Input';
+import Radio from '@/atoms/Radio';
 import Select from '@/atoms/Input/Select';
 import { SimpleBtn } from '@/atoms/buttons/Button';
 import { periodFilter, settlementFilter } from '@/utils/data';
 import { Icon } from '@/atoms/icon/icon';
-import { useFormikContext } from 'formik';
+import { ErrorMessage, useFormikContext } from 'formik';
 import { ObjectData } from '@/utils/interface';
 
 interface Props {
-	isFetching?: boolean;
+	isExporting?: boolean;
 	active: string;
 	businessName?: string;
 	onSetActive: (value: string) => void;
@@ -18,7 +19,8 @@ interface Props {
 
 const FilterModal: React.FC<Props> = props => {
 	const { setFieldValue, values } = useFormikContext();
-	const { isFetching, active, onSetActive, onCloseModal, businessName } = props;
+	const { isExporting, active, onSetActive, onCloseModal, businessName } =
+		props;
 
 	const { startDate } = values as ObjectData;
 	const today = format(new Date(), 'yyyy-MM-dd');
@@ -98,9 +100,16 @@ const FilterModal: React.FC<Props> = props => {
 				useFormik
 				placeholder='select settlement status'
 			/>
+			<ErrorMessage name='action' component='div' className='error' />
+			<div className='mb-5'>
+				<Radio name='action' value='email' formik /> Send to Email
+			</div>
+			<div>
+				<Radio name='action' value='download' formik /> Download as Excel
+			</div>
 
-			<SimpleBtn className='proceed' disabled={isFetching}>
-				Proceed
+			<SimpleBtn className='proceed' disabled={isExporting}>
+				{isExporting ? <em>Processing...</em> : 'Proceed'}
 			</SimpleBtn>
 		</div>
 	);

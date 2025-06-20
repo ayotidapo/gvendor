@@ -5,7 +5,6 @@ import { sessionUser } from '@/utils/interface';
 import { getVendorApi } from '@/redux/apis/vendor';
 import { redirect } from 'next/navigation';
 import GetUserLayout from '@/components/GetUserLayout';
-import { Suspense } from 'react';
 
 const UserLayout: React.FC<{ children: React.ReactNode }> = async props => {
 	const session = await getServerSession(nextAuthOptions);
@@ -18,6 +17,7 @@ const UserLayout: React.FC<{ children: React.ReactNode }> = async props => {
 		const response = await getVendorApi(goodToken);
 		vendor = response?.data;
 	} catch (e: any) {
+		console.log(e);
 		redirect(`/auth-validate`);
 	}
 
