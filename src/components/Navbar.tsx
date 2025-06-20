@@ -76,7 +76,7 @@ const _Navbar: React.FC = () => {
 									</div>
 								)}
 								{notifications?.length < 1 && (
-									<div className='flex h-[100px] justify-center items-center '>
+									<div className='flex h-[100px] justify-center items-center'>
 										No notification found
 									</div>
 								)}

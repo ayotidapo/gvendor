@@ -19,6 +19,7 @@ const InventoryDetails: React.FC<ServerProps> = async ({ params }) => {
 	} catch {
 		return;
 	}
+
 	return <InventoryDetailsPage details={details} />;
 };
 
